@@ -118,3 +118,4 @@ public final class Sprint4UiTestSuite {
         if (!condition) throw new AssertionError(message);
     }
 }
+

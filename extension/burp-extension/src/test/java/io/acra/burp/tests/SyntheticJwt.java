@@ -11,3 +11,4 @@ public final class SyntheticJwt {
     private static String b64(String s){return Base64.getUrlEncoder().withoutPadding().encodeToString(s.getBytes(StandardCharsets.UTF_8));}
     private static String esc(String s){return s==null?"":s.replace("\\","\\\\").replace("\"","\\\"");}
 }
+
