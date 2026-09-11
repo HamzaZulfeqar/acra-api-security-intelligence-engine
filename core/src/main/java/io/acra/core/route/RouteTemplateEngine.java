@@ -1,0 +1,18 @@
+package io.acra.core.route;
+import io.acra.core.domain.uri.UriModel;
+import java.util.*;
+import java.util.regex.*;
+public final class RouteTemplateEngine {
+    private static final Pattern BRACE=Pattern.compile("^\\{([^}]+)}$");
+    private static final Pattern ANGLE=Pattern.compile("^<(?:(?:[^:>]+):)?([^>]+)>$");
+    public RouteTemplateModel fromObserved(UriModel uri){return parse(uri.canonicalPath(),RouteSyntax.OBSERVED);}
+    public RouteTemplateModel parse(String path){return parse(path,detect(path));}
+    private RouteTemplateModel parse(String path,RouteSyntax syntax){String p=path==null||path.isBlank()?"/":path;List<RouteSegmentModel> segs=new ArrayList<>();StringBuilder canonical=new StringBuilder();int idx=0;
+        for(String part:p.split("/")){if(part.isEmpty())continue;RouteSegmentModel s=classify(idx++,part);segs.add(s);canonical.append('/').append(canonicalSegment(s));}
+        if(canonical.length()==0)canonical.append('/');return new RouteTemplateModel(p,canonical.toString(),syntax,segs);}
+    private static RouteSyntax detect(String path){if(path==null)return RouteSyntax.UNKNOWN;if(path.contains("**"))return RouteSyntax.CATCH_ALL;if(path.matches(".*(^|/)\\*($|/).*"))return RouteSyntax.LITERAL_WILDCARD;if(path.contains("{")&&path.contains("}"))return RouteSyntax.BRACE_TEMPLATE;if(path.matches(".*(^|/):[A-Za-z_][A-Za-z0-9_]*($|/).*"))return RouteSyntax.COLON_TEMPLATE;if(path.contains("<")&&path.contains(">"))return RouteSyntax.ANGLE_TEMPLATE;if(path.contains("[")||path.contains("(")||path.contains("+"))return RouteSyntax.REGEX;return RouteSyntax.OBSERVED;}
+    private static RouteSegmentModel classify(int i,String part){Matcher b=BRACE.matcher(part);if(b.matches())return new RouteSegmentModel(i,part,kindFromName(b.group(1)),cleanName(b.group(1)));if(part.startsWith(":"))return new RouteSegmentModel(i,part,kindFromName(part.substring(1)),cleanName(part.substring(1)));Matcher a=ANGLE.matcher(part);if(a.matches())return new RouteSegmentModel(i,part,kindFromName(a.group(1)),cleanName(a.group(1)));if(part.equals("**"))return new RouteSegmentModel(i,part,RouteSegmentKind.CATCH_ALL,"catch_all");if(part.equals("*"))return new RouteSegmentModel(i,part,RouteSegmentKind.WILDCARD,"wildcard");if(part.matches("(?i)v[0-9]+(?:\\.[0-9]+)?"))return new RouteSegmentModel(i,part,RouteSegmentKind.VERSION,"version");if(part.matches(".*[\\[\\]()+?\\\\].*"))return new RouteSegmentModel(i,part,RouteSegmentKind.REGEX,"regex");return new RouteSegmentModel(i,part,RouteSegmentKind.STATIC,"");}
+    private static RouteSegmentKind kindFromName(String raw){String n=cleanName(raw).toLowerCase(Locale.ROOT);if(n.contains("tenant")||n.equals("org")||n.contains("organization"))return RouteSegmentKind.TENANT;if(n.contains("user")||n.contains("principal")||n.contains("account"))return RouteSegmentKind.USER;if(n.equals("id")||n.endsWith("_id")||n.contains("resource")||n.contains("document")||n.contains("order")||n.contains("invoice"))return RouteSegmentKind.RESOURCE;if(n.contains("version"))return RouteSegmentKind.VERSION;return RouteSegmentKind.PARAMETER;}
+    private static String cleanName(String s){String n=s==null?"":s;int colon=n.indexOf(':');if(colon>0&&n.indexOf('_')<0)n=n.substring(colon+1);return n.replaceAll("[^A-Za-z0-9_]","_");}
+    private static String canonicalSegment(RouteSegmentModel s){return switch(s.kind()){case TENANT->"{tenant}";case USER->"{user_id}";case RESOURCE->"{"+(s.name().isBlank()?"resource_id":s.name())+"}";case PARAMETER->"{"+(s.name().isBlank()?"param":s.name())+"}";case WILDCARD->"{wildcard}";case CATCH_ALL->"{catch_all}";case REGEX->"{regex}";case VERSION,STATIC,UNKNOWN->s.raw();};}
+}

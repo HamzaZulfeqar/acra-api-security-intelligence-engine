@@ -1,0 +1,2 @@
+package io.acra.core.openapi;
+public enum OpenApiCorrelationStatus { DOCUMENTED_OBSERVED, DOCUMENTED_UNOBSERVED, UNDOCUMENTED_OBSERVED, CONFLICTING, UNKNOWN }

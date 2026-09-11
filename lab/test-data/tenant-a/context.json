@@ -1,0 +1,1 @@
+{"principal":"user-a","role":"viewer","tenant":"tenant-a","resources":["document:1001","document:1002"],"tokenFixture":"TOKEN_USER_A"}

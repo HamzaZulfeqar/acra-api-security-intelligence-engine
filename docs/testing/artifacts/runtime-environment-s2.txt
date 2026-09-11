@@ -1,0 +1,12 @@
+ACRA Sprint 2 runtime environment evidence
+captured_utc=2026-08-30T19:51:24Z
+os=Debian GNU/Linux 13 (trixie)
+kernel=Linux 6.18.35 x86_64
+java=openjdk 21.0.11
+maven=NOT_AVAILABLE
+burp=NOT_AVAILABLE
+git_commit=NOT_AVAILABLE_SUPPLIED_WORKING_COPY_HAS_NO_GIT_METADATA
+selected_montoya=2026.7
+selected_maven=3.9.16
+selected_burp_stable=2026.7.3
+candidate_version=0.2.0-rc1

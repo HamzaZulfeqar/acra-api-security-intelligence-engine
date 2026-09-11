@@ -1,0 +1,55 @@
+S5 DEFENSIVE VERIFICATION PASS
+Started UTC: 2026-09-09T16:05:56.5231682Z
+Evidence: NEWLY EXECUTED
+Scope: core compilation, offline regression and defensive S5 tests; no live lab run.
+Runtime
+openjdk version "26.0.1" 2026-04-21
+OpenJDK Runtime Environment (build 26.0.1+8-34)
+OpenJDK 64-Bit Server VM (build 26.0.1+8-34, mixed mode)
+Exit code: 0
+Compiler
+javac 26.0.1
+Exit code: 0
+Core main compile
+Exit code: 0
+Core test compile
+Exit code: 0
+io.acra.core.tests.TestSuite
+PASS HTTP tests=5
+PASS URI tests=6
+PASS CONTEXT tests=5
+PASS GRAPH tests=5
+PASS SERIALIZATION_SECURITY tests=5
+PASS RESOLUTION_CONTRACT tests=6
+PASS NEGATIVE_SECURITY tests=5
+PASS BOLA_ASSESSMENT tests=3
+PASS BFLA_ASSESSMENT tests=3
+PASS total=43 durationMs=558
+Exit code: 0
+io.acra.core.tests.sprint3.Sprint3CoreTestSuite
+PASS Sprint3 core tests=47
+Exit code: 0
+io.acra.core.tests.sprint4.Sprint4CoreVerificationTestSuite
+PASS Sprint4 core verification tests=54
+Exit code: 0
+io.acra.core.tests.sprint4.Sprint4EngineSecurityTestSuite
+PASS Sprint4 engine security tests=52
+Exit code: 0
+io.acra.core.tests.sprint4.Sprint4GraphIntegrationTestSuite
+S4_GRAPH_NODE_MERGE inserted=PASS equivalent=PASS conflict=BLOCKED atomicity=PASS
+PASS Sprint4 graph integration tests=87
+Exit code: 0
+io.acra.core.tests.sprint4.Sprint4ProductCompletionTestSuite
+PASS Sprint4 product completion tests=132
+Exit code: 0
+io.acra.core.tests.sprint5.Sprint5AssessmentGuardTestSuite
+SPRINT5_ASSESSMENT_GUARDS PASS assertions=58
+Exit code: 0
+io.acra.core.tests.sprint5.Sprint5CorrelationSafetyTestSuite
+SPRINT5_CORRELATION_SAFETY PASS assertions=58
+Exit code: 0
+io.acra.core.tests.sprint5.Sprint5SerializationSecurityTestSuite
+SPRINT5_SERIALIZATION_SECURITY PASS assertions=156
+Exit code: 0
+Assessment network/process dependency scan
+

@@ -1,0 +1,1 @@
+package burp.api.montoya.http.message.responses; import burp.api.montoya.core.ByteArray; import burp.api.montoya.http.message.HttpHeader; import java.util.List; public interface HttpResponse { short statusCode(); String httpVersion(); List<HttpHeader> headers(); String headerValue(String name); ByteArray body(); ByteArray toByteArray(); }

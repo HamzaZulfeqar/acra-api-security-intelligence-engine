@@ -1,0 +1,8 @@
+endpoint.tp=10 endpoint.fp=0 endpoint.fn=0 endpoint.precision=1.0000 endpoint.recall=1.0000
+identifier.tp=6 identifier.fp=0 identifier.fn=0 identifier.precision=1.0000 identifier.recall=1.0000
+tenant.accuracy=1.0000 owner.accuracy=1.0000 route.accuracy=1.0000
+context.coverage=0.8111 evidence.completeness=1.0000
+falsePositive.soft200Handled=true
+falsePositive.dynamicReorderHandled=true
+scope=CONTROLLED_LOCAL_GROUND_TRUTH_ONLY
+burpRuntime=UNVERIFIED_BLOCKED

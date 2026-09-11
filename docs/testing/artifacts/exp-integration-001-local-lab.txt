@@ -1,0 +1,10 @@
+EXP-INTEGRATION-001 LOCAL-LAB PASS
+httpStatus=200
+transactionId=ACRA-TX-000001
+principal=user-a
+tenant=tenant-a
+resource=document:1001
+action=READ
+endpoint=GET /api/v1/tenants/{tenant}/documents/{document_id}
+evidenceCount=10
+burpStage=UNVERIFIED_NOT_AVAILABLE_IN_EXECUTION_ENVIRONMENT

@@ -1,0 +1,1 @@
+package burp.api.montoya; import burp.api.montoya.extension.Extension; import burp.api.montoya.http.Http; import burp.api.montoya.logging.Logging; import burp.api.montoya.ui.UserInterface; public interface MontoyaApi { Extension extension(); Http http(); Logging logging(); UserInterface userInterface(); }

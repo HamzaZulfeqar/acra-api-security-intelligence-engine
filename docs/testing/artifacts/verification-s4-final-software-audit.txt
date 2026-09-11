@@ -1,0 +1,55 @@
+ACRA Sprint 4 final software audit verification
+captured_utc=2026-08-31T22:25:42Z
+checkpoint=S4-FINAL-SOFTWARE-AUDIT-2026-09-01
+candidate=0.4.0-rc1
+source_archive=acra-sprint-04-current-recovered.zip
+source_archive_sha256=db303eeac4b6ffe44b6756b667b748414797069d235cc541ec0e3326e55266bf
+
+ARCHIVE
+SHA-256: PASS
+ZIP entries: 524
+Unsafe paths: 0
+Clean extraction: PASS
+
+NEWLY EXECUTED BUILD
+Command scope: all core/src/main/java and core/src/test/java
+Compiler: C:\Users\hamzi\AppData\Local\Programs\BurpSuite\jre\bin\javac.exe 26.0.1
+Flags: --release 21 -Xlint:all -Werror
+Main compile: PASS
+Test compile: PASS
+
+NEWLY EXECUTED TESTS
+Sprint4CoreVerificationTestSuite: PASS 54 assertions
+Sprint4EngineSecurityTestSuite: PASS 52 assertions
+Sprint4LocalhostIntegrationTestSuite: PASS 51 assertions
+Core TestSuite: PASS 37 assertions
+Sprint3CoreTestSuite: PASS 47 assertions
+Newly executed unique assertions: PASS 241
+
+DISPATCH-SAFETY PROOF
+Valid declared mutation: COMPLETED; total transport dispatches=4; mutation transport dispatches=1
+Invalid original-method declaration: BLOCKED / INVALID_REQUEST; total transport dispatches=0; mutation transport dispatches=0
+Contaminated identity-type/path-location declaration: BLOCKED / INVALID_REQUEST; total transport dispatches=0; mutation transport dispatches=0
+
+LOCAL RUNTIME
+Transport round trip/method/header/body/external rejection/timing: PASS
+Timeout: TIMEOUT; observationCreated=false
+Secure fixture: expected=DENY observed=DENY differential=EXPECTED_CHANGE evidenceEntries=11
+Vulnerable fixture: expected=DENY observed=ALLOW differential=UNEXPECTED_CHANGE evidenceEntries=11; observation only
+HTTP-200 application denial: DENY
+Dynamic and representation-only responses: semantically equivalent
+
+STATIC/PACKAGING
+Sprint 4 network client isolation: PASS
+Sprint 5 analyzer/finding boundary: PASS
+pom.xml: XML PASS
+core/pom.xml: XML PASS
+extension/burp-extension/pom.xml: XML PASS
+Maven package: BLOCKED / UNVERIFIED; mvn executable not found
+
+RETAINED, NOT NEWLY EXECUTED
+Sprint3AdapterTestSuite: PASS 11 assertions from verification-s4-localhost.txt
+Historical S2/S3 Burp Level 3/4: BLOCKED / UNVERIFIED
+
+FINAL SOFTWARE DECISION
+S4 SOFTWARE PARTIAL

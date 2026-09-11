@@ -1,0 +1,25 @@
+ACRA Sprint 2 final continuation verification
+captured_utc=2026-08-30T19:51:24Z
+version=0.2.0-rc1
+target=0.2.0
+
+Build=PASS (JDK/local contract build)
+Tests=PASS (Sprint 1 regressions 37 + Sprint 2 assertions 52 = 89)
+Security Gate=PASS
+Architecture Boundary=PASS
+Montoya Dependency=BLOCKED / UNVERIFIED (official artifact build cannot execute: Maven unavailable and outbound artifact resolution blocked)
+Burp Load=BLOCKED / UNVERIFIED (Burp Suite not installed)
+Burp HTTP=BLOCKED / UNVERIFIED
+Burp UI=BLOCKED / UNVERIFIED
+Scope=PASS locally; real Burp path UNVERIFIED
+Redaction=PASS locally; real Burp path UNVERIFIED
+Context=PASS locally; real Burp path UNVERIFIED
+Graph=PASS locally; real Burp path UNVERIFIED
+Lab=PASS for direct local live-HTTP path
+Experiment=EXP-INTEGRATION-001 PARTIAL; EXP-BURP-INTEGRATION-001 BLOCKED / UNVERIFIED
+Performance=EXECUTED / OBSERVATIONAL
+Repository Package=PASS (RC1 continuation package; v0.2.0 promotion package intentionally not created)
+Research Evidence Level=Level 2 for Burp integration claim
+Release Decision=HOLD
+
+Promotion to v0.2.0 is prohibited until official Montoya packaging and actual Burp Level 3/4 gates PASS.

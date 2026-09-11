@@ -1,0 +1,1 @@
+package burp.api.montoya.http.handler; import burp.api.montoya.core.ToolSource; import burp.api.montoya.http.message.requests.HttpRequest; import burp.api.montoya.http.message.responses.HttpResponse; public interface HttpResponseReceived extends HttpResponse { int messageId(); HttpRequest initiatingRequest(); ToolSource toolSource(); }

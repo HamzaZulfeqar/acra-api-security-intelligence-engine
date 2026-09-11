@@ -1,0 +1,1475 @@
+{
+  "project": "ACRA",
+  "checkpoint": "S5-DEFENSIVE-CONTINUATION",
+  "evidence": "NEWLY EXECUTED",
+  "result": "PASS",
+  "startedAt": "2026-09-09T16:05:56.5231682Z",
+  "finishedAt": "2026-09-09T16:06:23.2690396Z",
+  "repositoryPath": "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra",
+  "buildPath": "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531",
+  "targetJavaRelease": 21,
+  "liveLabExecuted": false,
+  "mavenAvailable": false,
+  "records": [
+    {
+      "label": "Runtime",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:05:56.5666431Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-version"
+      ],
+      "exitCode": 0,
+      "output": [
+        "openjdk version \"26.0.1\" 2026-04-21",
+        "OpenJDK Runtime Environment (build 26.0.1+8-34)",
+        "OpenJDK 64-Bit Server VM (build 26.0.1+8-34, mixed mode)"
+      ]
+    },
+    {
+      "label": "Compiler",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:05:56.7801592Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/javac.exe",
+      "arguments": [
+        "-version"
+      ],
+      "exitCode": 0,
+      "output": [
+        "javac 26.0.1"
+      ]
+    },
+    {
+      "label": "Core main compile",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:05:57.3613286Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/javac.exe",
+      "arguments": [
+        "--release",
+        "21",
+        "-Xlint:all",
+        "-Werror",
+        "-d",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main",
+        "@C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main-sources.txt"
+      ],
+      "exitCode": 0,
+      "output": []
+    },
+    {
+      "label": "Core test compile",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:08.4301294Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/javac.exe",
+      "arguments": [
+        "--release",
+        "21",
+        "-Xlint:all",
+        "-Werror",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main",
+        "-d",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "@C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test-sources.txt"
+      ],
+      "exitCode": 0,
+      "output": []
+    },
+    {
+      "label": "io.acra.core.tests.TestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:14.1826757Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.TestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "PASS HTTP tests=5",
+        "PASS URI tests=6",
+        "PASS CONTEXT tests=5",
+        "PASS GRAPH tests=5",
+        "PASS SERIALIZATION_SECURITY tests=5",
+        "PASS RESOLUTION_CONTRACT tests=6",
+        "PASS NEGATIVE_SECURITY tests=5",
+        "PASS BOLA_ASSESSMENT tests=3",
+        "PASS BFLA_ASSESSMENT tests=3",
+        "PASS total=43 durationMs=558"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint3.Sprint3CoreTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:15.0312099Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint3.Sprint3CoreTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "PASS Sprint3 core tests=47"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint4.Sprint4CoreVerificationTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:15.7743814Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint4.Sprint4CoreVerificationTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "PASS Sprint4 core verification tests=54"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint4.Sprint4EngineSecurityTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:16.6743203Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint4.Sprint4EngineSecurityTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "PASS Sprint4 engine security tests=52"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint4.Sprint4GraphIntegrationTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:17.7712145Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint4.Sprint4GraphIntegrationTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "S4_GRAPH_NODE_MERGE inserted=PASS equivalent=PASS conflict=BLOCKED atomicity=PASS",
+        "PASS Sprint4 graph integration tests=87"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint4.Sprint4ProductCompletionTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:19.4908861Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint4.Sprint4ProductCompletionTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "PASS Sprint4 product completion tests=132"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint5.Sprint5AssessmentGuardTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:20.7015428Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint5.Sprint5AssessmentGuardTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "SPRINT5_ASSESSMENT_GUARDS PASS assertions=58"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint5.Sprint5CorrelationSafetyTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:21.2436119Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint5.Sprint5CorrelationSafetyTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "SPRINT5_CORRELATION_SAFETY PASS assertions=58"
+      ]
+    },
+    {
+      "label": "io.acra.core.tests.sprint5.Sprint5SerializationSecurityTestSuite",
+      "evidence": "NEWLY EXECUTED",
+      "startedAt": "2026-09-09T16:06:21.9119622Z",
+      "command": "C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/java.exe",
+      "arguments": [
+        "-ea",
+        "-cp",
+        "C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\main;C:\\Users\\hamzi\\Documents\\Codex\\2026-08-31\\referenced-chatgpt-conversation-this-is-an-2\\work\\acra-sprint-05-final-work\\acra\\build\\s5-defensive-20260909-210556-531\\test",
+        "io.acra.core.tests.sprint5.Sprint5SerializationSecurityTestSuite"
+      ],
+      "exitCode": 0,
+      "output": [
+        "SPRINT5_SERIALIZATION_SECURITY PASS assertions=156"
+      ]
+    },
+    {
+      "label": "Assessment network/process dependency scan",
+      "evidence": "NEWLY EXECUTED",
+      "command": "Select-String",
+      "scope": [
+        "AuthorizationAssessmentCorrelator.java",
+        "BflaAssessmentEvaluator.java",
+        "BolaAssessmentEvaluator.java"
+      ],
+      "matches": 0,
+      "result": "PASS"
+    }
+  ],
+  "sourceInventory": [
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/AuthorizationOutcome.java",
+      "sha256": "b4a9f6f87f0ce1166f199096b92d13e4ba1b06c2530fb89e8354e36e2bb7d31f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/AuthorizationOutcomeNormalizer.java",
+      "sha256": "b58471332e97f9adc208d429970ff45238a3b9415676d168e5ce61b0c0c2e32b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/DifferentialClassification.java",
+      "sha256": "c217c98ae53b43d9f18a9a9d1fc1a327e1a3cbb2f87d1ca382cc66677c3c64f2"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/ExpectedDecisionCandidate.java",
+      "sha256": "f0a224ece51a2f51641c89c61b881f3079c62830d29626f34c70b78d38572d78"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/ExpectedDecisionCandidateFactory.java",
+      "sha256": "1a99478ff8f4a3c6abaa4de287644bb1f3a8451f4e846035f42390668feb6b9d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/ExpectedDecisionResolution.java",
+      "sha256": "97fe1b771eec9e9286bf75513d62b32f1f47cf48ecac8aee5488095003d80ab3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/ExpectedDecisionResolver.java",
+      "sha256": "63b93d17c0b1ce0bda9366822400905942e3d4c7e45e50bbfb2251599a733182"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/ExpectedDecisionSource.java",
+      "sha256": "1e655cc6787ad5e59fe33b7cdb1e36cdf9b7f9391d8959726c6d922036de361b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/MultiWayDifferential.java",
+      "sha256": "ec0a901841cda036312432e10a747f3c00d900e6a045f84522a4e670a7668b50"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/MultiWayDifferentialAnalyzer.java",
+      "sha256": "66a6a10066c562c01ca76031ccdd20ef9f3fe3fc31e5dd56ecb8257260e8cddd"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/analysis/PairwiseDifference.java",
+      "sha256": "e614ca40e1249bfc0e1ee97c33b09396de86f9d7120c033b1f34f8f9a230eeed"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/EvidenceChainEntry.java",
+      "sha256": "051ee3fe3e72ad4eb197e7390ded3efdfe56e5b55b34565534ab08e33bf862db"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/EvidenceStage.java",
+      "sha256": "f4fa20fb999791d4b30f2654dffeb969d2589f9f164ec7a1ff1333b1ad3c9bf7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/ExecutionEvidenceStore.java",
+      "sha256": "3fd09b3b1aa068f17e9afff75fb92b6a6da2c3b9b8995c51ad8387f6eca8e0c8"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/ExecutionFingerprint.java",
+      "sha256": "dfcf2ca2d579d53b1e3a6e9eccdf2ccb348ee4458091e2cdd68ab67f5bd0abd6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/Observation.java",
+      "sha256": "f725404d807447e0bcded4329679087ba50af3fe20c5accded0ca64eeac0fc34"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/RequestSnapshot.java",
+      "sha256": "86d95390a31b75a263ed7a0f0268b59075f358104f046bcfadf61a14f97535b3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/ResponseSnapshot.java",
+      "sha256": "2b62ac519b2524e1d198a593ec7dc7aca95fb44fcd8dc208ba8c7bddf76f7620"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/SafetyAuditEvent.java",
+      "sha256": "bbbbe9e51025f36c24773096598d75ce9f4bb0d2fa19ad747540bc84f15c0d3b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/SafetyAuditLog.java",
+      "sha256": "f4e14b1a4be27420021c59752f5b7827fbbf74e9da475d92946816a2cd9616dc"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/evidence/SafetyEventType.java",
+      "sha256": "73b6c700ba38b9198767c0213420bb3781ff1f595959b02256e86c9e8b16b52e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/BackoffAction.java",
+      "sha256": "88eef7c0827749e648589a0e05f15a6ac323d55c542afedbd9c3834888759700"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/BackoffDecision.java",
+      "sha256": "58a99ff18bee4718781abb88e6105dc00ddcceab4cc82a4ad5816c4603b33c9b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/BackoffPolicy.java",
+      "sha256": "afa17260465ac602eaf1d46f90c39f198a61cd68a4c14405c81a17484e8723df"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/BuiltRequest.java",
+      "sha256": "a1cf599ff8751aca26a75623e46f578af3240d10c17fc543136cb06ba0204989"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/CancellationToken.java",
+      "sha256": "9693adb058a721ed1185c78a42e5b9cb203188a047cdc86d3ec609bb3a1e6c7f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/DelayController.java",
+      "sha256": "464d2c5aab92fd3838b6e3867aa02f6043467e82dd668863cd32b1def5172c14"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/ExecutionErrorType.java",
+      "sha256": "3565ea76d5d6f8a47dabd44c0114eaa83fc745d5cdf14f7d54b43a834a697ec5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/ExecutionFailure.java",
+      "sha256": "fa68428036ff2d0afc4cf23bdded29f47425ca03c8a0e348b6c60c4bbf42155d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/ExecutionQueue.java",
+      "sha256": "2549d5b448123402d0aec574a5805f0b572b8562bd6cd92c9916d63522781833"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/HttpTransport.java",
+      "sha256": "56fb3ec09571da7e76417b1357fcf00d1ef185b964af389e49d524880e6c85a6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/LocalhostHttpTransport.java",
+      "sha256": "b7cf644058dd7f789386c5d8a81d70e9e91be152342098105ce7cc297f49b9db"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/QueueEntrySnapshot.java",
+      "sha256": "ae2738d86fee1fc1f5cc62ca2f60e576902cc65b6e754ec820c3c6bba3dda1d7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/RequestBuilder.java",
+      "sha256": "489489191014b4a21538a36eb1e6219939c8d70eca87ab730a5fe314a48382ca"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/RequestSet.java",
+      "sha256": "a6c2e6e64c8b5207773ae31ce8e53ffa3fe55dce3d367d2d9f8f6ffa1ea7b33f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/RequestVariantKind.java",
+      "sha256": "73e5a7dc028d577840b0d54c10b38493ff83d56bb0fc908da261e14257b41e39"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/TestExecutionResult.java",
+      "sha256": "e413a7cd31193d6ec68a04ad905f17a783a61b230b36240ee6cbc7926028d8aa"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/TestExecutor.java",
+      "sha256": "1e9852dbb143c6b49833c83e4294aa8e83677dfba46af27a71096bbfa0c5d996"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/TestPriority.java",
+      "sha256": "254f05b839c5c32e0e967c3b24d378bf8401cf5690ab6e81f58a3086acb7f58b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/TransportResult.java",
+      "sha256": "3eceaa0bbaee46dbbe30bd08b3371016bc2e48c8e603b8be2275b0b1969c2017"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/execution/UriMutationAdapter.java",
+      "sha256": "1a30c0b88bc030f484b0de9df1e7a69c1b34ec6bf1eea51c6e2d31435d5adeec"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/graph/GraphHydrationResult.java",
+      "sha256": "419166036dd79c9e948c1d16d6df82c89eb87262df51c27eaa422464ef4023cb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/graph/GraphHydrationStatus.java",
+      "sha256": "b9518f88ed41ce29e82c2d37e092058f0eca8bf03ef74bc3be47ed8246a0fb56"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/graph/ObservationGraphIntegrator.java",
+      "sha256": "ce44b54cda7cb49113fd3976c9403479d64519deef51f9017174a08e61329a64"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/ActiveControl.java",
+      "sha256": "489e044a9cb04960c8aca7d63f8b9ca9761fafa5777ab2087fe59b1ec6e694f9"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/ComparisonModel.java",
+      "sha256": "ad5899a7a83f2e7800e2c868b720f9f7737a3375638f55928dfb4c8ba48bbba2"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/ConfigurationSnapshot.java",
+      "sha256": "9672c5433fc0af28d980b8d480a916366452a2f22e71c25d95d6742288481607"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/ConfirmationPolicy.java",
+      "sha256": "06979190f09d2a2dc4652a0c80d902add51e6e91f8268819b5bc9d2512748218"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/EvidenceDetail.java",
+      "sha256": "8f63b899822b7b9fe8babd2a652e917ffdd3ac5d6350b6a008251a6d58d90c17"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/ExecutionEnvironment.java",
+      "sha256": "9b6ad393a5e94680d4793ed51a27afd963274dc27abb4e5801fc5fbc3ef93d67"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/Mutation.java",
+      "sha256": "dc9b9acde1b63048b958e6cf50897e3e1680739fa42cb41a91a64f6f6955b486"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/MutationLocation.java",
+      "sha256": "9383651e0e073555d40177c8ec9ccdef6f517d7f9604b038c0526341d0773ae5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/MutationType.java",
+      "sha256": "35a6111960e50afcbb6946647f215b741911dfb83549a0bb924d498f7690fbce"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/PlanSkip.java",
+      "sha256": "2f26b0c7601870edf44e6fd52bf18ed65c81228fa0591e8f35c5fa59ffa47b3c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/ReproducibilityMetadata.java",
+      "sha256": "6eac6b1f573464d8cf8eee06735b8f0863aa92ac04d93fc81dd68c86b747ba34"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/RequestDefinition.java",
+      "sha256": "210fe9346254c28967e52a93dfdaa1a450beaaa84dc359ac874a0bd6d438f940"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/SafetyClass.java",
+      "sha256": "4e5251438268ade5d869b0ca737b3a7ae6c90b138e5d7bf9bf5d2619fae42819"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/SafetyPolicy.java",
+      "sha256": "22505160f1359e3678eb2aa40c339044237b5fa11049f6b6d8ca16906599ac2c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/SecurityTest.java",
+      "sha256": "3e4c30d5a5ab7ce23d5952ddaddbd601c4c57bd69ab96c680f4f20d57dbedde0"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/SelectionMode.java",
+      "sha256": "c8c59f727ade2609ff965a29836fb9b9d15d3191ca8fb7303e3b89acfcee8eda"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/TargetDescriptor.java",
+      "sha256": "3656b1cc21adb30072eda6b4bd9becb0efb3a0bc608993e710785a7f544a8c74"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/TestCategory.java",
+      "sha256": "4fbbe13958bf733601ceb77e997da0085a4ec28740493c225951353ca714d054"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/TestContract.java",
+      "sha256": "7b7ccc72fd470c5c5f7b866e2f2340a173a879ddabbe83140281a1ba708be46e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/TestPlan.java",
+      "sha256": "7ce00506046025cf5454982f6750a75d376dbcb9b1cf3b73097011e88719f6d3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/TestProfile.java",
+      "sha256": "dac59af88ef77bb097a6e36ff7fc48e3c068c15b9a537565b227886ba00baf58"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/TestProfileDefinition.java",
+      "sha256": "451e1ef10fa7196eedabf38bc0ad4d8ab22e6eecebb26122c4ad0257c652c92d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/TestSignature.java",
+      "sha256": "c74fe73b660daa09200d09eabc4e5195cf68cf5235e99bbea5ca799b58cee57c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/UserMode.java",
+      "sha256": "4dc25f193a27272098d0584898a0cfeabaa203f1e78e6a9e5754d857355525ae"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/model/UserModeDefinition.java",
+      "sha256": "a1df995195c36adb88ba5564519efb24122aaaf59edfa931965640d2a12323e4"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/ActiveCoverageSnapshot.java",
+      "sha256": "376743301a3064057692f08dae7af2fa10a181f2e9224df0b37012df8ac0ec7c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/ActiveCoverageTracker.java",
+      "sha256": "ec77a8948d13e4e97472264b3a1e36f8d5b5e48f54ee14d91c620ff0376b1268"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/PlanningInput.java",
+      "sha256": "b95f1577d24d5d64d14a5a2be1411ae39c752dad7418f1f65db68cb55b446673"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/PlanningMetrics.java",
+      "sha256": "c81d6641f2a469fc20a13a95be7599af51fd0ec054733a94e1666443144785cd"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/PlanningResult.java",
+      "sha256": "ceb75d457b5a9d145046b55bae319b0ace4804aab9c448bcb6536be9c1604ee3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/RequestEfficiencySnapshot.java",
+      "sha256": "e01998e78da9303b317c3fca9ba8fb94468d882c35869fd0e6175adc30b58a6d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/TestPlanner.java",
+      "sha256": "a907f8688286f099e450f0ef52e708e1cd340a54dc5583d01212ad04879f0159"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/planning/TestSeed.java",
+      "sha256": "633af75ef2364ff316795947b141e2a5aa506bd9b6a37c8313d5c568fa6356f2"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/product/ActiveEngineWorkspace.java",
+      "sha256": "cef2c1bf36545a1384c4e96654e2acd2925fb9fb31712ee63de7e2cf75b36fd7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/replay/ReplayDescriptor.java",
+      "sha256": "9b057bb6e8a085a9dd241987a7c78222accfc5f9581687f3a09cb39961b2fa66"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/replay/ReplayResult.java",
+      "sha256": "92a9314f4c8fe1b180b8063b1610fa736dcf3d68240a34b5eb67afddf5c994b7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/replay/ReplayService.java",
+      "sha256": "aa835a35b4034e7659c9683e52b130651f236f618a33693a10bad6b63e7cdf4f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/research/ExperimentRunMetadata.java",
+      "sha256": "e8a24adf57ead6b33d1cf1c364726e72ca9bf00793b0c27d0ae6ded96e8e1dd9"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/research/ResearchCaseDefinition.java",
+      "sha256": "172be1450610adcf8b72c045a948335465598f6c27db6d0448fd1d0399b74195"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/research/ResearchCaseFamily.java",
+      "sha256": "7e795fa868f4ebb737d47c85f076cd3f6f83ef3fa971a78211eb3d2147e455b6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/research/ResearchExecutionRecord.java",
+      "sha256": "0a901680edf0adb792b32e432a37d9c212d696cffb1b329959a2dacf527b415e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/research/ResearchGroundTruth.java",
+      "sha256": "925e8db6d85b92b0916ccd2ed40966074ea73fc0c3de72b83d169e25a404538a"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/research/ResearchMetrics.java",
+      "sha256": "3576ed3f78b6c157e7b85776a51813993c1e6d48a08c6ce9f5151ad9f6bc5ce5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/research/ResearchPrediction.java",
+      "sha256": "184f34bf996bef4c87d7915456eda06fe0108bbf8e2e19da417c0f87a9bc6b2f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ActiveConsent.java",
+      "sha256": "562c94ab31e10e3ef0aaae12e944f5a782e415dd16328961397f91239535b1d9"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/BudgetExceededException.java",
+      "sha256": "803e6d56de4919e59618765394ec636fa4d508c97dd4c070845989c1b5c19fd8"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/BudgetKey.java",
+      "sha256": "a97ea7641bb73aac7217cecc34c93e7d77c16e97fe9e2ff102d3021559a40be4"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/BudgetReservation.java",
+      "sha256": "ecf2be92cbc36f676c4f2efcfdd2625621fbcd4d8947a9822c729a0bda243065"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/BudgetScope.java",
+      "sha256": "ac00703c5683ca4ae6660a296436c854ec43ddb55c6f2c4d26969d993aea6f54"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/BudgetSnapshot.java",
+      "sha256": "a884ce58758832b497cc7d4c6e621f356224fde75f14837065091a072ef4d69d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ConcurrencyKey.java",
+      "sha256": "46e1205b94489bb3e3e194c41a0dc526f4f9ead6849906fc42cebcfdec26467b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ConcurrencyLease.java",
+      "sha256": "6e1c74849d090e31a4f3c7ab785bc0a59fd800e13042737a2a99f1d4aa6b869d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ConcurrencyScope.java",
+      "sha256": "bcbb7ef296722825c21a958d180225f7192487c5456765556ea7f69fad82f449"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ConsentGuard.java",
+      "sha256": "61811132235bc6d864963e2a1e7067dadb23c5c006023c69a1e5440d2ea15e40"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/EnvironmentGuard.java",
+      "sha256": "39be8b080e277712c259cadc971dae56338f503877ff25a10ae691f8ae219124"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/HardScopeGuard.java",
+      "sha256": "84e514c2f70f88a53e8e445b8aba0717b91651f9fbc14b5f564dcb328a678444"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/HierarchicalBudgetManager.java",
+      "sha256": "ca623272388e271916dc8ecabc4b12d573f5b8b005f775bda6b0c941d7a8842d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/HierarchicalConcurrencyController.java",
+      "sha256": "5cbc95238449654637f9a06450fb35182ecfe1fd554417ef6dbeaac3879e2f0d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/KillSwitch.java",
+      "sha256": "239c431af0362df550eac3e95de1ddf2f068e68390bfa76260f1796b02412674"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/LocalDevelopmentExecutionPolicy.java",
+      "sha256": "99cbfbfdb014239dcd7af1f8227a8ccf52d55a6ded0053ca59f61a2050719dca"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/MutationBudgetSnapshot.java",
+      "sha256": "89c4d4dd2841a0ca1652ab582e8b3ce27ae63ea48b293ce4e758df268a172325"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/MutationBudgetTracker.java",
+      "sha256": "16a51abca9b36ae00b151e9dd8b9b2b39e0cd185aa6adeb46bbee22f4542640b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/MutationValidator.java",
+      "sha256": "3b9d825ab9e49766cd23ceb9b5700cb586b006f2abfd800d423121cd39f85e4f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/RateLimitPolicy.java",
+      "sha256": "515c3a48a46895d518f912db094044902a10aed37878573daf71b9dbd3b63112"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/RateLimitResult.java",
+      "sha256": "2540b61f800fc036f4bf90b05d3e1a206b880f481e80743754db86b34dd6e299"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/RequestEquivalenceGuard.java",
+      "sha256": "76baf098dccc0f4fe9cdecc52c5b773ae98d702e8c7c69a215be11c65203e88f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ScopedRateLimiter.java",
+      "sha256": "87ec2b015c373a6eab0b0092a6c5aee4bdc8a600b775bcf3244076ba1b52205e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ValidationDecision.java",
+      "sha256": "9d0ae4695b3f258168c814d5a416e400c961a622998b30bf6f4c599c508502b6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/active/safety/ValidationStatus.java",
+      "sha256": "6fb126325cf94cc9c3a394d047198f4cc2281c87cf4704908f1e2966c267646d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/NormalizedResponse.java",
+      "sha256": "783e3d8449467f69a7b5adf7dc9cd75122db9a1796d22711c627441b23e2b93a"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/PassiveDifferentialComparator.java",
+      "sha256": "a0f10038521b08d29ce3ef76b4cefa097ff5cd311d2ea0443f4b6ead6c927957"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/ResponseComparisonMode.java",
+      "sha256": "951da16dbc292b9062332dfe7db9de92156ee329a4857c4614cd76451820be22"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/ResponseDifference.java",
+      "sha256": "abf2e258e680626a544f0a3008493aa1afe071800b164f2d609aa230cbc65e84"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/ResponseNormalizer.java",
+      "sha256": "f1051c88d24a6dc3814b1e1ad1ed5a3ad5fd1dbcf9b49502b1874ad3d7325589"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/semantic/ResourceSemanticMatch.java",
+      "sha256": "f0789ee68a708c378d15b59b59052a34257b05ec050e75e782460c45e832e7dd"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/semantic/ResourceSemanticMatcher.java",
+      "sha256": "645c2edf1c0e6758fd3a126bd72909e4b333b64fc901525bab22ab77fe4dd12b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/semantic/ResponseSemanticAnalyzer.java",
+      "sha256": "2a6323c29e200b74c3299e1532e567e14ba5e64c84efb216b204e494982ffcf3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/semantic/ResponseSemanticFingerprint.java",
+      "sha256": "d1042aca38d9fa5600554660762cb917aab1c8889dc7d64050ae99195d1730d5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/analysis/semantic/SemanticResponseClass.java",
+      "sha256": "076b916d1442db27e66d5b9728228ed432f2336a3b072d379fd1a4aaeaefc503"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/Action.java",
+      "sha256": "0814550abe80612a9f85054a8f558de20f5dcd9a927649f89a8fe6980f736c8e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/ActionType.java",
+      "sha256": "a1b312be11a15351e9a79afc91ad7aa7cb41a80f7e8a1403985d46aef2746273"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/AuthorizationAssessmentAggregate.java",
+      "sha256": "db615fd8257ca3abd56231f19a783809ed4b4678cd42a58064dc8ae78c56f787"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/AuthorizationContext.java",
+      "sha256": "941131128c8a316586492946beacb9ff71ebcfeb82a18686d9d272abc31fe0e6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/AuthorizationDecision.java",
+      "sha256": "f941e76288aa2b393c5556bae0f6adcdecc121d076e6d01b1cdce6c9f6c96e93"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/AuthorizationMatrix.java",
+      "sha256": "0c78553836c86f072a6c868195455516da935b4b084abc83f57e9ce3ffb69ac3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/AuthorizationMatrixEntry.java",
+      "sha256": "3d219aab3524c66f619395a82ef7b3c36b0925e9aa18721c924ccb787659b1c1"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BflaAssessment.java",
+      "sha256": "8c934fdfd977bd8053e6ee92ccce41fb1a429dff0301f43834cea359a6f13b97"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BflaAssessmentStatus.java",
+      "sha256": "69c08bf23f0cf3076fb84307d90f912f9dfd5777d95abc5136132b3b2c65124f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BflaConfidence.java",
+      "sha256": "fe3b37d63e098d9ea6094dd79ade9ec93fe9a1d3bedf1728a468aebd8f5efaed"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BolaAssessment.java",
+      "sha256": "895993c90ea4d540b46e758cb0e87229b857f49ee9b16608905ca7c8c979faa2"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BolaAssessmentStatus.java",
+      "sha256": "3644e3e095f2effa3acf24910976cf2345fbf51fcd0e2de40fe472f264096020"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BolaConfidence.java",
+      "sha256": "35fbd685996164578f4dd7406c68632b04fe3744e5113deb389ce578d33bbca1"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/ContextStatus.java",
+      "sha256": "7adef4c00337e260ad2b51dfc1cc40d464f121905cd69cec1ef3cb57e0a286d1"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/CorrelationState.java",
+      "sha256": "66831383bb457e778cebf68c43cb4b79c27f63421a6c46881ee7061c798bed00"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/common/Confidence.java",
+      "sha256": "e223c3833062ab185f6474fe91b7f712bbe2141a910924f1291336fe4b265417"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/common/ConfidenceBasis.java",
+      "sha256": "22b3dddd854f5e16bebccf84d3af2987bb99857725573c9b0bc2f5fa4c5233c8"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/common/DomainLimits.java",
+      "sha256": "dba042556e46a48d0110be616d124cf61a005a12a8153dec4c170be1e573c5ae"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/common/DomainValidationException.java",
+      "sha256": "c9bccba8dbf4c92e1f38b599eb18611ddb1780a7b583dd898f3b4be7c2245980"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/common/Validation.java",
+      "sha256": "a3a24b90ee32062a451ab949777d550eb2c29697ea1bc875b1aa4b623a72f9da"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/endpoint/ApiEndpointRecord.java",
+      "sha256": "a5a5772d7ffb116598768d726f43d6996702fb4c201d0e743f24fddffbfb4462"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/endpoint/DocumentationStatus.java",
+      "sha256": "9e3617297709448c32fcd579ea7c95185027bd580e4568ea563eb244509560ef"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/endpoint/Endpoint.java",
+      "sha256": "04fedcbeeac7af6a4c19911afb929592eacfc73e3c0adb58ea0fafd51a9b880c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/endpoint/RiskTier.java",
+      "sha256": "069bff6773cc1d8ea6c252db3a2211070913ed87690eeb61895ad389f8325be5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/evidence/Evidence.java",
+      "sha256": "f3dd877bc4382f0f980766c5b98a972ad42ce8e66d4c8ca236e7eefcc200febe"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/evidence/EvidenceSource.java",
+      "sha256": "0b1fc4f0336706401145d746ae99a9878dbf7ec3f0d0571ceece6eeb822598ea"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/finding/FindingFingerprint.java",
+      "sha256": "bba72e4f18454d853247fdc91cddd856c315023d30116fc4c569bb319d147ccb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/groundtruth/GroundTruthContext.java",
+      "sha256": "55b8aac6f29f3dcfff86c212c3d41c5daee11e9359866ae762921a9b036ac738"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/http/HttpHeader.java",
+      "sha256": "088d32cdb5946bde4309d1a9e5cc9c79d79c123be22a3676edce09ccacce027d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/http/HttpMethod.java",
+      "sha256": "df757935daf931305e96ee80473d477cbd114aa8978a388f6a36eb18bef70efb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/http/HttpProtocol.java",
+      "sha256": "b0f69f2dbd432353bd251b96e1d1f425f45a046bf2adf5d4880f2ac11e4ecfe2"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/http/HttpRequest.java",
+      "sha256": "0b7e6486e4e4434f1c6e78a39d6c3d5742c53ee4f13c295b1e24a87ec091c64a"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/http/HttpResponse.java",
+      "sha256": "d771634a800e3ebd901438962d979595dc3a8672e214ce44a29848dde7ed9d59"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/http/HttpTransaction.java",
+      "sha256": "4e89243d2fc483d6b24ed9e9951b0abaf8cc50716f8348b9ddd72d5e0620f6ac"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/identity/AuthenticationType.java",
+      "sha256": "f9d17090175d0d879fae8f24a07ef0b79ad495bb958cfc3a3b28f11c27b2a052"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/identity/IdentityEvidence.java",
+      "sha256": "f52ece0400cd192fe483670bcaa8e5ff14bf59a9198c7f45792f8abd75fc083d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/identity/Principal.java",
+      "sha256": "5ac4fd9cf8cff352f275f3ffc5bd8bd6d99a8f9f053b7ae5e2acc8fa909cd88b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/identity/Role.java",
+      "sha256": "f77606085715f1c2529c9490c98f39cefa6473682e3f79da7fde727affb2eab7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/identity/SessionContext.java",
+      "sha256": "d16836e8f105fb877a6bc9f773d0b00f633bcdbb242bb4eaef32d2c8af511888"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/identity/SessionState.java",
+      "sha256": "2b108edfcd716b31769cb2e64587443bdc59ec4a1fa4df28483b7eca19df8c40"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/observation/EvidenceTimelineEntry.java",
+      "sha256": "e194b380f8f92c575c2350df6081987d950c848213496ebe4595a1972bdf1e54"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/observation/ObservationStatus.java",
+      "sha256": "296c65d7fc08469805ed7d1a42db6938b19a827dcd9b71219be39c30faa4aba9"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/observation/ObservationType.java",
+      "sha256": "3a144172c94a51b121314912d2d25b2f956569cc8a4592649b308ba4054ffb14"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/observation/TrafficObservation.java",
+      "sha256": "a8cd34323a57d4feeba43410d402c99bfe35c3815c3b6f8cd957bf168a6feb03"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/resource/Resource.java",
+      "sha256": "492fb2b3ecf70139ecf7373b9ba2d1ac68aeeb5e5e70ec9435667b0d02f77477"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/tenant/Tenant.java",
+      "sha256": "a37d3513589ec395b6cacb87f84cfad00751bb8660c3af517f30ada5ec94102d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/testing/DifferentialTest.java",
+      "sha256": "abdc0445bbd5ffcbebedcb3a55f68e77f7c979f66b3e18998685d632137a305e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/testing/TestCase.java",
+      "sha256": "985c1a69dd03c7d812427c8066a0d58590d39f1347ae5f5888b5ec8121798298"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/testing/TestState.java",
+      "sha256": "ee1099263e6c37d158a37098b9413384db01100434a56d2048ec57b4862f4e60"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/uri/IdentifierCandidate.java",
+      "sha256": "26a14435148a568cced29e9c3054a3d5867ef4dfa908a81d09ebe755a6a751fb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/uri/IdentifierLocation.java",
+      "sha256": "75f99cff4cd3a89a83a3a85629daa65f9f86e14e7bfca08d3bf2bbdea61c844f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/uri/IdentifierType.java",
+      "sha256": "496fe8bf03dff8896df5d9a78d9eb09a6f49f899135d36cdcc1cea92268df233"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/uri/PathSegment.java",
+      "sha256": "12cfada7d54ddc8924ebddfcc882a8078aeb7b941471a0b81331231a879517c9"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/uri/PathSegmentClassification.java",
+      "sha256": "26fb238808f731aa612602dedc271c1302aa7fad1ca11e747653ad6fbcc9be24"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/uri/UriModel.java",
+      "sha256": "bbcd55b6515ca659cf7809df7c0f374e0aeadf9582c8bb1ea476f2e2065e55e6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/workflow/Workflow.java",
+      "sha256": "ebcfbb62d0fc4008bd3ce48f14707d039342132df711936dd239c4a501811eb8"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/workflow/WorkflowState.java",
+      "sha256": "fb86272e6186536025507e2cc5f865cac9d0f8d3eb2fc72cd78a30edaaa89297"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/AuthorizationAssessmentCorrelator.java",
+      "sha256": "530e41152b1bc124840831b9d446e225e29b3ff5465231d8e06e9633ff806719"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/BflaAssessmentEvaluator.java",
+      "sha256": "78efc2f0bf7e6a802873d8c2f736851539b06363e8e655717502013d035d00bb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/BolaAssessmentEvaluator.java",
+      "sha256": "75461a89b07632ebdecd59a32d1a00748d36062db3e5662649d8da114e517601"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/SecurityContextEngine.java",
+      "sha256": "b56938d36feddfc8092616e70bfd6d687fd36a9f6d7ff0736241d40ea0f21604"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/SecurityContextSnapshot.java",
+      "sha256": "202d02c1dff53a1524f0e5139b360011fd00b437084e7120c6c9681b19e8b9f7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/ActionExtractor.java",
+      "sha256": "83c90f992d8c43dac821d1e5a7fe6bf1e73a5c8e85c7700c4280f8be54f6a2d1"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/DefaultActionExtractor.java",
+      "sha256": "870fc2b170d0ac8e46fd6ba8d47e8a99e5a2eb87bc224c131724c466c1188bd9"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/DefaultIdentityExtractor.java",
+      "sha256": "ef1d2e06e38036a704ac29767943d9ae2ce638b7d51ee8fac7151dbb486921f0"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/DefaultResourceExtractor.java",
+      "sha256": "ee93bcd6cf3d183b5364f7e6e9ac25b2d2cc8f300b1c45cae8a73303247deddf"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/DefaultTenantExtractor.java",
+      "sha256": "70d030d81ea9dd37d59144207d40b14919e8bc0de5c8526c9ee38d5b29527ede"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/DefaultUriExtractor.java",
+      "sha256": "5afbc909cbb4595041c101c60d4b23ed59109c9b58c635486c2dcddfc253ea22"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/IdentifierDetector.java",
+      "sha256": "48a3db8c9d2df49b03098f9de9a5b6a031e2c2c236fee3d348fd0c332d35e25f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/PercentCodec.java",
+      "sha256": "0f05c8f042d093b3aef52b1adcb467b45f23963780e4aeca3ea311929a828207"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/defaults/SimpleJwtClaims.java",
+      "sha256": "cd0cd16a7609405693f2a46e0fd21d746f6962277a2e80eba1ceb9e5a4772d70"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/ExtractionResult.java",
+      "sha256": "c1b7866f593b7734b40a6e54591b63ab3adbf2559a9dc3401fb16e5ff404b60b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/IdentityExtraction.java",
+      "sha256": "a23d007a6fc1ab6b577f2477999490f7f3e988530679713cccbe89077b493305"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/IdentityExtractor.java",
+      "sha256": "754c6c53537daae22fd992f9e2b96b665b83c27a23e07724b0bbbc7befa617cd"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/ResolutionStatus.java",
+      "sha256": "7d8953969ed33a8db855d9fd7c53d81bafe6877dd92c598f499d086b397ca585"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/ResourceExtractor.java",
+      "sha256": "31e0a3f4946d94d5585ff8ef0a4610a92f50f9bf0350cf1a968d67cfe3db398c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/TenantExtractor.java",
+      "sha256": "c6cc5ca20dbee2c4baac98f0156045b45372769a18a9be4445de49d98985a858"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/extraction/UriExtractor.java",
+      "sha256": "d561dd9f5a775c4c2850affc589a2fc5fd7c95287681c20d65e1f56f77c8da16"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/graph/GraphEdge.java",
+      "sha256": "b164da87c67fb72f0e9892768a77b85dca2ef337258b66775c6663da8e7c9fb7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/graph/GraphNode.java",
+      "sha256": "db91609210c93e51a5b7e8af7a46cbaa99ddaed786b17c09c80c5ceb95866bf3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/graph/GraphQuery.java",
+      "sha256": "c61946615fb1be0ae5da0f05284ebff1a875706e7349902919e73adfce26c7e3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/graph/NodeType.java",
+      "sha256": "df06a3dd71dc51cd6716ceb7c9bd3b3034061132e86f0af5390fe4bc69557efb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/graph/RelationType.java",
+      "sha256": "20d5ecba7b78815bf4a4443b040507437aa1ed2230a533106e6e0b153a17aae3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/graph/SecurityContextGraph.java",
+      "sha256": "93ea678c24a1e304067cf02a2801f1844b7f951c0e247e2d4fbedcfe1746692b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/inventory/EndpointAggregate.java",
+      "sha256": "460ed8f9b8e2f7f586fdd2ef898eea109aa9384076b8cae546f373a9c80bdc79"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/inventory/EndpointInventory.java",
+      "sha256": "6791fa9566e670e429505eaa53ce7bdfceba23e260e3c2e0e8290f2e226bbaae"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/MiniJson.java",
+      "sha256": "b14b278829a111890828c5756441e2ba82a58ae007a6cdc7553e5570c3f5e100"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiCorrelationStatus.java",
+      "sha256": "dbdaf4563b3b390018444915d1177a86063f159e1b841983bd8dc9c06c75b7bd"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiDocument.java",
+      "sha256": "3983ada4b70237265aab8a39a5214f41e81b95dce0b265ca9f3fdaae8ff10c74"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiImporter.java",
+      "sha256": "62f427ee49289564ce58eb780c2496ae3dff3638cbe9b6e2749e25b4863cacc2"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiOperation.java",
+      "sha256": "ec76717bf618c9ac9cd32d0cbc83c0bf4455848fa7ed8ae6232229c31335fa72"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiParameter.java",
+      "sha256": "885226fddb1c4e40b0491a7410f1cea8e348aad76be1d480ae1e4fb7851242c6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiSecurityScheme.java",
+      "sha256": "4e65ec177f2baec76fad6973def0f543f28407f534cde49e875dedbee3ff80e5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiSpecKind.java",
+      "sha256": "41a6a750b110f01a7c3e76f95be74a59e67934e0be930279c4bf490af6afae6a"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/OpenApiTrafficCorrelator.java",
+      "sha256": "0df9e24bd62e1c95ecc71d19b5925b4e96cf1448e7d2822bdd00ca3781eb8192"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/SchemaDriftAnalyzer.java",
+      "sha256": "4d8c87e8ec9d8333315aea850dd328f3d63f508c78cfde159814d1f50984f003"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/SchemaDriftObservation.java",
+      "sha256": "454a0963e8cf9784b98da5aa917e63990f789f650d6629767dbcb13fc23c1c23"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/openapi/SchemaDriftType.java",
+      "sha256": "7de2ada541448a7fbc562fe0a2946142cb5d49962d38292224754c19928479a7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/planning/DryRunPlan.java",
+      "sha256": "adaff78c732a56f14b164a0c1956b604279e6d4fbcf5b1d44bf846ce5bce1b55"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/planning/PlannedTest.java",
+      "sha256": "e0bc7a4ad9196fdad10542be1192a3d95358f6febb507e5b5d4ab5944f005192"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/planning/ReconTestPlanner.java",
+      "sha256": "588a29965549ef0d5f169064566e9fefbc3e848ef5e8fd5e4d10b96129423f44"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/planning/TargetEnvironment.java",
+      "sha256": "64a787e29c16d945cb0dd834824f90491674a780a053d48cdfcdfdb70540ebaa"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/planning/TargetProfile.java",
+      "sha256": "9f0574c72ce59406fa399cb99637dd60d03edf1297028edad0dac0a599b8943a"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/planning/TestFamily.java",
+      "sha256": "0dc8eee19887f4032fd730031eda3ef283a25d0947399edc9f50740da54b9dc0"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/AnalysisContext.java",
+      "sha256": "81ab413b3ede4b9f7d0257a89b3cf83ac0781b0a38f839b312006a81f6b0ace0"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/Analyzer.java",
+      "sha256": "b0e121bf5a00d0c522484a715b1bd8b9d124495e518f47ee493e220551bb8dab"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/AnalyzerOutput.java",
+      "sha256": "f6ba141786875e83b3e7d74b1ed966b7ee79d69fbe182b6c93944a16a9bbf77e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/ApiParser.java",
+      "sha256": "451b7db2def3ab5ee796bc675ecfa529b9c9add7a7c0927361fe2106203882d3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/Capability.java",
+      "sha256": "55ec8debc4f689b5c795635a6169a542bd4b284fe3f7a5b3808852e84f811c76"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/EvidenceProvider.java",
+      "sha256": "537bc9fc17cbeb41726877a6e3c3afdbb88d0232282319d8e96bae6b91ebfd7c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/MutationProvider.java",
+      "sha256": "66db9883135c97f98c47b61329176f467c703adcf08e03e893747784130e5a9c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/Reporter.java",
+      "sha256": "0c5ad222e0792e06dc7e02294d61a2b0bd6d3ba6705281be114bfff7da16d197"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/plugin/WorkflowDetector.java",
+      "sha256": "b14b2ca114ca83cb2e06a55723af8c987004b67146b4f723f158c9af4359f116"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ApiReconnaissanceEngine.java",
+      "sha256": "fdc438dffc9a4d95479b45d38733adae3d19ddbd63d4780e04510a524e0a0d56"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ApiReconnaissanceResult.java",
+      "sha256": "487d32109c820c52c3332fea0956431291b62e89199e0bad68e39d6b07478b7b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ApiVersionDiscovery.java",
+      "sha256": "26a5f9a337119e785d8170fb95977d51b1fdd659253a55481f0497e5a6277f05"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ApiVersionSignal.java",
+      "sha256": "96137bbb790ac6b394f62c5996ade7e9c036e5e752d7f4ce2b8fd96f54e23a6c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/CollectionAnalyzer.java",
+      "sha256": "28c2e8ef4e43fac3ab0a10cd7e2f0b9166a8aacd541e725101d1b9a915595fd3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/CollectionIntelligence.java",
+      "sha256": "399a3757a2100d5c01c055b7e687b558b21a061edfaa9f85499a3ca27e47c319"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ConfirmedIdentityContext.java",
+      "sha256": "0119a8089c52f0587c90ba26079038ba31ecf50329855cbb8f3e54cbe6707361"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ContextCoverage.java",
+      "sha256": "63aaa444a54b36fce5d532d50e8f9c8e81ebdd9a8461d9b2aa1d2c7305fbf441"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/EndpointLifecycle.java",
+      "sha256": "c6eab5abae7a918349fcb852ea0c3d910415eeae5ca0b9aa747d0216b9d08c17"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/EndpointPriority.java",
+      "sha256": "4b8699c0bd5b3dd9b6a2bbe4a5e95ba3a8853e47edaa4c4419eb53a4d7d11f3c"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/EndpointRiskAssessment.java",
+      "sha256": "13157e7ccf4268fac82194931d116f7a0ecd7b1de679d461528e795e8705cee5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/EndpointRiskPrioritizer.java",
+      "sha256": "5a4c39cd67fed547a44e7d704d98e2eea501c1575d850169f44e4b9726d6e949"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/HeaderClassifier.java",
+      "sha256": "2eaf075f1acc1471e618ddde872028e6fce1f3e48fdd026aaeb24b4372177f94"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/HeaderIntelligence.java",
+      "sha256": "49d0c7928253f31c07d51ddfaf3d082e0c90e4859de81f2eae63ac287e5d4bb1"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/HeaderRole.java",
+      "sha256": "b80f7f1f3747ead055ce9cca3356c7c9d2882e4c378b4a70b21364f6f1f90303"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/IdentityConfidenceState.java",
+      "sha256": "e84789fcc49eaca5c3d72bfdea55b335e0d65b49b1e1817573987fa9ea924c9d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/IdentityConfirmationRegistry.java",
+      "sha256": "e17c8d09e1c44393ea7d96c96d21d24630995cec09f243eba6c0655eb484a29d"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ManualContextMapping.java",
+      "sha256": "3f0bdf22fc9a0a6e0c61f69097eaf42ce4481321811ca4489c8b6c46a1fbce9f"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ManualContextRegistry.java",
+      "sha256": "8e2d48fd62cc5cd094269d35212fa0f646861dba9194569a61a104c727d6a636"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/PaginationIntelligence.java",
+      "sha256": "d9f7dd50774254f9ba93bbd80a2630e9dfbb41dbc2135b502efa37d1de0f29f4"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ParameterClassifier.java",
+      "sha256": "799f7717e780974e39b8caf7e2da295fd8a719a2af590acb6a77cd5b0e31884e"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ParameterIntelligence.java",
+      "sha256": "b4d5439813e20faa8e2de45b0894cdf574ad81eb362e5c43cfd838278cedb2ff"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ParameterRole.java",
+      "sha256": "cd9e298b2adb17c03031d5c94169dbba2f9edb4c401667faaebc68c9691ebb3b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ReconnaissanceSnapshot.java",
+      "sha256": "d41596387b3609d434a4f290178bb9815f72a343fd59929991ba4c76b69c9766"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ResourceRelationship.java",
+      "sha256": "5b5bbb80f15a9015db11376209d2d9f41c685676375b50278f654bc8f0c349eb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ResourceRelationshipInferer.java",
+      "sha256": "a36bb04ffcdb9357505fd1b1c682d74b9c31010aecb227733735f843e1e356b0"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/ResourceRelationshipType.java",
+      "sha256": "f45afa35d97b8258e420499e498660e4fc10ac4cf4ed241336a2010802fbe2a3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/SecurityContextFingerprint.java",
+      "sha256": "0f2fbd48f5d446d27511abda823a1957fffd1472030aa81a72a838a668476dfb"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/SemanticIdentifier.java",
+      "sha256": "f425a6be74319ab6beba65760923c9760a10dd17371508e7e05dac67021c00e5"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/SemanticIdentifierClassifier.java",
+      "sha256": "50e7d8fa4b8704fc307231c64f08fc47b2489097c69a865950763e717eb07504"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/recon/SemanticIdentifierType.java",
+      "sha256": "62a6974037653dc63c3956ba43e548bd2651fe0451ffb679ceecd78d68b9ad83"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/resolution/EntityResolution.java",
+      "sha256": "e492c2d59cea56e7b6f12ce59fcb61e2eeb0614ffb973a68dbb4af3d907fc00b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/resolution/EntityResolutionStatus.java",
+      "sha256": "81e2e0f7cd1ab58ebbeb18069cbb0692c8bc20df7e1d3800d86475073d214699"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/resolution/EntityResolver.java",
+      "sha256": "870f5a57f4c79d67d7fe0aa49a7f1c5788603348107390a3e2f928bf67ce1e4b"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteEquivalenceEngine.java",
+      "sha256": "86f2b57cae391ab2b98d2bce70f4072a04ab4674775cedafa38c7fb8bd0e3254"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteEquivalenceKind.java",
+      "sha256": "79a4e2e37cc0ed993d05e448d561fbfe5fcde580f766799569bba415e7ff18a7"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteEquivalenceResult.java",
+      "sha256": "9f4ea2389f5e758ed58384439d7cef1745d16325d6e7ee8550acff01ae346b93"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteSegmentKind.java",
+      "sha256": "08912527c83b82bc2994ba96be2ac89f37bead7b7dd6344509b440f8239bb0df"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteSegmentModel.java",
+      "sha256": "c155277cd36379c20d71581e15cadea5d32b10df4fa0f579c60e3671963f95c0"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteSyntax.java",
+      "sha256": "7889181b19f0d5e2d74e8cb097b9962b6a82568c0872f89723f6415536e70cdd"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteTemplateEngine.java",
+      "sha256": "644bc44d67b5d12016645599a875e95652ff367045ea5d98cf234d69825019b3"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/route/RouteTemplateModel.java",
+      "sha256": "76c4de74ace5dee26ed7820064183f59bdf7576b50423d59ef098f5e618ee8a4"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/security/TokenFingerprint.java",
+      "sha256": "23d1dcaace90eeded1345c24d8429074e6e7924dc5c3cb6a44fb140e7f8fdfb4"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/security/UniversalRedactor.java",
+      "sha256": "fcfb1af078afa2bb3460e19af9eeb7d2a8f26fe65f76a1cac0cf13ae47f0acc6"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/serialization/CanonicalJsonWriter.java",
+      "sha256": "cef74d2c43a9d2da238fb8fd0d4e031bb3458d352084c0f99fa45e13138d1a53"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/serialization/DomainSerializer.java",
+      "sha256": "36f0a39bff46d1ba4ec21cee67cfcd08489dd536932f6d375e59aa912e67c2b0"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/BflaAssessmentTests.java",
+      "sha256": "6d70912f63a56fd82348fac4a4bb7c9c517e55f706fec0780f28744a12bbeb03"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/BolaAssessmentTests.java",
+      "sha256": "db1fc4bed840c963ee9e8b17ece59161dbc72c63bf89282548be550fc0c9b6e2"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/ContextTests.java",
+      "sha256": "d34b94de5a7e89d37af1ea8b875d62dd73f98856ca946b45c0ebdcbe92ed0cf5"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/Fixtures.java",
+      "sha256": "cfab3577a9f9f073e237d59b5e614a641e279958caebe40b0b6606eb0de7fa31"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/GraphTests.java",
+      "sha256": "06a0a0602f34397b52ca5eee3255e47aa3bbdd230ca337e1a939aac7c1a111fd"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/HttpModelTests.java",
+      "sha256": "05beaafd30c19c259ac13e29c1481174ae9fed72af34236199007fc5d215b05d"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/NegativeSecurityTests.java",
+      "sha256": "c46c42b87e4db1dc65250deb2ff97572f17235dec3bd7f3aca0b5ff97f80b4cc"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/PerformanceBaseline.java",
+      "sha256": "c7970eff201f6c85e1ab0e5b794441cc44ebbbe8059de63b98f9e63a6d44bc71"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/ResolutionContractTests.java",
+      "sha256": "6dde11df41bf4347b8ce8b119c03f08411e658f5f5c092e4f1c8eac08dd9a598"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/SerializationSecurityTests.java",
+      "sha256": "39bcae0f0eed474651bc6942af08960eb38bfafa298afdebe03c160967b3c846"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint3/Sprint3CoreTestSuite.java",
+      "sha256": "7dc59f3cdfc7ebb7dcd24e757122a0e8bcfd0c66aaa779a0c4ee27357661f2ca"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint3/Sprint3MetricsExperiment.java",
+      "sha256": "5efc42410b50523da78456ca46a019c831ddd1688f0a089395835f0d16b9a720"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint4/Sprint4CoreVerificationTestSuite.java",
+      "sha256": "221721e2bf87129a46f3305166fa444e629204135fb42ecf277d377e4a801d6d"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint4/Sprint4EngineSecurityTestSuite.java",
+      "sha256": "467c7e832a7a146756824f0f38cf947808d5ac33b50470889a95def3582eeeae"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint4/Sprint4Fixtures.java",
+      "sha256": "35d2b77f3809cfcedbd41239df24c6a0ea77cf1769779caae0b755f89ef4fb92"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint4/Sprint4GraphIntegrationTestSuite.java",
+      "sha256": "4ea24f6c3bee69580d3fcec9b33c09f69343a5fa988ae7bd6785fa183a360efb"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint4/Sprint4LocalhostFixtures.java",
+      "sha256": "a142f4859b31d3f8a462cfc84b10e350427bb20af36469bb7684a8db0dd0f996"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint4/Sprint4LocalhostIntegrationTestSuite.java",
+      "sha256": "369bfcd3a687c819a6192dec5dd48aeeeb9095573e6a20277075fd91c524b1b2"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint4/Sprint4ProductCompletionTestSuite.java",
+      "sha256": "40bed7431dc4e80764c7ea02ece6117b54ed97af312f15ce949ca1b9504c7c11"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint5/Sprint5AssessmentGuardTestSuite.java",
+      "sha256": "dd0e69c8374f1ab0620626c022528cfa3540a98046a5743a35e021fd17fb76c7"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint5/Sprint5CorrelationSafetyTestSuite.java",
+      "sha256": "fc49be6650a4e9bc8f404631efc3bf4dbfe132486231d02b4362a8d00598c671"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint5/Sprint5SerializationSecurityTestSuite.java",
+      "sha256": "fcc73e6b0128c8a7db4d30570fc0307b26e146c4fc5bbb60e271d272fb56d124"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/TestSuite.java",
+      "sha256": "3714b6988fc46f35fd807c7f06c8c0b93f353ac96146fc2e9a714959a32ef394"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/TestSupport.java",
+      "sha256": "590a6eeddbc847c6824258876859a17fba9420ebbec93610a9907d0e33893e1d"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/UriTests.java",
+      "sha256": "34a8354529728b967b0ffb032028df131d2f16df1eb6538ed3401e1a900f41f4"
+    }
+  ]
+}

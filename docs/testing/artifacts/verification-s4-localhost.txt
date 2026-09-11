@@ -1,0 +1,48 @@
+== JAVA ==
+openjdk version "21.0.11" 2026-04-21
+== CORE BUILD ==
+BUILD PASS
+== S4 CORE VERIFICATION ==
+PASS Sprint4 core verification tests=54
+== S4 ENGINE SECURITY ==
+PASS Sprint4 engine security tests=41
+== CORE REGRESSION ==
+PASS HTTP tests=5
+PASS URI tests=6
+PASS CONTEXT tests=5
+PASS GRAPH tests=5
+PASS SERIALIZATION_SECURITY tests=5
+PASS RESOLUTION_CONTRACT tests=6
+PASS NEGATIVE_SECURITY tests=5
+PASS total=37 durationMs=197
+== CORE SECURITY ==
+SECURITY TEST PASS
+== CORE ARCHITECTURE ==
+ARCHITECTURE BOUNDARY PASS
+== SPRINT3 BUILD ==
+BUILD PASS
+POM XML PASS
+MAVEN PACKAGE UNVERIFIED: mvn not installed in execution environment
+SPRINT 3 CONTRACT BUILD PASS
+== SPRINT3 TESTS ==
+PASS Sprint3 core tests=47
+PASS Sprint3 adapter tests=11
+== SPRINT3 SECURITY ==
+SECURITY TEST PASS
+SPRINT 3 SECURITY PASS
+== SPRINT3 ARCHITECTURE ==
+ARCHITECTURE BOUNDARY PASS
+SPRINT 3 ARCHITECTURE PASS
+== SPRINT4 ARCHITECTURE ==
+ARCHITECTURE BOUNDARY PASS
+SPRINT 4 ARCHITECTURE PASS
+== SPRINT4 LIVE LOCALHOST ==
+BUILD PASS
+S4_TRANSPORT roundTrip=PASS methodBodyHeader=PASS externalRejected=PASS responseTiming=PASS
+S4_TIMEOUT errorType=TIMEOUT observationCreated=false
+S4_SECURE executionId=S4-EXEC-00000002 requestFingerprint=93ee763813edb461888011e89caf8bbb836cc2e644edd3ed74ea124426642005 responseFingerprint=f6e299b4fad2cd8f584c88aded4a8b28ee746decdbe0506474ac90b46eb4d486 expected=DENY observed=DENY differential=EXPECTED_CHANGE evidenceEntries=11
+S4_VULNERABLE executionId=S4-EXEC-00000003 requestFingerprint=9973a381c4a8a1a423ee0cd7ca79d78abf99202da099fee5257d7eb655d30b0c responseFingerprint=7787fca70dcda3d37f7ab0f8961942aae5971983717a6c2b2e21daa28c90d39a expected=DENY observed=ALLOW differential=UNEXPECTED_CHANGE evidenceEntries=11
+S4_FP http200ApplicationDenial=DENY dynamicEquivalent=true representationEquivalent=true
+PASS Sprint4 localhost integration tests=51
+== FINAL STATUS ==
+SPRINT4 LOCALHOST SLICE VERIFICATION PASS

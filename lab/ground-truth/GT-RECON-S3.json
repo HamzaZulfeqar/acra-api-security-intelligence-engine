@@ -1,0 +1,16 @@
+{
+  "schemaVersion":"1",
+  "groundTruthId":"GT-RECON-S3",
+  "category":"sprint3-api-reconnaissance",
+  "knownOperations":10,
+  "knownTenants":["tenant-a","tenant-b"],
+  "knownUsers":["user-a","user-b","admin-a"],
+  "knownResources":["document:1001","document:1002","document:2001","comment:c-1"],
+  "knownOwnership":{"document:1001":"user-a","document:1002":"user-a","document:2001":"user-b","comment:c-1":"user-a"},
+  "knownVersions":["v1","v2"],
+  "knownRouteEquivalences":[
+    ["/users/{id}","/users/:id"],
+    ["/documents/{document_id}","/documents/<int:document_id>"]
+  ],
+  "notes":"Ground truth for deterministic Sprint 3 reconnaissance experiments. This is not a vulnerability result dataset."
+}

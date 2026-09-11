@@ -1,0 +1,2 @@
+package io.acra.core.recon;
+public enum HeaderRole { AUTHENTICATION, IDENTITY, TENANT, ROLE, ROUTING, PROXY, ORIGIN, CUSTOM_SECURITY, UNKNOWN }

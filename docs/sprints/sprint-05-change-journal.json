@@ -1,0 +1,256 @@
+{
+  "checkpoint": "S5-DEFENSIVE-CONTINUATION-2026-09-09",
+  "basis": "Recorded creation/modification operations and inspected current files; canonical ZIP unavailable for final byte comparison",
+  "addedCount": 19,
+  "modifiedCount": 22,
+  "deletedOperations": 0,
+  "baselineDeletionComparison": "BLOCKED",
+  "files": [
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint5/Sprint5AssessmentGuardTestSuite.java",
+      "status": "ADDED",
+      "purpose": "Guard regression",
+      "requirement": "S5-02/03/12"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint5/Sprint5CorrelationSafetyTestSuite.java",
+      "status": "ADDED",
+      "purpose": "Correlation safety regression",
+      "requirement": "S5-04/12"
+    },
+    {
+      "path": "core/src/test/java/io/acra/core/tests/sprint5/Sprint5SerializationSecurityTestSuite.java",
+      "status": "ADDED",
+      "purpose": "Serialization and reference security regression",
+      "requirement": "S5-01/12"
+    },
+    {
+      "path": "scripts/verify-sprint5-defensive.ps1",
+      "status": "ADDED",
+      "purpose": "Java 21 target compilation and offline verification",
+      "requirement": "S5-13"
+    },
+    {
+      "path": "scripts/package-sprint5-continuation.ps1",
+      "status": "ADDED",
+      "purpose": "Cumulative archive and integrity verification",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/sprints/sprint-05-00-reconciliation.md",
+      "status": "ADDED",
+      "purpose": "Canonical source reconciliation",
+      "requirement": "S5-00"
+    },
+    {
+      "path": "docs/sprints/sprint-05-final-software-closure.md",
+      "status": "ADDED",
+      "purpose": "Complete requirement matrix and partial decision",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/sprints/sprint-05-05-tenant.md",
+      "status": "ADDED",
+      "purpose": "Missing-scope audit record",
+      "requirement": "S5-05"
+    },
+    {
+      "path": "docs/sprints/sprint-05-06-workflow.md",
+      "status": "ADDED",
+      "purpose": "Missing-scope audit record",
+      "requirement": "S5-06"
+    },
+    {
+      "path": "docs/sprints/sprint-05-07-property.md",
+      "status": "ADDED",
+      "purpose": "Missing-scope audit record",
+      "requirement": "S5-07"
+    },
+    {
+      "path": "docs/sprints/sprint-05-08-finding-candidate.md",
+      "status": "ADDED",
+      "purpose": "Missing-scope audit record",
+      "requirement": "S5-08"
+    },
+    {
+      "path": "docs/sprints/sprint-05-09-severity.md",
+      "status": "ADDED",
+      "purpose": "Missing-scope audit record",
+      "requirement": "S5-09"
+    },
+    {
+      "path": "docs/sprints/sprint-05-10-orchestration.md",
+      "status": "ADDED",
+      "purpose": "Missing-scope audit record",
+      "requirement": "S5-10"
+    },
+    {
+      "path": "docs/adr/ADR-0036-s5-defensive-evidence-boundaries.md",
+      "status": "ADDED",
+      "purpose": "Defensive compatibility/security decisions",
+      "requirement": "S5-12"
+    },
+    {
+      "path": "S5-CONTINUATION-HANDOVER.md",
+      "status": "ADDED",
+      "purpose": "Truthful transfer record and exact remaining gap",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/testing/artifacts/verification-s5-defensive.json",
+      "status": "ADDED",
+      "purpose": "Generated command output and source hashes",
+      "requirement": "S5-13"
+    },
+    {
+      "path": "docs/testing/artifacts/verification-s5-defensive.txt",
+      "status": "ADDED",
+      "purpose": "Generated readable execution log",
+      "requirement": "S5-13"
+    },
+    {
+      "path": "docs/sprints/sprint-05-change-journal.json",
+      "status": "ADDED",
+      "purpose": "Recorded edit inventory, not baseline diff",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/sprints/sprint-05-file-changes.json",
+      "status": "ADDED",
+      "purpose": "Generated inventory annotated with baseline limitation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/BolaAssessmentEvaluator.java",
+      "status": "MODIFIED",
+      "purpose": "Fail-closed evidence/context/provenance guards",
+      "requirement": "S5-02/12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/BflaAssessmentEvaluator.java",
+      "status": "MODIFIED",
+      "purpose": "Fail-closed guards and honest missing endpoint",
+      "requirement": "S5-03/12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/engine/AuthorizationAssessmentCorrelator.java",
+      "status": "MODIFIED",
+      "purpose": "Conservative conflict handling and determinism",
+      "requirement": "S5-04/12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/AuthorizationContext.java",
+      "status": "MODIFIED",
+      "purpose": "Sanitized immutable context projection",
+      "requirement": "S5-01/12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BolaAssessment.java",
+      "status": "MODIFIED",
+      "purpose": "Recognized credential sanitization",
+      "requirement": "S5-02/12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/BflaAssessment.java",
+      "status": "MODIFIED",
+      "purpose": "Recognized credential sanitization",
+      "requirement": "S5-03/12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/domain/authorization/AuthorizationAssessmentAggregate.java",
+      "status": "MODIFIED",
+      "purpose": "Sanitized immutable canonical reference lists",
+      "requirement": "S5-04/12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/security/UniversalRedactor.java",
+      "status": "MODIFIED",
+      "purpose": "Sensitive session/header/Basic text handling",
+      "requirement": "S5-12"
+    },
+    {
+      "path": "core/src/main/java/io/acra/core/serialization/CanonicalJsonWriter.java",
+      "status": "MODIFIED",
+      "purpose": "Sensitive map and record field redaction",
+      "requirement": "S5-12"
+    },
+    {
+      "path": "PROJECT_STATE.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "KNOWN_ISSUES.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "TEST_MATRIX.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "ROADMAP.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "EXPERIMENT_REGISTRY.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/testing/TEST_MATRIX.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/sprints/TEST_MATRIX.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/sprints/ROADMAP.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/architecture/s5-authorization-analysis.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "scripts/README.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "docs/adr/ADR_INDEX.md",
+      "status": "MODIFIED",
+      "purpose": "Current state/evidence and historical-boundary documentation",
+      "requirement": "S5-15"
+    },
+    {
+      "path": "REPOSITORY_MANIFEST.txt",
+      "status": "MODIFIED",
+      "purpose": "Generated inventory of current package files",
+      "requirement": "S5-15"
+    }
+  ]
+}

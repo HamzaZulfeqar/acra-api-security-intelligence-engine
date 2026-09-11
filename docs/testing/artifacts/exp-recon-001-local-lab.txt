@@ -1,0 +1,9 @@
+EXP-RECON-001 LOCAL-LAB PASS
+knownOperations=10
+observedEndpointOperations=10
+documentedObserved=10
+reconRecords=10
+graphNodes=22
+graphEdges=80
+dryRunDispatched=0
+burpRuntime=UNVERIFIED_BLOCKED

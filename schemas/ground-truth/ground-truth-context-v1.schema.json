@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "type": "object"
+    },
+    "expectedDecision": {
+      "type": "string"
+    },
+    "groundTruthId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ownerPrincipalId": {
+      "type": "string"
+    },
+    "principal": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "resource": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "role": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "tenant": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "vulnerableCase": {
+      "type": "boolean"
+    },
+    "workflowState": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "groundTruthId",
+    "ownerPrincipalId",
+    "action",
+    "expectedDecision",
+    "workflowState",
+    "vulnerableCase"
+  ],
+  "title": "ACRA GroundTruthContext v1",
+  "type": "object"
+}

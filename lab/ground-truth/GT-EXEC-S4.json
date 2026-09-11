@@ -1,0 +1,31 @@
+{
+  "ground_truth_id": "GT-EXEC-S4",
+  "lab_version": "0.4.0-rc1-s4-local",
+  "source": "independent ACRA-Lab fixture policy",
+  "independent_of_acra_output": true,
+  "entities": {
+    "User-A": {"id": "user-a", "tenant": "Tenant-A", "role": "viewer"},
+    "User-B": {"id": "user-b", "tenant": "Tenant-B", "role": "editor"},
+    "Tenant-A": {"id": "tenant-a"},
+    "Tenant-B": {"id": "tenant-b"},
+    "Document-A": {"id": "Document-A", "owner": "User-A", "tenant": "Tenant-A"},
+    "Document-B": {"id": "Document-B", "owner": "User-B", "tenant": "Tenant-B"}
+  },
+  "cases": [
+    {"test_case_id":"GT-S4-ALLOW-A-A","principal":"User-A","tenant":"Tenant-A","resource":"Document-A","owner":"User-A","action":"READ","expected":"ALLOW"},
+    {"test_case_id":"GT-S4-DENY-A-B","principal":"User-A","tenant":"Tenant-A","resource":"Document-B","owner":"User-B","resource_tenant":"Tenant-B","action":"READ","expected":"DENY"},
+    {"test_case_id":"GT-S4-DENY-B-A","principal":"User-B","tenant":"Tenant-B","resource":"Document-A","owner":"User-A","resource_tenant":"Tenant-A","action":"READ","expected":"DENY"},
+    {"test_case_id":"GT-S4-VULN-A-B","principal":"User-A","tenant":"Tenant-A","resource":"Document-B","owner":"User-B","resource_tenant":"Tenant-B","action":"READ","expected_secure_policy":"DENY","expected_vulnerable_fixture_observation":"ALLOW"}
+  ],
+  "lab_modes": {
+    "secure": {"host":"127.0.0.1","port":18082,"direct_resource_policy":"owner and tenant must match"},
+    "vulnerable": {"host":"127.0.0.1","port":18081,"intentional_fixture_behavior":"Document-B direct-resource authorization check omitted while Document-A mismatch denial remains enforced for the negative control"}
+  },
+  "false_positive_preparation": [
+    "HTTP 200 application denial",
+    "dynamic timestamp",
+    "dynamic request identifier",
+    "response ordering and formatting variation",
+    "public resource"
+  ]
+}

@@ -1,0 +1,2 @@
+package io.acra.core.route;
+public enum RouteSyntax { OBSERVED, BRACE_TEMPLATE, COLON_TEMPLATE, ANGLE_TEMPLATE, LITERAL_WILDCARD, CATCH_ALL, REGEX, UNKNOWN }

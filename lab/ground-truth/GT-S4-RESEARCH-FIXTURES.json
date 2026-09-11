@@ -1,0 +1,34 @@
+{
+  "ground_truth_id": "GT-S4-RESEARCH-FIXTURES",
+  "version": "1",
+  "lab_version": "0.4.0-rc1-s4-local",
+  "independent_of_acra_output": true,
+  "execution_state": "NOT_RUN",
+  "labels": ["TP", "TN", "FP", "FN"],
+  "cases": [
+    {"case_id":"S4-FP-PUBLIC","family":"FALSE_POSITIVE_CONTROL","fixture":"public endpoint","ground_truth":"ALLOW","expected_candidate":false},
+    {"case_id":"S4-FP-SOFT-DENY","family":"FALSE_POSITIVE_CONTROL","fixture":"HTTP 200 application denial","ground_truth":"DENY","expected_candidate":false},
+    {"case_id":"S4-FP-TIMESTAMP","family":"FALSE_POSITIVE_CONTROL","fixture":"dynamic timestamp","ground_truth":"NO_AUTHORIZATION_CHANGE","expected_candidate":false},
+    {"case_id":"S4-FP-REQUEST-ID","family":"FALSE_POSITIVE_CONTROL","fixture":"dynamic request identifier","ground_truth":"NO_AUTHORIZATION_CHANGE","expected_candidate":false},
+    {"case_id":"S4-FP-ORDERING","family":"FALSE_POSITIVE_CONTROL","fixture":"response ordering","ground_truth":"NO_AUTHORIZATION_CHANGE","expected_candidate":false},
+    {"case_id":"S4-FP-FORMATTING","family":"FALSE_POSITIVE_CONTROL","fixture":"formatting-only difference","ground_truth":"NO_AUTHORIZATION_CHANGE","expected_candidate":false},
+    {"case_id":"S4-FP-REPRESENTATION","family":"FALSE_POSITIVE_CONTROL","fixture":"same authorized resource in two representations","ground_truth":"ALLOW","expected_candidate":false},
+    {"case_id":"S4-FN-SAME-STATUS","family":"FALSE_NEGATIVE_CONTROL","fixture":"same HTTP status","ground_truth":"AUTHORIZATION_CHANGE","expected_candidate":true},
+    {"case_id":"S4-FN-SOFT-DENIAL","family":"FALSE_NEGATIVE_CONTROL","fixture":"soft denial","ground_truth":"DENY","expected_candidate":true},
+    {"case_id":"S4-FN-DYNAMIC-LENGTH","family":"FALSE_NEGATIVE_CONTROL","fixture":"dynamic body length","ground_truth":"AUTHORIZATION_CHANGE","expected_candidate":true},
+    {"case_id":"S4-FN-REORDERED-JSON","family":"FALSE_NEGATIVE_CONTROL","fixture":"reordered JSON","ground_truth":"AUTHORIZATION_CHANGE","expected_candidate":true},
+    {"case_id":"S4-FN-OPAQUE-ID","family":"FALSE_NEGATIVE_CONTROL","fixture":"opaque identifiers","ground_truth":"AUTHORIZATION_CHANGE","expected_candidate":true},
+    {"case_id":"S4-FN-NESTED","family":"FALSE_NEGATIVE_CONTROL","fixture":"nested resource","ground_truth":"AUTHORIZATION_CHANGE","expected_candidate":true},
+    {"case_id":"S4-FN-COLLECTION","family":"FALSE_NEGATIVE_CONTROL","fixture":"small collection","ground_truth":"AUTHORIZATION_CHANGE","expected_candidate":true},
+    {"case_id":"S4-FN-NONSTANDARD-AUTH","family":"FALSE_NEGATIVE_CONTROL","fixture":"non-standard authentication representation","ground_truth":"AUTHORIZATION_CHANGE","expected_candidate":true}
+  ],
+  "metrics": {
+    "tp": "NOT_MEASURED",
+    "tn": "NOT_MEASURED",
+    "fp": "NOT_MEASURED",
+    "fn": "NOT_MEASURED",
+    "precision": "NOT_MEASURED",
+    "recall": "NOT_MEASURED",
+    "f1": "NOT_MEASURED"
+  }
+}

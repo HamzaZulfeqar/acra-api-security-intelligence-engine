@@ -1,0 +1,7 @@
+ACRA Sprint 1 performance baseline
+java=21.0.11
+availableProcessors=4
+count,parseMs,graphMs,serializeMs,approxMemoryDeltaBytes
+1000,94,63,341,10504808
+10000,127,64,1428,23627152
+100000,769,188,12940,26779072

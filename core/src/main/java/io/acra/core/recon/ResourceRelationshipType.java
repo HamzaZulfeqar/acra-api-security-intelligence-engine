@@ -1,0 +1,2 @@
+package io.acra.core.recon;
+public enum ResourceRelationshipType { OWNS, BELONGS_TO, CONTAINS, REFERENCES, ASSIGNED_TO, CREATED_BY, APPROVED_BY, ASSOCIATED_WITH, PARENT_OF, UNKNOWN }

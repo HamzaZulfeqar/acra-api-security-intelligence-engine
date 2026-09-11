@@ -1,0 +1,32 @@
+# IDE / OS
+.vs/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Build outputs
+build/
+target/
+out/
+dist/
+*.class
+*.jar
+
+# Runtime / workspace data
+*.acra
+*.acrapkg
+*.db
+*.db-wal
+*.db-shm
+logs/
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+secrets/
+
+# Test artifacts
+coverage/
+test-results/

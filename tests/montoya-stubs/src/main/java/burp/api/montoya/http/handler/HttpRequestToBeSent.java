@@ -1,0 +1,1 @@
+package burp.api.montoya.http.handler; import burp.api.montoya.core.ToolSource; import burp.api.montoya.http.message.requests.HttpRequest; public interface HttpRequestToBeSent extends HttpRequest { int messageId(); boolean isInScope(); ToolSource toolSource(); }

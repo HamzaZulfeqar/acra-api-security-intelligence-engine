@@ -1,0 +1,3 @@
+n=100 totalMs=287.781 avgUs=2877.810 memoryDeltaMB=12.739 endpoints=1 recon=100 graphNodes=106 graphEdges=900 evidence=1200
+n=1000 totalMs=964.249 avgUs=964.249 memoryDeltaMB=76.740 endpoints=1 recon=1000 graphNodes=1006 graphEdges=9000 evidence=12000
+n=10000 totalMs=24284.780 avgUs=2428.478 memoryDeltaMB=377.867 endpoints=1 recon=10000 graphNodes=10006 graphEdges=90000 evidence=120000

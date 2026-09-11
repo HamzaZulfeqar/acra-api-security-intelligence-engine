@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object"
+    },
+    "request": {
+      "type": "object"
+    },
+    "requestId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "response": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "request",
+    "timestamp",
+    "requestId",
+    "source",
+    "metadata"
+  ],
+  "title": "ACRA HttpTransaction v1",
+  "type": "object"
+}

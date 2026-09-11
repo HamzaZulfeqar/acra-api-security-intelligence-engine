@@ -1,0 +1,19 @@
+ACRA Sprint 2 official dependency gate attempt
+captured_utc=2026-08-30T19:51:24Z
+
+Authoritative coordinates verified externally:
+- net.portswigger.burp.extensions:montoya-api:2026.7
+- Apache Maven 3.9.16
+- Burp Suite Professional/Community 2026.7.3 Stable
+
+Local execution evidence:
+- `mvn` executable: not installed
+- outbound DNS/artifact download from repo1.maven.org: blocked in container
+- outbound download of Maven distribution: blocked in container
+- Burp Suite installation: not present
+
+Result:
+Montoya Dependency Build = BLOCKED / UNVERIFIED
+Burp Runtime = BLOCKED / UNVERIFIED
+
+This file records environment limitations only. It is not proof of compatibility.

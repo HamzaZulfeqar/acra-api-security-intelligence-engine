@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "type": "object"
+    },
+    "evidenceIds": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "expectedDecision": {
+      "type": "string"
+    },
+    "observedDecision": {
+      "type": "string"
+    },
+    "ownerPrincipalId": {
+      "type": "string"
+    },
+    "principal": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "resource": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "role": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "RESOLVED",
+        "PARTIAL",
+        "CONFLICTING_EVIDENCE",
+        "UNKNOWN"
+      ]
+    },
+    "tenant": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "workflowState": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "action",
+    "workflowState",
+    "expectedDecision",
+    "observedDecision",
+    "evidenceIds",
+    "status"
+  ],
+  "title": "ACRA AuthorizationContext v1",
+  "type": "object"
+}

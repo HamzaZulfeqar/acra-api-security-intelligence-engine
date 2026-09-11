@@ -1,0 +1,2 @@
+package io.acra.core.domain.evidence;
+public enum EvidenceSource { PATH, QUERY, HEADER, COOKIE, JWT_CLAIM, BODY, RESPONSE, CONFIGURATION, USER_POLICY, HTTP_METHOD, TRANSACTION, UNKNOWN }

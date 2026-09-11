@@ -1,0 +1,9 @@
+ACRA Sprint 2 retained engineering baseline
+source=authoritative v0.2.0-rc1 Sprint 2 record supplied for continuation
+classification=OBSERVATIONAL_ONLY
+count,totalMs,approxMemoryDeltaMB,graphEdges,evidenceRecords
+100,208,5.3,900,1000
+1000,327,19.1,9000,10000
+10000,2587,148.2,90000,100000
+
+These values are retained as the original Sprint 2 baseline. They are not scientific benchmarks, guarantees, or release thresholds.

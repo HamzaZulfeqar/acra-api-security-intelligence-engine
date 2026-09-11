@@ -1,0 +1,21 @@
+name: ACRA Core CI
+
+on:
+  push:
+    paths:
+      - 'core/**'
+      - 'scripts/**'
+      - '.github/workflows/core-ci.yml'
+  pull_request:
+
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify Sprint 1 core
+        run: ./scripts/verify-sprint1.sh

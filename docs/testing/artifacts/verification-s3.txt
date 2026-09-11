@@ -1,0 +1,29 @@
+ACRA Sprint 3 verification
+utc=2026-08-30T20:26:14Z
+openjdk version "21.0.11" 2026-04-21
+version=0.3.0-rc1
+BUILD PASS
+POM XML PASS
+MAVEN PACKAGE UNVERIFIED: mvn not installed in execution environment
+SPRINT 2 CONTRACT BUILD PASS
+BUILD PASS
+POM XML PASS
+MAVEN PACKAGE UNVERIFIED: mvn not installed in execution environment
+SPRINT 3 CONTRACT BUILD PASS
+PASS HTTP tests=5
+PASS URI tests=6
+PASS CONTEXT tests=5
+PASS GRAPH tests=5
+PASS SERIALIZATION_SECURITY tests=5
+PASS RESOLUTION_CONTRACT tests=6
+PASS NEGATIVE_SECURITY tests=5
+PASS total=37 durationMs=129
+PASS Sprint2 tests=52
+PASS Sprint3 core tests=47
+PASS Sprint3 adapter tests=11
+SECURITY TEST PASS
+SPRINT 3 SECURITY PASS
+ARCHITECTURE BOUNDARY PASS
+SPRINT 3 ARCHITECTURE PASS
+OFFICIAL MONTOYA MAVEN BUILD: UNVERIFIED / BLOCKED when mvn or artifact network unavailable
+BURP LIVE VALIDATION: UNVERIFIED / BLOCKED (Burp Suite unavailable in execution environment)

@@ -1,0 +1,1 @@
+package burp.api.montoya.http; import burp.api.montoya.core.Registration; import burp.api.montoya.http.handler.HttpHandler; public interface Http { Registration registerHttpHandler(HttpHandler handler); }

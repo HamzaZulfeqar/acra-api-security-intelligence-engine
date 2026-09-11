@@ -1,0 +1,36 @@
+ACRA Sprint 2 verification
+utc=2026-08-30T19:53:10Z
+openjdk version "21.0.11" 2026-04-21
+BUILD PASS
+POM XML PASS
+MAVEN PACKAGE UNVERIFIED: mvn not installed in execution environment
+SPRINT 2 CONTRACT BUILD PASS
+PASS HTTP tests=5
+PASS URI tests=6
+PASS CONTEXT tests=5
+PASS GRAPH tests=5
+PASS SERIALIZATION_SECURITY tests=5
+PASS RESOLUTION_CONTRACT tests=6
+PASS NEGATIVE_SECURITY tests=5
+PASS total=37 durationMs=139
+PASS Sprint2 tests=52
+SECURITY TEST PASS
+SPRINT 2 SECURITY PASS
+ARCHITECTURE BOUNDARY PASS
+SPRINT 2 ARCHITECTURE PASS
+BURP LIVE VALIDATION: UNVERIFIED / BLOCKED (Burp Suite unavailable in execution environment)
+EXP-INTEGRATION-001 LOCAL-LAB PASS
+httpStatus=200
+transactionId=ACRA-TX-000001
+principal=user-a
+tenant=tenant-a
+resource=document:1001
+action=READ
+endpoint=GET /api/v1/tenants/{tenant}/documents/{document_id}
+evidenceCount=10
+burpStage=UNVERIFIED_NOT_AVAILABLE_IN_EXECUTION_ENVIRONMENT
+count,totalMs,avgAnalysisMicros,approxMemoryDeltaBytes,graphNodes,graphEdges,graphEvidence,endpoints,observations,edtRoundTripMicros
+100,206,2061.76,5344168,106,900,1000,1,100,19485.09
+1000,316,316.77,19851312,106,9000,10000,1,1000,597.23
+10000,2441,244.16,169869312,106,90000,100000,1,10000,1633.23
+SPRINT 2 LOCAL VERIFICATION PASS; BURP LIVE GATE REMAINS BLOCKED

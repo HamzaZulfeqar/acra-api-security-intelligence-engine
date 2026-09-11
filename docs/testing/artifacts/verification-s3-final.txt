@@ -1,0 +1,38 @@
+ACRA Sprint 3 Final Verification Report
+
+Version: v0.3.0-rc1
+Target: v0.3.0
+Release Decision: HOLD
+
+Build: PASS (JDK/local contract build)
+Sprint 1 Regression: PASS, 37
+Sprint 2 Regression: PASS, 52
+Sprint 3 Core: PASS, 47
+Sprint 3 Adapter: PASS, 11
+Total Automated Assertions: PASS, 147
+Security Gate: PASS
+Architecture Boundary: PASS
+OpenAPI/Traffic Correlation: PASS in controlled local fixture, 10/10 operations
+Semantic Identifier Experiment: PASS in controlled fixture scope
+Route Equivalence Experiment: PASS in controlled fixture scope
+Response FP Controls: PASS for selected soft-200 and dynamic/reordered fixtures
+Context Coverage Experiment: MEASURED, 0.8111 mean fixture coverage
+Evidence Completeness: MEASURED, 1.0000 for measured inferred fixture fields
+Local ACRA-Lab: PASS
+Dry-Run Dispatch: PASS, 0 requests dispatched
+Performance Baseline: EXECUTED / OBSERVATIONAL
+Official Montoya Maven Dependency Build: BLOCKED / UNVERIFIED
+Real Burp Load: BLOCKED / UNVERIFIED
+Real Burp HTTP Handling: BLOCKED / UNVERIFIED
+Real Burp UI: BLOCKED / UNVERIFIED
+Real Burp Sprint 3 Recon Experiment: BLOCKED / UNVERIFIED
+Research Evidence Level for Burp Claim: Level 2
+Repository Package: acra-sprint-03-v0.3.0-rc1.zip
+
+Environment blockers:
+- Java 21 is available.
+- Maven executable is not installed.
+- outbound DNS/artifact resolution is blocked.
+- Burp Suite is not installed.
+
+No final v0.3.0 promotion is permitted from this evidence state.

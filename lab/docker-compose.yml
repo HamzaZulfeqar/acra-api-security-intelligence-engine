@@ -1,0 +1,15 @@
+services:
+  vulnerable-api:
+    build: ./vulnerable-api/basic-api
+    environment:
+      ACRA_LAB_MODE: vulnerable
+      PORT: 18081
+    ports:
+      - "18081:18081"
+  secure-api:
+    build: ./secure-api/basic-api
+    environment:
+      ACRA_LAB_MODE: secure
+      PORT: 18082
+    ports:
+      - "18082:18082"

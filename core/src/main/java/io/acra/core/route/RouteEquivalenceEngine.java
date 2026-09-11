@@ -1,0 +1,7 @@
+package io.acra.core.route;
+import java.util.*;
+public final class RouteEquivalenceEngine {
+    private final RouteTemplateEngine templates=new RouteTemplateEngine();
+    public RouteEquivalenceResult compare(String a,String b){if(a==null||b==null)return new RouteEquivalenceResult(RouteEquivalenceKind.UNKNOWN,"","",List.of("missing-route"));if(a.equals(b))return new RouteEquivalenceResult(RouteEquivalenceKind.SYNTACTICALLY_EQUAL,a,b,List.of("exact-string-match"));RouteTemplateModel ta=templates.parse(a),tb=templates.parse(b);if(ta.canonical().equals(tb.canonical()))return new RouteEquivalenceResult(RouteEquivalenceKind.CANONICALLY_EQUIVALENT,ta.canonical(),tb.canonical(),List.of("canonical-template-match"));if(sameFamily(ta,tb))return new RouteEquivalenceResult(RouteEquivalenceKind.SAME_FAMILY,ta.canonical(),tb.canonical(),List.of("same-static-skeleton"));return new RouteEquivalenceResult(RouteEquivalenceKind.DIFFERENT,ta.canonical(),tb.canonical(),List.of("different-route-structure"));}
+    private static boolean sameFamily(RouteTemplateModel a,RouteTemplateModel b){if(a.segments().size()!=b.segments().size())return false;for(int i=0;i<a.segments().size();i++){RouteSegmentModel x=a.segments().get(i),y=b.segments().get(i);boolean xd=x.kind()!=RouteSegmentKind.STATIC&&x.kind()!=RouteSegmentKind.VERSION;boolean yd=y.kind()!=RouteSegmentKind.STATIC&&y.kind()!=RouteSegmentKind.VERSION;if(xd&&yd)continue;if(!x.raw().equalsIgnoreCase(y.raw()))return false;}return true;}
+}

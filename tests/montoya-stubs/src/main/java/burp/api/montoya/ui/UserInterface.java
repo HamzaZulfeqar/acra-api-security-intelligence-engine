@@ -1,0 +1,1 @@
+package burp.api.montoya.ui; import burp.api.montoya.core.Registration; import java.awt.Component; public interface UserInterface { Registration registerSuiteTab(String caption, Component component); }

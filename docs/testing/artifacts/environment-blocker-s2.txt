@@ -1,0 +1,16 @@
+ACRA Sprint 2 environment blocker evidence
+captured_utc=2026-08-30T19:51:24Z
+
+== java ==
+openjdk version "21.0.11" 2026-04-21
+OpenJDK Runtime Environment (build 21.0.11+10-1-deb13u2-Debian)
+OpenJDK 64-Bit Server VM (build 21.0.11+10-1-deb13u2-Debian, mixed mode, sharing)
+
+== maven ==
+mvn: NOT FOUND
+
+== burp ==
+burpsuite command: NOT FOUND
+
+== artifact DNS probe ==
+curl: (6) Could not resolve host: repo1.maven.org

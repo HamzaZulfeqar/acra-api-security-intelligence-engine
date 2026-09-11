@@ -1,0 +1,75 @@
+ACRA Sprint 4 core verification slice
+captured_utc=2026-08-31T18:23:05Z
+checkpoint=S4-RESUME-2026-08-31-CORE-INTEGRATED
+candidate=0.4.0-rc1
+
+SCOPE
+Focused core contract/security verification only. No localhost transport, ACRA-Lab active execution, UI, research experiment, Burp runtime, or Sprint 5 work executed.
+
+FILES ADDED
+core/src/test/java/io/acra/core/tests/sprint4/Sprint4Fixtures.java
+core/src/test/java/io/acra/core/tests/sprint4/Sprint4CoreVerificationTestSuite.java
+core/src/test/java/io/acra/core/tests/sprint4/Sprint4EngineSecurityTestSuite.java
+
+BUILD
+Initial invocation: BLOCKED operationally because ZIP extraction did not preserve executable permission on scripts/build-core.sh.
+Equivalent invocation: bash scripts/build-core.sh
+First test compile: FAIL due -Xlint:all -Werror warning that an AutoCloseable concurrency lease in test code was not referenced.
+Fix: reference/assert the acquired lease in the test body. No engine/main-source code changed.
+Rerun build: PASS
+
+SPRINT 4 TESTS
+Sprint4CoreVerificationTestSuite: PASS 54 assertions
+Sprint4EngineSecurityTestSuite: PASS 41 assertions
+Focused Sprint 4 total: PASS 95 assertions
+
+REGRESSION
+Core TestSuite: PASS 37 assertions
+Sprint3CoreTestSuite: PASS 47 assertions
+
+VERIFIED CONTRACTS
+- SecurityTest fields, deterministic signature, immutable evidence list
+- single-value Mutation no-op rejection
+- immutable baseline/control request construction and one declared principal change
+- ambiguous multi-match mutation rejection
+- deterministic TestPlanner output, deduplication, estimated cost
+- preserved S3 dry-run dispatchedRequests=0 and NO_NETWORK_REQUESTS marker
+- deterministic queue priority/order/transitions/deduplication/STOP ALL
+- semantic ALLOW/DENY including HTTP 200 application denial
+- four-way differential classification
+- append-only evidence object IDs
+- scope/cross-project/path traversal blocking
+- LAB loopback environment enforcement
+- consent/kill-switch reset and STOP ALL behavior
+- hierarchical budget accounting and overflow rejection
+- concurrency lease enforcement
+- scoped rate limiting
+- configuration fingerprint tamper rejection
+- serialized credential redaction and safety-audit redaction
+- in-memory synthetic TestExecutor four-request orchestration using a non-network transport double
+- observation/evidence creation distinct from findings
+- response cookie redaction in evidence snapshot
+- ReplayService signature/environment/config verification and fresh execution ID
+- rejected tampered replay produces zero dispatch
+
+NOT VERIFIED IN THIS SLICE
+- concrete localhost transport
+- Sprint 4 ACRA-Lab active execution
+- secure/vulnerable active-control ground truth execution
+- FP/FN suite
+- graph hydration from active observations
+- adapter compilation/tests
+- active UI
+- research experiment/metrics
+- performance workloads
+- Maven/Montoya packaging
+- current Burp runtime
+
+HISTORICAL BURP STATUS
+S2 Level 3: BLOCKED / UNVERIFIED
+S2 Level 4: BLOCKED / UNVERIFIED
+S3 Level 3: BLOCKED / UNVERIFIED
+S3 Level 4: BLOCKED / UNVERIFIED
+
+NEXT TASK
+Add the concrete localhost-only transport and controlled ACRA-Lab integration slice, then execute secure/deny controls under the already-verified safety gates. Do not begin UI/research/S5 work before that slice is evidenced.

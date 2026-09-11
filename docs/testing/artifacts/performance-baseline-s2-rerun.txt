@@ -1,0 +1,7 @@
+ACRA Sprint 2 continuation rerun observation
+captured_utc=2026-08-30T19:51:35Z
+classification=OBSERVATIONAL_ONLY
+count,totalMs,avgAnalysisMicros,approxMemoryDeltaBytes,graphNodes,graphEdges,graphEvidence,endpoints,observations,edtRoundTripMicros
+100,201,2013.68,5344992,106,900,1000,1,100,19213.07
+1000,360,360.14,18360128,106,9000,10000,1,1000,636.12
+10000,2575,257.51,121991976,106,90000,100000,1,10000,1682.35

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1",
+  "groundTruthId": "GT-INTEGRATION-001",
+  "category": "integration-context-reconstruction",
+  "principal": "user-a",
+  "role": "viewer",
+  "tenant": "tenant-a",
+  "resource": "document:1001",
+  "owner": "user-a",
+  "action": "READ",
+  "workflowState": "UNKNOWN",
+  "expectedAuthorizationDecision": "ALLOW",
+  "endpointTemplate": "GET /api/v1/tenants/{tenant}/documents/{document_id}",
+  "securityClassification": "secure-control",
+  "notes": "Sprint 2 benign same-tenant integration fixture. Not a vulnerability test."
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "confidence": {
+      "type": "object"
+    },
+    "evidenceId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "extractedValue": {
+      "type": "string"
+    },
+    "extractionMethod": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "location": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "requestId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "evidenceId",
+    "source",
+    "requestId",
+    "location",
+    "extractedValue",
+    "extractionMethod",
+    "confidence",
+    "timestamp"
+  ],
+  "title": "ACRA Evidence v1",
+  "type": "object"
+}

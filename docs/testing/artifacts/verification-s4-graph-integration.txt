@@ -1,0 +1,72 @@
+ACRA S4-PHASE2-01 GRAPH INTEGRATION VERIFICATION
+Date: 2026-09-04 Asia/Karachi
+Repository: work/s4-final-audit-recovered/acra
+Status: NEWLY EXECUTED unless explicitly marked otherwise
+
+CHECKPOINT RECOVERY
+- Repository has no .git metadata; Git commit/branch/status are unavailable.
+- Compared with clean S4 continuation checkpoint: graph adapter/result/status/test were added; TestExecutor and localhost integration suite were modified.
+- Historical focused graph result supplied by the checkpoint: 71 PASS assertions.
+- Recovered source contained an interrupted, unverified atomicity delta and collision fixture; this run compiled and verified the completed proof.
+
+JAVA TARGET BUILD
+- Compiler: C:/Users/hamzi/AppData/Local/Programs/BurpSuite/jre/bin/javac.exe, OpenJDK 26.0.1
+- Command scope: every core/src/main/java and core/src/test/java source
+- Flags: --release 21 -Xlint:all -Werror
+- Result: PASS
+- Exact JDK 21 runtime: UNVERIFIED; the available runtime is OpenJDK 26.0.1
+
+FOCUSED GRAPH SUITE
+- Sprint4GraphIntegrationTestSuite: PASS, 87 assertions
+- Insert: PASS
+- Equivalent-node reuse: PASS
+- Conflicting identity: BLOCKED
+- Whole-graph atomicity: PASS
+- Incomplete identity/tenant/resource/owner/policy: INCONCLUSIVE with zero graph mutation
+- Configured/observed resource-owner-tenant conflict: CONFLICTING_CONTEXT, both retained
+- Identical hydration: idempotent
+- Replay: fresh execution/observation/evidence, history retained
+- Credential exclusion: raw bearer/password/API-key/session secrets absent from observations, evidence objects and serialized graph
+- Forged provenance: BLOCKED
+- Cross-project hydration: BLOCKED
+
+REGRESSION
+- Sprint4CoreVerificationTestSuite: PASS, 54 assertions
+- Sprint4EngineSecurityTestSuite: PASS, 52 assertions
+- core TestSuite: PASS, 37 assertions
+- Sprint3CoreTestSuite: PASS, 47 assertions
+- Sprint3AdapterTestSuite against local Montoya contract stubs: PASS, 11 assertions
+- An initial core-runner launch used the nonexistent class io.acra.core.tests.AcraCoreTestSuite and failed before tests. The corrected repository runner io.acra.core.tests.TestSuite passed 37 assertions.
+
+LIVE ACRA-LAB ACCEPTANCE
+- Endpoints: secure 127.0.0.1:18082; vulnerable 127.0.0.1:18081
+- Health: secure ok/secure; vulnerable ok/vulnerable
+- Sprint4LocalhostIntegrationTestSuite: PASS, 60 assertions
+- Normal path: SecurityTest -> TestExecutor -> LocalhostHttpTransport -> ACRA-Lab -> Response -> Differential -> Observation -> Evidence -> ObservationGraphIntegrator -> SecurityContextGraph
+- testId: S4-EXEC-SECURE-001
+- executionId: S4-EXEC-00000002
+- observationId: S4-EXEC-00000002:observation
+- originating chainEvidenceId: S4-EVIDENCE-00000009
+- graphEvidenceId: ev-97dbe353e0decdbb45ee
+- relationshipId: edge-837c5bd8d56408e3c53b
+- Secure result: expected DENY, observed DENY, EXPECTED_CHANGE
+- Vulnerable control result: expected DENY, observed ALLOW, UNEXPECTED_CHANGE observation only
+- Raw session secret absent from Observation, evidence serialization and serialized graph
+- Lab stopped: PASS; ports 18081 and 18082 listeners=0
+- Service shutdown produced expected interrupted-request traces from timeout fixtures; no service remained listening.
+
+ARCHITECTURE
+- bash runner: BLOCKED because bash is unavailable
+- Native equivalent of scripts/architecture-core.sh and scripts/architecture-sprint4.sh: PASS
+- Active network client exists only in LocalhostHttpTransport; LAB/loopback enforcement present
+- Burp/Montoya dependency absent from core
+- Sprint 5 analyzer/finding markers absent from active engine
+
+MAVEN / BURP
+- Maven: BLOCKED; mvn executable unavailable
+- Official Montoya dependency build: BLOCKED / UNVERIFIED
+- Historical S2 Burp Level 3/4: BLOCKED / UNVERIFIED
+- Historical S3 Burp Level 3/4: BLOCKED / UNVERIFIED
+
+TOTAL CURRENT UNIQUE ASSERTIONS: 348
+87 graph + 54 S4 core + 52 S4 security + 60 S4 localhost + 37 core + 47 S3 core + 11 S3 adapter

@@ -1,0 +1,68 @@
+ACRA S4-PHASE3 ACTIVE ENGINE PRODUCT COMPLETION
+Date: 2026-09-04 Asia/Karachi
+State: NEWLY EXECUTED
+
+Compiler/runtime
+- Compiler: Burp-bundled OpenJDK javac 26.0.1
+- Runtime: Burp-bundled OpenJDK 26.0.1
+- Target contract: --release 21 -Xlint:all -Werror
+- Exact JDK 21 runtime: UNVERIFIED
+- Maven: BLOCKED; mvn is not installed
+
+Warning-clean compilation
+- All core main and test sources: PASS
+- All Burp extension main and test sources against retained Montoya contract stubs: PASS
+- POM XML parse: PASS
+
+NEWLY EXECUTED suites
+- Sprint4GraphIntegrationTestSuite: PASS 87
+- Sprint4CoreVerificationTestSuite: PASS 54
+- Sprint4EngineSecurityTestSuite: PASS 52
+- Sprint4ProductCompletionTestSuite: PASS 132
+- Sprint4LocalhostIntegrationTestSuite: PASS 60
+- Sprint4UiTestSuite: PASS 26
+- core TestSuite: PASS 37
+- Sprint3CoreTestSuite: PASS 47
+- Sprint3AdapterTestSuite: PASS 11
+- Sprint2TestSuite: PASS 52
+- Total represented assertions: 558
+
+Live local acceptance
+- Existing secure and deliberately vulnerable ACRA-Lab services started on loopback.
+- Normal SecurityTest -> TestExecutor -> LocalhostHttpTransport -> ACRA-Lab -> Response -> Differential -> Observation -> Evidence -> existing SecurityContextGraph path: PASS
+- Secure execution: S4-EXEC-00000002; expected DENY; observed DENY; EXPECTED_CHANGE
+- Secure graph provenance: observation S4-EXEC-00000002:observation; chain evidence S4-EVIDENCE-00000009; graph evidence ev-fee85386319ffba8fcb9; relationship edge-aca48822682d07be11fb
+- Vulnerable fixture execution: S4-EXEC-00000003; expected DENY; observed ALLOW; UNEXPECTED_CHANGE; Observation only
+- HTTP-200 denial, dynamic fields and representation equivalence: PASS
+- Suite result: PASS 60
+- ACRA-Lab stopped; ports 18081 and 18082 confirmed closed
+
+Phase 3 behavior
+- Five executable product profiles: PASS
+- ALL/AUTOMATIC/USER_SELECTED/HYBRID planning: PASS
+- Beginner/Professional/Researcher/Expert mode mapping and enforcement: PASS
+- Queue lifecycle, retry/rerun/stop/skip/dependencies including missing dependency: PASS
+- Authorized local automatic consent and external/destructive refusal: PASS
+- 429/503/Retry-After/connection failure bounded behavior: PASS
+- Unknown expected policy -> INCONCLUSIVE: PASS
+- Active coverage and request-efficiency accounting: PASS
+- TP/TN/FP/FN and undefined-metric software records: PASS
+- Existing Swing UI views and backend control binding: PASS 26
+- Explicitly configured workspace plan -> queue -> existing executor -> result/coverage: PASS
+- Real Burp-session passive import/provisioning: DEFERRED; default remains safely disabled
+
+Architecture
+- POM XML: PASS
+- Core has no Burp/Montoya dependency: PASS
+- LocalhostHttpTransport is the only active-core network client: PASS
+- No Sprint 5 BOLA/BFLA/finding marker in active core: PASS
+
+Measurements not performed
+- Broad EXP-DIFF-001 labelled campaign: DEFERRED / NOT MEASURED
+- 100/1,000/10,000 request-efficiency and performance workloads: DEFERRED / NOT MEASURED
+- Optimization percentage: NOT MEASURED
+- Real Burp and authorized external validation: DEFERRED
+
+Historical evidence retained
+- S2 Burp Level 3/4: BLOCKED / UNVERIFIED
+- S3 Burp Level 3/4: BLOCKED / UNVERIFIED
