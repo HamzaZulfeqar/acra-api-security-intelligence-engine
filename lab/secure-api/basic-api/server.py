@@ -36,6 +36,10 @@ S6_REPORTS={
  'report-b':{'id':'report-b','tenant_id':'tenant-b','owner_id':'user-b','classification':'internal'},
  'shared-report':{'id':'shared-report','tenant_id':'shared','owner_id':'system','classification':'shared'},
 }
+S6_TENANT_REPORTS={
+ 'tenant-a':{'report-common':{'id':'report-common','tenant_id':'tenant-a','owner_id':'manager-a','classification':'internal'}},
+ 'tenant-b':{'report-common':{'id':'report-common','tenant_id':'tenant-b','owner_id':'user-b','classification':'internal'}},
+}
 S6_REPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/reports/(?P<report>[^/?]+)$')
 S6_EXPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/admin/export$')
 
@@ -123,13 +127,14 @@ class Handler(BaseHTTPRequestHandler):
         if m:
             ident=self._require_identity()
             if not ident:return
-            report=S6_REPORTS.get(m.group('report'))
+            report=S6_TENANT_REPORTS.get(m.group('tenant'),{}).get(m.group('report'))
+            if report is None: report=S6_REPORTS.get(m.group('report'))
             if not report or (report['tenant_id']!='shared' and m.group('tenant')!=report['tenant_id']):
                 return self._json(404,{'error':'report_not_found'})
             authorized=self._s6_tenant_allowed(ident,report['tenant_id'])
             if MODE=='secure' and not authorized:
                 return self._json(403,{'error':'access_denied','tenant_id':report['tenant_id']})
-            if MODE=='vulnerable' and not authorized and report['id']!='report-b':
+            if MODE=='vulnerable' and not authorized and report['id'] not in ('report-b','report-common'):
                 return self._json(403,{'error':'access_denied','tenant_id':report['tenant_id']})
             return self._json(200,{**report,'authorization_mode':MODE,'request_id':f's6-report-{id(self)}'})
         if path=='/api/v1/search':

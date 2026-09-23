@@ -35,3 +35,18 @@ policy content produces the same fingerprint regardless of caller list order.
 - global/shared assignments are explicit rather than inferred from role names
 - explicit rule precedence requires both a numeric value and a provenance/source label
 - S6 policy results remain separate from confirmed real-world vulnerability findings
+
+
+## Policy-aware active planning bridge
+
+Sprint 6 does not introduce a second active-testing engine. `S6PolicyPlanningBridge` adds policy-derived seeds to
+the existing S4 `PlanningInput`; `TestPlanner`, `ExecutionQueue`, `MutationValidator`, budgets, rate controls,
+kill switch and `TestExecutor` remain canonical.
+
+Current automatically generated active mutation:
+- `CROSS_TENANT` → one explicit tenant-path substitution, only when baseline and target policy decisions are resolved.
+
+Current fail-closed boundary:
+- `ROLE_COMPARISON` recommendations are retained, but generic active generation is skipped until credential-safe
+  context substitution can reference an explicit alternate authenticated context without copying token material into
+  `Mutation.originalValue` / `Mutation.mutatedValue`.

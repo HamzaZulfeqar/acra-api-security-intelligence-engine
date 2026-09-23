@@ -31,6 +31,10 @@
 - controlled S6 ACRA-Lab ground truth and secure/vulnerable tenant/RBAC fixtures
 - policy-aware planning recommendations
 - live controlled tenant/RBAC experiment and measurement pipeline
+- policy-aware S6 planning bridge into the existing S4 planner/queue/executor
+- deterministic safe read-only CROSS_TENANT test generation
+- live generated-test execution against secure localhost ACRA-Lab
+- ROLE_COMPARISON active generation intentionally fail-closed pending credential-safe authenticated-context substitution
 
 ### Newly measured S6 evidence
 

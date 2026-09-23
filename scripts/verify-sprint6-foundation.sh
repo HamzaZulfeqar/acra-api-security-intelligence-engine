@@ -26,6 +26,7 @@ suites=(
   io.acra.core.tests.sprint6.Sprint6GraphAndGroupingTestSuite
   io.acra.core.tests.sprint6.Sprint6LabAndPlanningTestSuite
   io.acra.core.tests.sprint6.Sprint6LiveLabExperimentTestSuite
+  io.acra.core.tests.sprint6.Sprint6PlannerExecutionIntegrationTestSuite
 )
 
 python3 -m py_compile "$ROOT/lab/common/basic_api.py" "$ROOT/lab/secure-api/basic-api/server.py" "$ROOT/lab/vulnerable-api/basic-api/server.py"

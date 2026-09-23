@@ -44,3 +44,19 @@ The successful campaign followed correction of a shared-scope isolation defect f
 8. produce final S6 audit
 9. create reproducible S6 ZIP, manifest and SHA-256
 10. keep Sprint 7 NOT STARTED until the S6 checkpoint is frozen
+
+
+## Policy-aware planner → queue → executor integration
+
+Implemented:
+- `S6PolicyPlanningCandidate` explicit input contract
+- `S6PolicyTestSeedFactory` deterministic policy-aware seed generation
+- `S6PolicyPlanningBridge` that augments the existing S4 `PlanningInput` instead of replacing the planner
+- automatic safe read-only `CROSS_TENANT` tenant-substitution generation when baseline and target policy decisions are resolved
+- generated tests preserve the existing S4 planner, queue, safety policy, kill switch, budgets, concurrency, rate limits and executor
+- localhost integration proof uses one shared resource identifier present independently in Tenant-A and Tenant-B so only the tenant path value changes
+- raw credentials remain in explicit request controls and are never copied into `Mutation`
+- generic `ROLE_COMPARISON` active generation deliberately fails closed until a credential-safe context substitution adapter exists; the current system does not serialize raw tokens into mutation values
+
+The integration suite proves:
+`S6 policy → generated TestSeed → S4 TestPlanner → ExecutionQueue → TestExecutor → live secure ACRA-Lab → differential observation`.
