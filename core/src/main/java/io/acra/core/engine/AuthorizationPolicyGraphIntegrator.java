@@ -56,7 +56,7 @@ public final class AuthorizationPolicyGraphIntegrator {
             GraphNode principal = node("principal:" + membership.principalId(), NodeType.PRINCIPAL,
                     membership.principalId(), Map.of());
             GraphNode tenant = node("tenant:" + membership.tenantId(), NodeType.TENANT,
-                    membership.tenantId(), Map.of("membershipType", membership.type().name()));
+                    membership.tenantId(), Map.of());
             delta.addNode(principal);
             delta.addNode(tenant);
             addEdge(delta, principal.id(), tenant.id(), RelationType.BELONGS_TO, membership.evidenceIds(),
@@ -67,7 +67,7 @@ public final class AuthorizationPolicyGraphIntegrator {
             GraphNode principal = node("principal:" + assignment.principalId(), NodeType.PRINCIPAL,
                     assignment.principalId(), Map.of());
             GraphNode role = node("role:" + assignment.roleId(), NodeType.ROLE,
-                    assignment.roleId(), Map.of("scope", assignment.scope().type().name()));
+                    assignment.roleId(), Map.of());
             delta.addNode(principal);
             delta.addNode(role);
             addEdge(delta, principal.id(), role.id(), RelationType.ROLE_ASSIGNMENT, assignment.evidenceIds(),
@@ -92,7 +92,7 @@ public final class AuthorizationPolicyGraphIntegrator {
 
         snapshot.permissions().forEach(permission -> delta.addNode(
                 node("permission:" + permission.permissionId(), NodeType.PERMISSION, permission.permissionId(),
-                        Map.of("action", permission.action(), "scope", permission.scope().type().name()))));
+                        Map.of())));
 
         for (RolePermissionAssignment assignment : snapshot.rolePermissionAssignments()) {
             GraphNode role = node("role:" + assignment.roleId(), NodeType.ROLE, assignment.roleId(), Map.of());
