@@ -35,8 +35,7 @@ public final class S6PolicyTestSeedFactory {
             }
             switch (recommendation.contract()) {
                 case CROSS_TENANT -> crossTenant(candidate, recommendation, seeds, skipped);
-                case ROLE_COMPARISON -> skipped.add(candidate.candidateId()
-                        + ":ROLE_COMPARISON_REQUIRES_CREDENTIAL_SAFE_CONTEXT_SUBSTITUTION");
+                case ROLE_COMPARISON -> roleComparison(candidate, recommendation, seeds, skipped);
                 default -> skipped.add(candidate.candidateId() + ":UNSUPPORTED_S6_CONTRACT:"
                         + recommendation.contract().name());
             }
@@ -105,6 +104,82 @@ public final class S6PolicyTestSeedFactory {
                 candidate.userSelected(),
                 candidate.userExcluded(),
                 recommendation.reason() + "; policy=" + candidate.targetResolution().policyFingerprint()));
+    }
+
+    private void roleComparison(S6PolicyPlanningCandidate candidate,
+                                S6PolicyPlanningRecommendation recommendation,
+                                List<TestSeed> seeds,
+                                List<String> skipped) {
+        String sourceRole = candidate.sourceContext().role();
+        String targetRole = candidate.targetContext().role();
+        if (sourceRole == null || sourceRole.isBlank() || targetRole == null || targetRole.isBlank()
+                || sourceRole.equals(targetRole)) {
+            skipped.add(candidate.candidateId() + ":ROLE_CONTEXT_NOT_DISTINCT");
+            return;
+        }
+        if (!candidate.sourceContext().tenant().equals(candidate.targetContext().tenant())) {
+            skipped.add(candidate.candidateId() + ":ROLE_COMPARISON_REQUIRES_SAME_TENANT");
+            return;
+        }
+        if (!safe(candidate.endpoint().method())) {
+            skipped.add(candidate.candidateId() + ":ROLE_COMPARISON_REQUIRES_SAFE_READ_ONLY_ENDPOINT");
+            return;
+        }
+        if (!candidate.baseline().request().rawTarget().equals(candidate.positiveControl().request().rawTarget())
+                || candidate.baseline().request().method() != candidate.positiveControl().request().method()) {
+            skipped.add(candidate.candidateId() + ":ROLE_TARGET_CONTROL_CHANGED_ENDPOINT_OR_METHOD");
+            return;
+        }
+        if (candidate.baseline().contextRef().equals(candidate.positiveControl().contextRef())) {
+            skipped.add(candidate.candidateId() + ":ROLE_TARGET_CONTEXT_REFERENCE_NOT_DISTINCT");
+            return;
+        }
+
+        String key = candidate.targetResolution().policyFingerprint() + "|" + candidate.endpoint().endpointId()
+                + "|" + sourceRole + "->" + targetRole + "|" + recommendation.contract();
+        String suffix = TokenFingerprint.sha256(key).substring(0, 24);
+        Mutation mutation = new Mutation(
+                "S6-MUT-CONTEXT-" + suffix,
+                MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION,
+                MutationLocation.CONTEXT,
+                sourceRole,
+                targetRole,
+                candidate.baseline().contextRef(),
+                candidate.positiveControl().contextRef(),
+                "credential-safe authenticated-context substitution by explicit context reference",
+                "target role policy expects " + candidate.targetResolution().expectedDecision(),
+                SafetyClass.SAFE_READ_ONLY,
+                "s6-role-context:" + suffix);
+
+        List<String> invariants = new ArrayList<>(candidate.invariants());
+        invariants.add("endpoint, method, tenant, resource and body remain constant during authenticated-context substitution");
+        invariants.add("Mutation stores role labels and context references, never raw token/cookie/password material");
+        invariants.add("target authenticated request material is resolved only from explicit in-memory test controls");
+        invariants.add("target policy fingerprint=" + candidate.targetResolution().policyFingerprint());
+
+        seeds.add(new TestSeed(
+                "S6-AUTO-ROLE-" + suffix,
+                "1",
+                TestContract.ROLE_COMPARISON,
+                candidate.endpoint(),
+                candidate.baseline(),
+                candidate.positiveControl(),
+                candidate.negativeControl(),
+                mutation,
+                candidate.sourceContext(),
+                candidate.targetContext(),
+                candidate.sourceResource(),
+                candidate.targetResource(),
+                candidate.targetResolution().expectedDecision(),
+                candidate.targetResolution().evidenceIds(),
+                candidate.dependencies(),
+                invariants,
+                4,
+                true,
+                candidate.userSelected(),
+                candidate.userExcluded(),
+                recommendation.reason() + "; credential-safe contextRef="
+                        + candidate.positiveControl().contextRef()));
     }
 
     private static boolean resolvable(io.acra.core.domain.authorization.EffectiveAuthorizationResolution resolution) {

@@ -12,6 +12,8 @@ import io.acra.core.active.execution.LocalhostHttpTransport;
 import io.acra.core.active.execution.TestExecutor;
 import io.acra.core.active.model.ConfigurationSnapshot;
 import io.acra.core.active.model.ExecutionEnvironment;
+import io.acra.core.active.model.MutationLocation;
+import io.acra.core.active.model.MutationType;
 import io.acra.core.active.model.RequestDefinition;
 import io.acra.core.active.model.SafetyPolicy;
 import io.acra.core.active.model.SelectionMode;
@@ -86,196 +88,245 @@ public final class Sprint6PlannerExecutionIntegrationTestSuite {
         AuthorizationPolicySnapshot policy = policy();
         EffectiveAuthorizationResolver resolver = new EffectiveAuthorizationResolver();
 
-        EffectiveAuthorizationResolution baselineResolution = resolver.resolve(policy,
+        EffectiveAuthorizationResolution tenantBaseline = resolver.resolve(policy,
                 new EffectiveAuthorizationRequest("user-a", "tenant-a", "tenant-a", "report-common", "report",
                         "/api/v1/s6/tenants/tenant-a/reports/report-common", "", "READ_REPORT",
                         AuthorizationDecision.UNKNOWN, false, NOW));
-        EffectiveAuthorizationResolution targetResolution = resolver.resolve(policy,
+        EffectiveAuthorizationResolution tenantTarget = resolver.resolve(policy,
                 new EffectiveAuthorizationRequest("user-a", "tenant-a", "tenant-b", "report-common", "report",
                         "/api/v1/s6/tenants/tenant-b/reports/report-common", "", "READ_REPORT",
                         AuthorizationDecision.UNKNOWN, false, NOW));
 
-        S6PolicyPlanningCandidate candidate = candidate(baselineResolution, targetResolution);
-        EffectiveAuthorizationResolution roleResolution = resolver.resolve(policy,
-                new EffectiveAuthorizationRequest("user-a", "tenant-a", "tenant-a", "tenant-a-export",
-                        "tenant-export", "/api/v1/s6/tenants/tenant-a/admin/export", "", "ADMIN_EXPORT",
-                        AuthorizationDecision.UNKNOWN, false, NOW));
-        S6PolicyPlanningCandidate roleCandidate = roleCandidate(roleResolution);
-        PlanningInput base = planningInput();
-        var augmentation = new S6PolicyPlanningBridge().augment(base, List.of(candidate, roleCandidate));
-
-        TestSupport.assertEquals(1, augmentation.generatedSeeds().size(),
+        var tenantAugmentation = new S6PolicyPlanningBridge().augment(
+                tenantPlanningInput(), List.of(tenantCandidate(tenantBaseline, tenantTarget)));
+        TestSupport.assertEquals(1, tenantAugmentation.generatedSeeds().size(),
                 "policy bridge should generate one safe CROSS_TENANT seed");
         assertions++;
-        TestSupport.assertTrue(augmentation.skippedReasons().stream()
-                        .anyMatch(reason -> reason.contains("ROLE_COMPARISON_REQUIRES_CREDENTIAL_SAFE_CONTEXT_SUBSTITUTION")),
-                "role comparison must fail closed instead of copying credentials into a Mutation");
+
+        var tenantSeed = tenantAugmentation.generatedSeeds().getFirst();
+        TestSupport.assertEquals(TestContract.CROSS_TENANT, tenantSeed.contract(),
+                "generated tenant contract should be CROSS_TENANT");
         assertions++;
-        var generated = augmentation.generatedSeeds().getFirst();
-        TestSupport.assertEquals(TestContract.CROSS_TENANT, generated.contract(),
-                "generated contract should be CROSS_TENANT");
+        TestSupport.assertEquals("tenant-a", tenantSeed.mutation().originalValue(),
+                "tenant mutation should contain non-secret source tenant");
         assertions++;
-        TestSupport.assertEquals("tenant-a", generated.mutation().originalValue(),
-                "generated mutation should contain non-secret tenant value");
-        assertions++;
-        TestSupport.assertEquals("tenant-b", generated.mutation().mutatedValue(),
-                "generated mutation should target explicit tenant context");
+        TestSupport.assertEquals("tenant-b", tenantSeed.mutation().mutatedValue(),
+                "tenant mutation should contain non-secret target tenant");
         assertions++;
 
-        Clock clock = Clock.fixed(NOW, ZoneOffset.UTC);
-        Harness harness = harness(clock);
-        ActiveEngineWorkspace workspace = new ActiveEngineWorkspace(clock, harness.executor());
-        var planning = workspace.plan(augmentation.planningInput());
-        TestSupport.assertEquals(1, planning.plan().tests().size(),
-                "existing S4 planner should admit generated S6 test");
-        assertions++;
-        TestSupport.assertEquals(1, workspace.queue().snapshots().size(),
-                "generated S6 test should enter existing execution queue");
-        assertions++;
-
-        var test = planning.plan().tests().getFirst();
-        configureExecutionGuards(harness, test);
-        harness.kill().reset(true, "authorized Sprint 6 localhost generated-test execution");
-        ExpectedDecisionCandidate expected = new ExpectedDecisionCandidate(
-                AuthorizationDecision.DENY, ExpectedDecisionSource.EXPLICIT_CONFIGURED_POLICY,
-                policy.policyId(), targetResolution.evidenceIds(), 1.0);
-        var result = workspace.executeNextLocal(List.of(expected)).orElseThrow();
-
-        TestSupport.assertEquals(io.acra.core.domain.testing.TestState.COMPLETED, result.state(),
-                "policy-generated test should execute through the existing S4 executor");
-        assertions++;
-        TestSupport.assertEquals(AuthorizationOutcome.ALLOW,
-                result.observation().differences().baselineOutcome(),
-                "baseline same-tenant control should allow");
-        assertions++;
+        var tenantResult = executeSingle(tenantAugmentation.planningInput(),
+                AuthorizationDecision.DENY, tenantTarget, "tenant");
         TestSupport.assertEquals(AuthorizationOutcome.DENY,
-                result.observation().differences().negativeControlOutcome(),
-                "explicit cross-tenant negative control should deny");
-        assertions++;
-        TestSupport.assertEquals(AuthorizationOutcome.DENY,
-                result.observation().observedDecision(),
+                tenantResult.result().observation().observedDecision(),
                 "generated tenant mutation should be denied by secure ACRA-Lab");
         assertions++;
         TestSupport.assertEquals(DifferentialClassification.EXPECTED_CHANGE,
-                result.observation().differences().classification(),
-                "generated cross-tenant mutation should match expected policy change");
-        assertions++;
-        TestSupport.assertEquals(io.acra.core.domain.testing.TestState.COMPLETED,
-                workspace.queue().snapshot(test.testId()).state(),
-                "queue should close the generated test as completed");
+                tenantResult.result().observation().differences().classification(),
+                "generated tenant mutation should match expected policy change");
         assertions++;
 
-        String rawToken = token("user-a", "tenant-a", "viewer");
-        String serializedTest = new DomainSerializer().serialize(test);
-        TestSupport.assertNotContains(serializedTest, rawToken,
-                "generated test serialization must not expose synthetic credentials");
+        EffectiveAuthorizationResolution roleBaseline = resolver.resolve(policy,
+                new EffectiveAuthorizationRequest("user-a", "tenant-a", "tenant-a", "admin-summary",
+                        "admin-summary", "/api/v1/s6/tenants/tenant-a/admin/summary", "", "READ_ADMIN_SUMMARY",
+                        AuthorizationDecision.UNKNOWN, false, NOW));
+        EffectiveAuthorizationResolution roleTarget = resolver.resolve(policy,
+                new EffectiveAuthorizationRequest("admin-a", "tenant-a", "tenant-a", "admin-summary",
+                        "admin-summary", "/api/v1/s6/tenants/tenant-a/admin/summary", "", "READ_ADMIN_SUMMARY",
+                        AuthorizationDecision.UNKNOWN, false, NOW));
+
+        var roleAugmentation = new S6PolicyPlanningBridge().augment(
+                rolePlanningInput(), List.of(roleCandidate(roleBaseline, roleTarget)));
+        TestSupport.assertEquals(1, roleAugmentation.generatedSeeds().size(),
+                "policy bridge should generate one credential-safe ROLE_COMPARISON seed");
         assertions++;
-        TestSupport.assertFalse(test.mutation().originalValue().contains(rawToken)
-                        || test.mutation().mutatedValue().contains(rawToken),
-                "Mutation values must never contain credential material");
+        TestSupport.assertTrue(roleAugmentation.skippedReasons().isEmpty(),
+                "valid safe role comparison should not be skipped");
         assertions++;
 
-        System.out.println("SPRINT6_AUTO_PLAN testId=" + test.testId()
-                + " contract=" + test.category()
-                + " expected=" + test.expectedDecision()
-                + " differential=" + result.observation().differences().classification()
-                + " queueState=" + workspace.queue().snapshot(test.testId()).state());
+        var roleSeed = roleAugmentation.generatedSeeds().getFirst();
+        TestSupport.assertEquals(TestContract.ROLE_COMPARISON, roleSeed.contract(),
+                "generated role contract should be ROLE_COMPARISON");
+        assertions++;
+        TestSupport.assertEquals(MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION,
+                roleSeed.mutation().type(), "role comparison should use authenticated-context substitution");
+        assertions++;
+        TestSupport.assertEquals(MutationLocation.CONTEXT, roleSeed.mutation().targetLocation(),
+                "role comparison mutation should reference CONTEXT rather than token/header value");
+        assertions++;
+        TestSupport.assertEquals("viewer", roleSeed.mutation().originalValue(),
+                "mutation should store non-secret source role label");
+        assertions++;
+        TestSupport.assertEquals("admin", roleSeed.mutation().mutatedValue(),
+                "mutation should store non-secret target role label");
+        assertions++;
+        TestSupport.assertEquals(roleBaselineRequest().contextRef(), roleSeed.mutation().sourceContext(),
+                "mutation source should reference explicit viewer request context");
+        assertions++;
+        TestSupport.assertEquals(roleAdminRequest().contextRef(), roleSeed.mutation().targetContext(),
+                "mutation target should reference explicit admin request context");
+        assertions++;
+
+        var roleResult = executeSingle(roleAugmentation.planningInput(),
+                AuthorizationDecision.ALLOW, roleTarget, "role");
+        TestSupport.assertEquals(AuthorizationOutcome.DENY,
+                roleResult.result().observation().differences().baselineOutcome(),
+                "viewer baseline should be denied privileged read");
+        assertions++;
+        TestSupport.assertEquals(AuthorizationOutcome.ALLOW,
+                roleResult.result().observation().differences().positiveControlOutcome(),
+                "admin positive control should allow privileged read");
+        assertions++;
+        TestSupport.assertEquals(AuthorizationOutcome.DENY,
+                roleResult.result().observation().differences().negativeControlOutcome(),
+                "viewer negative control should deny privileged read");
+        assertions++;
+        TestSupport.assertEquals(AuthorizationOutcome.ALLOW,
+                roleResult.result().observation().observedDecision(),
+                "credential-safe context substitution should execute with admin context");
+        assertions++;
+        TestSupport.assertEquals(DifferentialClassification.EXPECTED_CHANGE,
+                roleResult.result().observation().differences().classification(),
+                "role-context substitution should produce expected policy change");
+        assertions++;
+
+        String viewerToken = token("user-a", "tenant-a", "viewer");
+        String adminToken = token("admin-a", "tenant-a", "admin");
+        String serializedRoleTest = new DomainSerializer().serialize(roleResult.test());
+        TestSupport.assertNotContains(serializedRoleTest, viewerToken,
+                "serialized role test must not expose viewer credential");
+        assertions++;
+        TestSupport.assertNotContains(serializedRoleTest, adminToken,
+                "serialized role test must not expose admin credential");
+        assertions++;
+        TestSupport.assertFalse(roleSeed.mutation().originalValue().contains(viewerToken)
+                        || roleSeed.mutation().mutatedValue().contains(adminToken)
+                        || roleSeed.mutation().sourceContext().contains(viewerToken)
+                        || roleSeed.mutation().targetContext().contains(adminToken),
+                "Mutation must contain references/labels only, never raw authentication material");
+        assertions++;
+
+        System.out.println("SPRINT6_AUTO_ROLE testId=" + roleResult.test().testId()
+                + " sourceContextRef=" + roleSeed.mutation().sourceContext()
+                + " targetContextRef=" + roleSeed.mutation().targetContext()
+                + " expected=" + roleResult.test().expectedDecision()
+                + " observed=" + roleResult.result().observation().observedDecision()
+                + " differential=" + roleResult.result().observation().differences().classification()
+                + " queueState=" + roleResult.workspace().queue().snapshot(roleResult.test().testId()).state());
+
         return assertions;
     }
 
-    private static S6PolicyPlanningCandidate candidate(EffectiveAuthorizationResolution baseline,
-                                                        EffectiveAuthorizationResolution target) {
-        Endpoint endpoint = endpoint();
+    private static ExecutionResult executeSingle(PlanningInput input, AuthorizationDecision expectedDecision,
+                                                 EffectiveAuthorizationResolution resolution, String label) {
+        Clock clock = Clock.fixed(NOW, ZoneOffset.UTC);
+        Harness harness = harness(clock);
+        ActiveEngineWorkspace workspace = new ActiveEngineWorkspace(clock, harness.executor());
+        var planning = workspace.plan(input);
+        TestSupport.assertEquals(1, planning.plan().tests().size(),
+                label + " planning should admit exactly one generated test");
+        var test = planning.plan().tests().getFirst();
+        configureExecutionGuards(harness, test);
+        harness.kill().reset(true, "authorized Sprint 6 localhost " + label + " generated-test execution");
+        ExpectedDecisionCandidate expected = new ExpectedDecisionCandidate(
+                expectedDecision, ExpectedDecisionSource.EXPLICIT_CONFIGURED_POLICY,
+                "s6-auto-policy", resolution.evidenceIds(), 1.0);
+        var result = workspace.executeNextLocal(List.of(expected)).orElseThrow();
+        TestSupport.assertEquals(io.acra.core.domain.testing.TestState.COMPLETED, result.state(),
+                label + " generated test should execute through existing S4 executor");
+        TestSupport.assertEquals(io.acra.core.domain.testing.TestState.COMPLETED,
+                workspace.queue().snapshot(test.testId()).state(),
+                label + " generated queue item should complete");
+        return new ExecutionResult(test, result, workspace);
+    }
+
+    private static S6PolicyPlanningCandidate tenantCandidate(EffectiveAuthorizationResolution baseline,
+                                                              EffectiveAuthorizationResolution target) {
         return new S6PolicyPlanningCandidate(
                 "S6-CANDIDATE-CROSS-TENANT",
-                endpoint,
-                baselineDefinition(),
-                positiveDefinition(),
-                negativeDefinition(),
-                sourceContext(),
-                targetContext(),
-                sourceResource(),
-                targetResource(),
+                tenantEndpoint(),
+                tenantBaselineRequest(),
+                tenantPositiveRequest(),
+                tenantNegativeRequest(),
+                tenantSourceContext(),
+                tenantTargetContext(),
+                tenantSourceResource(),
+                tenantTargetResource(),
                 baseline,
                 target,
-                Set.of(TestContract.CROSS_TENANT, TestContract.ROLE_COMPARISON),
+                Set.of(TestContract.CROSS_TENANT),
                 List.of(),
                 List.of("principal remains user-a", "method remains GET", "resource identifier remains report-common"),
                 false,
                 false);
     }
 
-    private static S6PolicyPlanningCandidate roleCandidate(EffectiveAuthorizationResolution resolution) {
-        SecurityContextFingerprint source = new SecurityContextFingerprint(
-                "user-a", "viewer", "tenant-a", "tenant-export:tenant-a", "", "ADMIN_EXPORT", "ACTIVE",
-                "POST /api/v1/s6/tenants/{tenant}/admin/export", "raw", "s6-user-a",
-                AuthorizationDecision.DENY, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
-        SecurityContextFingerprint target = new SecurityContextFingerprint(
-                "admin-a", "tenant-admin", "tenant-a", "tenant-export:tenant-a", "", "ADMIN_EXPORT", "ACTIVE",
-                "POST /api/v1/s6/tenants/{tenant}/admin/export", "raw", "s6-admin-a",
-                AuthorizationDecision.ALLOW, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
+    private static S6PolicyPlanningCandidate roleCandidate(EffectiveAuthorizationResolution baseline,
+                                                            EffectiveAuthorizationResolution target) {
         return new S6PolicyPlanningCandidate(
                 "S6-CANDIDATE-ROLE",
-                endpoint(),
-                baselineDefinition(),
-                positiveDefinition(),
-                negativeDefinition(),
-                source,
+                roleEndpoint(),
+                roleBaselineRequest(),
+                roleAdminRequest(),
+                roleViewerNegativeRequest(),
+                roleSourceContext(),
+                roleTargetContext(),
+                roleResource(),
+                roleResource(),
+                baseline,
                 target,
-                sourceResource(),
-                targetResource(),
-                resolution,
-                resolution,
                 Set.of(TestContract.ROLE_COMPARISON),
                 List.of(),
-                List.of("role comparison requires an explicit alternate authenticated context"),
+                List.of("tenant remains tenant-a", "resource remains admin-summary", "method remains GET"),
                 false,
                 false);
     }
 
-    private static PlanningInput planningInput() {
-        ApiEndpointRecord inventory = new ApiEndpointRecord(endpoint(), "v1", "LAB", AuthenticationType.BEARER,
+    private static PlanningInput tenantPlanningInput() {
+        return planningInput("PLAN-S6-TENANT-AUTO", tenantEndpoint(),
+                List.of(tenantSourceContext(), tenantTargetContext()), Set.of(TestContract.CROSS_TENANT));
+    }
+
+    private static PlanningInput rolePlanningInput() {
+        return planningInput("PLAN-S6-ROLE-AUTO", roleEndpoint(),
+                List.of(roleSourceContext(), roleTargetContext()), Set.of(TestContract.ROLE_COMPARISON));
+    }
+
+    private static PlanningInput planningInput(String planId, Endpoint endpoint,
+                                               List<SecurityContextFingerprint> contexts,
+                                               Set<TestContract> contracts) {
+        ApiEndpointRecord inventory = new ApiEndpointRecord(endpoint, "v1", "LAB", AuthenticationType.BEARER,
                 "ACRA-Lab", NOW, NOW, DocumentationStatus.DOCUMENTED, RiskTier.HIGH);
-        return new PlanningInput(
-                "PLAN-S6-POLICY-AUTO",
-                List.of(inventory),
-                new SecurityContextGraph(),
-                new AuthorizationMatrix(),
-                List.of(sourceContext(), targetContext()),
-                List.of(),
-                null,
-                target(),
-                Set.of(TestContract.CROSS_TENANT, TestContract.ROLE_COMPARISON),
-                Map.of(),
-                Map.of(),
-                20,
-                5,
-                SafetyPolicy.safeLabReadOnly(20, 5),
-                SelectionMode.AUTOMATIC,
+        return new PlanningInput(planId, List.of(inventory), new SecurityContextGraph(), new AuthorizationMatrix(),
+                contexts, List.of(), null, target(), contracts, Map.of(), Map.of(), 20, 5,
+                SafetyPolicy.safeLabReadOnly(20, 5), SelectionMode.AUTOMATIC,
                 TestProfileDefinition.defaults(TestProfile.SAFE_LAB),
-                ConfigurationSnapshot.of(Map.of(
-                        "dataset", "GT-S6-TENANT-RBAC",
-                        "environment", "LAB",
-                        "target", "localhost:18082")),
-                List.of(),
-                NOW);
+                ConfigurationSnapshot.of(Map.of("dataset", "S6-AUTO-PLANNING", "environment", "LAB",
+                        "target", "localhost:18082")), List.of(), NOW);
     }
 
     private static AuthorizationPolicySnapshot policy() {
         return AuthorizationPolicySnapshot.create(
                 "s6-auto-policy", "1", "controlled-local-lab", List.of(),
-                List.of(new RoleAssignment("ra-viewer", "user-a", "viewer", "tenant-a",
-                        AuthorizationScope.tenant("tenant-a"), true, List.of("e-role"))),
+                List.of(
+                        new RoleAssignment("ra-viewer", "user-a", "viewer", "tenant-a",
+                                AuthorizationScope.tenant("tenant-a"), true, List.of("e-role-viewer")),
+                        new RoleAssignment("ra-admin", "admin-a", "admin", "tenant-a",
+                                AuthorizationScope.tenant("tenant-a"), true, List.of("e-role-admin"))),
                 List.of(),
-                List.of(new Permission("p-read-a", "READ_REPORT", "report", "", "",
-                        AuthorizationScope.tenant("tenant-a"), List.of("e-permission"))),
-                List.of(new RolePermissionAssignment("rp-read-a", "viewer", "p-read-a", "tenant-a",
-                        List.of("e-role-permission"))),
-                List.of(), List.of(),
-                List.of("e-policy"), AuthorizationDecision.DENY, NOW);
+                List.of(
+                        new Permission("p-read-a", "READ_REPORT", "report", "", "",
+                                AuthorizationScope.tenant("tenant-a"), List.of("e-permission-read")),
+                        new Permission("p-admin-summary", "READ_ADMIN_SUMMARY", "admin-summary", "", "",
+                                AuthorizationScope.tenant("tenant-a"), List.of("e-permission-admin"))),
+                List.of(
+                        new RolePermissionAssignment("rp-read-a", "viewer", "p-read-a", "tenant-a",
+                                List.of("e-rp-read")),
+                        new RolePermissionAssignment("rp-admin-summary", "admin", "p-admin-summary", "tenant-a",
+                                List.of("e-rp-admin"))),
+                List.of(), List.of(), List.of("e-policy"), AuthorizationDecision.DENY, NOW);
     }
 
-    private static Endpoint endpoint() {
+    private static Endpoint tenantEndpoint() {
         return new Endpoint("EP-S6-AUTO-TENANT", HttpMethod.GET,
                 "/api/v1/s6/tenants/tenant-a/reports/report-common",
                 "/api/v1/s6/tenants/{tenant}/reports/report-common",
@@ -283,56 +334,93 @@ public final class Sprint6PlannerExecutionIntegrationTestSuite {
                 "localhost", "v1", List.of("Sprint 6 policy-generated tenant test"));
     }
 
+    private static Endpoint roleEndpoint() {
+        return new Endpoint("EP-S6-AUTO-ROLE", HttpMethod.GET,
+                "/api/v1/s6/tenants/tenant-a/admin/summary",
+                "/api/v1/s6/tenants/{tenant}/admin/summary",
+                "/api/v1/s6/tenants/{tenant}/admin/summary",
+                "localhost", "v1", List.of("Sprint 6 credential-safe role comparison"));
+    }
+
     private static TargetDescriptor target() {
         return new TargetDescriptor(PROJECT, "acra-lab-secure-s6", "http", "localhost", SECURE_PORT,
                 ExecutionEnvironment.LAB, true, List.of("/api/v1/s6"), Set.of(HttpMethod.GET));
     }
 
-    private static RequestDefinition baselineDefinition() {
-        return new RequestDefinition("S6-REQ-BASE",
-                request("/api/v1/s6/tenants/tenant-a/reports/report-common"),
-                "ctx-user-a-tenant-a", "report:report-common");
+    private static RequestDefinition tenantBaselineRequest() {
+        return requestDefinition("S6-REQ-TENANT-BASE", "/api/v1/s6/tenants/tenant-a/reports/report-common",
+                "user-a", "tenant-a", "viewer", "ctx-user-a-tenant-a", "report:report-common");
     }
 
-    private static RequestDefinition positiveDefinition() {
-        return new RequestDefinition("S6-REQ-POS",
-                request("/api/v1/s6/tenants/tenant-a/reports/report-common"),
-                "ctx-user-a-tenant-a", "report:report-common");
+    private static RequestDefinition tenantPositiveRequest() {
+        return requestDefinition("S6-REQ-TENANT-POS", "/api/v1/s6/tenants/tenant-a/reports/report-common",
+                "user-a", "tenant-a", "viewer", "ctx-user-a-tenant-a-pos", "report:report-common");
     }
 
-    private static RequestDefinition negativeDefinition() {
-        return new RequestDefinition("S6-REQ-NEG",
-                request("/api/v1/s6/tenants/tenant-b/reports/report-b"),
-                "ctx-user-a-tenant-b", "report:report-b");
+    private static RequestDefinition tenantNegativeRequest() {
+        return requestDefinition("S6-REQ-TENANT-NEG", "/api/v1/s6/tenants/tenant-b/reports/report-b",
+                "user-a", "tenant-a", "viewer", "ctx-user-a-tenant-b-deny", "report:report-b");
     }
 
-    private static HttpRequest request(String path) {
-        String token = token("user-a", "tenant-a", "viewer");
-        return HttpRequest.of(HttpMethod.GET, "http", "localhost", SECURE_PORT, path,
-                List.of(new HttpHeader("Authorization", "Bearer " + token),
-                        new HttpHeader("X-S6-Role", "viewer"),
+    private static RequestDefinition roleBaselineRequest() {
+        return requestDefinition("S6-REQ-ROLE-BASE", "/api/v1/s6/tenants/tenant-a/admin/summary",
+                "user-a", "tenant-a", "viewer", "ctx-role-viewer-a", "admin-summary:tenant-a");
+    }
+
+    private static RequestDefinition roleAdminRequest() {
+        return requestDefinition("S6-REQ-ROLE-ADMIN", "/api/v1/s6/tenants/tenant-a/admin/summary",
+                "admin-a", "tenant-a", "admin", "ctx-role-admin-a", "admin-summary:tenant-a");
+    }
+
+    private static RequestDefinition roleViewerNegativeRequest() {
+        return requestDefinition("S6-REQ-ROLE-NEG", "/api/v1/s6/tenants/tenant-a/admin/summary",
+                "user-a", "tenant-a", "viewer", "ctx-role-viewer-neg-a", "admin-summary:tenant-a");
+    }
+
+    private static RequestDefinition requestDefinition(String id, String path, String principal, String tenant,
+                                                       String role, String contextRef, String resourceRef) {
+        String rawToken = token(principal, tenant, role);
+        HttpRequest request = HttpRequest.of(HttpMethod.GET, "http", "localhost", SECURE_PORT, path,
+                List.of(new HttpHeader("Authorization", "Bearer " + rawToken),
                         new HttpHeader("Accept", "application/json")),
                 new byte[0], HttpProtocol.HTTP_1_1);
+        return new RequestDefinition(id, request, contextRef, resourceRef);
     }
 
-    private static SecurityContextFingerprint sourceContext() {
+    private static SecurityContextFingerprint tenantSourceContext() {
         return new SecurityContextFingerprint("user-a", "viewer", "tenant-a", "report:report-common", "manager-a",
                 "READ_REPORT", "ACTIVE", "GET /api/v1/s6/tenants/{tenant}/reports/{report}", "raw",
                 "s6-user-a", AuthorizationDecision.ALLOW, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
     }
 
-    private static SecurityContextFingerprint targetContext() {
-        return new SecurityContextFingerprint("user-a", "tenant-admin", "tenant-b", "report:report-common", "user-b",
+    private static SecurityContextFingerprint tenantTargetContext() {
+        return new SecurityContextFingerprint("user-a", "viewer", "tenant-b", "report:report-common", "user-b",
                 "READ_REPORT", "ACTIVE", "GET /api/v1/s6/tenants/{tenant}/reports/{report}", "raw",
                 "s6-user-a", AuthorizationDecision.DENY, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
     }
 
-    private static Resource sourceResource() {
+    private static SecurityContextFingerprint roleSourceContext() {
+        return new SecurityContextFingerprint("user-a", "viewer", "tenant-a", "admin-summary:tenant-a", "",
+                "READ_ADMIN_SUMMARY", "ACTIVE", "GET /api/v1/s6/tenants/{tenant}/admin/summary", "raw",
+                "s6-viewer-a", AuthorizationDecision.DENY, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
+    }
+
+    private static SecurityContextFingerprint roleTargetContext() {
+        return new SecurityContextFingerprint("admin-a", "admin", "tenant-a", "admin-summary:tenant-a", "",
+                "READ_ADMIN_SUMMARY", "ACTIVE", "GET /api/v1/s6/tenants/{tenant}/admin/summary", "raw",
+                "s6-admin-a", AuthorizationDecision.ALLOW, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
+    }
+
+    private static Resource tenantSourceResource() {
         return new Resource("report-common", "report", null, "manager-a", "tenant-a", "ACTIVE", Confidence.unknown());
     }
 
-    private static Resource targetResource() {
+    private static Resource tenantTargetResource() {
         return new Resource("report-common", "report", null, "user-b", "tenant-b", "ACTIVE", Confidence.unknown());
+    }
+
+    private static Resource roleResource() {
+        return new Resource("admin-summary", "admin-summary", null, "", "tenant-a", "ACTIVE", Confidence.unknown());
     }
 
     private static Harness harness(Clock clock) {
@@ -347,7 +435,7 @@ public final class Sprint6PlannerExecutionIntegrationTestSuite {
         DelayController noDelay = duration -> { };
         TestExecutor executor = new TestExecutor(clock, Duration.ofSeconds(2),
                 new LocalhostHttpTransport(target()), noDelay, validator, budgets, concurrency, rate,
-                new BackoffPolicy(0, Duration.ofMillis(25)), kill, new MutationBudgetTracker(10),
+                new BackoffPolicy(0, Duration.ofMillis(25)), kill, new MutationBudgetTracker(20),
                 audit, evidence);
         return new Harness(executor, kill, budgets, concurrency, rate);
     }
@@ -393,10 +481,10 @@ public final class Sprint6PlannerExecutionIntegrationTestSuite {
         return header + "." + payload + ".s6synthetic";
     }
 
-    private record Harness(
-            TestExecutor executor,
-            KillSwitch kill,
-            HierarchicalBudgetManager budgets,
-            HierarchicalConcurrencyController concurrency,
-            ScopedRateLimiter rate) { }
+    private record Harness(TestExecutor executor, KillSwitch kill, HierarchicalBudgetManager budgets,
+                           HierarchicalConcurrencyController concurrency, ScopedRateLimiter rate) { }
+
+    private record ExecutionResult(io.acra.core.active.model.SecurityTest test,
+                                   io.acra.core.active.execution.TestExecutionResult result,
+                                   ActiveEngineWorkspace workspace) { }
 }

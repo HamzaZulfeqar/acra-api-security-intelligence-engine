@@ -41,7 +41,396 @@ S6_TENANT_REPORTS={
  'tenant-b':{'report-common':{'id':'report-common','tenant_id':'tenant-b','owner_id':'user-b','classification':'internal'}},
 }
 S6_REPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/reports/(?P<report>[^/?]+)$')
-S6_EXPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/admin/export$')
+S6_EXPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/admin/export
+
+def claim(token,name):
+    try:
+        part=token.split('.')[1]
+        part += '='*((4-len(part)%4)%4)
+        obj=json.loads(base64.urlsafe_b64decode(part.encode()).decode())
+        return obj.get(name)
+    except Exception:
+        return None
+
+class Handler(BaseHTTPRequestHandler):
+    server_version='ACRA-Lab/0.3'
+    def log_message(self, fmt, *args):
+        pass
+    def _json(self,status,obj,extra_headers=None,pretty=False):
+        data=json.dumps(obj,indent=2 if pretty else None,separators=None if pretty else (',',':')).encode()
+        self.send_response(status)
+        self.send_header('Content-Type','application/json')
+        self.send_header('Content-Length',str(len(data)))
+        self.send_header('X-Request-ID',f'lab-{id(self)}-{time.time_ns()}')
+        for name,value in (extra_headers or {}).items(): self.send_header(name,value)
+        self.end_headers()
+        try: self.wfile.write(data)
+        except (BrokenPipeError,ConnectionResetError): pass
+    def _identity(self):
+        auth=self.headers.get('Authorization','')
+        if not auth.lower().startswith('bearer '): return None
+        token=auth[7:].strip()
+        delegated=claim(token,'delegated_tenants')
+        if not isinstance(delegated,list): delegated=[]
+        return {'sub':claim(token,'sub'),'tenant_id':claim(token,'tenant_id'),'role':claim(token,'role'),
+                'delegated_tenants':delegated}
+    def _require_identity(self):
+        ident=self._identity()
+        if ident is None or not ident.get('sub'):
+            self._json(401,{'error':'unauthorized'}); return None
+        return ident
+    def _s6_tenant_allowed(self,ident,target_tenant):
+        if target_tenant=='shared': return True
+        if ident.get('role')=='global-admin': return True
+        if ident.get('tenant_id')==target_tenant: return True
+        return ident.get('role')=='delegated-admin' and target_tenant in ident.get('delegated_tenants',[])
+    def _doc_access(self,tenant,doc_id,ident,owner_required=False):
+        doc=DOCS.get(doc_id)
+        if doc is None or tenant!=doc['tenant_id']:
+            self._json(404,{'error':'document_not_found'}); return None
+        if MODE=='secure' and ident.get('tenant_id')!=doc['tenant_id']:
+            self._json(403,{'error':'access_denied','tenant_id':doc['tenant_id']}); return None
+        if MODE=='secure' and owner_required and ident.get('sub')!=doc['owner_id'] and ident.get('role')!='admin':
+            self._json(403,{'error':'access_denied','owner_id':doc['owner_id']}); return None
+        return doc
+    def do_GET(self):
+        parsed=urlparse(self.path); path=parsed.path; query=parse_qs(parsed.query)
+        if path=='/health': return self._json(200,{'status':'ok','mode':MODE})
+        if path=='/api/v1/s4/application-denial':
+            ident=self._require_identity()
+            if not ident:return
+            return self._json(200,{'success':False,'message':'Access denied','timestamp':time.time_ns(),'request_id':f's4-deny-{id(self)}'})
+        if path=='/api/v1/s4/public':
+            variant=query.get('variant',['a'])[0]
+            if variant=='b':
+                return self._json(200,{'request_id':f's4-public-{id(self)}','timestamp':time.time_ns(),'name':'Public fixture','id':'public-1'},pretty=True)
+            return self._json(200,{'id':'public-1','name':'Public fixture','timestamp':time.time_ns(),'request_id':f's4-public-{id(self)}'})
+        if path=='/api/v1/s4/slow':
+            ident=self._require_identity()
+            if not ident:return
+            ms=max(0,min(int(query.get('ms',['250'])[0]),2000)); time.sleep(ms/1000.0)
+            return self._json(200,{'status':'ok','slept_ms':ms})
+        m=S4_DOC_RE.match(path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            doc=S4_DOCS.get(m.group('doc'))
+            if not doc:return self._json(404,{'error':'document_not_found'})
+            mismatch=(ident.get('tenant_id')!=doc['tenant_id'] or ident.get('sub')!=doc['owner_id'])
+            if MODE=='secure' and mismatch:
+                return self._json(403,{'error':'access_denied','resource_id':doc['id']})
+            if MODE=='vulnerable' and mismatch and doc['id']!='Document-B':
+                return self._json(403,{'error':'access_denied','resource_id':doc['id']})
+            return self._json(200,{**doc,'timestamp':time.time_ns(),'request_id':f's4-doc-{id(self)}'},
+                              {'Set-Cookie':'s4session=synthetic-cookie-secret; Path=/; HttpOnly; SameSite=Strict'})
+        m=S6_ADMIN_SUMMARY_RE.match(path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            tenant=m.group('tenant')
+            tenant_allowed=self._s6_tenant_allowed(ident,tenant)
+            role_allowed=ident.get('role') in ('admin','tenant-admin','global-admin','delegated-admin')
+            if MODE=='secure' and (not tenant_allowed or not role_allowed):
+                return self._json(403,{'error':'access_denied','required_role':'tenant-admin'})
+            if MODE=='vulnerable' and not tenant_allowed:
+                return self._json(403,{'error':'access_denied'})
+            return self._json(200,{'tenant_id':tenant,'summary':'privileged-read-only',
+                                   'actor':ident.get('sub'),'role':ident.get('role'),
+                                   'authorization_mode':MODE})
+        m=S6_REPORT_RE.match(path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            report=S6_TENANT_REPORTS.get(m.group('tenant'),{}).get(m.group('report'))
+            if report is None: report=S6_REPORTS.get(m.group('report'))
+            if not report or (report['tenant_id']!='shared' and m.group('tenant')!=report['tenant_id']):
+                return self._json(404,{'error':'report_not_found'})
+            authorized=self._s6_tenant_allowed(ident,report['tenant_id'])
+            if MODE=='secure' and not authorized:
+                return self._json(403,{'error':'access_denied','tenant_id':report['tenant_id']})
+            if MODE=='vulnerable' and not authorized and report['id'] not in ('report-b','report-common'):
+                return self._json(403,{'error':'access_denied','tenant_id':report['tenant_id']})
+            return self._json(200,{**report,'authorization_mode':MODE,'request_id':f's6-report-{id(self)}'})
+        if path=='/api/v1/search':
+            ident=self._require_identity();
+            if not ident:return
+            tenant=query.get('tenant_id',[ident.get('tenant_id')])[0]
+            docs=[d for d in DOCS.values() if d['tenant_id']==tenant]
+            if MODE=='secure' and tenant!=ident.get('tenant_id'): return self._json(403,{'error':'access_denied'})
+            return self._json(200,{'items':docs,'page':1,'limit':len(docs),'next':None})
+        m=DOC_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            doc=self._doc_access(m.group('tenant'),m.group('doc'),ident)
+            if doc:return self._json(200,{**doc,'api_version':'v'+m.group('version')})
+            return
+        m=DOC_LIST_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            tenant=m.group('tenant')
+            if MODE=='secure' and ident.get('tenant_id')!=tenant:return self._json(403,{'error':'access_denied'})
+            items=[d for d in DOCS.values() if d['tenant_id']==tenant]
+            return self._json(200,{'items':items,'offset':0,'limit':len(items),'request_id':f'list-{id(self)}'})
+        m=TENANT_USER_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            user=USERS.get(m.group('user'))
+            if not user:return self._json(404,{'error':'user_not_found'})
+            if MODE=='secure' and (ident.get('tenant_id')!=m.group('tenant') or user['tenant_id']!=m.group('tenant')):return self._json(403,{'error':'access_denied'})
+            return self._json(200,user)
+        m=USER_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            user=USERS.get(m.group('user'))
+            if not user:return self._json(404,{'error':'user_not_found'})
+            if MODE=='secure' and ident.get('tenant_id')!=user['tenant_id']:return self._json(403,{'error':'access_denied'})
+            return self._json(200,user)
+        m=COMMENTS_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            doc=self._doc_access(m.group('tenant'),m.group('doc'),ident)
+            if not doc:return
+            return self._json(200,{'items':COMMENTS.get(doc['id'],[]),'document_id':doc['id'],'tenant_id':doc['tenant_id']})
+        return self._json(404,{'error':'not_found'})
+    def do_PATCH(self):
+        parsed=urlparse(self.path);m=DOC_RE.match(parsed.path)
+        if not m:return self._json(404,{'error':'not_found'})
+        ident=self._require_identity();
+        if not ident:return
+        doc=self._doc_access(m.group('tenant'),m.group('doc'),ident,owner_required=True)
+        if not doc:return
+        length=min(int(self.headers.get('Content-Length','0') or '0'),65536)
+        raw=self.rfile.read(length) if length else b'{}'
+        try: body=json.loads(raw.decode())
+        except Exception:return self._json(400,{'error':'malformed_json'})
+        if isinstance(body,dict) and isinstance(body.get('title'),str):doc['title']=body['title']
+        return self._json(200,doc)
+    def do_POST(self):
+        parsed=urlparse(self.path)
+        if parsed.path=='/api/v1/s4/echo':
+            ident=self._require_identity()
+            if not ident:return
+            length=min(int(self.headers.get('Content-Length','0') or '0'),65536)
+            raw=self.rfile.read(length) if length else b''
+            return self._json(200,{'method':'POST','x_echo':self.headers.get('X-Echo',''),'body':raw.decode(errors='replace')})
+        m=S6_EXPORT_RE.match(parsed.path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            tenant=m.group('tenant')
+            tenant_allowed=self._s6_tenant_allowed(ident,tenant)
+            role_allowed=ident.get('role') in ('admin','tenant-admin','global-admin','delegated-admin')
+            if MODE=='secure' and (not tenant_allowed or not role_allowed):
+                return self._json(403,{'error':'access_denied','required_role':'tenant-admin'})
+            if MODE=='vulnerable' and not tenant_allowed and ident.get('sub')!='user-a':
+                return self._json(403,{'error':'access_denied'})
+            return self._json(200,{'export':'accepted','tenant_id':tenant,'actor':ident.get('sub'),
+                                   'role':ident.get('role'),'authorization_mode':MODE})
+        m=APPROVE_RE.match(parsed.path)
+        if not m:return self._json(404,{'error':'not_found'})
+        ident=self._require_identity();
+        if not ident:return
+        doc=self._doc_access(m.group('tenant'),m.group('doc'),ident)
+        if not doc:return
+        if MODE=='secure' and ident.get('role') not in ('editor','admin'):return self._json(403,{'error':'access_denied','required_role':'editor'})
+        doc['state']='approved';return self._json(200,doc)
+
+if __name__=='__main__':
+    ThreadingHTTPServer(('127.0.0.1',PORT),Handler).serve_forever()
+)
+S6_ADMIN_SUMMARY_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/admin/summary
+
+def claim(token,name):
+    try:
+        part=token.split('.')[1]
+        part += '='*((4-len(part)%4)%4)
+        obj=json.loads(base64.urlsafe_b64decode(part.encode()).decode())
+        return obj.get(name)
+    except Exception:
+        return None
+
+class Handler(BaseHTTPRequestHandler):
+    server_version='ACRA-Lab/0.3'
+    def log_message(self, fmt, *args):
+        pass
+    def _json(self,status,obj,extra_headers=None,pretty=False):
+        data=json.dumps(obj,indent=2 if pretty else None,separators=None if pretty else (',',':')).encode()
+        self.send_response(status)
+        self.send_header('Content-Type','application/json')
+        self.send_header('Content-Length',str(len(data)))
+        self.send_header('X-Request-ID',f'lab-{id(self)}-{time.time_ns()}')
+        for name,value in (extra_headers or {}).items(): self.send_header(name,value)
+        self.end_headers()
+        try: self.wfile.write(data)
+        except (BrokenPipeError,ConnectionResetError): pass
+    def _identity(self):
+        auth=self.headers.get('Authorization','')
+        if not auth.lower().startswith('bearer '): return None
+        token=auth[7:].strip()
+        delegated=claim(token,'delegated_tenants')
+        if not isinstance(delegated,list): delegated=[]
+        return {'sub':claim(token,'sub'),'tenant_id':claim(token,'tenant_id'),'role':claim(token,'role'),
+                'delegated_tenants':delegated}
+    def _require_identity(self):
+        ident=self._identity()
+        if ident is None or not ident.get('sub'):
+            self._json(401,{'error':'unauthorized'}); return None
+        return ident
+    def _s6_tenant_allowed(self,ident,target_tenant):
+        if target_tenant=='shared': return True
+        if ident.get('role')=='global-admin': return True
+        if ident.get('tenant_id')==target_tenant: return True
+        return ident.get('role')=='delegated-admin' and target_tenant in ident.get('delegated_tenants',[])
+    def _doc_access(self,tenant,doc_id,ident,owner_required=False):
+        doc=DOCS.get(doc_id)
+        if doc is None or tenant!=doc['tenant_id']:
+            self._json(404,{'error':'document_not_found'}); return None
+        if MODE=='secure' and ident.get('tenant_id')!=doc['tenant_id']:
+            self._json(403,{'error':'access_denied','tenant_id':doc['tenant_id']}); return None
+        if MODE=='secure' and owner_required and ident.get('sub')!=doc['owner_id'] and ident.get('role')!='admin':
+            self._json(403,{'error':'access_denied','owner_id':doc['owner_id']}); return None
+        return doc
+    def do_GET(self):
+        parsed=urlparse(self.path); path=parsed.path; query=parse_qs(parsed.query)
+        if path=='/health': return self._json(200,{'status':'ok','mode':MODE})
+        if path=='/api/v1/s4/application-denial':
+            ident=self._require_identity()
+            if not ident:return
+            return self._json(200,{'success':False,'message':'Access denied','timestamp':time.time_ns(),'request_id':f's4-deny-{id(self)}'})
+        if path=='/api/v1/s4/public':
+            variant=query.get('variant',['a'])[0]
+            if variant=='b':
+                return self._json(200,{'request_id':f's4-public-{id(self)}','timestamp':time.time_ns(),'name':'Public fixture','id':'public-1'},pretty=True)
+            return self._json(200,{'id':'public-1','name':'Public fixture','timestamp':time.time_ns(),'request_id':f's4-public-{id(self)}'})
+        if path=='/api/v1/s4/slow':
+            ident=self._require_identity()
+            if not ident:return
+            ms=max(0,min(int(query.get('ms',['250'])[0]),2000)); time.sleep(ms/1000.0)
+            return self._json(200,{'status':'ok','slept_ms':ms})
+        m=S4_DOC_RE.match(path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            doc=S4_DOCS.get(m.group('doc'))
+            if not doc:return self._json(404,{'error':'document_not_found'})
+            mismatch=(ident.get('tenant_id')!=doc['tenant_id'] or ident.get('sub')!=doc['owner_id'])
+            if MODE=='secure' and mismatch:
+                return self._json(403,{'error':'access_denied','resource_id':doc['id']})
+            if MODE=='vulnerable' and mismatch and doc['id']!='Document-B':
+                return self._json(403,{'error':'access_denied','resource_id':doc['id']})
+            return self._json(200,{**doc,'timestamp':time.time_ns(),'request_id':f's4-doc-{id(self)}'},
+                              {'Set-Cookie':'s4session=synthetic-cookie-secret; Path=/; HttpOnly; SameSite=Strict'})
+        m=S6_REPORT_RE.match(path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            report=S6_TENANT_REPORTS.get(m.group('tenant'),{}).get(m.group('report'))
+            if report is None: report=S6_REPORTS.get(m.group('report'))
+            if not report or (report['tenant_id']!='shared' and m.group('tenant')!=report['tenant_id']):
+                return self._json(404,{'error':'report_not_found'})
+            authorized=self._s6_tenant_allowed(ident,report['tenant_id'])
+            if MODE=='secure' and not authorized:
+                return self._json(403,{'error':'access_denied','tenant_id':report['tenant_id']})
+            if MODE=='vulnerable' and not authorized and report['id'] not in ('report-b','report-common'):
+                return self._json(403,{'error':'access_denied','tenant_id':report['tenant_id']})
+            return self._json(200,{**report,'authorization_mode':MODE,'request_id':f's6-report-{id(self)}'})
+        if path=='/api/v1/search':
+            ident=self._require_identity();
+            if not ident:return
+            tenant=query.get('tenant_id',[ident.get('tenant_id')])[0]
+            docs=[d for d in DOCS.values() if d['tenant_id']==tenant]
+            if MODE=='secure' and tenant!=ident.get('tenant_id'): return self._json(403,{'error':'access_denied'})
+            return self._json(200,{'items':docs,'page':1,'limit':len(docs),'next':None})
+        m=DOC_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            doc=self._doc_access(m.group('tenant'),m.group('doc'),ident)
+            if doc:return self._json(200,{**doc,'api_version':'v'+m.group('version')})
+            return
+        m=DOC_LIST_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            tenant=m.group('tenant')
+            if MODE=='secure' and ident.get('tenant_id')!=tenant:return self._json(403,{'error':'access_denied'})
+            items=[d for d in DOCS.values() if d['tenant_id']==tenant]
+            return self._json(200,{'items':items,'offset':0,'limit':len(items),'request_id':f'list-{id(self)}'})
+        m=TENANT_USER_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            user=USERS.get(m.group('user'))
+            if not user:return self._json(404,{'error':'user_not_found'})
+            if MODE=='secure' and (ident.get('tenant_id')!=m.group('tenant') or user['tenant_id']!=m.group('tenant')):return self._json(403,{'error':'access_denied'})
+            return self._json(200,user)
+        m=USER_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            user=USERS.get(m.group('user'))
+            if not user:return self._json(404,{'error':'user_not_found'})
+            if MODE=='secure' and ident.get('tenant_id')!=user['tenant_id']:return self._json(403,{'error':'access_denied'})
+            return self._json(200,user)
+        m=COMMENTS_RE.match(path)
+        if m:
+            ident=self._require_identity();
+            if not ident:return
+            doc=self._doc_access(m.group('tenant'),m.group('doc'),ident)
+            if not doc:return
+            return self._json(200,{'items':COMMENTS.get(doc['id'],[]),'document_id':doc['id'],'tenant_id':doc['tenant_id']})
+        return self._json(404,{'error':'not_found'})
+    def do_PATCH(self):
+        parsed=urlparse(self.path);m=DOC_RE.match(parsed.path)
+        if not m:return self._json(404,{'error':'not_found'})
+        ident=self._require_identity();
+        if not ident:return
+        doc=self._doc_access(m.group('tenant'),m.group('doc'),ident,owner_required=True)
+        if not doc:return
+        length=min(int(self.headers.get('Content-Length','0') or '0'),65536)
+        raw=self.rfile.read(length) if length else b'{}'
+        try: body=json.loads(raw.decode())
+        except Exception:return self._json(400,{'error':'malformed_json'})
+        if isinstance(body,dict) and isinstance(body.get('title'),str):doc['title']=body['title']
+        return self._json(200,doc)
+    def do_POST(self):
+        parsed=urlparse(self.path)
+        if parsed.path=='/api/v1/s4/echo':
+            ident=self._require_identity()
+            if not ident:return
+            length=min(int(self.headers.get('Content-Length','0') or '0'),65536)
+            raw=self.rfile.read(length) if length else b''
+            return self._json(200,{'method':'POST','x_echo':self.headers.get('X-Echo',''),'body':raw.decode(errors='replace')})
+        m=S6_EXPORT_RE.match(parsed.path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            tenant=m.group('tenant')
+            tenant_allowed=self._s6_tenant_allowed(ident,tenant)
+            role_allowed=ident.get('role') in ('admin','tenant-admin','global-admin','delegated-admin')
+            if MODE=='secure' and (not tenant_allowed or not role_allowed):
+                return self._json(403,{'error':'access_denied','required_role':'tenant-admin'})
+            if MODE=='vulnerable' and not tenant_allowed and ident.get('sub')!='user-a':
+                return self._json(403,{'error':'access_denied'})
+            return self._json(200,{'export':'accepted','tenant_id':tenant,'actor':ident.get('sub'),
+                                   'role':ident.get('role'),'authorization_mode':MODE})
+        m=APPROVE_RE.match(parsed.path)
+        if not m:return self._json(404,{'error':'not_found'})
+        ident=self._require_identity();
+        if not ident:return
+        doc=self._doc_access(m.group('tenant'),m.group('doc'),ident)
+        if not doc:return
+        if MODE=='secure' and ident.get('role') not in ('editor','admin'):return self._json(403,{'error':'access_denied','required_role':'editor'})
+        doc['state']='approved';return self._json(200,doc)
+
+if __name__=='__main__':
+    ThreadingHTTPServer(('127.0.0.1',PORT),Handler).serve_forever()
+)
 
 def claim(token,name):
     try:

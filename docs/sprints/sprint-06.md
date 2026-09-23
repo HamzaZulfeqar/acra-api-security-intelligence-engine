@@ -60,3 +60,19 @@ Implemented:
 
 The integration suite proves:
 `S6 policy → generated TestSeed → S4 TestPlanner → ExecutionQueue → TestExecutor → live secure ACRA-Lab → differential observation`.
+
+
+## Credential-safe automatic ROLE_COMPARISON
+
+Implemented:
+- `AUTHENTICATED_CONTEXT_SUBSTITUTION` mutation type
+- `CONTEXT` mutation location
+- `AuthenticatedContextSubstitutionResolver`
+- automatic safe read-only ROLE_COMPARISON seed generation
+- context-reference resolution from explicit SecurityTest controls
+- non-authentication equivalence enforcement before dispatch
+- localhost privileged read-only `/api/v1/s6/tenants/{tenant}/admin/summary` fixture
+- live viewer→admin authenticated-context substitution proof
+- credential-exclusion assertions covering both source and target synthetic tokens
+
+No raw credential is copied into Mutation metadata.

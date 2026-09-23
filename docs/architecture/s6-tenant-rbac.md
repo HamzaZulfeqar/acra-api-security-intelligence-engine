@@ -50,3 +50,24 @@ Current fail-closed boundary:
 - `ROLE_COMPARISON` recommendations are retained, but generic active generation is skipped until credential-safe
   context substitution can reference an explicit alternate authenticated context without copying token material into
   `Mutation.originalValue` / `Mutation.mutatedValue`.
+
+
+## Credential-safe ROLE_COMPARISON
+
+Sprint 6 now supports automatic ROLE_COMPARISON for safe read-only endpoints through
+`AUTHENTICATED_CONTEXT_SUBSTITUTION`.
+
+The generated mutation stores:
+- source role label
+- target role label
+- source `contextRef`
+- target `contextRef`
+
+It does not store bearer tokens, cookies, passwords or API keys.
+
+At execution, `AuthenticatedContextSubstitutionResolver` resolves the target request only from the explicit
+in-memory controls already attached to that SecurityTest. `RequestEquivalenceGuard` rejects the substitution if
+endpoint, method, body, resource reference or non-authentication headers change.
+
+This preserves a clean experiment:
+same tenant + same resource + same operation + different authenticated role context.

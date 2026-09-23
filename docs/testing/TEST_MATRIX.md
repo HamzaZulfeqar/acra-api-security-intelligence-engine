@@ -26,7 +26,9 @@ The metrics above apply only to the controlled localhost dataset and are not rea
 | TEST-S6-AUTO-EXEC-001 | queue → existing TestExecutor → secure localhost ACRA-Lab | run 35882729813 | PASS |
 | TEST-S6-AUTO-MUT-001 | one-variable tenant-a → tenant-b path substitution | generated test S6-AUTO-TENANT-a915a78d9e3fd8c06e49c4e9 | PASS |
 | TEST-S6-AUTO-SAFE-001 | credentials excluded from Mutation and serialized test | same suite | PASS |
-| TEST-S6-ROLE-GEN-001 | generic ROLE_COMPARISON active generation | fail-closed pending credential-safe context substitution | EXPECTED BLOCK |
+| TEST-S6-ROLE-GEN-001 | safe read-only ROLE_COMPARISON active generation | authenticated contextRef substitution; raw credentials excluded from Mutation | PASS |
+| TEST-S6-ROLE-EQUIV-001 | same endpoint/method/resource/body/non-auth headers | RequestEquivalenceGuard | PASS |
+| TEST-S6-ROLE-SECRET-001 | viewer/admin raw tokens absent from serialized test and Mutation metadata | Sprint6PlannerExecutionIntegrationTestSuite | PASS |
 
 ## Sprint 5 final closure — 2026-09-23
 

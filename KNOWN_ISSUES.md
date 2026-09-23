@@ -7,7 +7,7 @@
 - The first live S6 campaign exposed a shared-scope isolation defect; it is fixed and covered by regression tests.
 - S6 policy state and graph/evidence persistence remain in-memory.
 - Full UI/reporting/performance/final package closure is still pending.
-- ROLE_COMPARISON active test generation remains intentionally blocked until ACRA can substitute an alternate authenticated context by reference without placing raw credential/token material inside Mutation values.
+- ROLE_COMPARISON active generation is now implemented for safe read-only endpoints using explicit contextRef substitution. State-changing role comparisons remain intentionally outside this automatic path until separate confirmation/transaction-safety policy is defined.
 - Historical real Burp runtime validation remains separate.
 
 ## Current residual issues after S5 completion — 2026-09-23

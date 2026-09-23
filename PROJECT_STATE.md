@@ -34,7 +34,8 @@
 - policy-aware S6 planning bridge into the existing S4 planner/queue/executor
 - deterministic safe read-only CROSS_TENANT test generation
 - live generated-test execution against secure localhost ACRA-Lab
-- ROLE_COMPARISON active generation intentionally fail-closed pending credential-safe authenticated-context substitution
+- credential-safe authenticated-context substitution implemented for safe read-only ROLE_COMPARISON
+- ROLE_COMPARISON now generates and executes through explicit contextRef controls without raw credentials in Mutation
 
 ### Newly verified planner/execution evidence
 
