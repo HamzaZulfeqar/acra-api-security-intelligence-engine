@@ -60,6 +60,7 @@ jobs:
             io.acra.core.tests.sprint5.Sprint5PolicyValidationTestSuite
             io.acra.core.tests.sprint5.Sprint5ContextNormalizationTestSuite
             io.acra.core.tests.sprint5.Sprint5AuthorizationDimensionTestSuite
+            io.acra.core.tests.sprint5.Sprint5OrchestrationTestSuite
           )
           for suite in "${suites[@]}"; do
             echo "==> $suite"
