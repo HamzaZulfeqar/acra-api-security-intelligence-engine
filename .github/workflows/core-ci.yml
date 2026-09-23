@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Make verification scripts executable
+        run: chmod +x scripts/*.sh
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
