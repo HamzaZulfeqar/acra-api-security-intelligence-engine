@@ -66,3 +66,35 @@ jobs:
             echo "==> $suite"
             java -ea -cp "$CP" "$suite"
           done
+
+      - name: Run controlled S5 localhost authorization validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/s5-ci
+          ACRA_LAB_MODE=vulnerable PORT=18081 python3 lab/common/basic_api.py > build/s5-ci/lab-vulnerable.log 2>&1 &
+          VULN_PID=$!
+          ACRA_LAB_MODE=secure PORT=18082 python3 lab/common/basic_api.py > build/s5-ci/lab-secure.log 2>&1 &
+          SECURE_PID=$!
+          cleanup() {
+            kill "$VULN_PID" "$SECURE_PID" 2>/dev/null || true
+            wait "$VULN_PID" "$SECURE_PID" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+          ready=0
+          for _ in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:18081/health >/dev/null \
+              && curl -fsS http://127.0.0.1:18082/health >/dev/null; then
+              ready=1
+              break
+            fi
+            sleep 0.25
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "ACRA-Lab did not become ready" >&2
+            cat build/s5-ci/lab-vulnerable.log || true
+            cat build/s5-ci/lab-secure.log || true
+            exit 1
+          fi
+          java -ea -cp "build/s5-ci/main:build/s5-ci/test" \
+            io.acra.core.tests.sprint4.Sprint5LocalhostAuthorizationIntegrationTestSuite
