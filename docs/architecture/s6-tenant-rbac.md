@@ -81,3 +81,10 @@ ID. `S6AuthorizationPanel` renders that state into Authorization sub-views for t
 roles, hierarchy, permission catalog, effective authorization matrix, policy conflict and policy coverage.
 
 No authorization policy is inferred in the UI. Empty policy state renders as NOT LOADED rather than guessed data.
+
+
+## Reporting/export projection
+
+S6AuthorizationReportGenerator converts the same S6AuthorizationProductSnapshot used by the UI into a versioned report. Its report ID is content-derived from the report version, policy fingerprint and deterministic analysis/candidate/conflict identities; generatedAt is explicit input rather than hidden wall-clock state.
+
+S6AuthorizationReportExporter provides canonical JSON through the existing secret-safe DomainSerializer plus deterministic Markdown. Reporting does not promote FindingCandidate to a confirmed vulnerability.

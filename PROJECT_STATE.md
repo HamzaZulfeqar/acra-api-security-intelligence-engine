@@ -36,6 +36,10 @@
 - live generated-test execution against secure localhost ACRA-Lab
 - S6 authorization product workspace and Burp UI projection
 - Authorization Overview / Policy / Tenant Map / Roles / Hierarchy / Permissions / Effective Permissions / Conflicts / Coverage views
+- deterministic S6 authorization report model
+- canonical secret-safe JSON report export + SHA-256
+- deterministic Markdown review report
+- Reporter plugin adapter and UI Report / JSON Export projections
 - credential-safe authenticated-context substitution implemented for safe read-only ROLE_COMPARISON
 - ROLE_COMPARISON now generates and executes through explicit contextRef controls without raw credentials in Mutation
 

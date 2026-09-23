@@ -110,3 +110,21 @@ GitHub Actions run `35885676715`:
 
 This verifies the headless Swing product projection only. It does not by itself establish a real Burp runtime/UI
 session; historical Burp runtime validation remains a separate gate.
+
+
+## S6 reporting and machine-readable export
+
+Implemented:
+- deterministic S6 authorization report model with content-derived report ID
+- summary counts for expected ALLOW/DENY, conflicts, review candidates, risk assessments and coverage
+- effective-authorization, policy-conflict and coverage projections
+- FindingCandidate and risk export without promotion to confirmed vulnerability
+- aggregated evidence-reference inventory
+- canonical secret-safe JSON export through the existing DomainSerializer
+- deterministic Markdown review report
+- SHA-256 digest for JSON report artifact
+- S6AuthorizationJsonReporter adapter using the existing Reporter plugin contract
+- Authorization UI Report and JSON Export views backed by the same S6 product workspace
+- CI artifact generation for JSON, digest and Markdown
+
+The report explicitly records confirmedFindingCount=0. SARIF and Burp Issue export remain broader reporting-roadmap items and are not claimed complete in this slice.
