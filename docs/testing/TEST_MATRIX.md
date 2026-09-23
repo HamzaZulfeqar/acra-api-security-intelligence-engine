@@ -17,6 +17,19 @@ GitHub Actions run `35878508170`: **PASS** on exact Temurin JDK 21.0.12.1.
 
 The metrics above apply only to the controlled localhost dataset and are not real-world accuracy claims.
 
+### Sprint 6 performance/security closure
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S6-PERF-001 | 100 / 1,000 / 10,000 policy resolution | Sprint6PerformanceObservationTestSuite | PENDING CI |
+| TEST-S6-PERF-002 | policy-aware planning recommendations | Sprint6PerformanceObservationTestSuite | PENDING CI |
+| TEST-S6-PERF-003 | S6 report generation at 100 / 1,000 / 10,000 analyses | Sprint6PerformanceObservationTestSuite | PENDING CI |
+| TEST-S6-SEC-CTX-001 | missing / ambiguous / spoofed authenticated context refs | Sprint6SecurityHardeningTestSuite | PENDING CI |
+| TEST-S6-SEC-EQUIV-001 | path / non-auth header / resource drift rejection | Sprint6SecurityHardeningTestSuite | PENDING CI |
+| TEST-S6-SEC-AUTH-001 | unchanged auth context rejected | Sprint6SecurityHardeningTestSuite | PENDING CI |
+| TEST-S6-SEC-SERIAL-001 | viewer/admin raw token exclusion | Sprint6SecurityHardeningTestSuite | PENDING CI |
+| TEST-S6-SEC-POLICY-001 | conflicting policy produces no executable seed | Sprint6SecurityHardeningTestSuite | PENDING CI |
+
 ### Sprint 6 reporting/export
 
 | Test ID | Coverage | Evidence | Result |

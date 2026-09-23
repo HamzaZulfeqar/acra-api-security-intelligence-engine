@@ -28,6 +28,8 @@ suites=(
   io.acra.core.tests.sprint6.Sprint6LiveLabExperimentTestSuite
   io.acra.core.tests.sprint6.Sprint6PlannerExecutionIntegrationTestSuite
   io.acra.core.tests.sprint6.Sprint6ReportingExportTestSuite
+  io.acra.core.tests.sprint6.Sprint6PerformanceObservationTestSuite
+  io.acra.core.tests.sprint6.Sprint6SecurityHardeningTestSuite
 )
 
 python3 -m py_compile "$ROOT/lab/common/basic_api.py" "$ROOT/lab/secure-api/basic-api/server.py" "$ROOT/lab/vulnerable-api/basic-api/server.py"
@@ -73,6 +75,7 @@ PY
 
 export ACRA_S6_EXPERIMENT_OUTPUT="$BUILD/EXP-S6-TENANT-RBAC-001.json"
 export ACRA_S6_REPORT_OUTPUT_DIR="$BUILD/reporting"
+export ACRA_S6_PERF_OUTPUT="$BUILD/performance/performance-s6.csv"
 
 for suite in "${suites[@]}"; do
   java -ea -cp "$CP" "$suite"

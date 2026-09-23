@@ -49,4 +49,5 @@ jobs:
             build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.json
             build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.json.sha256
             build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.md
+            build/s6-foundation-ci/performance/performance-s6.csv
           if-no-files-found: warn

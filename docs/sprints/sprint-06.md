@@ -141,3 +141,20 @@ GitHub Actions run `35887862337`:
 - JSON, SHA-256 and Markdown report artifacts produced and uploaded by CI
 
 This validates the deterministic S6 authorization-report slice. SARIF and Burp Issue export remain future reporting targets.
+
+
+## S6 performance and security closure
+
+Added dedicated exact-Java-21 verification for:
+- 100 / 1,000 / 10,000 authorization-policy resolution workloads
+- policy-aware planning recommendation workload
+- S6 authorization report-generation workload
+- approximate JVM memory delta observations
+- credential-safe context-reference abuse cases
+- missing / ambiguous / spoofed authenticated context references
+- non-authentication path/header/resource drift rejection
+- unchanged authentication-context rejection
+- serialized raw-token exclusion
+- conflicting-policy fail-closed planning
+
+Performance values are environment-specific engineering observations only. No release latency threshold or general performance claim is introduced.

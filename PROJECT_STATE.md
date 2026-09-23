@@ -88,6 +88,17 @@ GitHub Actions run `35887862337` completed successfully at commit `b051f08612730
 - report UI and JSON export UI are backed by the same S6 authorization product workspace
 - report boundary preserves FindingCandidate as review-only and records confirmedFindingCount=0
 
+### S6 performance/security closure in progress
+
+- 100 / 1,000 / 10,000 S6 policy-resolution performance observation suite added
+- policy-aware recommendation and report-generation workload measurement added
+- context-reference abuse / spoofing / ambiguity tests added
+- request-equivalence drift checks expanded for role-context substitution
+- raw viewer/admin credential exclusion re-verified
+- conflicting-policy active generation explicitly fail-closed
+
+These checks are awaiting the current CI run before being promoted to PASS.
+
 ### Remaining S6 closure work
 
 - fuller planner→controlled execution product integration
