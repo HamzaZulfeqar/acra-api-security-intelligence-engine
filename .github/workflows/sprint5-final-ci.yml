@@ -1,0 +1,30 @@
+name: Sprint 5 Final Verification
+
+on:
+  push:
+    branches:
+      - s5-s6-completion
+    paths:
+      - 'core/**'
+      - 'scripts/verify-sprint5-final.sh'
+      - '.github/workflows/sprint5-final-ci.yml'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  sprint5-final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify Java
+        run: java -version
+      - name: Run Sprint 5 final verification
+        run: bash ./scripts/verify-sprint5-final.sh
