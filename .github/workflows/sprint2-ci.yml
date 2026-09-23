@@ -38,7 +38,7 @@ jobs:
         run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
 
       - name: Sprint 2 local verification gates
-        run: ./scripts/verify-sprint2.sh
+        run: bash ./scripts/verify-sprint2.sh
 
       - name: Upload verification evidence
         if: always()
