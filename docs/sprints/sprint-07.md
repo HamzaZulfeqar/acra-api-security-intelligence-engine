@@ -80,3 +80,21 @@ GitHub Actions run `35894118859` completed successfully on Temurin Java 21.
 Phase 1 is therefore complete. Sprint 7 remains IN PROGRESS because assessment/finding integration,
 controlled workflow ACRA-Lab execution, automatic WORKFLOW_TRANSITION planning, UI/reporting closure,
 performance/security finalization and package freeze remain outstanding.
+
+
+## Phase 2 — workflow assessment, finding/risk integration and ground truth
+
+Implemented:
+- `WorkflowTransitionAssessment` and explicit assessment states
+- deterministic assessment IDs
+- `S7WorkflowAnalysisRequest` / `S7WorkflowAnalysisResult`
+- `S7WorkflowOrchestrator`
+- evidence/project/test/execution/observation ownership checks before candidate promotion
+- workflow FindingCandidate projection
+- deterministic risk prioritization through the existing `AuthorizationSeverityEvaluator`
+- dimensions for workflow, approval, separation-of-duties, token binding and delegation context
+- downstream token-context data minimization
+- controlled `GT-S7-WORKFLOW-AUTHORIZATION.json` with ten independently declared cases
+
+Candidate promotion remains conservative: policy conflict, incomplete policy, evidence ownership failure or
+observation provenance failure yields INCONCLUSIVE rather than a vulnerability claim.

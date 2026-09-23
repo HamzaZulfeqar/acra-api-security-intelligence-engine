@@ -1,0 +1,24 @@
+{
+  "id": "GT-S7-WORKFLOW-AUTHORIZATION",
+  "scope": "controlled localhost ACRA-Lab only",
+  "version": "1",
+  "workflow": "document-approval",
+  "states": ["DRAFT", "SUBMITTED", "APPROVED", "SHIPPED", "CANCELLED"],
+  "notes": [
+    "Ground truth is defined independently of observed HTTP responses.",
+    "A policy mismatch is a FindingCandidate review signal, not an automatically confirmed vulnerability.",
+    "Token binding uses synthetic SHA-256 context fingerprints only; raw tokens are excluded."
+  ],
+  "cases": [
+    {"id":"S7-GT-001","family":"WORKFLOW","actor":"author-a","role":"author","action":"SUBMIT","from":"DRAFT","to":"SUBMITTED","expected":"ALLOW","label":"VALID_SUBMIT_CONTROL"},
+    {"id":"S7-GT-002","family":"WORKFLOW","actor":"author-a","role":"author","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","expected":"DENY","label":"WRONG_ROLE_DENY"},
+    {"id":"S7-GT-003","family":"WORKFLOW","actor":"approver-a","role":"approver","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","approval":false,"expected":"DENY","label":"APPROVAL_REQUIRED_DENY"},
+    {"id":"S7-GT-004","family":"WORKFLOW","actor":"approver-a","role":"approver","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","role_separation":false,"expected":"DENY","label":"SEPARATION_OF_DUTIES_DENY"},
+    {"id":"S7-GT-005","family":"WORKFLOW","actor":"approver-a","role":"approver","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","approval":true,"role_separation":true,"token_binding":"valid","expected":"ALLOW","label":"VALID_APPROVAL_CONTROL"},
+    {"id":"S7-GT-006","family":"TOKEN_BINDING","actor":"approver-a","role":"approver","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","token_binding":"mismatch","expected":"DENY","label":"TOKEN_BINDING_DENY"},
+    {"id":"S7-GT-007","family":"DELEGATION","actor":"delegate-a","role":"approver","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","delegation":"active","expected":"ALLOW","label":"DELEGATION_ALLOW_CONTROL"},
+    {"id":"S7-GT-008","family":"DELEGATION","actor":"delegate-a","role":"approver","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","delegation":"expired","expected":"DENY","label":"EXPIRED_DELEGATION_DENY"},
+    {"id":"S7-GT-009","family":"WORKFLOW","actor":"author-a","role":"author","action":"CANCEL","from":"SHIPPED","to":"CANCELLED","expected":"DENY","label":"TERMINAL_STATE_DENY"},
+    {"id":"S7-GT-010","family":"POLICY_CONFLICT","actor":"approver-a","role":"approver","action":"APPROVE","from":"SUBMITTED","to":"APPROVED","expected":"INCONCLUSIVE","label":"UNPROVEN_PRECEDENCE"}
+  ]
+}

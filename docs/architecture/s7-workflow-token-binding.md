@@ -47,3 +47,30 @@ records the matched binding ID rather than copying the token-context fingerprint
 Missing required roles, approval, role separation, token binding or valid delegation prevents an ALLOW rule from
 becoming eligible. Explicit default DENY then resolves the transition to DENY. Conflicting eligible allow/deny
 rules remain CONFLICTING unless explicit evidence-backed precedence is supplied.
+
+
+## Phase 2 assessment/finding path
+
+```
+WorkflowAuthorizationResolution
+        ↓
+S7WorkflowAssessmentEvaluator
+        ↓
+WorkflowTransitionAssessment
+        ↓
+EvidenceReferenceValidator
+        ↓
+S7WorkflowFindingCandidateEvaluator
+        ↓
+FindingCandidate
+        ↓
+AuthorizationSeverityEvaluator
+        ↓
+AuthorizationRiskAssessment
+```
+
+A candidate is emitted only for a verified expected-DENY / observed-ALLOW mismatch with valid project,
+execution, test and observation ownership. Policy conflicts and evidence failures remain INCONCLUSIVE.
+
+The downstream S7 result stores binding IDs and delegation IDs, but not raw authentication material or the
+token-context fingerprint itself.

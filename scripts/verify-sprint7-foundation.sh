@@ -13,5 +13,6 @@ find core/src/test/java -name '*.java' | sort > "$BUILD/test-sources.txt"
 javac --release 21 -Xlint:all -Werror -cp "$BUILD/main" -d "$BUILD/test" @"$BUILD/test-sources.txt"
 
 java -ea -cp "$BUILD/main:$BUILD/test" io.acra.core.tests.sprint7.Sprint7WorkflowAuthorizationFoundationTestSuite
+java -ea -cp "$BUILD/main:$BUILD/test" io.acra.core.tests.sprint7.Sprint7WorkflowAssessmentIntegrationTestSuite
 
 echo "SPRINT7_FOUNDATION_VERIFICATION PASS"
