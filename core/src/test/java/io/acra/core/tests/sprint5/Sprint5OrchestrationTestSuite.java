@@ -58,7 +58,7 @@ public final class Sprint5OrchestrationTestSuite {
                 PROJECT_ID,
                 "GET /documents/{id}",
                 new PolicyValidationEvaluator.TenantPolicy(
-                        "tenant-policy", "fixture", "tenant-b", "tenant-a", "viewer",
+                        "tenant-policy", "fixture", "tenant-b", "tenant-b", "viewer",
                         false, false, AuthorizationDecision.DENY, List.of(EVIDENCE_ID)),
                 null,
                 "",
@@ -69,7 +69,7 @@ public final class Sprint5OrchestrationTestSuite {
                 "",
                 null,
                 "",
-                new AuthorizationImpact(ImpactLevel.HIGH, false, false, true,
+                new AuthorizationImpact(ImpactLevel.HIGH, false, false, false,
                         false, false, false, List.of(EVIDENCE_ID)));
 
         var result = orchestrator.analyze(request);
@@ -79,7 +79,7 @@ public final class Sprint5OrchestrationTestSuite {
         TestSupport.assertEquals(BflaAssessmentStatus.BFLA_CANDIDATE, result.bfla().status(),
                 "function decision mismatch should become BFLA candidate assessment");
         TestSupport.assertEquals(PolicyValidationState.CONFLICTING, result.tenant().state(),
-                "tenant policy decision mismatch should remain explicit conflict");
+                "explicit tenant policy deny/observed allow remains an explicit conflict");
         TestSupport.assertEquals(FindingCandidateState.SUPPORTED, result.candidate().state(),
                 "validated explicit deny/allow mismatch should produce supported candidate");
         TestSupport.assertEquals(SeverityLevel.HIGH, result.severity().level(),
