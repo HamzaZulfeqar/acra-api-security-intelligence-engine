@@ -21,13 +21,13 @@ The metrics above apply only to the controlled localhost dataset and are not rea
 
 | Test ID | Coverage | Evidence | Result |
 |---|---|---|---|
-| TEST-S6-REPORT-001 | deterministic report model / content identity | Sprint6ReportingExportTestSuite | PENDING CI |
-| TEST-S6-REPORT-002 | canonical JSON + SHA-256 | Sprint6ReportingExportTestSuite | PENDING CI |
-| TEST-S6-REPORT-003 | Markdown review report | Sprint6ReportingExportTestSuite | PENDING CI |
-| TEST-S6-REPORT-004 | raw-secret exclusion / redaction | Sprint6ReportingExportTestSuite | PENDING CI |
-| TEST-S6-REPORT-005 | candidate != confirmed finding boundary | Sprint6ReportingExportTestSuite | PENDING CI |
-| TEST-S6-REPORT-006 | Reporter plugin adapter | Sprint6ReportingExportTestSuite | PENDING CI |
-| TEST-S6-REPORT-UI-001 | Report + JSON Export product views | Sprint6AuthorizationUiTestSuite | PENDING CI |
+| TEST-S6-REPORT-001 | deterministic report model / content identity | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-002 | canonical JSON + SHA-256 | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-003 | Markdown review report | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-004 | raw-secret exclusion / redaction | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-005 | candidate != confirmed finding boundary | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-006 | Reporter plugin adapter | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-UI-001 | Report + JSON Export product views | Sprint6AuthorizationUiTestSuite | PASS |
 
 ### Sprint 6 authorization UI
 

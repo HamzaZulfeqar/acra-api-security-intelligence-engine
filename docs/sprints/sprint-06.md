@@ -128,3 +128,16 @@ Implemented:
 - CI artifact generation for JSON, digest and Markdown
 
 The report explicitly records confirmedFindingCount=0. SARIF and Burp Issue export remain broader reporting-roadmap items and are not claimed complete in this slice.
+
+
+### Reporting/export verification evidence
+
+GitHub Actions run `35887862337`:
+- Sprint 6 core/live verification: PASS
+- `Sprint6ReportingExportTestSuite`: PASS (19 assertions)
+- Maven extension compilation: PASS
+- retained Sprint 4 UI regression: PASS (26 checks)
+- Sprint 6 Authorization UI including Report / JSON Export: PASS (27 assertions)
+- JSON, SHA-256 and Markdown report artifacts produced and uploaded by CI
+
+This validates the deterministic S6 authorization-report slice. SARIF and Burp Issue export remain future reporting targets.

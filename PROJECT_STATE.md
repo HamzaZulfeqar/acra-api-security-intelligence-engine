@@ -76,6 +76,18 @@ GitHub Actions run `35885676715` completed successfully at commit
 - Authorization product area now renders policy, tenant map, role assignments, hierarchy, permissions,
   effective authorization matrix, conflict assessments and coverage without inventing missing policy state.
 
+### S6 reporting/export verification
+
+GitHub Actions run `35887862337` completed successfully at commit `b051f08612730a455375e75312ca70d6e5fc9f6f`.
+
+- `Sprint6ReportingExportTestSuite`: PASS, 19 assertions
+- canonical report JSON / digest / Markdown artifact generation: PASS
+- Maven extension compilation: PASS
+- retained `Sprint4UiTestSuite`: PASS, 26 checks
+- `Sprint6AuthorizationUiTestSuite`: PASS, 27 assertions
+- report UI and JSON export UI are backed by the same S6 authorization product workspace
+- report boundary preserves FindingCandidate as review-only and records confirmedFindingCount=0
+
 ### Remaining S6 closure work
 
 - fuller planner→controlled execution product integration
