@@ -45,7 +45,7 @@ public final class WorkflowAuthorizationResolver {
 
         if (transitionMatches.isEmpty()) {
             reasons.add("NO_MATCHING_WORKFLOW_TRANSITION_RULE");
-            return defaultResult(workflowPolicy, request, evidence, reasons);
+            return defaultResult(workflowPolicy, request, Set.of(), Set.of(), evidence, reasons);
         }
 
         Map<String, WorkflowTokenBinding> bindings = new TreeMap<>();
@@ -105,7 +105,7 @@ public final class WorkflowAuthorizationResolver {
 
         if (eligible.isEmpty()) {
             reasons.add("NO_ELIGIBLE_WORKFLOW_TRANSITION_RULE");
-            return defaultResult(workflowPolicy, request, evidence, reasons);
+            return defaultResult(workflowPolicy, request, matchedBindings, delegationIds, evidence, reasons);
         }
 
         Decision decision = decide(eligible, workflowPolicy.defaultDecision());
@@ -178,10 +178,12 @@ public final class WorkflowAuthorizationResolver {
     private static WorkflowAuthorizationResolution defaultResult(
             WorkflowPolicySnapshot policy,
             WorkflowAuthorizationRequest request,
+            Set<String> matchedBindingIds,
+            Set<String> delegationIds,
             Set<String> evidence,
             List<String> reasons) {
         Decision decision = defaultDecision(policy.defaultDecision(), reasons);
-        return result(policy, request, Set.of(), Set.of(), Set.of(),
+        return result(policy, request, Set.of(), matchedBindingIds, delegationIds,
                 decision.expected(), decision.state(), evidence, reasons);
     }
 
