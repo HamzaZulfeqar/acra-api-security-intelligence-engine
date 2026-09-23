@@ -21,11 +21,11 @@ The metrics above apply only to the controlled localhost dataset and are not rea
 
 | Test ID | Coverage | Evidence | Result |
 |---|---|---|---|
-| TEST-S6-UI-001 | Authorization top-level product area | Sprint6AuthorizationUiTestSuite | PENDING CI |
-| TEST-S6-UI-002 | Tenant Map / roles / hierarchy / permissions | Sprint6AuthorizationUiTestSuite | PENDING CI |
-| TEST-S6-UI-003 | Effective permissions matrix / conflicts / coverage | Sprint6AuthorizationUiTestSuite | PENDING CI |
-| TEST-S6-UI-004 | Policy and candidate-vs-finding evidence boundary | Sprint6AuthorizationUiTestSuite | PENDING CI |
-| TEST-S6-UI-REG-001 | Retained Sprint 4 UI after S6 integration | Sprint4UiTestSuite | PENDING CI |
+| TEST-S6-UI-001 | Authorization top-level product area | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-002 | Tenant Map / roles / hierarchy / permissions | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-003 | Effective permissions matrix / conflicts / coverage | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-004 | Policy and candidate-vs-finding evidence boundary | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-REG-001 | Retained Sprint 4 UI after S6 integration | Sprint4UiTestSuite | PASS |
 
 ### Sprint 6 planner/execution integration
 

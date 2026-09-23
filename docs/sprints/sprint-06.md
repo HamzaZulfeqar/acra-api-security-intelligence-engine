@@ -98,3 +98,15 @@ authorization facts or maintain a parallel policy engine.
 
 UI tables expose policy evidence counts, effective roles/decisions, tenant relationships, conflict reasons and
 coverage gaps. The Overview explicitly states that a FindingCandidate is not a confirmed vulnerability.
+
+
+### Authorization UI verification evidence
+
+GitHub Actions run `35885676715`:
+- exact Java 21 S6 verification: PASS
+- Maven extension compilation: PASS
+- retained Sprint 4 UI regression: PASS (26 checks)
+- Sprint 6 Authorization UI: PASS (22 assertions)
+
+This verifies the headless Swing product projection only. It does not by itself establish a real Burp runtime/UI
+session; historical Burp runtime validation remains a separate gate.

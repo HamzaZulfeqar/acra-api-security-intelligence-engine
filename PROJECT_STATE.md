@@ -60,6 +60,18 @@ These are controlled-fixture measurements only. They do not establish real-world
 
 The campaign also exposed and closed a SHARED-scope isolation defect before the successful run.
 
+### S6 authorization UI verification
+
+GitHub Actions run `35885676715` completed successfully at commit
+`7458b37706bb5ebe24839f3bb7464ef88ed41f4b`.
+
+- Sprint 6 core/live verification: PASS
+- Maven extension test compilation: PASS
+- retained `Sprint4UiTestSuite`: PASS, 26 checks
+- `Sprint6AuthorizationUiTestSuite`: PASS, 22 assertions
+- Authorization product area now renders policy, tenant map, role assignments, hierarchy, permissions,
+  effective authorization matrix, conflict assessments and coverage without inventing missing policy state.
+
 ### Remaining S6 closure work
 
 - fuller planner→controlled execution product integration
