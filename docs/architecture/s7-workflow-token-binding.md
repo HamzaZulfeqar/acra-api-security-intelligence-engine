@@ -39,6 +39,8 @@ WorkflowAuthorizationResolution
 
 Sprint 7 token binding stores only SHA-256 fingerprints. Constructors reject non-SHA-256 token-context values.
 Raw bearer tokens, cookies, API keys, passwords and session secrets are not valid workflow-binding material.
+The fingerprint is retained only in explicit workflow binding/request state; `WorkflowAuthorizationResolution`
+records the matched binding ID rather than copying the token-context fingerprint into downstream findings/reporting state.
 
 ## Fail-closed behavior
 

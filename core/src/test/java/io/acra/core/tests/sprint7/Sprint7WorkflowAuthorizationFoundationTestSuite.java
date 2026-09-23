@@ -135,7 +135,8 @@ public final class Sprint7WorkflowAuthorizationFoundationTestSuite {
         String serialized = new DomainSerializer().serialize(boundApproval);
         TestSupport.assertNotContains(serialized, RAW_TOKEN, "raw token absent from resolution serialization");
         assertions++;
-        TestSupport.assertContains(serialized, TOKEN_FP, "fingerprint remains available for deterministic correlation only through policy/request state");
+        TestSupport.assertNotContains(serialized, TOKEN_FP,
+                "token-context fingerprint is not copied into the authorization resolution");
         assertions++;
 
         return assertions;
