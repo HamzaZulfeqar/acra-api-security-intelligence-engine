@@ -30,7 +30,14 @@ TENANT_USER_RE=re.compile(r'^/api/v1/tenants/(?P<tenant>[^/]+)/users/(?P<user>[^
 USER_RE=re.compile(r'^/api/v1/users/(?P<user>[^/?]+)$')
 APPROVE_RE=re.compile(r'^/api/v1/tenants/(?P<tenant>[^/]+)/documents/(?P<doc>[^/?]+)/approve$')
 COMMENTS_RE=re.compile(r'^/api/v1/tenants/(?P<tenant>[^/]+)/documents/(?P<doc>[^/?]+)/comments$')
-S4_DOC_RE=re.compile(r'^/api/v1/s4/documents/(?P<doc>Document-[AB])
+S4_DOC_RE=re.compile(r'^/api/v1/s4/documents/(?P<doc>Document-[AB])$')
+S6_REPORTS={
+ 'report-a':{'id':'report-a','tenant_id':'tenant-a','owner_id':'manager-a','classification':'internal'},
+ 'report-b':{'id':'report-b','tenant_id':'tenant-b','owner_id':'user-b','classification':'internal'},
+ 'shared-report':{'id':'shared-report','tenant_id':'shared','owner_id':'system','classification':'shared'},
+}
+S6_REPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/reports/(?P<report>[^/?]+)$')
+S6_EXPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/admin/export$')
 
 def claim(token,name):
     try:
