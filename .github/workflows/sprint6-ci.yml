@@ -29,5 +29,14 @@ jobs:
           java-version: '21'
       - name: Normalize scripts
         run: chmod +x ./scripts/*.sh
-      - name: Verify Sprint 6 foundation
+      - name: Verify Sprint 6 foundation and live experiment
         run: bash ./scripts/verify-sprint6-foundation.sh
+      - name: Upload Sprint 6 controlled experiment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint6-controlled-experiment
+          path: |
+            build/s6-foundation-ci/EXP-S6-TENANT-RBAC-001.json
+            build/s6-foundation-ci/lab/*.log
+          if-no-files-found: warn

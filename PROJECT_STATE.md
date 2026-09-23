@@ -47,6 +47,8 @@ Implemented foundation:
 - S6 ACRA-Lab ground truth and secure/vulnerable local tenant/RBAC fixtures
 - policy-aware planning advisor for CROSS_TENANT / ROLE_COMPARISON coverage
 - global/delegated/shared false-positive controls preserved as legitimate policy-aware cases
+- controlled live S6 experiment harness that starts secure/vulnerable localhost services and emits measured JSON evidence
+- S6 live experiment metrics remain pending until the new campaign completes successfully
 
 This is **not Sprint 6 completion**. Effective permission/decision resolution, tenant-isolation and RBAC
 assessment engines, S5 FindingCandidate integration, expanded ACRA-Lab experiments, UI/report extensions
