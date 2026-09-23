@@ -44,7 +44,15 @@ Implemented in this slice:
 - S5 risk/severity reuse after S6 candidate composition
 
 Still required:
-Policy graph integration, root-cause grouping,
+Implemented in this slice:
+- atomic policy-to-existing-SecurityContextGraph integration with evidence preflight
+- policy/role/tenant/permission/delegation graph relationships
+- root-cause grouping foundation for repeated FindingCandidates
+- policy-import plugin boundary
+- manual policy builder
+
+Still required:
+planner/UI integration, expanded ACRA-Lab, controlled experiments,
 matrix/graph integration, S4 planner integration, S5 FindingCandidate integration, expanded lab,
 controlled experiments, UI, reporting extensions, performance/security validation, final audit and
 reproducible S6 checkpoint.

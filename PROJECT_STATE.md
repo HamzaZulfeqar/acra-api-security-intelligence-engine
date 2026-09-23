@@ -41,6 +41,9 @@ Implemented foundation:
 - effective authorization matrix
 - S6 FindingCandidate composition using the existing S5 finding model
 - S6 end-to-end authorization orchestrator with existing S5 severity/risk reuse
+- atomic authorization-policy hydration into the existing SecurityContextGraph
+- deterministic root-cause grouping foundation
+- policy-import plugin boundary and manual policy builder
 
 This is **not Sprint 6 completion**. Effective permission/decision resolution, tenant-isolation and RBAC
 assessment engines, S5 FindingCandidate integration, expanded ACRA-Lab experiments, UI/report extensions
