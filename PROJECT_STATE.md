@@ -3,11 +3,31 @@
 ## Current state — 2026-09-23
 
 **Current sprint:** Sprint 6 — Tenant Isolation, Advanced RBAC and Policy Intelligence.  
-**Decision:** S6 IN PROGRESS.  
+**Decision:** S6 SOFTWARE COMPLETE — authorized local/synthetic scope.  
 **Working branch:** `s6-tenant-rbac`.  
 **Immutable Sprint 5 base:** `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`.  
 **Sprint 5:** SOFTWARE COMPLETE and preserved separately.  
 **Sprint 7:** NOT STARTED.
+**Frozen S6 checkpoint:** `s6-final-software-2026-09-23` at `8d996a2b2b1bb47372490945aec197dd9e20ff36`.
+
+### S6 final closure
+
+GitHub Actions run `35891427324` completed successfully.
+
+- final verification: PASS
+- official Maven package: PASS
+- retained S2 tests: 52 PASS
+- retained S3 core: 47 PASS
+- retained S3 adapter: 11 PASS
+- retained S4 UI: 26 PASS
+- S6 Authorization UI: 27 PASS
+- source archive entry count: 737
+- unsafe paths: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- final source archive SHA-256: `a26a20758e4c2e6db98995d2b6ec64e4bb81d3b1b5e76b4cf54567994e8fb724`
+
+Real Burp desktop runtime remains separate and unverified; it is not part of the S6 software-complete claim.
 
 ### Implemented S6 capabilities
 
@@ -120,7 +140,7 @@ Current CI:
 - official Maven test compilation excludes the legacy local-Montoya-stub suites because those suites target the preserved stub contract rather than the current official Montoya test interface
 - real Burp desktop runtime remains a separate UNVERIFIED/BLOCKED gate
 
-### Remaining S6 closure work
+### Post-S6 deferred validation / later-sprint work
 
 - fuller planner→controlled execution product integration
 - UI for policy, role hierarchy, tenant map, effective permissions, conflicts and coverage

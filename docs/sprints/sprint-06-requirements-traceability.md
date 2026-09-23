@@ -1,6 +1,6 @@
 # Sprint 6 Requirements Traceability
 
-Status: FINAL-CLOSURE CANDIDATE  
+Status: SOFTWARE COMPLETE / FINAL CLOSURE VERIFIED  
 Branch: `s6-tenant-rbac`
 
 This matrix records the source-backed Sprint 6 scope. PASS means implementation plus focused executable evidence exists. It does not promote the separate real-Burp desktop runtime gate.
@@ -30,9 +30,23 @@ This matrix records the source-backed Sprint 6 scope. PASS means implementation 
 | S6-20 | Security hardening: context spoofing, ambiguity, drift, redaction, conflict fail-closed | S6 security guards | Sprint6SecurityHardeningTestSuite | PASS |
 | S6-21 | Retained Sprint 2 / Sprint 3 local regression lanes | restored exact historical suites/lab fixtures | S2 run 35890873262 / S3 run 35890873276 | PASS |
 | S6-22 | Official Maven package on Java 21 | parent/core/extension Maven reactor | S2/S3/S6 CI package evidence | PASS |
-| S6-23 | Full S1-S6 final regression and package verification | scripts/verify-sprint6-final.sh | final workflow pending | PENDING FINAL RUN |
-| S6-24 | Reproducible source checkpoint ZIP + manifest + SHA-256 | scripts/package-sprint6.sh | final workflow pending | PENDING FINAL RUN |
+| S6-23 | Full S1-S6 final regression and package verification | scripts/verify-sprint6-final.sh | GitHub Actions run 35891427324 | PASS |
+| S6-24 | Reproducible source checkpoint ZIP + manifest + SHA-256 | scripts/package-sprint6.sh | run 35891427324; SHA-256 a26a20758e4c2e6db98995d2b6ec64e4bb81d3b1b5e76b4cf54567994e8fb724 | PASS |
 | S6-25 | Real Burp desktop load/handler/UI runtime | separate runtime gate | no current desktop runtime execution | UNVERIFIED / DEFERRED |
+
+## Final closure evidence
+
+- verified source commit: `8d996a2b2b1bb47372490945aec197dd9e20ff36`
+- frozen checkpoint branch: `s6-final-software-2026-09-23`
+- final workflow: `35891427324` — SUCCESS
+- source archive: `acra-sprint-06-final.zip`
+- archive SHA-256: `a26a20758e4c2e6db98995d2b6ec64e4bb81d3b1b5e76b4cf54567994e8fb724`
+- archive entries: 737
+- unsafe archive paths: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- GitHub Actions artifact ID: `10764917130`
+- workflow artifact digest: `sha256:2d40f92a65e9ebd1163aa1270390886ce68e349f658b778f889838270b5c9c55`
 
 ## Scope exclusions
 

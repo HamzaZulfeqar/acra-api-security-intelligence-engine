@@ -11,12 +11,9 @@ on:
       - 'tests/**'
       - 'scripts/verify-sprint6-final.sh'
       - 'scripts/package-sprint6.sh'
-      - '.github/workflows/sprint6-final.yml'
       - 'pom.xml'
       - 'core/pom.xml'
       - 'extension/burp-extension/pom.xml'
-      - 'docs/sprints/sprint-06-requirements-traceability.md'
-      - 'docs/sprints/sprint-06-final-software-audit.md'
   workflow_dispatch:
 
 permissions:
