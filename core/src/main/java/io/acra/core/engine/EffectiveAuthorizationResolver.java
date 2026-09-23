@@ -168,6 +168,7 @@ public final class EffectiveAuthorizationResolver {
 
     private boolean scopeMatches(AuthorizationScope scope, EffectiveAuthorizationRequest request) {
         if (scope == null || scope.type() == AuthorizationScopeType.UNKNOWN) return true;
+        if (scope.type() == AuthorizationScopeType.SHARED && !request.sharedResource()) return false;
         if (!scope.appliesToTenant(request.resourceTenantId())) return false;
         if (!scope.resourceId().isBlank() && !scope.resourceId().equals(request.resourceId())) return false;
         if (!scope.endpoint().isBlank() && !scope.endpoint().equals(request.endpoint())) return false;

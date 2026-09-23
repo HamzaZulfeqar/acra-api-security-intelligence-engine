@@ -102,6 +102,20 @@ public final class Sprint6PolicyResolutionTestSuite {
         TestSupport.assertTrue(multi.effectiveRoleIds().containsAll(List.of("viewer", "auditor")),
                 "multi-role context must retain both roles");
         assertions++;
+
+        EffectiveAuthorizationResolution privateCrossTenant = resolver.resolve(sharedScopePolicy(),
+                new EffectiveAuthorizationRequest("user-shared", "tenant-a", "tenant-b", "report-b", "report",
+                        "/reports/report-b", "", "READ_REPORT", AuthorizationDecision.ALLOW, false, NOW));
+        TestSupport.assertEquals(AuthorizationDecision.DENY, privateCrossTenant.expectedDecision(),
+                "shared-scope permission must not authorize a private cross-tenant resource");
+        assertions++;
+
+        EffectiveAuthorizationResolution sharedResource = resolver.resolve(sharedScopePolicy(),
+                new EffectiveAuthorizationRequest("user-shared", "tenant-a", "shared", "shared-report", "report",
+                        "/reports/shared-report", "", "READ_REPORT", AuthorizationDecision.ALLOW, true, NOW));
+        TestSupport.assertEquals(AuthorizationDecision.ALLOW, sharedResource.expectedDecision(),
+                "shared-scope permission should authorize an explicitly shared resource");
+        assertions++;
         return assertions;
     }
 
@@ -166,6 +180,18 @@ public final class Sprint6PolicyResolutionTestSuite {
                         new AuthorizationRule("deny", AuthorizationRuleEffect.DENY, "", "viewer", "perm-read",
                                 "tenant-a", AuthorizationScope.tenant("tenant-a"), denyP, source, List.of("e5"))),
                 List.of(), List.of("e-policy"), AuthorizationDecision.DENY, NOW);
+    }
+
+    private static AuthorizationPolicySnapshot sharedScopePolicy() {
+        return AuthorizationPolicySnapshot.create("p-shared", "1", "lab", List.of(),
+                List.of(new RoleAssignment("ra-shared", "user-shared", "shared-reader", "",
+                        AuthorizationScope.shared(), true, List.of("e1"))),
+                List.of(),
+                List.of(new Permission("shared-read", "READ_REPORT", "report", "", "",
+                        AuthorizationScope.shared(), List.of("e2"))),
+                List.of(new RolePermissionAssignment("rp-shared", "shared-reader", "shared-read", "",
+                        List.of("e3"))),
+                List.of(), List.of(), List.of("e-policy"), AuthorizationDecision.DENY, NOW);
     }
 
     private static AuthorizationPolicySnapshot multiRolePolicy() {

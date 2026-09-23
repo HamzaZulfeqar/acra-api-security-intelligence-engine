@@ -81,6 +81,23 @@ public final class Sprint6LiveLabExperimentTestSuite {
         ResearchMetrics baseline = ResearchMetrics.from(baselineRecords);
         ResearchMetrics acra = ResearchMetrics.from(acraRecords);
 
+        Path output = experimentOutput();
+        Files.createDirectories(output.getParent());
+        Files.writeString(output, json(results, baseline, acra), StandardCharsets.UTF_8);
+        for (CaseResult result : results) {
+            System.out.println("SPRINT6_EXPERIMENT_CASE " + result.id()
+                    + " truth=" + result.truth()
+                    + " baseline=" + result.baseline()
+                    + " acra=" + result.acra()
+                    + " policyExpected=" + result.policyExpected()
+                    + " observed=" + result.observed()
+                    + " relationship=" + result.tenantRelationship()
+                    + " state=" + result.resolutionState());
+        }
+        System.out.println("SPRINT6_EXPERIMENT_RESULT " + summary("baseline", baseline));
+        System.out.println("SPRINT6_EXPERIMENT_RESULT " + summary("acra", acra));
+        System.out.println("SPRINT6_EXPERIMENT_ARTIFACT " + output);
+
         TestSupport.assertEquals(2, acra.truePositive(),
                 "ACRA treatment should detect both deliberately vulnerable labelled cases");
         assertions++;
@@ -100,12 +117,6 @@ public final class Sprint6LiveLabExperimentTestSuite {
                 "ACRA precision should not be lower than naive baseline on this controlled dataset");
         assertions++;
 
-        Path output = experimentOutput();
-        Files.createDirectories(output.getParent());
-        Files.writeString(output, json(results, baseline, acra), StandardCharsets.UTF_8);
-        System.out.println("SPRINT6_EXPERIMENT_RESULT " + summary("baseline", baseline));
-        System.out.println("SPRINT6_EXPERIMENT_RESULT " + summary("acra", acra));
-        System.out.println("SPRINT6_EXPERIMENT_ARTIFACT " + output);
         return assertions;
     }
 
