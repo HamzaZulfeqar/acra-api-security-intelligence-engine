@@ -4,12 +4,14 @@ import io.acra.core.active.evidence.Observation;
 import io.acra.core.domain.finding.AuthorizationImpact;
 import io.acra.core.engine.PolicyValidationEvaluator;
 import io.acra.core.security.UniversalRedactor;
+import java.util.Set;
 
 /** Immutable input for the S5 observation-to-authorization-analysis pipeline. */
 public record AuthorizationAnalysisRequest(
         Observation observation,
         String projectId,
         String endpoint,
+        Set<AuthorizationAnalysisDimension> dimensions,
         PolicyValidationEvaluator.TenantPolicy tenantPolicy,
         PolicyValidationEvaluator.WorkflowPolicy workflowPolicy,
         String currentWorkflowState,
@@ -26,6 +28,7 @@ public record AuthorizationAnalysisRequest(
     public AuthorizationAnalysisRequest {
         projectId = safe(projectId);
         endpoint = safe(endpoint);
+        dimensions = Set.copyOf(dimensions == null ? Set.of() : dimensions);
         currentWorkflowState = safe(currentWorkflowState);
         requestedWorkflowState = safe(requestedWorkflowState);
         property = safe(property);
