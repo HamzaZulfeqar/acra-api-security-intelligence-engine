@@ -28,4 +28,4 @@ Scope:
 - controlled WORKFLOW_TRANSITION planning/execution
 - workflow UI/reporting/research validation
 
-Phase 1 foundation is implemented on `s7-workflow-token-binding`; executable CI verification is pending.
+Phase 1 foundation is implemented and verified on `s7-workflow-token-binding` by run `35894118859` (19 focused S7 assertions + retained S6 foundation PASS).
