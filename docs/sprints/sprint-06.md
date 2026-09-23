@@ -158,3 +158,33 @@ Added dedicated exact-Java-21 verification for:
 - conflicting-policy fail-closed planning
 
 Performance values are environment-specific engineering observations only. No release latency threshold or general performance claim is introduced.
+
+
+### Performance/security verification evidence
+
+GitHub Actions run `35890873379` at commit `76389e13b996a02c9f7011b262364b5b03a9231d`:
+
+| Workload | Resolution | Planning | Report generation | Approx JVM memory delta | Recommendations |
+|---:|---:|---:|---:|---:|---:|
+| 100 | 34 ms | 1 ms | 9 ms | 2,948,768 B | 150 |
+| 1,000 | 57 ms | 2 ms | 6 ms | 19,825,512 B | 1,500 |
+| 10,000 | 169 ms | 4 ms | 29 ms | 10,003,728 B | 15,000 |
+
+`Sprint6PerformanceObservationTestSuite`: PASS (12 assertions).  
+`Sprint6SecurityHardeningTestSuite`: PASS (13 assertions).
+
+These values are environment-specific CI observations, not latency SLOs, JMH benchmarks or general product-performance claims.
+
+### Retained S2/S3 CI repair
+
+The zero-length retained `Sprint2TestSuite`, `Sprint3AdapterTestSuite`, `LiveLabExperiment` and
+`Sprint3LabExperiment` were restored from exact repository history, not recreated from conversation text.
+
+- Sprint 2 CI `35890873262`: SUCCESS
+- Sprint 3 CI `35890873276`: SUCCESS
+
+The restored suites remain compiled/executed by their local Montoya-stub verification scripts. Maven's current
+official-Montoya test compile excludes those legacy stub-contract classes while continuing to compile current
+product/UI tests. This avoids falsely treating an old test double contract as the current official Montoya API.
+
+Real Burp desktop runtime remains UNVERIFIED / BLOCKED and is not promoted by these CI repairs.

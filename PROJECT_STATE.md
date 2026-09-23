@@ -88,16 +88,37 @@ GitHub Actions run `35887862337` completed successfully at commit `b051f08612730
 - report UI and JSON export UI are backed by the same S6 authorization product workspace
 - report boundary preserves FindingCandidate as review-only and records confirmedFindingCount=0
 
-### S6 performance/security closure in progress
+### S6 performance/security closure verified
 
-- 100 / 1,000 / 10,000 S6 policy-resolution performance observation suite added
-- policy-aware recommendation and report-generation workload measurement added
-- context-reference abuse / spoofing / ambiguity tests added
-- request-equivalence drift checks expanded for role-context substitution
-- raw viewer/admin credential exclusion re-verified
-- conflicting-policy active generation explicitly fail-closed
+GitHub Actions run `35890873379` completed successfully at commit `76389e13b996a02c9f7011b262364b5b03a9231d`.
 
-These checks are awaiting the current CI run before being promoted to PASS.
+- `Sprint6PerformanceObservationTestSuite`: PASS, 12 assertions
+- `Sprint6SecurityHardeningTestSuite`: PASS, 13 assertions
+- 100 / 1,000 / 10,000 policy-resolution workloads completed
+- policy-aware recommendation and report-generation workloads completed
+- missing / ambiguous / spoofed authenticated-context references rejected
+- path / non-authentication header / resource drift rejected
+- unchanged authentication material rejected
+- raw viewer/admin credentials excluded from serialized test state
+- conflicting policy produces no executable S6 active seed
+
+Observed CI timings are engineering observations only:
+- 100: resolve 34 ms, planning 1 ms, report 9 ms, approx memory delta 2,948,768 bytes
+- 1,000: resolve 57 ms, planning 2 ms, report 6 ms, approx memory delta 19,825,512 bytes
+- 10,000: resolve 169 ms, planning 4 ms, report 29 ms, approx memory delta 10,003,728 bytes
+
+Memory deltas are JVM-process observations affected by allocation/GC and are not monotonic or release thresholds.
+
+### Legacy Sprint 2 / Sprint 3 CI closure
+
+The retained Sprint 2 and Sprint 3 local-contract test/lab sources were restored from repository commit
+`07a3f60bc2bd2218d0749e497b4f0b9dc57a9c2c`; they were not reconstructed from chat.
+
+Current CI:
+- Sprint 2 run `35890873262`: SUCCESS; Maven package PASS, Sprint2 tests=52, EXP-INTEGRATION-001 local-lab PASS
+- Sprint 3 run `35890873276`: SUCCESS; Maven package PASS, Sprint2 tests=52, Sprint3 core=47, Sprint3 adapter=11, EXP-RECON-001 local-lab PASS
+- official Maven test compilation excludes the legacy local-Montoya-stub suites because those suites target the preserved stub contract rather than the current official Montoya test interface
+- real Burp desktop runtime remains a separate UNVERIFIED/BLOCKED gate
 
 ### Remaining S6 closure work
 

@@ -1,5 +1,12 @@
 # Known Issues and Technical Debt
 
+## Sprint 6 closure updates — 2026-09-23
+
+- Legacy S2/S3 zero-length test sources were repaired from exact Git history; Sprint 2 and Sprint 3 CI are green again.
+- Legacy local Montoya-stub suites are intentionally excluded from the current official-Montoya Maven test compile; they execute under their preserved stub-contract verification scripts.
+- Real Burp desktop runtime/load/handler/UI validation remains separate and unverified.
+- S6 performance values are observational CI measurements, not release thresholds or JMH benchmarks.
+
 ## Sprint 6 current limitations — 2026-09-23
 
 - `EXP-S6-TENANT-RBAC-001` metrics are from ten controlled localhost cases only; they are not real-world accuracy claims.
