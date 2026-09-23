@@ -82,9 +82,11 @@ public final class Sprint7WorkflowAssessmentIntegrationTestSuite {
         TestSupport.assertTrue(candidate.findingCandidate().dimensions().contains("TOKEN_BINDING"),
                 "token-binding policy dimension retained");
         assertions++;
-        TestSupport.assertTrue(candidate.riskAssessment().severity() == FindingSeverity.HIGH
-                        || candidate.riskAssessment().severity() == FindingSeverity.CRITICAL,
-                "workflow integrity/privileged impact should receive high internal prioritization");
+        TestSupport.assertEquals(FindingSeverity.MEDIUM, candidate.riskAssessment().severity(),
+                "workflow integrity plus privileged-function impact follows the existing deterministic severity scale");
+        assertions++;
+        TestSupport.assertEquals(55, candidate.riskAssessment().internalRiskScore(),
+                "workflow risk score must remain deterministic rather than being inflated for Sprint 7");
         assertions++;
         TestSupport.assertEquals(0, candidate.findingCandidate().contradictoryEvidence().size(),
                 "valid evidence ownership should not create provenance contradictions");
