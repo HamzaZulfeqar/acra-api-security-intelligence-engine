@@ -38,11 +38,11 @@ public final class EvidenceReferenceValidator {
 				continue;
 			}
 			if (!distinctReferences.add(reference)) failures.add("EVIDENCE_REFERENCE_DUPLICATED");
-			if (!store.contains(reference)) {
+			List<EvidenceChainEntry> entries = entriesForReference(reference);
+			if (entries.isEmpty()) {
 				failures.add("EVIDENCE_UNKNOWN");
 				continue;
 			}
-			List<EvidenceChainEntry> entries = store.chainForObject(reference);
 			if (entries.size() != 1) {
 				failures.add("EVIDENCE_PROVENANCE_CONTRADICTORY");
 				continue;
@@ -78,11 +78,11 @@ public final class EvidenceReferenceValidator {
 				continue;
 			}
 			if (!distinctReferences.add(reference)) failures.add("EVIDENCE_REFERENCE_DUPLICATED");
-			if (!store.contains(reference)) {
+			List<EvidenceChainEntry> entries = entriesForReference(reference);
+			if (entries.isEmpty()) {
 				failures.add("EVIDENCE_UNKNOWN");
 				continue;
 			}
-			List<EvidenceChainEntry> entries = store.chainForObject(reference);
 			if (entries.size() != 1) {
 				failures.add("EVIDENCE_PROVENANCE_CONTRADICTORY");
 				continue;
@@ -133,13 +133,20 @@ public final class EvidenceReferenceValidator {
 		Set<String> observedReferences = new LinkedHashSet<>(observation.evidenceIds());
 		if (!observedReferences.equals(references)) failures.add("EVIDENCE_PROVENANCE_CONTRADICTORY");
 		for (String reference : observedReferences) {
-			if (blankOrUnknown(reference) || !store.contains(reference)) continue;
-			for (EvidenceChainEntry entry : store.chainForObject(reference)) {
+			if (blankOrUnknown(reference)) continue;
+			for (EvidenceChainEntry entry : entriesForReference(reference)) {
 				if (!entry.executionId().equals(executionId) || !entry.testId().equals(testId)) {
 					failures.add("REPLAY_LINEAGE_INVALID");
 				}
 			}
 		}
+	}
+
+	private List<EvidenceChainEntry> entriesForReference(String reference) {
+		if (store == null || blankOrUnknown(reference)) return List.of();
+		List<EvidenceChainEntry> objectEntries = store.chainForObject(reference);
+		if (!objectEntries.isEmpty()) return objectEntries;
+		return store.chainForEvidenceId(reference);
 	}
 
 	private void validateObservationObject(String observationId, String executionId, String testId,
