@@ -12,6 +12,7 @@ import io.acra.core.active.evidence.Observation;
 import io.acra.core.active.evidence.ResponseSnapshot;
 import io.acra.core.analysis.semantic.ResponseSemanticAnalyzer;
 import io.acra.core.domain.authorization.AuthorizationAnalysisRequest;
+import io.acra.core.domain.authorization.AuthorizationAnalysisDimension;
 import io.acra.core.domain.authorization.AuthorizationDecision;
 import io.acra.core.domain.authorization.BflaAssessmentStatus;
 import io.acra.core.domain.authorization.BolaAssessmentStatus;
@@ -30,6 +31,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class Sprint5OrchestrationTestSuite {
     private static final String PROJECT_ID = "project-a";
@@ -57,6 +59,8 @@ public final class Sprint5OrchestrationTestSuite {
                 observation,
                 PROJECT_ID,
                 "GET /documents/{id}",
+                Set.of(AuthorizationAnalysisDimension.OBJECT, AuthorizationAnalysisDimension.FUNCTION,
+                        AuthorizationAnalysisDimension.TENANT),
                 new PolicyValidationEvaluator.TenantPolicy(
                         "tenant-policy", "fixture", "tenant-b", "tenant-b", "viewer",
                         false, false, AuthorizationDecision.DENY, List.of(EVIDENCE_ID)),
@@ -92,7 +96,7 @@ public final class Sprint5OrchestrationTestSuite {
 
         AuthorizationAnalysisRequest wrongProject = new AuthorizationAnalysisRequest(
                 observation, "project-b", "GET /documents/{id}",
-                null, null, "", "", false, false, null, "", null, "",
+                Set.of(AuthorizationAnalysisDimension.OBJECT), null, null, "", "", false, false, null, "", null, "",
                 new AuthorizationImpact(ImpactLevel.HIGH, false, false, true,
                         false, false, false, List.of(EVIDENCE_ID)));
         var rejected = orchestrator.analyze(wrongProject);
