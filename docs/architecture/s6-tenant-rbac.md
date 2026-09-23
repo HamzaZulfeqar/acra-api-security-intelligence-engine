@@ -71,3 +71,13 @@ endpoint, method, body, resource reference or non-authentication headers change.
 
 This preserves a clean experiment:
 same tenant + same resource + same operation + different authenticated role context.
+
+
+## Product UI projection
+
+`S6AuthorizationWorkspace` is the product-facing projection boundary between S6 authorization intelligence and
+the Burp UI. It holds the explicitly loaded policy snapshot and deterministic analysis results keyed by resolution
+ID. `S6AuthorizationPanel` renders that state into Authorization sub-views for tenant membership/delegation,
+roles, hierarchy, permission catalog, effective authorization matrix, policy conflict and policy coverage.
+
+No authorization policy is inferred in the UI. Empty policy state renders as NOT LOADED rather than guessed data.

@@ -34,6 +34,8 @@
 - policy-aware S6 planning bridge into the existing S4 planner/queue/executor
 - deterministic safe read-only CROSS_TENANT test generation
 - live generated-test execution against secure localhost ACRA-Lab
+- S6 authorization product workspace and Burp UI projection
+- Authorization Overview / Policy / Tenant Map / Roles / Hierarchy / Permissions / Effective Permissions / Conflicts / Coverage views
 - credential-safe authenticated-context substitution implemented for safe read-only ROLE_COMPARISON
 - ROLE_COMPARISON now generates and executes through explicit contextRef controls without raw credentials in Mutation
 

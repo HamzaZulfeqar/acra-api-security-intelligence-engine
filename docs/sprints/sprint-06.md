@@ -76,3 +76,25 @@ Implemented:
 - credential-exclusion assertions covering both source and target synthetic tokens
 
 No raw credential is copied into Mutation metadata.
+
+
+## S6 authorization product UI — phase started
+
+Implemented in the existing Burp suite-tab architecture:
+- top-level `Authorization` product area
+- Overview
+- Policy
+- Tenant Map
+- Roles
+- Role Hierarchy
+- Permissions
+- Effective Permissions
+- Policy Conflicts
+- Coverage
+
+The UI consumes `S6AuthorizationWorkspace`, a core product projection that stores an explicit
+`AuthorizationPolicySnapshot` plus deterministic S6 analysis results. The Swing layer does not invent
+authorization facts or maintain a parallel policy engine.
+
+UI tables expose policy evidence counts, effective roles/decisions, tenant relationships, conflict reasons and
+coverage gaps. The Overview explicitly states that a FindingCandidate is not a confirmed vulnerability.

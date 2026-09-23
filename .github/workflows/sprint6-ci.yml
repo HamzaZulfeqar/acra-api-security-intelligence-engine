@@ -6,6 +6,7 @@ on:
       - s6-tenant-rbac
     paths:
       - 'core/**'
+      - 'extension/burp-extension/**'
       - 'lab/**'
       - 'scripts/verify-sprint6-foundation.sh'
       - '.github/workflows/sprint6-ci.yml'
@@ -31,6 +32,12 @@ jobs:
         run: chmod +x ./scripts/*.sh
       - name: Verify Sprint 6 foundation and live experiment
         run: bash ./scripts/verify-sprint6-foundation.sh
+      - name: Compile Sprint 6 product UI
+        run: mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
+      - name: Verify retained Sprint 4 UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint4.Sprint4UiTestSuite
+      - name: Verify Sprint 6 authorization UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint6.Sprint6AuthorizationUiTestSuite
       - name: Upload Sprint 6 controlled experiment evidence
         if: always()
         uses: actions/upload-artifact@v4
