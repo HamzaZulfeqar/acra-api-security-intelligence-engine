@@ -1,0 +1,138 @@
+{
+  "id": "GT-S6-TENANT-RBAC",
+  "scope": "controlled localhost ACRA-Lab only",
+  "version": "1",
+  "notes": [
+    "Ground truth is defined independently of observed HTTP responses.",
+    "Candidate means policy mismatch candidate, not automatically confirmed real-world vulnerability."
+  ],
+  "identities": [
+    {
+      "id": "user-a",
+      "tenant": "tenant-a",
+      "role": "viewer"
+    },
+    {
+      "id": "manager-a",
+      "tenant": "tenant-a",
+      "role": "manager"
+    },
+    {
+      "id": "global-admin",
+      "tenant": "global",
+      "role": "global-admin"
+    },
+    {
+      "id": "delegate-a",
+      "tenant": "tenant-a",
+      "role": "delegated-admin",
+      "delegated_tenants": [
+        "tenant-b"
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "report-a",
+      "tenant": "tenant-a",
+      "shared": false
+    },
+    {
+      "id": "report-b",
+      "tenant": "tenant-b",
+      "shared": false
+    },
+    {
+      "id": "shared-report",
+      "tenant": "shared",
+      "shared": true
+    }
+  ],
+  "cases": [
+    {
+      "id": "S6-GT-001",
+      "family": "TENANT_ISOLATION",
+      "actor": "user-a",
+      "target": "report-a",
+      "expected": "ALLOW",
+      "label": "NEGATIVE_CONTROL"
+    },
+    {
+      "id": "S6-GT-002",
+      "family": "TENANT_ISOLATION",
+      "actor": "user-a",
+      "target": "report-b",
+      "expected": "DENY",
+      "label": "CROSS_TENANT_DENY"
+    },
+    {
+      "id": "S6-GT-003",
+      "family": "TENANT_ISOLATION",
+      "actor": "global-admin",
+      "target": "report-b",
+      "expected": "ALLOW",
+      "label": "GLOBAL_ADMIN_FP_CONTROL"
+    },
+    {
+      "id": "S6-GT-004",
+      "family": "TENANT_ISOLATION",
+      "actor": "delegate-a",
+      "target": "report-b",
+      "expected": "ALLOW",
+      "label": "DELEGATION_FP_CONTROL"
+    },
+    {
+      "id": "S6-GT-005",
+      "family": "TENANT_ISOLATION",
+      "actor": "user-a",
+      "target": "shared-report",
+      "expected": "ALLOW",
+      "label": "SHARED_RESOURCE_FP_CONTROL"
+    },
+    {
+      "id": "S6-GT-006",
+      "family": "RBAC",
+      "actor": "user-a",
+      "action": "ADMIN_EXPORT",
+      "tenant": "tenant-a",
+      "expected": "DENY",
+      "label": "LOW_ROLE_DENY"
+    },
+    {
+      "id": "S6-GT-007",
+      "family": "RBAC",
+      "actor": "manager-a",
+      "action": "READ_REPORT",
+      "tenant": "tenant-a",
+      "expected": "ALLOW",
+      "label": "INHERITED_PERMISSION_CONTROL"
+    },
+    {
+      "id": "S6-GT-008",
+      "family": "RBAC",
+      "actor": "global-admin",
+      "action": "ADMIN_EXPORT",
+      "tenant": "tenant-b",
+      "expected": "ALLOW",
+      "label": "GLOBAL_PRIVILEGE_CONTROL"
+    },
+    {
+      "id": "S6-GT-009",
+      "family": "RBAC",
+      "actor": "delegate-a",
+      "action": "ADMIN_EXPORT",
+      "tenant": "tenant-b",
+      "expected": "ALLOW",
+      "label": "DELEGATED_PRIVILEGE_CONTROL"
+    },
+    {
+      "id": "S6-GT-010",
+      "family": "POLICY_CONFLICT",
+      "actor": "user-a",
+      "action": "READ_REPORT",
+      "tenant": "tenant-a",
+      "expected": "INCONCLUSIVE",
+      "label": "UNPROVEN_PRECEDENCE"
+    }
+  ]
+}

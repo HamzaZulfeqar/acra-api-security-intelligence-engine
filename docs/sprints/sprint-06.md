@@ -58,3 +58,15 @@ controlled experiments, UI, reporting extensions, performance/security validatio
 reproducible S6 checkpoint.
 
 Sprint 7 remains NOT STARTED.
+
+
+## S6 controlled-lab and planning slice
+
+Implemented:
+- independent `GT-S6-TENANT-RBAC.json` ground truth
+- secure/vulnerable localhost S6 report and privileged-export fixtures
+- explicit global-admin, delegated-admin and shared-resource controls
+- deliberately vulnerable cross-tenant/report and low-role privileged-action behavior in vulnerable mode
+- `S6PolicyPlanningAdvisor` that recommends existing CROSS_TENANT and ROLE_COMPARISON contracts from resolved policy context
+- planner recommendations keep global/delegated/shared cases as false-positive controls instead of vulnerability verdicts
+- live S6 TP/TN/FP/FN metrics remain NOT MEASURED until the localhost campaign is actually executed

@@ -44,6 +44,9 @@ Implemented foundation:
 - atomic authorization-policy hydration into the existing SecurityContextGraph
 - deterministic root-cause grouping foundation
 - policy-import plugin boundary and manual policy builder
+- S6 ACRA-Lab ground truth and secure/vulnerable local tenant/RBAC fixtures
+- policy-aware planning advisor for CROSS_TENANT / ROLE_COMPARISON coverage
+- global/delegated/shared false-positive controls preserved as legitimate policy-aware cases
 
 This is **not Sprint 6 completion**. Effective permission/decision resolution, tenant-isolation and RBAC
 assessment engines, S5 FindingCandidate integration, expanded ACRA-Lab experiments, UI/report extensions
