@@ -17,6 +17,17 @@ GitHub Actions run `35878508170`: **PASS** on exact Temurin JDK 21.0.12.1.
 
 The metrics above apply only to the controlled localhost dataset and are not real-world accuracy claims.
 
+### Sprint 6 planner/execution integration
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S6-AUTO-PLAN-001 | resolved S6 policy → generated CROSS_TENANT TestSeed | Sprint6PlannerExecutionIntegrationTestSuite | PASS |
+| TEST-S6-AUTO-QUEUE-001 | generated seed → existing S4 TestPlanner / ExecutionQueue | same suite | PASS |
+| TEST-S6-AUTO-EXEC-001 | queue → existing TestExecutor → secure localhost ACRA-Lab | run 35882729813 | PASS |
+| TEST-S6-AUTO-MUT-001 | one-variable tenant-a → tenant-b path substitution | generated test S6-AUTO-TENANT-a915a78d9e3fd8c06e49c4e9 | PASS |
+| TEST-S6-AUTO-SAFE-001 | credentials excluded from Mutation and serialized test | same suite | PASS |
+| TEST-S6-ROLE-GEN-001 | generic ROLE_COMPARISON active generation | fail-closed pending credential-safe context substitution | EXPECTED BLOCK |
+
 ## Sprint 5 final closure — 2026-09-23
 
 Current authoritative S5 verification is GitHub Actions run `35872345270`: exact JDK 21 compilation and all selected core/S3/S4/S5 suites PASS. See `docs/sprints/sprint-05-final-completion.md` for the requirement matrix and residual validation boundaries.

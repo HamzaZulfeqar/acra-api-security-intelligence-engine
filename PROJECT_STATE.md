@@ -36,6 +36,14 @@
 - live generated-test execution against secure localhost ACRA-Lab
 - ROLE_COMPARISON active generation intentionally fail-closed pending credential-safe authenticated-context substitution
 
+### Newly verified planner/execution evidence
+
+GitHub Actions run `35882729813` completed successfully on exact Temurin JDK 21.0.12.1.
+`Sprint6PlannerExecutionIntegrationTestSuite` passed 15 assertions and proved a generated CROSS_TENANT test can
+flow through the existing S4 planner, queue, safety validation and executor into the secure localhost ACRA-Lab.
+Generated test `S6-AUTO-TENANT-a915a78d9e3fd8c06e49c4e9` completed with expected DENY,
+`EXPECTED_CHANGE`, and queue state `COMPLETED`.
+
 ### Newly measured S6 evidence
 
 GitHub Actions run `35878508170` completed successfully on exact Temurin JDK 21.0.12.1.
