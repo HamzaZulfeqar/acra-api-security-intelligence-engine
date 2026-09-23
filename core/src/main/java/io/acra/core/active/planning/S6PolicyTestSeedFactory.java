@@ -1,0 +1,211 @@
+package io.acra.core.active.planning;
+
+import io.acra.core.active.model.Mutation;
+import io.acra.core.active.model.MutationLocation;
+import io.acra.core.active.model.MutationType;
+import io.acra.core.active.model.SafetyClass;
+import io.acra.core.active.model.TestContract;
+import io.acra.core.domain.authorization.AuthorizationDecision;
+import io.acra.core.domain.authorization.PolicyResolutionState;
+import io.acra.core.domain.http.HttpMethod;
+import io.acra.core.security.TokenFingerprint;
+import java.util.ArrayList;
+import java.util.List;
+
+public final class S6PolicyTestSeedFactory {
+    private final S6PolicyPlanningAdvisor advisor = new S6PolicyPlanningAdvisor();
+
+    public S6PolicySeedGenerationResult generate(S6PolicyPlanningCandidate candidate) {
+        if (candidate == null) throw new IllegalArgumentException("candidate required");
+        List<TestSeed> seeds = new ArrayList<>();
+        List<String> skipped = new ArrayList<>();
+
+        if (!resolvable(candidate.targetResolution())) {
+            skipped.add(candidate.candidateId() + ":TARGET_POLICY_UNRESOLVED");
+            return new S6PolicySeedGenerationResult(seeds, skipped);
+        }
+        if (!resolvable(candidate.baselineResolution())) {
+            skipped.add(candidate.candidateId() + ":BASELINE_POLICY_UNRESOLVED");
+            return new S6PolicySeedGenerationResult(seeds, skipped);
+        }
+
+        for (S6PolicyPlanningRecommendation recommendation : advisor.recommend(candidate.targetResolution())) {
+            if (!recommendation.recommended() || !candidate.allowedContracts().contains(recommendation.contract())) {
+                continue;
+            }
+            switch (recommendation.contract()) {
+                case CROSS_TENANT -> crossTenant(candidate, recommendation, seeds, skipped);
+                case ROLE_COMPARISON -> roleComparison(candidate, recommendation, seeds, skipped);
+                default -> skipped.add(candidate.candidateId() + ":UNSUPPORTED_S6_CONTRACT:"
+                        + recommendation.contract().name());
+            }
+        }
+        return new S6PolicySeedGenerationResult(seeds, skipped);
+    }
+
+    private void crossTenant(S6PolicyPlanningCandidate candidate, S6PolicyPlanningRecommendation recommendation,
+                             List<TestSeed> seeds, List<String> skipped) {
+        String sourceTenant = candidate.sourceContext().tenant();
+        String targetTenant = candidate.targetContext().tenant();
+        if (sourceTenant == null || sourceTenant.isBlank() || targetTenant == null || targetTenant.isBlank()
+                || sourceTenant.equals(targetTenant)) {
+            skipped.add(candidate.candidateId() + ":CROSS_TENANT_CONTEXT_NOT_DISTINCT");
+            return;
+        }
+        String rawTarget = candidate.baseline().request().rawTarget();
+        if (occurrences(rawTarget, sourceTenant) != 1) {
+            skipped.add(candidate.candidateId() + ":BASELINE_PATH_DOES_NOT_CONTAIN_ONE_SOURCE_TENANT");
+            return;
+        }
+
+        String key = candidate.targetResolution().policyFingerprint() + "|" + candidate.endpoint().endpointId()
+                + "|" + sourceTenant + "->" + targetTenant + "|" + recommendation.contract();
+        String suffix = TokenFingerprint.sha256(key).substring(0, 24);
+        SafetyClass safetyClass = safe(candidate.endpoint().method())
+                ? SafetyClass.SAFE_READ_ONLY : SafetyClass.STATE_CHANGING;
+        Mutation mutation = new Mutation(
+                "S6-MUT-TENANT-" + suffix,
+                MutationType.TENANT_SUBSTITUTION,
+                MutationLocation.TENANT,
+                sourceTenant,
+                targetTenant,
+                context(candidate.sourceContext()),
+                context(candidate.targetContext()),
+                "policy-aware tenant substitution using explicit supplied S6 contexts",
+                "target policy expects " + candidate.targetResolution().expectedDecision(),
+                safetyClass,
+                "s6-tenant:" + suffix);
+
+        List<String> invariants = new ArrayList<>(candidate.invariants());
+        invariants.add("only the declared tenant path value is changed by the generated mutation");
+        invariants.add("authorization credentials are supplied by explicit request controls and are never copied into Mutation");
+        invariants.add("target policy fingerprint=" + candidate.targetResolution().policyFingerprint());
+
+        List<String> evidence = candidate.targetResolution().evidenceIds();
+        seeds.add(new TestSeed(
+                "S6-AUTO-TENANT-" + suffix,
+                "1",
+                TestContract.CROSS_TENANT,
+                candidate.endpoint(),
+                candidate.baseline(),
+                candidate.positiveControl(),
+                candidate.negativeControl(),
+                mutation,
+                candidate.sourceContext(),
+                candidate.targetContext(),
+                candidate.sourceResource(),
+                candidate.targetResource(),
+                candidate.targetResolution().expectedDecision(),
+                evidence,
+                candidate.dependencies(),
+                invariants,
+                4,
+                true,
+                candidate.userSelected(),
+                candidate.userExcluded(),
+                recommendation.reason() + "; policy=" + candidate.targetResolution().policyFingerprint()));
+    }
+
+    private void roleComparison(S6PolicyPlanningCandidate candidate,
+                                S6PolicyPlanningRecommendation recommendation,
+                                List<TestSeed> seeds,
+                                List<String> skipped) {
+        String sourceRole = candidate.sourceContext().role();
+        String targetRole = candidate.targetContext().role();
+        if (sourceRole == null || sourceRole.isBlank() || targetRole == null || targetRole.isBlank()
+                || sourceRole.equals(targetRole)) {
+            skipped.add(candidate.candidateId() + ":ROLE_CONTEXT_NOT_DISTINCT");
+            return;
+        }
+        if (!candidate.sourceContext().tenant().equals(candidate.targetContext().tenant())) {
+            skipped.add(candidate.candidateId() + ":ROLE_COMPARISON_REQUIRES_SAME_TENANT");
+            return;
+        }
+        if (!safe(candidate.endpoint().method())) {
+            skipped.add(candidate.candidateId() + ":ROLE_COMPARISON_REQUIRES_SAFE_READ_ONLY_ENDPOINT");
+            return;
+        }
+        if (!candidate.baseline().request().rawTarget().equals(candidate.positiveControl().request().rawTarget())
+                || candidate.baseline().request().method() != candidate.positiveControl().request().method()) {
+            skipped.add(candidate.candidateId() + ":ROLE_TARGET_CONTROL_CHANGED_ENDPOINT_OR_METHOD");
+            return;
+        }
+        if (candidate.baseline().contextRef().equals(candidate.positiveControl().contextRef())) {
+            skipped.add(candidate.candidateId() + ":ROLE_TARGET_CONTEXT_REFERENCE_NOT_DISTINCT");
+            return;
+        }
+
+        String key = candidate.targetResolution().policyFingerprint() + "|" + candidate.endpoint().endpointId()
+                + "|" + sourceRole + "->" + targetRole + "|" + recommendation.contract();
+        String suffix = TokenFingerprint.sha256(key).substring(0, 24);
+        Mutation mutation = new Mutation(
+                "S6-MUT-CONTEXT-" + suffix,
+                MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION,
+                MutationLocation.CONTEXT,
+                sourceRole,
+                targetRole,
+                candidate.baseline().contextRef(),
+                candidate.positiveControl().contextRef(),
+                "credential-safe authenticated-context substitution by explicit context reference",
+                "target role policy expects " + candidate.targetResolution().expectedDecision(),
+                SafetyClass.SAFE_READ_ONLY,
+                "s6-role-context:" + suffix);
+
+        List<String> invariants = new ArrayList<>(candidate.invariants());
+        invariants.add("endpoint, method, tenant, resource and body remain constant during authenticated-context substitution");
+        invariants.add("Mutation stores role labels and context references, never raw token/cookie/password material");
+        invariants.add("target authenticated request material is resolved only from explicit in-memory test controls");
+        invariants.add("target policy fingerprint=" + candidate.targetResolution().policyFingerprint());
+
+        seeds.add(new TestSeed(
+                "S6-AUTO-ROLE-" + suffix,
+                "1",
+                TestContract.ROLE_COMPARISON,
+                candidate.endpoint(),
+                candidate.baseline(),
+                candidate.positiveControl(),
+                candidate.negativeControl(),
+                mutation,
+                candidate.sourceContext(),
+                candidate.targetContext(),
+                candidate.sourceResource(),
+                candidate.targetResource(),
+                candidate.targetResolution().expectedDecision(),
+                candidate.targetResolution().evidenceIds(),
+                candidate.dependencies(),
+                invariants,
+                4,
+                true,
+                candidate.userSelected(),
+                candidate.userExcluded(),
+                recommendation.reason() + "; credential-safe contextRef="
+                        + candidate.positiveControl().contextRef()));
+    }
+
+    private static boolean resolvable(io.acra.core.domain.authorization.EffectiveAuthorizationResolution resolution) {
+        return resolution != null
+                && resolution.expectedDecision() != AuthorizationDecision.UNKNOWN
+                && resolution.state() != PolicyResolutionState.CONFLICTING
+                && resolution.state() != PolicyResolutionState.INCOMPLETE
+                && resolution.state() != PolicyResolutionState.UNKNOWN;
+    }
+
+    private static boolean safe(HttpMethod method) {
+        return method == HttpMethod.GET || method == HttpMethod.HEAD || method == HttpMethod.OPTIONS;
+    }
+
+    private static int occurrences(String source, String value) {
+        int count = 0;
+        int offset = 0;
+        while (source != null && value != null && !value.isEmpty()
+                && (offset = source.indexOf(value, offset)) >= 0) {
+            count++;
+            offset += value.length();
+        }
+        return count;
+    }
+
+    private static String context(io.acra.core.recon.SecurityContextFingerprint value) {
+        return value.principal() + "|" + value.role() + "|" + value.tenant();
+    }
+}

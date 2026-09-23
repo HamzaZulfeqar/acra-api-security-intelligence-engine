@@ -1,0 +1,21 @@
+{
+  "experiment_id": "EXP-S6-TENANT-RBAC-001",
+  "dataset_id": "GT-S6-TENANT-RBAC",
+  "scope": "controlled localhost ACRA-Lab only",
+  "measured_at": "2026-09-23T15:00:00Z",
+  "baseline": {"tp":2,"tn":1,"fp":7,"fn":0,"precision":0.222222,"recall":1.000000,"f1":0.363636},
+  "acra": {"tp":2,"tn":8,"fp":0,"fn":0,"precision":1.000000,"recall":1.000000,"f1":1.000000},
+  "cases": [
+    {"id":"S6-LIVE-001","service":"secure","status":200,"expected_status":200,"ground_truth":"NEGATIVE","baseline_prediction":"NEGATIVE","acra_prediction":"NEGATIVE","policy_expected":"ALLOW","observed":"ALLOW","tenant_relationship":"SAME_TENANT","resolution_state":"RESOLVED_ALLOW"},
+    {"id":"S6-LIVE-002","service":"secure","status":403,"expected_status":403,"ground_truth":"NEGATIVE","baseline_prediction":"POSITIVE","acra_prediction":"NEGATIVE","policy_expected":"DENY","observed":"DENY","tenant_relationship":"CROSS_TENANT","resolution_state":"RESOLVED_DENY"},
+    {"id":"S6-LIVE-003","service":"vulnerable","status":200,"expected_status":200,"ground_truth":"POSITIVE","baseline_prediction":"POSITIVE","acra_prediction":"POSITIVE","policy_expected":"DENY","observed":"ALLOW","tenant_relationship":"CROSS_TENANT","resolution_state":"RESOLVED_DENY"},
+    {"id":"S6-LIVE-004","service":"secure","status":200,"expected_status":200,"ground_truth":"NEGATIVE","baseline_prediction":"POSITIVE","acra_prediction":"NEGATIVE","policy_expected":"ALLOW","observed":"ALLOW","tenant_relationship":"GLOBAL","resolution_state":"RESOLVED_ALLOW"},
+    {"id":"S6-LIVE-005","service":"secure","status":200,"expected_status":200,"ground_truth":"NEGATIVE","baseline_prediction":"POSITIVE","acra_prediction":"NEGATIVE","policy_expected":"ALLOW","observed":"ALLOW","tenant_relationship":"DELEGATED","resolution_state":"RESOLVED_ALLOW"},
+    {"id":"S6-LIVE-006","service":"secure","status":200,"expected_status":200,"ground_truth":"NEGATIVE","baseline_prediction":"POSITIVE","acra_prediction":"NEGATIVE","policy_expected":"ALLOW","observed":"ALLOW","tenant_relationship":"SHARED","resolution_state":"RESOLVED_ALLOW"},
+    {"id":"S6-LIVE-007","service":"secure","status":403,"expected_status":403,"ground_truth":"NEGATIVE","baseline_prediction":"POSITIVE","acra_prediction":"NEGATIVE","policy_expected":"DENY","observed":"DENY","tenant_relationship":"SAME_TENANT","resolution_state":"RESOLVED_DENY"},
+    {"id":"S6-LIVE-008","service":"vulnerable","status":200,"expected_status":200,"ground_truth":"POSITIVE","baseline_prediction":"POSITIVE","acra_prediction":"POSITIVE","policy_expected":"DENY","observed":"ALLOW","tenant_relationship":"SAME_TENANT","resolution_state":"RESOLVED_DENY"},
+    {"id":"S6-LIVE-009","service":"secure","status":200,"expected_status":200,"ground_truth":"NEGATIVE","baseline_prediction":"POSITIVE","acra_prediction":"NEGATIVE","policy_expected":"ALLOW","observed":"ALLOW","tenant_relationship":"GLOBAL","resolution_state":"RESOLVED_ALLOW"},
+    {"id":"S6-LIVE-010","service":"secure","status":200,"expected_status":200,"ground_truth":"NEGATIVE","baseline_prediction":"POSITIVE","acra_prediction":"NEGATIVE","policy_expected":"ALLOW","observed":"ALLOW","tenant_relationship":"DELEGATED","resolution_state":"RESOLVED_ALLOW"}
+  ],
+  "limitations": ["synthetic localhost fixtures","unsigned synthetic lab tokens","metrics do not establish real-world scanner accuracy","Burp runtime path not part of this experiment"]
+}

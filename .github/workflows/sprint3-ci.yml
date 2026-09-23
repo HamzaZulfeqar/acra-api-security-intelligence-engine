@@ -38,8 +38,11 @@ jobs:
       - name: Maven package with official Montoya dependency
         run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
 
+      - name: Normalize verification script permissions
+        run: chmod +x ./scripts/*.sh
+
       - name: Sprint 3 local verification gates
-        run: ./scripts/verify-sprint3.sh
+        run: bash ./scripts/verify-sprint3.sh
 
       - name: Upload verification evidence
         if: always()

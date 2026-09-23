@@ -1,5 +1,74 @@
 # Test Matrix
 
+## Sprint 6 controlled tenant/RBAC validation — 2026-09-23
+
+GitHub Actions run `35878508170`: **PASS** on exact Temurin JDK 21.0.12.1.
+
+| Test / Experiment | Coverage | Result |
+|---|---|---|
+| Sprint6PolicyFoundationTestSuite | scope, membership, multi-role, hierarchy, policy snapshot, secret safety | PASS |
+| Sprint6PolicyResolutionTestSuite | effective permissions, global/delegated/shared scope, precedence/conflict, shared-scope isolation | PASS |
+| Sprint6OrchestrationTestSuite | S5→S6 orchestration, tenant/RBAC/finding/risk composition | PASS |
+| Sprint6GraphAndGroupingTestSuite | policy graph hydration, evidence preflight, root-cause grouping | PASS |
+| Sprint6LabAndPlanningTestSuite | policy-aware CROSS_TENANT / ROLE_COMPARISON planning recommendations | PASS |
+| Sprint6LiveLabExperimentTestSuite | live secure/vulnerable localhost campaign | PASS, 16 assertions |
+| EXP-S6-TENANT-RBAC-001 baseline | 10 labelled cases | TP=2 TN=1 FP=7 FN=0, precision=.222222 recall=1.0 F1=.363636 |
+| EXP-S6-TENANT-RBAC-001 ACRA | 10 labelled cases | TP=2 TN=8 FP=0 FN=0, precision=1.0 recall=1.0 F1=1.0 |
+
+The metrics above apply only to the controlled localhost dataset and are not real-world accuracy claims.
+
+### Sprint 6 performance/security closure
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S6-PERF-001 | 100 / 1,000 / 10,000 policy resolution | Sprint6PerformanceObservationTestSuite | PASS |
+| TEST-S6-PERF-002 | policy-aware planning recommendations | Sprint6PerformanceObservationTestSuite | PASS |
+| TEST-S6-PERF-003 | S6 report generation at 100 / 1,000 / 10,000 analyses | Sprint6PerformanceObservationTestSuite | PASS |
+| TEST-S6-SEC-CTX-001 | missing / ambiguous / spoofed authenticated context refs | Sprint6SecurityHardeningTestSuite | PASS |
+| TEST-S6-SEC-EQUIV-001 | path / non-auth header / resource drift rejection | Sprint6SecurityHardeningTestSuite | PASS |
+| TEST-S6-SEC-AUTH-001 | unchanged auth context rejected | Sprint6SecurityHardeningTestSuite | PASS |
+| TEST-S6-SEC-SERIAL-001 | viewer/admin raw token exclusion | Sprint6SecurityHardeningTestSuite | PASS |
+| TEST-S6-SEC-POLICY-001 | conflicting policy produces no executable seed | Sprint6SecurityHardeningTestSuite | PASS |
+
+### Sprint 6 reporting/export
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S6-REPORT-001 | deterministic report model / content identity | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-002 | canonical JSON + SHA-256 | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-003 | Markdown review report | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-004 | raw-secret exclusion / redaction | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-005 | candidate != confirmed finding boundary | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-006 | Reporter plugin adapter | Sprint6ReportingExportTestSuite | PASS |
+| TEST-S6-REPORT-UI-001 | Report + JSON Export product views | Sprint6AuthorizationUiTestSuite | PASS |
+
+### Sprint 6 authorization UI
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S6-UI-001 | Authorization top-level product area | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-002 | Tenant Map / roles / hierarchy / permissions | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-003 | Effective permissions matrix / conflicts / coverage | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-004 | Policy and candidate-vs-finding evidence boundary | Sprint6AuthorizationUiTestSuite | PASS |
+| TEST-S6-UI-REG-001 | Retained Sprint 4 UI after S6 integration | Sprint4UiTestSuite | PASS |
+
+### Sprint 6 planner/execution integration
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S6-AUTO-PLAN-001 | resolved S6 policy → generated CROSS_TENANT TestSeed | Sprint6PlannerExecutionIntegrationTestSuite | PASS |
+| TEST-S6-AUTO-QUEUE-001 | generated seed → existing S4 TestPlanner / ExecutionQueue | same suite | PASS |
+| TEST-S6-AUTO-EXEC-001 | queue → existing TestExecutor → secure localhost ACRA-Lab | run 35882729813 | PASS |
+| TEST-S6-AUTO-MUT-001 | one-variable tenant-a → tenant-b path substitution | generated test S6-AUTO-TENANT-a915a78d9e3fd8c06e49c4e9 | PASS |
+| TEST-S6-AUTO-SAFE-001 | credentials excluded from Mutation and serialized test | same suite | PASS |
+| TEST-S6-ROLE-GEN-001 | safe read-only ROLE_COMPARISON active generation | authenticated contextRef substitution; raw credentials excluded from Mutation | PASS |
+| TEST-S6-ROLE-EQUIV-001 | same endpoint/method/resource/body/non-auth headers | RequestEquivalenceGuard | PASS |
+| TEST-S6-ROLE-SECRET-001 | viewer/admin raw tokens absent from serialized test and Mutation metadata | Sprint6PlannerExecutionIntegrationTestSuite | PASS |
+
+## Sprint 5 final closure — 2026-09-23
+
+Current authoritative S5 verification is GitHub Actions run `35872345270`: exact JDK 21 compilation and all selected core/S3/S4/S5 suites PASS. See `docs/sprints/sprint-05-final-completion.md` for the requirement matrix and residual validation boundaries.
+
 ## Current S5 defensive continuation — 2026-09-09
 
 | Suite | Coverage | Evidence |

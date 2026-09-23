@@ -1,5 +1,33 @@
 # Known Issues and Technical Debt
 
+## Sprint 6 closure updates — 2026-09-23
+
+- Legacy S2/S3 zero-length test sources were repaired from exact Git history; Sprint 2 and Sprint 3 CI are green again.
+- Legacy local Montoya-stub suites are intentionally excluded from the current official-Montoya Maven test compile; they execute under their preserved stub-contract verification scripts.
+- Real Burp desktop runtime/load/handler/UI validation remains separate and unverified.
+- S6 performance values are observational CI measurements, not release thresholds or JMH benchmarks.
+
+## Sprint 6 current limitations — 2026-09-23
+
+- `EXP-S6-TENANT-RBAC-001` metrics are from ten controlled localhost cases only; they are not real-world accuracy claims.
+- ACRA-Lab authentication uses unsigned synthetic tokens and must not be treated as production authentication evidence.
+- The first live S6 campaign exposed a shared-scope isolation defect; it is fixed and covered by regression tests.
+- S6 policy state and graph/evidence persistence remain in-memory.
+- Full UI/reporting/performance/final package closure is still pending.
+- ROLE_COMPARISON active generation is now implemented for safe read-only endpoints using explicit contextRef substitution. State-changing role comparisons remain intentionally outside this automatic path until separate confirmation/transaction-safety policy is defined.
+- Historical real Burp runtime validation remains separate.
+
+## Current residual issues after S5 completion — 2026-09-23
+
+- Historical Sprint 2/3 real Burp runtime validation remains BLOCKED / UNVERIFIED and is independent of S5 software completion.
+- FindingCandidate remains a candidate state, not an automatically confirmed real-world vulnerability.
+- Independent corroboration is explicit; the final S5 orchestrator does not manufacture independence from repeated same-execution evidence.
+- Internal authorization risk score is deterministic ACRA prioritization, not CVSS. Impact facts must be supplied rather than inferred from names.
+- ExecutionEvidenceStore persistence remains in-memory architecture inherited from S4; durable persistence is future product hardening.
+- The S5 final closure suite is offline/synthetic evidence. It does not establish real-world scanner accuracy or production target safety.
+- S6 is intentionally NOT STARTED in the S5 checkpoint.
+- setup-java@v4 deprecation warnings remain CI maintenance debt; they do not invalidate the Java 21 verification result.
+
 ## Current S5 continuation — 2026-09-09
 
 S5 SOFTWARE PARTIAL. Current matrix: `docs/sprints/sprint-05-final-software-closure.md`.

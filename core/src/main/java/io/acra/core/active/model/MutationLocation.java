@@ -9,6 +9,7 @@ public enum MutationLocation {
     RESOURCE,
     IDENTITY,
     ROLE,
+    CONTEXT,
     TENANT,
     URI_REPRESENTATION,
     METHOD

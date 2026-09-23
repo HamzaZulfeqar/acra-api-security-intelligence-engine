@@ -1,3 +1,5 @@
+> **HISTORICAL CHECKPOINT:** Batch 3 ended with S5 SOFTWARE PARTIAL. This state has since been superseded by `docs/sprints/sprint-05-final-completion.md` after the missing S5 closure layers were implemented and exact-JDK-21 verification passed.
+
 # Sprint 5 Batch 3 final integration and verified closure
 
 Date: 2026-09-11  
