@@ -21,6 +21,7 @@ suites=(
   io.acra.core.tests.sprint4.Sprint4CoreVerificationTestSuite
   io.acra.core.tests.sprint5.Sprint5FinalClosureTestSuite
   io.acra.core.tests.sprint6.Sprint6PolicyFoundationTestSuite
+  io.acra.core.tests.sprint6.Sprint6PolicyResolutionTestSuite
 )
 
 for suite in "${suites[@]}"; do

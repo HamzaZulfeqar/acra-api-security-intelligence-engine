@@ -18,6 +18,7 @@ public record AuthorizationPolicySnapshot(
         List<AuthorizationRule> rules,
         List<Delegation> delegations,
         List<String> evidenceIds,
+        AuthorizationDecision defaultDecision,
         Instant capturedAt,
         String fingerprint) {
 
@@ -37,9 +38,10 @@ public record AuthorizationPolicySnapshot(
         delegations = sort(delegations, Comparator.comparing(Delegation::delegationId));
         evidenceIds = List.copyOf(evidenceIds == null ? List.<String>of() : evidenceIds).stream()
                 .map(AuthorizationPolicySnapshot::safe).filter(v -> !v.isBlank()).distinct().sorted().toList();
+        defaultDecision = defaultDecision == null ? AuthorizationDecision.UNKNOWN : defaultDecision;
         if (capturedAt == null) throw new IllegalArgumentException("capturedAt required");
         String computed = computeFingerprint(policyId, version, source, memberships, roleAssignments,
-                roleInheritances, permissions, rolePermissionAssignments, rules, delegations, evidenceIds);
+                roleInheritances, permissions, rolePermissionAssignments, rules, delegations, evidenceIds, defaultDecision);
         fingerprint = fingerprint == null || fingerprint.isBlank() ? computed : safe(fingerprint);
         if (!fingerprint.equals(computed)) throw new IllegalArgumentException("policy fingerprint mismatch");
     }
@@ -49,19 +51,29 @@ public record AuthorizationPolicySnapshot(
             List<RoleInheritance> roleInheritances, List<Permission> permissions,
             List<RolePermissionAssignment> rolePermissionAssignments, List<AuthorizationRule> rules,
             List<Delegation> delegations, List<String> evidenceIds, Instant capturedAt) {
+        return create(policyId, version, source, memberships, roleAssignments, roleInheritances, permissions,
+                rolePermissionAssignments, rules, delegations, evidenceIds, AuthorizationDecision.UNKNOWN, capturedAt);
+    }
+
+    public static AuthorizationPolicySnapshot create(String policyId, String version, String source,
+            List<TenantMembership> memberships, List<RoleAssignment> roleAssignments,
+            List<RoleInheritance> roleInheritances, List<Permission> permissions,
+            List<RolePermissionAssignment> rolePermissionAssignments, List<AuthorizationRule> rules,
+            List<Delegation> delegations, List<String> evidenceIds, AuthorizationDecision defaultDecision,
+            Instant capturedAt) {
         return new AuthorizationPolicySnapshot(policyId, version, source, memberships, roleAssignments,
                 roleInheritances, permissions, rolePermissionAssignments, rules, delegations,
-                evidenceIds, capturedAt, "");
+                evidenceIds, defaultDecision, capturedAt, "");
     }
 
     private static String computeFingerprint(String policyId, String version, String source,
             List<TenantMembership> memberships, List<RoleAssignment> roleAssignments,
             List<RoleInheritance> roleInheritances, List<Permission> permissions,
             List<RolePermissionAssignment> rolePermissionAssignments, List<AuthorizationRule> rules,
-            List<Delegation> delegations, List<String> evidenceIds) {
+            List<Delegation> delegations, List<String> evidenceIds, AuthorizationDecision defaultDecision) {
         String material = policyId + "|" + version + "|" + source + "|" + memberships + "|" + roleAssignments
                 + "|" + roleInheritances + "|" + permissions + "|" + rolePermissionAssignments + "|" + rules
-                + "|" + delegations + "|" + evidenceIds;
+                + "|" + delegations + "|" + evidenceIds + "|" + defaultDecision;
         return "policy-" + TokenFingerprint.sha256(material);
     }
 

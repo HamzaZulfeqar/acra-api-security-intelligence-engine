@@ -36,6 +36,19 @@ public final class RoleHierarchyResolver {
             return new EffectiveRoleResolution(principal, tenant, List.of(), List.of(), List.of(),
                     RoleResolutionState.INCOMPLETE, List.of("NO_APPLICABLE_ROLE_ASSIGNMENT"));
         }
+        return expand(snapshot, principal, tenant, direct);
+    }
+
+    public EffectiveRoleResolution expand(AuthorizationPolicySnapshot snapshot, String principalId, String tenantId,
+                                           java.util.Collection<String> seedRoles) {
+        if (snapshot == null) throw new IllegalArgumentException("snapshot required");
+        String principal = principalId == null ? "" : principalId.strip();
+        String tenant = tenantId == null ? "" : tenantId.strip();
+        Set<String> direct = new TreeSet<>(seedRoles == null ? List.of() : seedRoles);
+        if (direct.isEmpty()) {
+            return new EffectiveRoleResolution(principal, tenant, List.of(), List.of(), List.of(),
+                    RoleResolutionState.INCOMPLETE, List.of("NO_ROLE_SEEDS"));
+        }
 
         Map<String, List<String>> parents = new HashMap<>();
         for (RoleInheritance edge : snapshot.roleInheritances()) {

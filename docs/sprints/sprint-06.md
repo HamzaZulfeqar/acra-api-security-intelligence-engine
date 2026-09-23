@@ -20,10 +20,21 @@ Base checkpoint: S5 final commit `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`.
 - S6-38 graph taxonomy extension foundation
 - S6-57/S6-58 immutable policy snapshot and deterministic fingerprint foundation
 
+## Current policy-resolution slice
+
+Newly implemented:
+- effective permission resolution across inherited and multiple roles
+- explicit default ALLOW/DENY policy support
+- explicit rule precedence with conflict preservation when precedence is unproven
+- global and delegated authorization resolution
+- tenant relationship classification
+- tenant-isolation assessment
+- RBAC assessment
+- deterministic effective-authorization resolution IDs
+
 ## Still required
 
-Effective permission resolution, explicit policy-conflict/precedence engine, delegation resolution,
-effective authorization decision resolution, tenant-isolation evaluator, advanced RBAC evaluator,
+Role-escalation/root-cause assessment, policy graph/matrix integration,
 matrix/graph integration, S4 planner integration, S5 FindingCandidate integration, expanded lab,
 controlled experiments, UI, reporting extensions, performance/security validation, final audit and
 reproducible S6 checkpoint.

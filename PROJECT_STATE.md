@@ -29,6 +29,12 @@ Implemented foundation:
 - immutable deterministic authorization policy snapshot
 - policy/RBAC graph relation/node taxonomy extensions
 - dedicated Sprint 6 foundation test/CI lane
+- effective permission resolution across direct/inherited/multi-role assignments
+- explicit default policy decision
+- allow/deny conflict preservation and evidence-backed precedence
+- global/delegated authorization resolution
+- tenant-relationship classification
+- tenant-isolation and RBAC assessment foundations
 
 This is **not Sprint 6 completion**. Effective permission/decision resolution, tenant-isolation and RBAC
 assessment engines, S5 FindingCandidate integration, expanded ACRA-Lab experiments, UI/report extensions
