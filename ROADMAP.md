@@ -1,5 +1,15 @@
 # Roadmap
 
+## Current gate — 2026-09-23
+
+Sprint 5 software is complete on `s5-s6-completion` and must be checkpointed before Sprint 6 work begins.
+
+Next dependency-ordered milestone:
+1. Preserve the reproducible S5 ZIP + SHA-256.
+2. Keep historical Burp/runtime debt separate from S5.
+3. Start Sprint 6 on a new branch/checkpoint.
+4. Sprint 6 scope: tenant isolation, advanced RBAC, role inheritance/multi-role policy, delegated administration, global-vs-tenant scope, explicit deny and policy-conflict reasoning.
+
 Current gate: S5 SOFTWARE PARTIAL; S6 NOT STARTED. Source-backed remaining S5 work is in `docs/sprints/sprint-05-final-software-closure.md`. Previous short completion notes below are historical and do not supersede that audit.
 
 Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).

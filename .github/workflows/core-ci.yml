@@ -18,4 +18,4 @@ jobs:
           distribution: temurin
           java-version: '21'
       - name: Verify Sprint 1 core
-        run: ./scripts/verify-sprint1.sh
+        run: bash ./scripts/verify-sprint1.sh

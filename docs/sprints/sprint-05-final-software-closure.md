@@ -1,3 +1,5 @@
+> **SUPERSEDED CURRENT-STATE NOTE — 2026-09-23:** This document is preserved as the earlier defensive/partial audit. The authoritative Sprint 5 completion decision is now `docs/sprints/sprint-05-final-completion.md`, backed by GitHub Actions run `35872345270` and subsequent checkpoint verification. Historical statements below describe the earlier checkpoint and are not the current S5 status.
+
 # Sprint 5 software audit and continuation
 
 Checkpoint: `S5-DEFENSIVE-CONTINUATION-2026-09-09`.

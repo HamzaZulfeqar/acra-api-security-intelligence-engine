@@ -1,5 +1,16 @@
 # Known Issues and Technical Debt
 
+## Current residual issues after S5 completion — 2026-09-23
+
+- Historical Sprint 2/3 real Burp runtime validation remains BLOCKED / UNVERIFIED and is independent of S5 software completion.
+- FindingCandidate remains a candidate state, not an automatically confirmed real-world vulnerability.
+- Independent corroboration is explicit; the final S5 orchestrator does not manufacture independence from repeated same-execution evidence.
+- Internal authorization risk score is deterministic ACRA prioritization, not CVSS. Impact facts must be supplied rather than inferred from names.
+- ExecutionEvidenceStore persistence remains in-memory architecture inherited from S4; durable persistence is future product hardening.
+- The S5 final closure suite is offline/synthetic evidence. It does not establish real-world scanner accuracy or production target safety.
+- S6 is intentionally NOT STARTED in the S5 checkpoint.
+- setup-java@v4 deprecation warnings remain CI maintenance debt; they do not invalidate the Java 21 verification result.
+
 ## Current S5 continuation — 2026-09-09
 
 S5 SOFTWARE PARTIAL. Current matrix: `docs/sprints/sprint-05-final-software-closure.md`.

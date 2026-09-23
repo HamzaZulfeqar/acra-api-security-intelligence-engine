@@ -1,5 +1,9 @@
 # Test Matrix
 
+## Sprint 5 final closure — 2026-09-23
+
+Current authoritative S5 verification is GitHub Actions run `35872345270`: exact JDK 21 compilation and all selected core/S3/S4/S5 suites PASS. See `docs/sprints/sprint-05-final-completion.md` for the requirement matrix and residual validation boundaries.
+
 ## Current S5 defensive continuation — 2026-09-09
 
 | Suite | Coverage | Evidence |

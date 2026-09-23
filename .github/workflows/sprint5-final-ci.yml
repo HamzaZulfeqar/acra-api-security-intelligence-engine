@@ -8,6 +8,12 @@ on:
       - 'core/**'
       - 'scripts/verify-sprint5-final.sh'
       - '.github/workflows/sprint5-final-ci.yml'
+      - 'docs/**'
+      - 'PROJECT_STATE.md'
+      - 'CHANGELOG.md'
+      - 'KNOWN_ISSUES.md'
+      - 'ROADMAP.md'
+      - 'TEST_MATRIX.md'
   pull_request:
     branches:
       - main
@@ -28,3 +34,47 @@ jobs:
         run: java -version
       - name: Run Sprint 5 final verification
         run: bash ./scripts/verify-sprint5-final.sh
+      - name: Build reproducible Sprint 5 source checkpoint
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, zipfile
+          root = Path('.').resolve()
+          out = root / 'acra-sprint-05-final.zip'
+          excluded_dirs = {'.git', 'build', 'target', '__pycache__', '.gradle', 'node_modules'}
+          files = []
+          for p in root.rglob('*'):
+              if not p.is_file():
+                  continue
+              rel = p.relative_to(root)
+              if out == p:
+                  continue
+              if any(part in excluded_dirs for part in rel.parts):
+                  continue
+              if p.suffix in {'.class', '.pyc', '.pyo'}:
+                  continue
+              files.append((rel.as_posix(), p))
+          with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+              for rel, p in sorted(files):
+                  info = zipfile.ZipInfo(rel, date_time=(2026, 9, 23, 0, 0, 0))
+                  info.compress_type = zipfile.ZIP_DEFLATED
+                  info.external_attr = 0o100644 << 16
+                  z.writestr(info, p.read_bytes())
+          digest = hashlib.sha256(out.read_bytes()).hexdigest()
+          (root / 'acra-sprint-05-final.zip.sha256').write_text(
+              f"{digest}  acra-sprint-05-final.zip\n", encoding='utf-8')
+          (root / 'acra-sprint-05-final.entries.txt').write_text(
+              "\n".join(rel for rel, _ in sorted(files)) + "\n", encoding='utf-8')
+          print(f"checkpoint_files={len(files)}")
+          print(f"checkpoint_sha256={digest}")
+          PY
+      - name: Upload Sprint 5 reproducible checkpoint
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-05-final-checkpoint
+          path: |
+            acra-sprint-05-final.zip
+            acra-sprint-05-final.zip.sha256
+            acra-sprint-05-final.entries.txt
+          if-no-files-found: error

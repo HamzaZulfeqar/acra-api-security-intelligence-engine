@@ -1,26 +1,47 @@
 # ACRA Project State
 
-## Current state — 2026-09-11
+## Current state — 2026-09-23
 
-**Current sprint:** Sprint 5. **Decision:** S5 SOFTWARE PARTIAL. **S6:** NOT STARTED.  
-**Current checkpoint:** `S5-BATCH3-FINAL-CONTINUATION-2026-09-11`.  
-**Source baseline SHA-256:** `34b846321b1e2b4a6791bf8948c127cfba26697ec0425ec8dda8ea782e38df01`.  
-**Working tree:** cumulative changes relative to the verified S5-04 archive; no embedded Git metadata.  
-**Artifact version:** VERSION/POMs remain `0.3.0-rc1`; no release version is promoted by this continuation.
+**Current sprint:** Sprint 5. **Decision:** S5 SOFTWARE COMPLETE on branch `s5-s6-completion`.  
+**S6:** NOT STARTED; explicitly gated until the S5 checkpoint is preserved.  
+**Current checkpoint commit:** `8c4655e956ae8533f65ecc87874c4d206ff7d764`.  
+**Authoritative completion record:** `docs/sprints/sprint-05-final-completion.md`.  
+**Release version:** unchanged; historical Burp runtime promotion gates remain separate.
 
-Current authoritative S5 audit: `docs/sprints/sprint-05-final-software-closure.md`. Source inspection found that the previous S5-00..04 completion claims exceeded what the canonical package contained. The context record, BOLA/BFLA and correlator exist; the named observation normalizer and the remaining tenant/workflow/property/candidate/severity/orchestration modules do not.
+Sprint 5 now contains an evidence-backed authorization analysis chain rather than only isolated BOLA/BFLA foundations:
 
-Defensive work preserved and completed: incomplete/redacted evidence guards, missing endpoint represented honestly, conservative conflict/duplicate correlation, recognized credential redaction in existing models/serializer, focused tests, reproducible verification and continuation packaging scripts. The 2026-09-09 integrated run passes 272 focused S5 assertions and 415 retained suite-reported checks. Exact commands/results are in `docs/testing/artifacts/verification-s5-defensive.json`. Recorded edits are in `docs/sprints/sprint-05-file-changes.json` after packaging; a new baseline byte diff is BLOCKED because the previously verified Downloads ZIP later became unavailable. The new archive is still compared byte-for-byte against the current working tree after clean unpack.
+`Observation/Evidence → EvidenceReferenceValidator → AuthorizationContextNormalizer → AuthorizationContextAssessment → BOLA/BFLA → tenant/workflow/property authorization assessments → conservative correlation → FindingCandidate → deterministic severity/risk → final AuthorizationOrchestrator → secret-safe AuthorizationReport`.
 
-No new S5 live-lab, Burp, external, research or accuracy claim is made. Historical S4 SOFTWARE COMPLETE and S2/S3 Burp Level 3/4 BLOCKED / UNVERIFIED remain unchanged. Maven is BLOCKED; exact JDK 21 runtime is UNVERIFIED; Java 21 target compilation uses the available OpenJDK 26.0.1.
+New S5 closure components include context completeness/fact-state modelling, explicit endpoint/policy/evidence binding, typed tenant/workflow/property assessments reusing `PolicyValidationEvaluator`, SHA-256 assessment identifiers, a correlation envelope with explicit independence metadata, FindingCandidate evaluation, severity kept independent from confidence, a final orchestrator, and report generation.
 
-S5 Batch 1 source changes add `EvidenceReferenceValidator` and `EvidenceReferenceValidation` beside the existing `ExecutionEvidenceStore`. Store-backed BOLA/BFLA evaluation and validator-backed correlation now fail closed when evidence ownership, project scope, or replay lineage cannot be proven. `Sprint5EvidenceIntegrityTestSuite` adds focused coverage, but Java 21 compilation/test execution is blocked in this environment: only OpenJDK 17.0.8 was found, `javac` is absent from PATH, and Maven is unavailable. The Batch 1 checkpoint ZIP was independently verified with 604 files, safe paths, clean extraction equality and the required external SHA-256 sidecar. Full remaining S5 software gaps are itemized in the current audit. S6 remains gated on S5 completion.
+### Newly verified S5 closure evidence
 
-S5 Batch 2 adds `PolicyValidationEvaluator`, `PolicyValidationResult`, and `PolicyValidationState` for explicit offline tenant, workflow, property, and policy-conflict review. `Sprint5PolicyValidationTestSuite` is present but Java 21 compilation and all new/affected test execution remain blocked because no Java 21 compiler is available; OpenJDK 17.0.8 rejects `--release 21` and Maven is unavailable. S5 remains SOFTWARE PARTIAL and S6 remains NOT STARTED.
+GitHub Actions workflow **Sprint 5 Final Verification**, run `35872345270`, executed on Ubuntu 24.04 with Temurin OpenJDK 21.0.12.1 and completed **SUCCESS**. Main and test sources compiled with `--release 21 -Xlint:all -Werror`.
 
-The Batch 2 checkpoint archive was independently verified with 609 entries, safe paths, no build/cache entries, clean extraction equality, and an external SHA-256 sidecar. The exact hash is kept outside the archive to avoid recursive self-hashing.
+The successful run reported:
 
-S5 Batch 3 completed source-level integration review. Policy reviews now resolve their observation reference through the existing `EvidenceReferenceValidator`; unknown, forged, cross-project, replay-mismatched, or otherwise unverifiable observations remain inconclusive. The complete defensive chain and security properties were reviewed, but executable Java 21 compilation and tests remain blocked: PATH has no `javac`, the discovered compiler is OpenJDK 17.0.8, and Maven is unavailable. The final S5 decision remains SOFTWARE PARTIAL; S6 is NOT STARTED.
+- Core regression: 43
+- Sprint 3 core: 47
+- Sprint 4 core: 54
+- Sprint 4 engine security: 52
+- Sprint 4 graph integration: 87
+- Sprint 4 product completion: 132
+- S5 assessment guards: 58
+- S5 correlation safety: 58
+- S5 evidence integrity: 24
+- S5 policy validation: 4
+- S5 serialization security: 156
+- S5 final closure: 21
+
+Total represented suite checks/assertions in that run: **736**. S5-specific represented checks/assertions: **321**. Legacy suite counts remain suite-reported checks and are not reinterpreted as raw assertion invocations.
+
+The same current head also completed the official Maven/Montoya package step successfully in the Sprint 2 CI workflow before that historical workflow failed only because its shell verifier lacked executable permissions. The workflow invocation has now been corrected to use `bash`.
+
+### Scope and limits
+
+S5 SOFTWARE COMPLETE means the source-level authorization intelligence and offline deterministic end-to-end path are implemented and Java-21 verified. It does **not** convert a FindingCandidate into an automatically confirmed real-world vulnerability. Independent corroboration remains explicit and false unless separately verified. Internal risk score is not CVSS and requires supplied impact facts.
+
+Historical S2/S3 real Burp runtime validation debt remains separate and must not be rewritten as PASS by S5 completion. No S6 implementation is included in this checkpoint.
 
 ## Historical state before the S5 defensive continuation
 
@@ -254,3 +275,4 @@ S5-03 function-level authorization reasoning foundation added.
 
 
 S5-04: Evidence correlation aggregation foundation added.
+
