@@ -48,7 +48,12 @@ try {
         'io.acra.core.tests.sprint4.Sprint4ProductCompletionTestSuite',
         'io.acra.core.tests.sprint5.Sprint5AssessmentGuardTestSuite',
         'io.acra.core.tests.sprint5.Sprint5CorrelationSafetyTestSuite',
-        'io.acra.core.tests.sprint5.Sprint5SerializationSecurityTestSuite'
+        'io.acra.core.tests.sprint5.Sprint5SerializationSecurityTestSuite',
+        'io.acra.core.tests.sprint5.Sprint5EvidenceIntegrityTestSuite',
+        'io.acra.core.tests.sprint5.Sprint5PolicyValidationTestSuite',
+        'io.acra.core.tests.sprint5.Sprint5ContextNormalizationTestSuite',
+        'io.acra.core.tests.sprint5.Sprint5AuthorizationDimensionTestSuite',
+        'io.acra.core.tests.sprint5.Sprint5OrchestrationTestSuite'
     )
     foreach ($suite in $suites) {
         Invoke-CheckedNative $suite $Java @('-ea','-cp',$classPath,$suite)
