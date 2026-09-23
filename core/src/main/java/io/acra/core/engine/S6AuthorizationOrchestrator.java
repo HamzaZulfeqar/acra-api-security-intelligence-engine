@@ -53,9 +53,10 @@ public final class S6AuthorizationOrchestrator {
     private AuthorizationPolicyCoverage coverage(S6AuthorizationAnalysisRequest request,
                                                  EffectiveAuthorizationResolution resolution) {
         boolean tenant = !request.effectiveRequest().resourceTenantId().isBlank();
-        boolean role = !resolution.effectiveRoleIds().isEmpty();
+        boolean role = request.policySnapshot().roleAssignments().stream()
+                .anyMatch(assignment -> assignment.principalId().equals(request.effectiveRequest().principalId()));
         boolean hierarchy = request.policySnapshot().roleInheritances().isEmpty() || role;
-        boolean permission = !resolution.permissionIds().isEmpty();
+        boolean permission = !request.policySnapshot().permissions().isEmpty();
         boolean policyRule = !request.policySnapshot().rules().isEmpty()
                 || request.policySnapshot().defaultDecision() == AuthorizationDecision.ALLOW
                 || request.policySnapshot().defaultDecision() == AuthorizationDecision.DENY;
