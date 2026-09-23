@@ -2,12 +2,12 @@
 
 ## Current state — 2026-09-23
 
-**Current sprint:** Sprint 6 — Tenant Isolation, Advanced RBAC and Policy Intelligence.  
-**Decision:** S6 IN PROGRESS.  
-**Working branch:** `s6-tenant-rbac`.  
+**Current sprint:** Sprint 7 — Workflow Authorization, Delegation and Token Binding.  
+**Decision:** S7 IN PROGRESS.  
+**Working branch:** `s7-workflow-token-binding`.  
 **Immutable Sprint 5 base:** `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`.  
 **Sprint 5:** SOFTWARE COMPLETE and preserved separately.  
-**Sprint 7:** NOT STARTED.
+**Sprint 7:** IN PROGRESS.
 
 ### Implemented S6 capabilities
 

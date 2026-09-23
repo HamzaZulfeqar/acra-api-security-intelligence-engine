@@ -15,3 +15,17 @@ Pending:
 
 
 S5-04: Evidence correlation aggregation foundation added.
+
+
+## Sprint 7 — in progress
+
+Scope:
+- workflow authorization
+- transition policy/state reasoning
+- separation of duties and approval conditions
+- S6 delegation reuse
+- credential-safe token-context binding
+- controlled WORKFLOW_TRANSITION planning/execution
+- workflow UI/reporting/research validation
+
+Phase 1 foundation is implemented on `s7-workflow-token-binding`; executable CI verification is pending.
