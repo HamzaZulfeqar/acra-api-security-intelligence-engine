@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Make verification scripts executable
+        run: chmod +x scripts/*.sh
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -38,7 +40,7 @@ jobs:
         run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
 
       - name: Sprint 2 local verification gates
-        run: ./scripts/verify-sprint2.sh
+        run: bash ./scripts/verify-sprint2.sh
 
       - name: Upload verification evidence
         if: always()

@@ -3,6 +3,7 @@ package io.acra.core.engine;
 import io.acra.core.domain.authorization.*;
 import io.acra.core.active.evidence.EvidenceReferenceValidator;
 import io.acra.core.active.evidence.ExecutionEvidenceStore;
+import io.acra.core.security.TokenFingerprint;
 import io.acra.core.security.UniversalRedactor;
 
 import java.util.List;
@@ -28,33 +29,56 @@ public final class BflaAssessmentEvaluator {
 
     public BflaAssessment evaluate(AuthorizationContext context, String observationId, String executionId,
                                    String testId, String projectId) {
+        return evaluateInternal(context, observationId, executionId, testId, "", projectId, false);
+    }
+
+    public BflaAssessment evaluate(AuthorizationContext context, String observationId, String executionId,
+                                   String testId, String endpoint, String projectId) {
+        return evaluateInternal(context, observationId, executionId, testId, endpoint, projectId, true);
+    }
+
+    private BflaAssessment evaluateInternal(AuthorizationContext context, String observationId, String executionId,
+                                            String testId, String endpoint, String projectId,
+                                            boolean endpointRequired) {
         if (context == null || context.status() != ContextStatus.RESOLVED) {
-            return assessment(context, observationId, executionId, testId, BflaAssessmentStatus.INCONCLUSIVE,
-                    BflaConfidence.INSUFFICIENT, "Authorization context is unavailable, unresolved, or conflicting.");
+            return assessment(context, observationId, executionId, testId, endpoint,
+                    BflaAssessmentStatus.INCONCLUSIVE, BflaConfidence.INSUFFICIENT,
+                    "Authorization context is unavailable, unresolved, or conflicting.");
         }
         if (evidenceStore != null && !new EvidenceReferenceValidator(evidenceStore)
                 .validate(context.evidenceIds(), observationId, executionId, testId, projectId).valid()) {
-            return assessment(context, observationId, executionId, testId, BflaAssessmentStatus.INCONCLUSIVE,
-                    BflaConfidence.INSUFFICIENT, "Evidence references or provenance could not be authenticated.");
+            return assessment(context, observationId, executionId, testId, endpoint,
+                    BflaAssessmentStatus.INCONCLUSIVE, BflaConfidence.INSUFFICIENT,
+                    "Evidence references or provenance could not be authenticated.");
         }
         if (missingProvenance(observationId, executionId, testId) || missingEvidence(context.evidenceIds())) {
-            return assessment(context, observationId, executionId, testId, BflaAssessmentStatus.INCONCLUSIVE,
-                    BflaConfidence.INSUFFICIENT, "Assessment provenance or supporting evidence is incomplete.");
+            return assessment(context, observationId, executionId, testId, endpoint,
+                    BflaAssessmentStatus.INCONCLUSIVE, BflaConfidence.INSUFFICIENT,
+                    "Assessment provenance or supporting evidence is incomplete.");
         }
         if (missingContext(context)) {
-            return assessment(context, observationId, executionId, testId, BflaAssessmentStatus.INCONCLUSIVE,
-                    BflaConfidence.INSUFFICIENT, "Function authorization context is incomplete.");
+            return assessment(context, observationId, executionId, testId, endpoint,
+                    BflaAssessmentStatus.INCONCLUSIVE, BflaConfidence.INSUFFICIENT,
+                    "Function authorization context is incomplete.");
+        }
+        if (endpointRequired && isUnknown(endpoint)) {
+            return assessment(context, observationId, executionId, testId, endpoint,
+                    BflaAssessmentStatus.INCONCLUSIVE, BflaConfidence.INSUFFICIENT,
+                    "Function endpoint binding is unavailable.");
         }
         if (!isBinary(context.expectedDecision()) || !isBinary(context.observedDecision())) {
-            return assessment(context, observationId, executionId, testId, BflaAssessmentStatus.INCONCLUSIVE,
-                    BflaConfidence.INSUFFICIENT, "Expected or observed decision is not a resolved binary authorization decision.");
+            return assessment(context, observationId, executionId, testId, endpoint,
+                    BflaAssessmentStatus.INCONCLUSIVE, BflaConfidence.INSUFFICIENT,
+                    "Expected or observed decision is not a resolved binary authorization decision.");
         }
         if (context.expectedDecision() == AuthorizationDecision.DENY && context.observedDecision() == AuthorizationDecision.ALLOW) {
-            return assessment(context, observationId, executionId, testId, BflaAssessmentStatus.BFLA_CANDIDATE,
-                    BflaConfidence.HIGH, "Observed allow conflicts with denied function authorization expectation.");
+            return assessment(context, observationId, executionId, testId, endpoint,
+                    BflaAssessmentStatus.BFLA_CANDIDATE, BflaConfidence.HIGH,
+                    "Observed allow conflicts with denied function authorization expectation.");
         }
-        return assessment(context, observationId, executionId, testId, BflaAssessmentStatus.NO_VIOLATION,
-                BflaConfidence.MEDIUM, "Observed function decision is consistent with expected authorization decision.");
+        return assessment(context, observationId, executionId, testId, endpoint,
+                BflaAssessmentStatus.NO_VIOLATION, BflaConfidence.MEDIUM,
+                "Observed function decision is consistent with expected authorization decision.");
     }
 
     private boolean missingContext(AuthorizationContext c) {
@@ -83,12 +107,15 @@ public final class BflaAssessmentEvaluator {
     }
 
     private BflaAssessment assessment(AuthorizationContext c, String obs, String exec, String test,
-                                      BflaAssessmentStatus status, BflaConfidence confidence, String rationale) {
+                                      String endpoint, BflaAssessmentStatus status,
+                                      BflaConfidence confidence, String rationale) {
         String principal = c == null || c.principal() == null ? "" : c.principal().principalId();
         String role = c == null || c.role() == null ? "" : c.role().roleId();
         String action = c == null || c.action() == null ? "" : c.action().applicationAction();
-        String id = Integer.toHexString((String.valueOf(obs)+"|"+String.valueOf(exec)+"|"+String.valueOf(test)+"|"+status).hashCode());
-        return new BflaAssessment(id, obs, exec, test, principal, role, action, "",
+        String material = String.valueOf(obs) + "|" + String.valueOf(exec) + "|" + String.valueOf(test)
+                + "|" + String.valueOf(endpoint) + "|" + status;
+        String id = "bfla-" + TokenFingerprint.sha256(material).substring(0, 24);
+        return new BflaAssessment(id, obs, exec, test, principal, role, action, endpoint,
                 c == null ? AuthorizationDecision.UNKNOWN : c.expectedDecision(),
                 c == null ? AuthorizationDecision.UNKNOWN : c.observedDecision(), status, confidence,
                 c == null ? List.of() : c.evidenceIds(), rationale);

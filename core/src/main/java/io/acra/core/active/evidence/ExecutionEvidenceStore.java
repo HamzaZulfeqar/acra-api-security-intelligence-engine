@@ -62,6 +62,14 @@ public final class ExecutionEvidenceStore {
         return chain.stream().filter(entry -> entry.objectId().equals(objectId)).toList();
     }
 
+    public synchronized boolean containsEvidenceId(String evidenceId) {
+        return evidenceId != null && chain.stream().anyMatch(entry -> entry.evidenceId().equals(evidenceId));
+    }
+
+    public synchronized List<EvidenceChainEntry> chainForEvidenceId(String evidenceId) {
+        return chain.stream().filter(entry -> entry.evidenceId().equals(evidenceId)).toList();
+    }
+
     public synchronized Object object(String objectId) {
         Object value = objects.get(objectId);
         if (value == null) throw new IllegalArgumentException("unknown evidence object");

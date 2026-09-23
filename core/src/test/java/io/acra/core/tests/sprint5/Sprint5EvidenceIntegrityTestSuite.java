@@ -27,12 +27,18 @@ public final class Sprint5EvidenceIntegrityTestSuite {
 	public static int run() {
 		int assertions = 0;
 		ExecutionEvidenceStore store = new ExecutionEvidenceStore("project-a");
-		store.append("execution-a", "test-a", EvidenceStage.TEST, "evidence-a", "historical-a");
-		store.append("execution-b", "test-b", EvidenceStage.TEST, "evidence-b", "replay-b");
+		var chainA = store.append("execution-a", "test-a", EvidenceStage.TEST, "evidence-a", "historical-a");
+		var chainB = store.append("execution-b", "test-b", EvidenceStage.TEST, "evidence-b", "replay-b");
 		EvidenceReferenceValidator validator = new EvidenceReferenceValidator(store);
 
 		assertions += accepted(validator.validateEvidenceReferences(List.of("evidence-a"),
-				"execution-a", "test-a", "project-a"), "matching evidence and provenance");
+				"execution-a", "test-a", "project-a"), "matching object evidence and provenance");
+		assertions += accepted(validator.validateEvidenceReferences(List.of(chainA.evidenceId()),
+				"execution-a", "test-a", "project-a"), "matching chain evidence and provenance");
+		assertions += rejected(validator.validateEvidenceReferences(List.of(chainA.evidenceId()),
+				"execution-b", "test-b", "project-a"), "chain evidence cannot cross replay lineage");
+		TestSupport.assertTrue(store.containsEvidenceId(chainB.evidenceId()), "replay chain evidence ID is addressable");
+		assertions++;
 		assertions += rejected(new EvidenceReferenceValidator(null)
 				.validateEvidenceReferences(List.of("evidence-a"), "execution-a", "test-a", "project-a"), "missing store");
 		for (String reference : List.of("", "  ", "UNKNOWN", "<REDACTED>", "missing")) {
