@@ -63,7 +63,7 @@ public final class Sprint7WorkflowAssessmentIntegrationTestSuite {
         S7WorkflowOrchestrator orchestrator = new S7WorkflowOrchestrator(store);
 
         S7WorkflowAnalysisResult candidate = orchestrator.analyze(request(
-                AuthorizationDecision.ALLOW, TOKEN_FP, true, true));
+                AuthorizationDecision.ALLOW, TOKEN_FP, false, true));
         TestSupport.assertEquals(AuthorizationDecision.DENY, candidate.resolution().expectedDecision(),
                 "workflow policy should resolve this controlled approval attempt to DENY");
         assertions++;
@@ -91,7 +91,7 @@ public final class Sprint7WorkflowAssessmentIntegrationTestSuite {
         assertions++;
 
         S7WorkflowAnalysisResult denied = orchestrator.analyze(request(
-                AuthorizationDecision.DENY, TOKEN_FP, true, true));
+                AuthorizationDecision.DENY, TOKEN_FP, false, true));
         TestSupport.assertEquals(WorkflowTransitionAssessmentState.NO_VIOLATION, denied.assessment().state(),
                 "expected deny / observed deny is no violation");
         assertions++;
@@ -101,7 +101,7 @@ public final class Sprint7WorkflowAssessmentIntegrationTestSuite {
 
         S7WorkflowAnalysisRequest forged = new S7WorkflowAnalysisRequest(
                 workflowPolicy(), null,
-                workflowRequest(AuthorizationDecision.ALLOW, TOKEN_FP, true, true),
+                workflowRequest(AuthorizationDecision.ALLOW, TOKEN_FP, false, true),
                 "different-project", TEST, EXECUTION, OBSERVATION, "/api/v1/s7/workflow/approve",
                 impact());
         S7WorkflowAnalysisResult forgedResult = orchestrator.analyze(forged);
@@ -158,8 +158,8 @@ public final class Sprint7WorkflowAssessmentIntegrationTestSuite {
             boolean separationSatisfied) {
         return new WorkflowAuthorizationRequest(
                 "document-approval",
-                "author-a",
-                List.of("author"),
+                "approver-a",
+                List.of("approver"),
                 "tenant-a",
                 "document-1",
                 "APPROVE",
