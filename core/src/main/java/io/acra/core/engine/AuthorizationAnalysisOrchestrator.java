@@ -70,7 +70,8 @@ public final class AuthorizationAnalysisOrchestrator {
         String testId = observation.testId();
 
         BolaAssessment bola = bolaEvaluator.evaluate(context, observationId, executionId, testId, request.projectId());
-        BflaAssessment bfla = bflaEvaluator.evaluate(context, observationId, executionId, testId, request.projectId());
+        BflaAssessment bfla = bflaEvaluator.evaluate(
+                context, observationId, executionId, testId, request.endpoint(), request.projectId());
 
         TenantAuthorizationAssessment tenant = request.tenantPolicy() == null ? null
                 : tenantEvaluator.evaluate(context, request.tenantPolicy(), observationId, executionId,
