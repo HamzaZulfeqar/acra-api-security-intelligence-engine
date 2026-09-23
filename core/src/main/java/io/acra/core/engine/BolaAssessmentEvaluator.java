@@ -3,6 +3,7 @@ package io.acra.core.engine;
 import io.acra.core.domain.authorization.*;
 import io.acra.core.active.evidence.EvidenceReferenceValidator;
 import io.acra.core.active.evidence.ExecutionEvidenceStore;
+import io.acra.core.security.TokenFingerprint;
 import io.acra.core.security.UniversalRedactor;
 import java.util.List;
 import java.util.Locale;
@@ -109,8 +110,9 @@ public final class BolaAssessmentEvaluator {
     }
 
     private String deterministicId(String observationId, String executionId, String testId, String status) {
-        return Integer.toHexString((String.valueOf(observationId) + "|" + String.valueOf(executionId)
-                + "|" + String.valueOf(testId) + "|" + status).hashCode());
+        String material = String.valueOf(observationId) + "|" + String.valueOf(executionId)
+                + "|" + String.valueOf(testId) + "|" + status;
+        return "bola-" + TokenFingerprint.sha256(material).substring(0, 24);
     }
 
     private BolaAssessment assessment(AuthorizationContext c, String observationId,
