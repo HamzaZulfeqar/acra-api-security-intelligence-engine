@@ -58,9 +58,9 @@ public final class AuthorizationSeverityEvaluator {
         }
 
         SeverityLevel level;
-        if (score >= 7) level = SeverityLevel.CRITICAL;
-        else if (score >= 5) level = SeverityLevel.HIGH;
-        else if (score >= 3) level = SeverityLevel.MEDIUM;
+        if (impact.resourceImpact() == ImpactLevel.CRITICAL || score >= 7) level = SeverityLevel.CRITICAL;
+        else if (impact.resourceImpact() == ImpactLevel.HIGH || score >= 5) level = SeverityLevel.HIGH;
+        else if (impact.resourceImpact() == ImpactLevel.MEDIUM || score >= 3) level = SeverityLevel.MEDIUM;
         else if (score >= 1) level = SeverityLevel.LOW;
         else level = SeverityLevel.INFORMATIONAL;
 
