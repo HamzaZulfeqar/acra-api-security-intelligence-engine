@@ -34,7 +34,17 @@ Newly implemented:
 
 ## Still required
 
-Role-escalation/root-cause assessment, policy graph/matrix integration,
+Implemented in this slice:
+- explicit role-escalation assessment only when the caller supplies a privileged-action fact
+- policy-conflict assessment
+- policy coverage measurement
+- effective authorization matrix
+- S6 policy-aware FindingCandidate composition reusing the S5 finding architecture
+- S6 orchestrator combining the S5 chain with effective policy/tenant/RBAC reasoning
+- S5 risk/severity reuse after S6 candidate composition
+
+Still required:
+Policy graph integration, root-cause grouping,
 matrix/graph integration, S4 planner integration, S5 FindingCandidate integration, expanded lab,
 controlled experiments, UI, reporting extensions, performance/security validation, final audit and
 reproducible S6 checkpoint.
