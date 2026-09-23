@@ -74,7 +74,7 @@ public final class Sprint6AuthorizationUiTestSuite {
 
         JTabbedPane authTabs = find(tab.component(), JTabbedPane.class, "s6-authorization-tabs");
         Set<String> required = Set.of("Overview", "Policy", "Tenant Map", "Roles", "Role Hierarchy",
-                "Permissions", "Effective Permissions", "Policy Conflicts", "Coverage");
+                "Permissions", "Effective Permissions", "Policy Conflicts", "Coverage", "Report", "JSON Export");
         for (String title : required) {
             check(indexOf(authTabs, title) >= 0, "authorization sub-tab installed: " + title);
             assertions++;
@@ -106,6 +106,14 @@ public final class Sprint6AuthorizationUiTestSuite {
         check(policy.getText().contains("rule-deny"), "policy view renders explicit rule");
         assertions++;
         check(policy.getText().contains("delegation-a-b"), "policy view renders delegation");
+        assertions++;
+        JTextArea report = find(tab.component(), JTextArea.class, "s6-report-view");
+        check(report.getText().contains("ACRA Sprint 6 Authorization Report"), "report view renders");
+        assertions++;
+        check(report.getText().contains("Confirmed findings: 0"), "report view preserves candidate boundary");
+        assertions++;
+        JTextArea json = find(tab.component(), JTextArea.class, "s6-json-export-view");
+        check(json.getText().contains("s6-authorization-report-v1"), "JSON export view renders version");
         assertions++;
         check(tab.authorizationWorkspace().snapshot().analyses().size() == 1,
                 "suite tab exposes the same S6 product workspace");

@@ -46,4 +46,7 @@ jobs:
           path: |
             build/s6-foundation-ci/EXP-S6-TENANT-RBAC-001.json
             build/s6-foundation-ci/lab/*.log
+            build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.json
+            build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.json.sha256
+            build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.md
           if-no-files-found: warn

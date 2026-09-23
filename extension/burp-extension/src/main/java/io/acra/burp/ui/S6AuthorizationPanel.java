@@ -35,6 +35,8 @@ public final class S6AuthorizationPanel extends JPanel {
     private final S6AuthorizationWorkspace workspace;
     private final JTextArea overview = view("s6-auth-overview");
     private final JTextArea policyView = view("s6-policy-view");
+    private final JTextArea reportView = view("s6-report-view");
+    private final JTextArea jsonExportView = view("s6-json-export-view");
     private final TenantModel tenantModel = new TenantModel();
     private final RoleModel roleModel = new RoleModel();
     private final HierarchyModel hierarchyModel = new HierarchyModel();
@@ -72,6 +74,9 @@ public final class S6AuthorizationPanel extends JPanel {
         matrixModel.update(snapshot.analyses());
         conflictModel.update(snapshot.analyses());
         coverageModel.update(snapshot.analyses());
+        java.time.Instant previewAt=snapshot.policy()==null?java.time.Instant.EPOCH:snapshot.policy().capturedAt();
+        reportView.setText(workspace.exportMarkdown(previewAt).content());
+        jsonExportView.setText(workspace.exportJson(previewAt).content());
     }
 
     private JTabbedPane buildTabs() {
@@ -86,6 +91,8 @@ public final class S6AuthorizationPanel extends JPanel {
         tabs.addTab("Effective Permissions", table(matrixModel, "s6-effective-permissions-table"));
         tabs.addTab("Policy Conflicts", table(conflictModel, "s6-policy-conflicts-table"));
         tabs.addTab("Coverage", table(coverageModel, "s6-coverage-table"));
+        tabs.addTab("Report", scroll(reportView));
+        tabs.addTab("JSON Export", scroll(jsonExportView));
         return tabs;
     }
 
