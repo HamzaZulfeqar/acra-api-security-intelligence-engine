@@ -96,8 +96,13 @@ public final class Sprint6PlannerExecutionIntegrationTestSuite {
                         AuthorizationDecision.UNKNOWN, false, NOW));
 
         S6PolicyPlanningCandidate candidate = candidate(baselineResolution, targetResolution);
+        EffectiveAuthorizationResolution roleResolution = resolver.resolve(policy,
+                new EffectiveAuthorizationRequest("user-a", "tenant-a", "tenant-a", "tenant-a-export",
+                        "tenant-export", "/api/v1/s6/tenants/tenant-a/admin/export", "", "ADMIN_EXPORT",
+                        AuthorizationDecision.UNKNOWN, false, NOW));
+        S6PolicyPlanningCandidate roleCandidate = roleCandidate(roleResolution);
         PlanningInput base = planningInput();
-        var augmentation = new S6PolicyPlanningBridge().augment(base, List.of(candidate));
+        var augmentation = new S6PolicyPlanningBridge().augment(base, List.of(candidate, roleCandidate));
 
         TestSupport.assertEquals(1, augmentation.generatedSeeds().size(),
                 "policy bridge should generate one safe CROSS_TENANT seed");
@@ -196,6 +201,34 @@ public final class Sprint6PlannerExecutionIntegrationTestSuite {
                 Set.of(TestContract.CROSS_TENANT, TestContract.ROLE_COMPARISON),
                 List.of(),
                 List.of("principal remains user-a", "method remains GET", "resource identifier remains report-common"),
+                false,
+                false);
+    }
+
+    private static S6PolicyPlanningCandidate roleCandidate(EffectiveAuthorizationResolution resolution) {
+        SecurityContextFingerprint source = new SecurityContextFingerprint(
+                "user-a", "viewer", "tenant-a", "tenant-export:tenant-a", "", "ADMIN_EXPORT", "ACTIVE",
+                "POST /api/v1/s6/tenants/{tenant}/admin/export", "raw", "s6-user-a",
+                AuthorizationDecision.DENY, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
+        SecurityContextFingerprint target = new SecurityContextFingerprint(
+                "admin-a", "tenant-admin", "tenant-a", "tenant-export:tenant-a", "", "ADMIN_EXPORT", "ACTIVE",
+                "POST /api/v1/s6/tenants/{tenant}/admin/export", "raw", "s6-admin-a",
+                AuthorizationDecision.ALLOW, AuthorizationDecision.UNKNOWN, List.of("e-policy"));
+        return new S6PolicyPlanningCandidate(
+                "S6-CANDIDATE-ROLE",
+                endpoint(),
+                baselineDefinition(),
+                positiveDefinition(),
+                negativeDefinition(),
+                source,
+                target,
+                sourceResource(),
+                targetResource(),
+                resolution,
+                resolution,
+                Set.of(TestContract.ROLE_COMPARISON),
+                List.of(),
+                List.of("role comparison requires an explicit alternate authenticated context"),
                 false,
                 false);
     }
