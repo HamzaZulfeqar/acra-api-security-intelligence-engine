@@ -32,6 +32,9 @@ jobs:
           java-version: '21'
       - name: Verify Java
         run: java -version
+      - name: Normalize verification script permissions
+        run: chmod +x ./scripts/*.sh
+
       - name: Run Sprint 5 final verification
         run: bash ./scripts/verify-sprint5-final.sh
       - name: Build reproducible Sprint 5 source checkpoint

@@ -17,5 +17,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - name: Normalize verification script permissions
+        run: chmod +x ./scripts/*.sh
+
       - name: Verify Sprint 1 core
         run: bash ./scripts/verify-sprint1.sh
