@@ -6,6 +6,7 @@ import io.acra.core.active.evidence.Observation;
 import io.acra.core.domain.authorization.AuthorizationAnalysisRequest;
 import io.acra.core.domain.authorization.AuthorizationAnalysisResult;
 import io.acra.core.domain.authorization.AuthorizationAssessmentAggregate;
+import io.acra.core.domain.authorization.AuthorizationAnalysisDimension;
 import io.acra.core.domain.authorization.AuthorizationContext;
 import io.acra.core.domain.authorization.AuthorizationContextNormalizationResult;
 import io.acra.core.domain.authorization.BflaAssessment;
@@ -69,27 +70,33 @@ public final class AuthorizationAnalysisOrchestrator {
         String executionId = observation.executionFingerprint().executionId();
         String testId = observation.testId();
 
-        BolaAssessment bola = bolaEvaluator.evaluate(context, observationId, executionId, testId, request.projectId());
-        BflaAssessment bfla = bflaEvaluator.evaluate(
-                context, observationId, executionId, testId, request.endpoint(), request.projectId());
+        BolaAssessment bola = request.dimensions().contains(AuthorizationAnalysisDimension.OBJECT)
+                ? bolaEvaluator.evaluate(context, observationId, executionId, testId, request.projectId()) : null;
+        BflaAssessment bfla = request.dimensions().contains(AuthorizationAnalysisDimension.FUNCTION)
+                ? bflaEvaluator.evaluate(context, observationId, executionId, testId,
+                        request.endpoint(), request.projectId()) : null;
 
-        TenantAuthorizationAssessment tenant = request.tenantPolicy() == null ? null
+        TenantAuthorizationAssessment tenant = !request.dimensions().contains(AuthorizationAnalysisDimension.TENANT)
+                || request.tenantPolicy() == null ? null
                 : tenantEvaluator.evaluate(context, request.tenantPolicy(), observationId, executionId,
                         testId, request.projectId());
 
-        WorkflowAuthorizationAssessment workflow = request.workflowPolicy() == null ? null
+        WorkflowAuthorizationAssessment workflow = !request.dimensions().contains(AuthorizationAnalysisDimension.WORKFLOW)
+                || request.workflowPolicy() == null ? null
                 : workflowEvaluator.evaluate(context, request.workflowPolicy(),
                         request.currentWorkflowState(), request.requestedWorkflowState(),
                         request.approvalProvided(), request.roleSeparationSatisfied(),
                         observationId, executionId, testId, request.projectId());
 
-        PropertyAuthorizationAssessment property = request.propertyPolicy() == null ? null
+        PropertyAuthorizationAssessment property = !request.dimensions().contains(AuthorizationAnalysisDimension.PROPERTY)
+                || request.propertyPolicy() == null ? null
                 : propertyEvaluator.evaluate(context, request.propertyPolicy(), request.property(),
                         request.propertyOperation(), request.propertyEndpoint(),
                         observationId, executionId, testId, request.projectId());
 
         AuthorizationAssessmentAggregate aggregate = AuthorizationAssessmentCorrelator.correlate(
-                List.of(bola), List.of(bfla), validator, request.projectId());
+                bola == null ? List.of() : List.of(bola),
+                bfla == null ? List.of() : List.of(bfla), validator, request.projectId());
 
         FindingCandidate candidate = findingEvaluator.evaluate(
                 context, aggregate, bola, bfla, tenant, workflow, property,
