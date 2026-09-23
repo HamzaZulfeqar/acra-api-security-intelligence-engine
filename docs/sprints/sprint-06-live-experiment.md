@@ -2,30 +2,37 @@
 
 Experiment: `EXP-S6-TENANT-RBAC-001`  
 Dataset: `GT-S6-TENANT-RBAC`  
-Scope: controlled localhost ACRA-Lab only
+Status: **COMPLETED / CONTROLLED LOCAL**
 
-## Purpose
+## Execution evidence
 
-This experiment executes the secure and deliberately vulnerable S6 localhost fixtures against independently
-declared tenant/RBAC ground truth. It compares:
+GitHub Actions run `35878508170` completed successfully on exact Temurin JDK 21.0.12.1.
 
-1. a deliberately simple baseline based on tenant inequality and privileged role-name comparison; and
-2. ACRA S6 effective policy reasoning using tenant scope, role assignments, permissions, delegation, shared/global
-   scope and explicit default deny.
+The verification lane:
+- compiled core and tests with `--release 21 -Xlint:all -Werror`
+- syntax-checked all S6 Python lab services
+- validated the independent 10-case ground-truth contract
+- started secure localhost service on port 18082
+- started vulnerable localhost service on port 18081
+- waited for both health endpoints
+- executed the live S6 Java experiment
+- stopped both local services
+- uploaded the experiment JSON and lab logs as workflow evidence
 
-## Evidence discipline
+## Measured controlled metrics
 
-Metrics are not written into this document until a live CI campaign has executed. The live suite emits an immutable
-JSON result artifact containing each case, observed HTTP status, policy expectation, baseline prediction, ACRA
-prediction and TP/TN/FP/FN-derived metrics.
+| Treatment | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Naive tenant/role baseline | 2 | 1 | 7 | 0 | 0.222222 | 1.000000 | 0.363636 |
+| ACRA S6 | 2 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
 
-The synthetic lab maps 2xx to ALLOW and explicit lab denial responses to DENY for this controlled fixture only.
-This is not a general ACRA production rule and does not replace semantic/evidence correlation.
+Artifact ZIP digest:
+`sha256:3cc486fc55b61ba8c3f76155e7468f770dc6dab834f071ed992294fac276680e`
 
-## Limitations
+Committed JSON evidence:
+`docs/testing/artifacts/EXP-S6-TENANT-RBAC-001.json`
 
-- localhost synthetic services only
-- unsigned synthetic lab tokens
-- no real-world target
-- no real-world accuracy claim
-- no Burp-runtime claim
+## Scope
+
+This result is intentionally narrow: controlled localhost synthetic tenant/RBAC fixtures only. It is not a
+real-world accuracy claim and it does not validate the historical Burp runtime path.

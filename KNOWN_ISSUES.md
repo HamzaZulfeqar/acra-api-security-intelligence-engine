@@ -1,5 +1,14 @@
 # Known Issues and Technical Debt
 
+## Sprint 6 current limitations — 2026-09-23
+
+- `EXP-S6-TENANT-RBAC-001` metrics are from ten controlled localhost cases only; they are not real-world accuracy claims.
+- ACRA-Lab authentication uses unsigned synthetic tokens and must not be treated as production authentication evidence.
+- The first live S6 campaign exposed a shared-scope isolation defect; it is fixed and covered by regression tests.
+- S6 policy state and graph/evidence persistence remain in-memory.
+- Full UI/reporting/performance/final package closure is still pending.
+- Historical real Burp runtime validation remains separate.
+
 ## Current residual issues after S5 completion — 2026-09-23
 
 - Historical Sprint 2/3 real Burp runtime validation remains BLOCKED / UNVERIFIED and is independent of S5 software completion.

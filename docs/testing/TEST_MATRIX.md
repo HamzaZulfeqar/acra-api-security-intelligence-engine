@@ -1,5 +1,22 @@
 # Test Matrix
 
+## Sprint 6 controlled tenant/RBAC validation — 2026-09-23
+
+GitHub Actions run `35878508170`: **PASS** on exact Temurin JDK 21.0.12.1.
+
+| Test / Experiment | Coverage | Result |
+|---|---|---|
+| Sprint6PolicyFoundationTestSuite | scope, membership, multi-role, hierarchy, policy snapshot, secret safety | PASS |
+| Sprint6PolicyResolutionTestSuite | effective permissions, global/delegated/shared scope, precedence/conflict, shared-scope isolation | PASS |
+| Sprint6OrchestrationTestSuite | S5→S6 orchestration, tenant/RBAC/finding/risk composition | PASS |
+| Sprint6GraphAndGroupingTestSuite | policy graph hydration, evidence preflight, root-cause grouping | PASS |
+| Sprint6LabAndPlanningTestSuite | policy-aware CROSS_TENANT / ROLE_COMPARISON planning recommendations | PASS |
+| Sprint6LiveLabExperimentTestSuite | live secure/vulnerable localhost campaign | PASS, 16 assertions |
+| EXP-S6-TENANT-RBAC-001 baseline | 10 labelled cases | TP=2 TN=1 FP=7 FN=0, precision=.222222 recall=1.0 F1=.363636 |
+| EXP-S6-TENANT-RBAC-001 ACRA | 10 labelled cases | TP=2 TN=8 FP=0 FN=0, precision=1.0 recall=1.0 F1=1.0 |
+
+The metrics above apply only to the controlled localhost dataset and are not real-world accuracy claims.
+
 ## Sprint 5 final closure — 2026-09-23
 
 Current authoritative S5 verification is GitHub Actions run `35872345270`: exact JDK 21 compilation and all selected core/S3/S4/S5 suites PASS. See `docs/sprints/sprint-05-final-completion.md` for the requirement matrix and residual validation boundaries.

@@ -1,72 +1,46 @@
 # Sprint 6 — Tenant Isolation, Advanced RBAC and Policy Intelligence
 
-Status: **IN PROGRESS**
+Status: **IN PROGRESS**  
+Base checkpoint: `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`  
+Working branch: `s6-tenant-rbac`
 
-Base checkpoint: S5 final commit `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`.
+## Completed architecture
 
-## Current completed slice
+Sprint 6 now includes explicit authorization scope, tenant membership, multi-role assignments, role hierarchy,
+effective permissions, allow/deny policy, policy precedence/conflict preservation, global/shared/delegated access,
+tenant relationship resolution, tenant-isolation assessment, RBAC assessment, explicit privileged-action
+role-escalation assessment, policy coverage, effective authorization matrix, S5 FindingCandidate composition,
+policy graph hydration and root-cause grouping foundation.
 
-- S6-00 repository/S5 intake and reconciliation
-- S6-01 authorization scope foundation
-- S6-02 tenant membership foundation
-- S6-05 role assignment foundation
-- S6-06 multi-role representation foundation
-- S6-07 role hierarchy model
-- S6-08 cycle-safe role hierarchy resolution
-- S6-09 permission model
-- S6-10 role-permission assignment model
-- S6-12/S6-13 allow/deny rule model foundation
-- S6-22/S6-23 global/delegated scope primitives
-- S6-38 graph taxonomy extension foundation
-- S6-57/S6-58 immutable policy snapshot and deterministic fingerprint foundation
+## Controlled-lab integration
 
-## Current policy-resolution slice
+The ACRA-Lab includes independent S6 ground truth and secure/vulnerable fixtures covering:
+same-tenant access, secure cross-tenant denial, vulnerable cross-tenant allow, global admin, delegated admin,
+shared resources, low-role privileged denial and deliberately vulnerable low-role privileged allow.
 
-Newly implemented:
-- effective permission resolution across inherited and multiple roles
-- explicit default ALLOW/DENY policy support
-- explicit rule precedence with conflict preservation when precedence is unproven
-- global and delegated authorization resolution
-- tenant relationship classification
-- tenant-isolation assessment
-- RBAC assessment
-- deterministic effective-authorization resolution IDs
+The policy-aware planning advisor maps resolved policy context into existing `CROSS_TENANT` and
+`ROLE_COMPARISON` test contracts without treating global/delegated/shared cases as vulnerabilities.
 
-## Still required
+## Measured experiment
 
-Implemented in this slice:
-- explicit role-escalation assessment only when the caller supplies a privileged-action fact
-- policy-conflict assessment
-- policy coverage measurement
-- effective authorization matrix
-- S6 policy-aware FindingCandidate composition reusing the S5 finding architecture
-- S6 orchestrator combining the S5 chain with effective policy/tenant/RBAC reasoning
-- S5 risk/severity reuse after S6 candidate composition
+`EXP-S6-TENANT-RBAC-001` completed successfully in GitHub Actions run `35878508170`.
 
-Still required:
-Implemented in this slice:
-- atomic policy-to-existing-SecurityContextGraph integration with evidence preflight
-- policy/role/tenant/permission/delegation graph relationships
-- root-cause grouping foundation for repeated FindingCandidates
-- policy-import plugin boundary
-- manual policy builder
+| Treatment | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Naive baseline | 2 | 1 | 7 | 0 | 0.222222 | 1.000000 | 0.363636 |
+| ACRA S6 | 2 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
 
-Still required:
-planner/UI integration, expanded ACRA-Lab, controlled experiments,
-matrix/graph integration, S4 planner integration, S5 FindingCandidate integration, expanded lab,
-controlled experiments, UI, reporting extensions, performance/security validation, final audit and
-reproducible S6 checkpoint.
+The successful campaign followed correction of a shared-scope isolation defect found by the first live run.
 
-Sprint 7 remains NOT STARTED.
+## Remaining before S6 SOFTWARE COMPLETE
 
-
-## S6 controlled-lab and planning slice
-
-Implemented:
-- independent `GT-S6-TENANT-RBAC.json` ground truth
-- secure/vulnerable localhost S6 report and privileged-export fixtures
-- explicit global-admin, delegated-admin and shared-resource controls
-- deliberately vulnerable cross-tenant/report and low-role privileged-action behavior in vulnerable mode
-- `S6PolicyPlanningAdvisor` that recommends existing CROSS_TENANT and ROLE_COMPARISON contracts from resolved policy context
-- planner recommendations keep global/delegated/shared cases as false-positive controls instead of vulnerability verdicts
-- live S6 TP/TN/FP/FN metrics remain NOT MEASURED until the localhost campaign is actually executed
+1. finish planner→controlled execution product integration
+2. implement S6 UI surfaces
+3. extend technical/machine-readable reporting
+4. run larger performance workloads
+5. expand negative-security/serialization coverage
+6. finish ADRs and requirements traceability
+7. run full S1–S6 final regression/package gates
+8. produce final S6 audit
+9. create reproducible S6 ZIP, manifest and SHA-256
+10. keep Sprint 7 NOT STARTED until the S6 checkpoint is frozen

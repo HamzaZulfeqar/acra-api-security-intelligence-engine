@@ -6,55 +6,55 @@
 **Decision:** S6 IN PROGRESS.  
 **Working branch:** `s6-tenant-rbac`.  
 **Immutable Sprint 5 base:** `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`.  
-**Sprint 5:** SOFTWARE COMPLETE and preserved as a separate reproducible checkpoint.  
+**Sprint 5:** SOFTWARE COMPLETE and preserved separately.  
 **Sprint 7:** NOT STARTED.
 
-Sprint 6 began with source-driven reconciliation before feature changes. Existing Principal, Role, Tenant,
-Resource, AuthorizationContext, AuthorizationMatrix, SecurityContextGraph, S4 differential execution and
-S5 evidence/finding/risk/reporting architectures remain canonical and must be reused.
+### Implemented S6 capabilities
 
-### Current S6 slice
-
-Implemented foundation:
 - authorization scope taxonomy
-- explicit tenant memberships
-- multi-role assignments
-- tenant-scoped/global role assignments
-- role inheritance model
-- cycle-safe role hierarchy resolver
-- permission model
-- role-to-permission assignment
-- explicit allow/deny rule model
-- delegated authorization model
-- immutable deterministic authorization policy snapshot
-- policy/RBAC graph relation/node taxonomy extensions
-- dedicated Sprint 6 foundation test/CI lane
-- effective permission resolution across direct/inherited/multi-role assignments
-- explicit default policy decision
-- allow/deny conflict preservation and evidence-backed precedence
-- global/delegated authorization resolution
-- tenant-relationship classification
-- tenant-isolation and RBAC assessment foundations
+- tenant membership and multi-role assignment
+- role hierarchy with cycle-safe inheritance
+- permission and role-permission models
+- explicit ALLOW / DENY rules
+- explicit default decision and evidence-backed precedence
+- global, shared and delegated authorization
+- effective role and permission resolution
+- tenant relationship classification
+- tenant-isolation and RBAC assessments
 - explicit privileged-action role-escalation assessment
 - policy-conflict assessment
-- policy coverage metrics
-- effective authorization matrix
-- S6 FindingCandidate composition using the existing S5 finding model
-- S6 end-to-end authorization orchestrator with existing S5 severity/risk reuse
-- atomic authorization-policy hydration into the existing SecurityContextGraph
+- policy coverage and effective authorization matrix
+- S6 composition into the existing S5 FindingCandidate and severity/risk architecture
+- policy hydration into the existing SecurityContextGraph with atomic evidence preflight
 - deterministic root-cause grouping foundation
 - policy-import plugin boundary and manual policy builder
-- S6 ACRA-Lab ground truth and secure/vulnerable local tenant/RBAC fixtures
-- policy-aware planning advisor for CROSS_TENANT / ROLE_COMPARISON coverage
-- global/delegated/shared false-positive controls preserved as legitimate policy-aware cases
-- controlled live S6 experiment harness that starts secure/vulnerable localhost services and emits measured JSON evidence
-- S6 live experiment metrics remain pending until the new campaign completes successfully
+- controlled S6 ACRA-Lab ground truth and secure/vulnerable tenant/RBAC fixtures
+- policy-aware planning recommendations
+- live controlled tenant/RBAC experiment and measurement pipeline
 
-This is **not Sprint 6 completion**. Effective permission/decision resolution, tenant-isolation and RBAC
-assessment engines, S5 FindingCandidate integration, expanded ACRA-Lab experiments, UI/report extensions
-and final S6 verification remain pending.
+### Newly measured S6 evidence
 
-### Historical validation boundary
+GitHub Actions run `35878508170` completed successfully on exact Temurin JDK 21.0.12.1.
 
-Sprint 5 exact-JDK-21 verification remains the immutable predecessor evidence. Historical S2/S3 real Burp
-runtime validation debt remains separate and is not promoted by Sprint 6 work.
+`EXP-S6-TENANT-RBAC-001` executed ten labelled localhost cases.
+
+- naive baseline: TP=2, TN=1, FP=7, FN=0, precision=0.222222, recall=1.000000, F1=0.363636
+- ACRA S6: TP=2, TN=8, FP=0, FN=0, precision=1.000000, recall=1.000000, F1=1.000000
+
+These are controlled-fixture measurements only. They do not establish real-world scanner accuracy.
+
+The campaign also exposed and closed a SHARED-scope isolation defect before the successful run.
+
+### Remaining S6 closure work
+
+- fuller planner→controlled execution product integration
+- UI for policy, role hierarchy, tenant map, effective permissions, conflicts and coverage
+- report/export extension for S6 policy evidence
+- larger performance workloads and memory profiling
+- expanded negative-security and serialization audit
+- requirements traceability / ADR closure
+- full S1–S6 regression and Maven/package verification
+- final Sprint 6 audit
+- reproducible S6 ZIP + SHA-256 + manifest
+
+Historical S2/S3 real Burp runtime validation remains separate and is not promoted by Sprint 6 evidence.

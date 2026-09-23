@@ -15,6 +15,7 @@
 | EXP-DIFF-001 | Controlled differential baseline/treatment and labelled FP/FN campaign | SOFTWARE_READY / RESEARCH_DEFERRED | GT-S4-RESEARCH-FIXTURES | NOT_RUN; labelled records and metric semantics pass, outcomes remain NOT MEASURED |
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
+| EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
 | EXP-A0 | Naive differential baseline | PLANNED | OPEN | NOT_RUN |
 | EXP-A1 | + Identity | PLANNED | OPEN | NOT_RUN |
 | EXP-A2 | + Ownership | PLANNED | OPEN | NOT_RUN |
@@ -29,3 +30,9 @@ Sprint 3 measured metrics are deliberately limited to controlled local fixtures.
 `EXP-EXEC-001` is Level 4 evidence only for the controlled local execution-substrate claim. It does not establish real-world vulnerability-detection accuracy, FP/FN rates, or Burp runtime behavior.
 
 The Phase 3 software verification proves only the labelled-record and safe-metric contracts, including `N/A` for undefined denominators. It does not convert the deferred campaign into evidence. No measured TP/TN/FP/FN, precision, recall, F1, optimization percentage or Sprint 4 performance result is claimed.
+
+
+## Sprint 6 controlled result — 2026-09-23
+
+`EXP-S6-TENANT-RBAC-001` is the first measured Sprint 6 tenant/RBAC campaign. Metrics are valid only for the
+ten labelled localhost cases in `GT-S6-TENANT-RBAC`; they do not establish real-world scanner accuracy.
