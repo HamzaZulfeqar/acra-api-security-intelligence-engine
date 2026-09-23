@@ -25,12 +25,15 @@ public final class S6PolicyPlanningAdvisor {
                     "Legitimate cross-boundary context should be retained as a false-positive control"));
         }
 
-        if (!resolution.effectiveRoleIds().isEmpty()) {
+        if (!resolution.effectiveRoleIds().isEmpty() || resolution.mismatchCandidate()
+                || resolution.state() == PolicyResolutionState.CONFLICTING) {
             int boost = resolution.state() == PolicyResolutionState.CONFLICTING ? 95
                     : resolution.mismatchCandidate() ? 90 : 65;
+            String reason = resolution.effectiveRoleIds().isEmpty()
+                    ? "Resolved deny/observed allow merits controlled RBAC comparison even though no target-scope role is effective"
+                    : "Effective roles and permissions are available for controlled RBAC comparison";
             out.add(new S6PolicyPlanningRecommendation(TestContract.ROLE_COMPARISON, true, boost,
-                    resolution.policyFingerprint(),
-                    "Effective roles and permissions are available for controlled RBAC comparison"));
+                    resolution.policyFingerprint(), reason));
         }
 
         return out.stream().sorted((a,b) -> {
