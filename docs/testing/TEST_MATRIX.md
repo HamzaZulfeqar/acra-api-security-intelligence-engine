@@ -341,3 +341,19 @@ The verified graph/local results remain: graph integration **87 PASS**, core **5
 | TEST-S4-BURP-ACTIVE-001 | Passive context import and authorized local executor provisioning in real Burp | none | DEFERRED; default remains safely disabled |
 
 NEWLY EXECUTED Phase 3 total: **558 represented assertions** across graph 87, S4 core 54, S4 security 52, S4 product 132, localhost 60, UI 26, core 37, S3 core 47, S3 adapter 11 and S2 52. All core and extension sources compile with `--release 21 -Xlint:all -Werror` using OpenJDK 26.0.1. Exact JDK 21 runtime is UNVERIFIED; Maven is BLOCKED; broad research/performance metrics are NOT MEASURED.
+
+
+### Sprint 7 workflow authorization
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S7-WORKFLOW-FOUNDATION-001 | transition policy / role / approval / separation / terminal handling | Sprint7WorkflowAuthorizationFoundationTestSuite | PASS |
+| TEST-S7-WORKFLOW-BINDING-001 | SHA-256-only token-context binding and raw-token rejection | Sprint7WorkflowAuthorizationFoundationTestSuite | PASS |
+| TEST-S7-WORKFLOW-DELEGATION-001 | active vs expired S6 delegation reuse | Sprint7WorkflowAuthorizationFoundationTestSuite | PASS |
+| TEST-S7-WORKFLOW-CONFLICT-001 | allow/deny conflict and explicit precedence | Sprint7WorkflowAuthorizationFoundationTestSuite | PASS |
+| TEST-S7-ASSESS-001 | WorkflowAuthorizationResolution → WorkflowTransitionAssessment | Sprint7WorkflowAssessmentIntegrationTestSuite | PASS |
+| TEST-S7-FINDING-001 | evidence/provenance-gated FindingCandidate projection | Sprint7WorkflowAssessmentIntegrationTestSuite | PASS |
+| TEST-S7-RISK-001 | deterministic workflow risk prioritization | Sprint7WorkflowAssessmentIntegrationTestSuite | PASS |
+| TEST-S7-PROVENANCE-001 | cross-project ownership mismatch stays INCONCLUSIVE | Sprint7WorkflowAssessmentIntegrationTestSuite | PASS |
+| TEST-S7-DATA-MIN-001 | raw token and token fingerprint minimized from downstream result | Sprint7WorkflowAssessmentIntegrationTestSuite | PASS |
+| TEST-S7-GT-001 | ten-case controlled localhost workflow ground-truth fixture | GT-S7-WORKFLOW-AUTHORIZATION.json + integration suite | PASS |
