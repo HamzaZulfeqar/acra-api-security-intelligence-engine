@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASES 1–5 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Decision:** S10 PHASES 1–6 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -12,7 +12,8 @@
 **Sprint 10 Phase 2 verification:** GitHub Actions run `36004574331` — SUCCESS.  
 **Sprint 10 Phase 3 verification:** GitHub Actions run `36048381112` — SUCCESS at source commit `608490cfc1211057e879f6c6457ea62fd648b405`.  
 **Sprint 10 Phase 4 verification:** GitHub Actions run `36048837246` — SUCCESS at source commit `abb57d0320fcdc161992297415978bde6c769bee`.  
-**Sprint 10 Phase 5 verification:** GitHub Actions run `36049247018` — SUCCESS at source commit `16169367c3e7c3b179a6d8541dfc88698fde6b81`.
+**Sprint 10 Phase 5 verification:** GitHub Actions run `36049247018` — SUCCESS at source commit `16169367c3e7c3b179a6d8541dfc88698fde6b81`.  
+**Sprint 10 Phase 6 verification:** GitHub Actions run `36051856008` — SUCCESS at source commit `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.
 
 ### Sprint 10 verified progress
 
@@ -77,7 +78,20 @@ Sprint 10 Phase 5 deterministic coverage accounting is **VERIFIED COMPLETE**:
 - coverage entries validate observation, assessment and finding consistency;
 - combined coverage ordering and summary ratios are deterministic.
 
-The next dependency is Phase 6 batch/indirect product workspace and headless Burp UI projection.
+Sprint 10 Phase 6 read-only product workspace and headless Burp UI projection is **VERIFIED COMPLETE**:
+
+- immutable `S10BatchIndirectProductSnapshot` and synchronized `S10BatchIndirectWorkspace`;
+- separate batch and indirect policy/observation/assessment collections with shared candidate and coverage lifecycle;
+- read-only `Batch & Indirect` top-level Burp tab;
+- Overview / Policies / Observations / Assessments / Candidates / Coverage surfaces;
+- no premature Phase 7 Report or JSON Export tabs;
+- raw indirect aliases remain absent from UI tables; only fingerprints/resolved resources are rendered;
+- aggregate HTTP success is explicitly separated from per-item authorization;
+- candidate != confirmed vulnerability and unobserved != secure boundaries are rendered;
+- retained S4/S6/S7/S8/S9 headless UI regressions remain green;
+- real Burp desktop runtime/load/handler/UI validation remains UNVERIFIED / DEFERRED.
+
+The next dependency is Phase 7 deterministic report/export for batch and indirect authorization intelligence.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
