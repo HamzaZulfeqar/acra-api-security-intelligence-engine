@@ -1,6 +1,6 @@
 # Sprint 8 — Routing Normalization & Authorization-Path Intelligence
 
-Status: IN PROGRESS — PHASE 7 VERIFIED  
+Status: SOFTWARE COMPLETE  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
@@ -296,3 +296,41 @@ real-world capacity claims.
 
 Phase 7 is complete. Remaining Sprint 8 work is final traceability, retained regression, reproducible package
 verification and final software audit.
+
+
+## Final closure — S8 SOFTWARE COMPLETE
+
+GitHub Actions run `35971753523` passed the dedicated Sprint 8 final closure workflow at source commit
+`f6a0c19358b00672711532ec7effe1eed3800e3e`.
+
+Final verification included:
+- exact Temurin Java 21 compilation and Sprint 8 verification
+- all routing normalization / boundary / live / assessment / reporting / security / performance suites
+- controlled secure/vulnerable localhost route-equivalence validation
+- retained Sprint 6 and Sprint 7 foundation verification
+- official Maven package
+- retained Sprint 2 local-contract regression: 52 tests
+- retained Sprint 3 core regression: 47 tests
+- retained Sprint 3 adapter regression: 11 tests
+- Sprint 4 UI: 26 tests
+- Sprint 6 Authorization UI: 27 assertions
+- Sprint 7 Workflow UI: 20 assertions
+- Sprint 8 Routing UI: 23 assertions
+- deterministic source checkpoint generation
+- archive safe-path and duplicate-entry validation
+- clean-extraction equality
+- per-file SHA-256 equality
+
+Closure-candidate checkpoint: `acra-sprint-08-final.zip`  
+Closure-candidate SHA-256: `e063217d3c8795a59ce1cd7e052a2c9b0475a86836239973ef1d470a6c627af7`  
+Entries: **836**  
+Unsafe paths: **0**  
+Duplicate entries: **0**  
+Clean extraction: **PASS**  
+Per-file SHA-256 equality: **PASS**
+
+Real Burp desktop runtime/load/handler/UI validation remains a separate **UNVERIFIED / DEFERRED** validation
+lane. Controlled localhost and headless UI evidence do not establish real-world proxy/gateway behavior or
+scanner accuracy.
+
+Sprint 9 is **NOT STARTED** by this closure.
