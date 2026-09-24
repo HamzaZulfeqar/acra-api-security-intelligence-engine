@@ -72,14 +72,11 @@ public final class Sprint10BatchIndirectUiTestSuite {
 
         JTabbedPane tabs = find(tab.component(), JTabbedPane.class, "s10-batch-indirect-tabs");
         for (String title : Set.of(
-                "Overview", "Policies", "Observations", "Assessments", "Candidates", "Coverage")) {
+                "Overview", "Policies", "Observations", "Assessments", "Candidates", "Coverage",
+                "Report", "JSON Export")) {
             check(indexOf(tabs, title) >= 0, "Sprint 10 sub-tab installed: " + title);
             assertions++;
         }
-        check(indexOf(tabs, "Report") < 0 && indexOf(tabs, "JSON Export") < 0,
-                "Phase 6 does not prematurely expose Phase 7 report/export surfaces");
-        assertions++;
-
         JTextArea overview = find(tab.component(), JTextArea.class, "s10-batch-indirect-overview");
         check(overview.getText().contains("Policy contexts: 4"),
                 "overview renders explicit combined policy denominator");
@@ -152,6 +149,43 @@ public final class Sprint10BatchIndirectUiTestSuite {
         assertions++;
         check(snapshot.coverageSummary().unobservedContexts() == 1,
                 "workspace retains one unobserved context");
+        assertions++;
+
+        JTextArea report = find(tab.component(), JTextArea.class, "s10-batch-indirect-report-view");
+        check(report.getText().contains("ACRA Sprint 10 Batch & Indirect Authorization Report"),
+                "Sprint 10 report view renders canonical Markdown");
+        assertions++;
+        check(report.getText().contains("Confirmed findings: 0"),
+                "Sprint 10 report preserves zero confirmed findings");
+        assertions++;
+        check(report.getText().contains("Unobserved contexts: 1"),
+                "Sprint 10 report preserves explicit coverage gap");
+        assertions++;
+        check(report.getText().contains("referenceFingerprint="),
+                "Sprint 10 report renders indirect fingerprint instead of raw alias");
+        assertions++;
+        check(!report.getText().contains("share-a") && !report.getText().contains("share-b"),
+                "Sprint 10 report view excludes raw indirect aliases");
+        assertions++;
+
+        JTextArea json = find(tab.component(), JTextArea.class, "s10-batch-indirect-json-export-view");
+        check(json.getText().contains("\"reportVersion\":\"s10-batch-indirect-report-v1\""),
+                "Sprint 10 JSON view renders canonical report version");
+        assertions++;
+        check(json.getText().contains("\"confirmedFindingCount\":0"),
+                "Sprint 10 JSON view preserves review-only boundary");
+        assertions++;
+        check(json.getText().contains("\"unobservedContextCount\":1"),
+                "Sprint 10 JSON view preserves coverage gap");
+        assertions++;
+        check(!json.getText().contains("\"policySource\""),
+                "Sprint 10 JSON projection structurally excludes policySource");
+        assertions++;
+        check(!json.getText().contains("\"rationale\""),
+                "Sprint 10 JSON projection structurally excludes candidate rationale");
+        assertions++;
+        check(!json.getText().contains("share-a") && !json.getText().contains("share-b"),
+                "Sprint 10 JSON view excludes raw indirect aliases");
         assertions++;
 
         assertNoRawAlias(tab, "s10-batch-indirect-policy-table");
