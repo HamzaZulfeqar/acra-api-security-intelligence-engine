@@ -1,6 +1,6 @@
 # Sprint 10 — Batch & Indirect Authorization Intelligence
 
-Status: IN PROGRESS — Phases 1–5 VERIFIED  
+Status: IN PROGRESS — Phases 1–6 VERIFIED  
 Branch: `s10-batch-indirect-authorization`  
 Immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 
@@ -257,3 +257,43 @@ GitHub Actions run `36049247018`: **SUCCESS** at source commit
 Phase 5 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 6 owns the read-only batch/indirect product workspace and headless Burp UI projection.
+
+
+## Phase 6 — read-only product workspace and Burp UI
+
+Implemented:
+
+- `S10BatchIndirectProductSnapshot`;
+- `S10BatchIndirectWorkspace`;
+- `S10BatchIndirectPanel`;
+- `AcraSuiteTab` integration with backward-compatible constructor chaining;
+- top-level `Batch & Indirect` product area;
+- `Overview`, `Policies`, `Observations`, `Assessments`, `Candidates` and `Coverage` views;
+- separate batch vs indirect policy, observation and assessment rows;
+- shared review-only finding and coverage lifecycle;
+- raw indirect aliases excluded from UI projection;
+- no Phase 7 report/export surface exposed early;
+- real Burp desktop validation remains separately unverified.
+
+### Phase 6 verification
+
+GitHub Actions run `36051856008`: **SUCCESS** at source commit
+`a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.
+
+Verified UI evidence:
+
+- extension Maven `test-compile`: PASS;
+- retained Sprint 6 authorization UI: PASS, 27 assertions;
+- retained Sprint 7 workflow UI: PASS, 20 assertions;
+- retained Sprint 8 routing UI: PASS, 23 assertions;
+- retained Sprint 9 property UI: PASS, 59 assertions;
+- `Sprint10BatchIndirectUiTestSuite`: PASS, 218 assertions;
+- explicit four-policy denominator: 2 batch + 2 indirect;
+- three evidence-backed observed/assessed contexts and one explicit unobserved context;
+- one review candidate and two rejected controls;
+- raw `share-a` / `share-b` material absent from all S10 UI tables;
+- candidate/non-confirmation, aggregate-HTTP/per-item and headless/desktop boundaries preserved.
+
+Phase 6 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 7 owns deterministic report/export generation and read-only UI projection.
