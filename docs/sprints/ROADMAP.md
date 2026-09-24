@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE; final closure pending.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-export-interoperability`;
@@ -19,12 +19,22 @@ Canonical Sprint 12 evidence:
 - review-only / no automatic-confirmation boundary: VERIFIED;
 - real Burp desktop runtime: UNVERIFIED / DEFERRED.
 
+Verified Phase 5:
+- deterministic cross-format bundle: PASS;
+- package/candidate/evidence lineage consistency: PASS;
+- review-only consistency across JSON/SARIF/Burp: PASS;
+- secret redaction across all surfaces: PASS;
+- exact capability matrix: PASS;
+- invalid lifecycle/origin/artifact rejection: PASS;
+- hardening suite: PASS, 39 assertions;
+- verification run: `36073674429` — SUCCESS.
+
 Next dependency:
-1. build a deterministic cross-format interoperability bundle;
-2. verify package/candidate/evidence consistency across JSON, SARIF and Burp projection;
-3. verify redaction across every output surface;
-4. reject invalid state/evidence/origin combinations;
-5. run final Sprint 12 closure only after hardening passes.
+1. dedicated Sprint 12 final verification;
+2. retained Sprint 11 and historical regression gates;
+3. official Maven package;
+4. deterministic Sprint 12 source checkpoint;
+5. archive integrity validation and final software audit.
 
 ## Previous release boundary — Sprint 11
 
