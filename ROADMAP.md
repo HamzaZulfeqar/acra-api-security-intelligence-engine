@@ -5,17 +5,19 @@
 Sprint 12 — **Reproduction Export & Interoperability** is IN PROGRESS on
 `s12-reproduction-export-interoperability`.
 
-Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36071724705`.
+Phases 1–4 are VERIFIED COMPLETE. Latest capability-promotion gate: GitHub Actions run `36073182973`.
 
 Current evidence boundary:
 
 - export-neutral reproduction package is deterministic and review-only;
-- FR-013 target contracts exist for JSON, SARIF and Burp Issue;
-- renderer states remain CONTRACT_DEFINED until individually verified;
-- raw secret material is redacted defensively;
+- JSON export is IMPLEMENTED and verified;
+- SARIF 2.1.0 export is IMPLEMENTED and verified;
+- Burp Issue software projection is IMPLEMENTED_RUNTIME_UNVERIFIED;
+- official Montoya 2026.7 adapter compilation is verified;
+- real Burp desktop insertion remains UNVERIFIED / DEFERRED;
 - Sprint 11 remains the frozen SOFTWARE COMPLETE release base.
 
-Next dependency: generic reproduction JSON, then SARIF, then Burp Issue projection.
+Next dependency: cross-format interoperability/security hardening, then Sprint 12 final closure.
 
 Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
 

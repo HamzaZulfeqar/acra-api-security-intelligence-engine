@@ -3,13 +3,16 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 12 — Reproduction Export & Interoperability (in progress).  
-**Decision:** S12 PHASE 1 VERIFIED COMPLETE; reproduction-package and FR-013 export-target contracts are defined.  
+**Decision:** S12 PHASES 1–4 VERIFIED COMPLETE; JSON/SARIF implemented and Burp Issue software support implemented with desktop runtime still unverified.  
 **Working branch:** `s12-reproduction-export-interoperability`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-closure revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
 **Sprint 11 final-status ZIP SHA-256:** `ea3d65bbce6134dee6e03b75939b57b7b7cf26cf9988d22b17abef91aeb3622f` — 986 entries, archive integrity PASS.  
 **Sprint 12 Phase 1 verification:** GitHub Actions run `36071724705` — SUCCESS at source commit `3c61578f5fa8b0635313ae6c0cbffe7c870aef40`.  
+**Sprint 12 Phase 2 verification:** GitHub Actions run `36072071561` — SUCCESS at JSON source commit `5722352c2c35e3f3c045705c6b85e8b9bbb335bf`; JSON capability promotion run `36072225976` — SUCCESS at `a6d437d412f61a329dc24afacaa20bc6ace900cd`.  
+**Sprint 12 Phase 3 verification:** GitHub Actions run `36072500775` — SUCCESS at SARIF source commit `1b328b058f92c02500b044eb7de607c5e25de810`; SARIF capability promotion run `36072674240` — SUCCESS at `d3bf2cc83be052fb5883b3187ff083a37ebaae53`.  
+**Sprint 12 Phase 4 verification:** GitHub Actions run `36073018537` — SUCCESS at Burp Issue source commit `0d13916d40f17a52958f2c682798c76d3773ef73`; Burp capability promotion run `36073182973` — SUCCESS at `2f893b6b4a8fb10ea752dd7308f74a8404b644bb`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -58,7 +61,44 @@ Phase 1 reproduction/export foundation is **VERIFIED COMPLETE**:
 - retained Sprint 11 verification: PASS;
 - Maven core test compilation: PASS.
 
-Next dependency: deterministic generic reproduction JSON; SARIF and Burp Issue remain contract-only.
+Sprint 12 Phase 2 generic JSON export is **VERIFIED COMPLETE**:
+
+- deterministic `ReproductionExportArtifact` with content SHA-256 validation;
+- canonical `application/json` export;
+- stable `<packageId>.json` filename;
+- review-only state, expected/observed decisions and evidence lineage retained;
+- defensive redaction retained;
+- versioned `acra-reproduction-json-v1` Reporter adapter;
+- JSON suite: PASS, 21 assertions;
+- JSON capability state: `IMPLEMENTED`.
+
+Sprint 12 Phase 3 SARIF 2.1.0 export is **VERIFIED COMPLETE**:
+
+- deterministic SARIF 2.1.0 document;
+- ACRA tool driver and stable `ACRA-AUTHORIZATION-REVIEW` rule;
+- result kind `review` preserves candidate/human-review semantics;
+- severity mapped to SARIF note/warning/error;
+- ACRA review-only and evidence metadata retained in SARIF properties;
+- independent Python JSON-structure verification: PASS;
+- SARIF suite: PASS, 28 assertions;
+- SARIF capability state: `IMPLEMENTED`.
+
+Sprint 12 Phase 4 Burp Issue projection is **VERIFIED COMPLETE AT SOFTWARE LEVEL**:
+
+- only `CANDIDATE` packages may project to a Burp issue;
+- REJECTED / INCONCLUSIVE packages fail closed;
+- Burp severity is bounded to INFORMATION/LOW/MEDIUM/HIGH;
+- confidence maps to TENTATIVE/FIRM only; CERTAIN is never emitted;
+- origin and endpoint URL construction strips query/fragment secret material;
+- deterministic projection ID/fingerprint;
+- official Montoya 2026.7 adapter compiles using `AuditIssue.auditIssue(...)` and `SiteMap.add(...)`;
+- adapter is not auto-wired into extension initialization;
+- Burp projection suite: PASS, 23 assertions after capability-state promotion;
+- capability state: `IMPLEMENTED_RUNTIME_UNVERIFIED`.
+
+Real Burp desktop insertion/load/handler/UI behavior remains **UNVERIFIED / DEFERRED**.
+
+Next dependency: Phase 5 cross-format interoperability/security hardening before Sprint 12 final closure.
 
 ### Sprint 11 final closure
 

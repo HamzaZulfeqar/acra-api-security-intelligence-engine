@@ -2,25 +2,29 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-export-interoperability`;
 - immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`;
 - Phase 1 verification: `36071724705` — SUCCESS at `3c61578f5fa8b0635313ae6c0cbffe7c870aef40`;
+- Phase 2 JSON verification: `36072071561` — SUCCESS; promotion `36072225976` — SUCCESS;
+- Phase 3 SARIF verification: `36072500775` — SUCCESS; promotion `36072674240` — SUCCESS;
+- Phase 4 Burp Issue verification: `36073018537` — SUCCESS; promotion `36073182973` — SUCCESS;
 - reproduction package foundation: PASS, 24 assertions;
-- target contracts: JSON / SARIF / BURP_ISSUE;
-- review-only boundary: VERIFIED;
-- renderer implementation state: CONTRACT_DEFINED.
+- JSON export: PASS, 21 assertions; state IMPLEMENTED;
+- SARIF export: PASS, 28 assertions + JSON-shape verification; state IMPLEMENTED;
+- Burp Issue projection: PASS, 23 assertions; state IMPLEMENTED_RUNTIME_UNVERIFIED;
+- official Montoya 2026.7 adapter compilation: PASS;
+- review-only / no automatic-confirmation boundary: VERIFIED;
+- real Burp desktop runtime: UNVERIFIED / DEFERRED.
 
 Next dependency:
-1. deterministic generic reproduction JSON;
-2. stable artifact metadata and SHA-256;
-3. secret-safe minimized content;
-4. promote JSON only after verification;
-5. then SARIF, then Burp Issue projection.
-
-Real Burp desktop runtime remains UNVERIFIED / DEFERRED.
+1. build a deterministic cross-format interoperability bundle;
+2. verify package/candidate/evidence consistency across JSON, SARIF and Burp projection;
+3. verify redaction across every output surface;
+4. reject invalid state/evidence/origin combinations;
+5. run final Sprint 12 closure only after hardening passes.
 
 ## Previous release boundary — Sprint 11
 
