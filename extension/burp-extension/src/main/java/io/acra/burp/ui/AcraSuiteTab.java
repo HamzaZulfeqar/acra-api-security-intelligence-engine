@@ -12,6 +12,7 @@ import io.acra.core.product.batchindirect.S10BatchIndirectWorkspace;
 import io.acra.core.product.workflow.S7WorkflowWorkspace;
 import io.acra.core.product.routing.S8RoutingWorkspace;
 import io.acra.core.product.property.S9PropertyWorkspace;
+import io.acra.core.product.reproduction.S12ReproductionWorkspace;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
@@ -36,6 +37,7 @@ public final class AcraSuiteTab {
     private final S8RoutingPanel routingPanel;
     private final S9PropertyPanel propertyPanel;
     private final S10BatchIndirectPanel batchIndirectPanel;
+    private final S12ReproductionPanel reproductionPanel;
     private final Timer refresh;
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope){
@@ -79,6 +81,15 @@ public final class AcraSuiteTab {
                         ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
                         S7WorkflowWorkspace workflowWorkspace,S8RoutingWorkspace routingWorkspace,
                         S9PropertyWorkspace propertyWorkspace,S10BatchIndirectWorkspace batchIndirectWorkspace){
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,workflowWorkspace,routingWorkspace,
+                propertyWorkspace,batchIndirectWorkspace,new S12ReproductionWorkspace());
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
+                        S7WorkflowWorkspace workflowWorkspace,S8RoutingWorkspace routingWorkspace,
+                        S9PropertyWorkspace propertyWorkspace,S10BatchIndirectWorkspace batchIndirectWorkspace,
+                        S12ReproductionWorkspace reproductionWorkspace){
         JTabbedPane tabs=new JTabbedPane();
         trafficModel=new TrafficModel(pipeline); contextModel=new ContextModel(pipeline); endpointModel=new EndpointModel(pipeline);
         JPanel overviewPanel=new JPanel(new BorderLayout()); overviewPanel.add(overview,BorderLayout.NORTH); tabs.addTab("Overview",overviewPanel);
@@ -104,8 +115,10 @@ public final class AcraSuiteTab {
         propertyPanel.install(tabs);
         batchIndirectPanel=new S10BatchIndirectPanel(batchIndirectWorkspace);
         batchIndirectPanel.install(tabs);
+        reproductionPanel=new S12ReproductionPanel(reproductionWorkspace);
+        reproductionPanel.install(tabs);
         tabs.addTab("Configuration",configPanel(scope)); root.add(tabs,BorderLayout.CENTER);
-        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();authorizationPanel.refresh();workflowPanel.refresh();routingPanel.refresh();propertyPanel.refresh();batchIndirectPanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
+        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();authorizationPanel.refresh();workflowPanel.refresh();routingPanel.refresh();propertyPanel.refresh();batchIndirectPanel.refresh();reproductionPanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
         refresh.start();
     }
 
@@ -130,6 +143,7 @@ public final class AcraSuiteTab {
     public S8RoutingWorkspace routingWorkspace(){return routingPanel.workspace();}
     public S9PropertyWorkspace propertyWorkspace(){return propertyPanel.workspace();}
     public S10BatchIndirectWorkspace batchIndirectWorkspace(){return batchIndirectPanel.workspace();}
+    public S12ReproductionWorkspace reproductionWorkspace(){return reproductionPanel.workspace();}
     public void stop(){refresh.stop();}
 
     private Component trafficPanel(TrafficIntelligencePipeline pipeline){
