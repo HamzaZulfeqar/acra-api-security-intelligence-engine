@@ -5,6 +5,11 @@ import io.acra.core.domain.workflow.WorkflowAuthorizationResolution;
 import io.acra.core.domain.workflow.WorkflowPolicySnapshot;
 import io.acra.core.domain.workflow.WorkflowTransitionCoverageEntry;
 import io.acra.core.domain.workflow.WorkflowTransitionCoverageMatrix;
+import io.acra.core.reporting.s7.S7WorkflowExportArtifact;
+import io.acra.core.reporting.s7.S7WorkflowReport;
+import io.acra.core.reporting.s7.S7WorkflowReportExporter;
+import io.acra.core.reporting.s7.S7WorkflowReportGenerator;
+import java.time.Instant;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -13,6 +18,8 @@ public final class S7WorkflowWorkspace {
     private final TreeMap<String, WorkflowAuthorizationResolution> resolutions = new TreeMap<>();
     private final TreeMap<String, S7WorkflowAnalysisResult> analyses = new TreeMap<>();
     private final TreeMap<String, WorkflowTransitionCoverageEntry> coverage = new TreeMap<>();
+    private final S7WorkflowReportGenerator reportGenerator = new S7WorkflowReportGenerator();
+    private final S7WorkflowReportExporter reportExporter = new S7WorkflowReportExporter();
 
     public synchronized void loadPolicy(WorkflowPolicySnapshot snapshot) {
         if (snapshot == null) throw new IllegalArgumentException("workflow policy snapshot required");
@@ -49,6 +56,18 @@ public final class S7WorkflowWorkspace {
         resolutions.clear();
         analyses.clear();
         coverage.clear();
+    }
+
+    public synchronized S7WorkflowReport report(Instant at) {
+        return reportGenerator.generate(snapshot(), at);
+    }
+
+    public synchronized S7WorkflowExportArtifact exportJson(Instant at) {
+        return reportExporter.json(report(at));
+    }
+
+    public synchronized S7WorkflowExportArtifact exportMarkdown(Instant at) {
+        return reportExporter.markdown(report(at));
     }
 
     public synchronized S7WorkflowProductSnapshot snapshot() {
