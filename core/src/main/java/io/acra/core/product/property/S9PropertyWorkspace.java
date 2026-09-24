@@ -7,6 +7,11 @@ import io.acra.core.property.PropertyAccessObservation;
 import io.acra.core.property.PropertyAuthorizationCoverageEntry;
 import io.acra.core.property.PropertyAuthorizationCoverageSummary;
 import io.acra.core.property.S9PropertyCoverageTracker;
+import io.acra.core.reporting.s9.S9PropertyExportArtifact;
+import io.acra.core.reporting.s9.S9PropertyReport;
+import io.acra.core.reporting.s9.S9PropertyReportExporter;
+import io.acra.core.reporting.s9.S9PropertyReportGenerator;
+import java.time.Instant;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -16,6 +21,8 @@ public final class S9PropertyWorkspace {
     private final TreeMap<String, PropertyAuthorizationAssessment> assessments = new TreeMap<>();
     private final TreeMap<String, FindingCandidate> candidates = new TreeMap<>();
     private final TreeMap<String, PropertyAuthorizationCoverageEntry> coverage = new TreeMap<>();
+    private final S9PropertyReportGenerator reportGenerator = new S9PropertyReportGenerator();
+    private final S9PropertyReportExporter reportExporter = new S9PropertyReportExporter();
 
     public synchronized void recordPolicy(PolicyValidationEvaluator.PropertyPolicy policy) {
         if (policy == null) throw new IllegalArgumentException("property policy required");
@@ -61,6 +68,18 @@ public final class S9PropertyWorkspace {
             PropertyAuthorizationCoverageEntry entry = PropertyAuthorizationCoverageEntry.from(policy);
             coverage.put(entry.coverageId(), entry);
         }
+    }
+
+    public synchronized S9PropertyReport report(Instant at) {
+        return reportGenerator.generate(snapshot(), at);
+    }
+
+    public synchronized S9PropertyExportArtifact exportJson(Instant at) {
+        return reportExporter.json(report(at));
+    }
+
+    public synchronized S9PropertyExportArtifact exportMarkdown(Instant at) {
+        return reportExporter.markdown(report(at));
     }
 
     public synchronized S9PropertyProductSnapshot snapshot() {
