@@ -43,8 +43,8 @@ public final class Sprint11ControlledResearchLabFixtureTestSuite {
                 "timestamp-only fixture has distinct raw bodies");
         assertions++;
         TestSupport.assertEquals(
-                timestampA.body().replaceAll("\\"timestamp\\":\\"[^\\"]+\\"", "\"timestamp\":\"<volatile>\""),
-                timestampB.body().replaceAll("\\"timestamp\\":\\"[^\\"]+\\"", "\"timestamp\":\"<volatile>\""),
+                timestampA.body().replaceAll("\"timestamp\":\"[^\"]+\"", "\"timestamp\":\"<volatile>\""),
+                timestampB.body().replaceAll("\"timestamp\":\"[^\"]+\"", "\"timestamp\":\"<volatile>\""),
                 "timestamp-only fixture differs only in body timestamp");
         assertions++;
         TestSupport.assertContains(timestampA.body(), "\"request_id\":\"fixed-003\"",
@@ -60,8 +60,8 @@ public final class Sprint11ControlledResearchLabFixtureTestSuite {
                 "request-id-only fixture has distinct raw bodies");
         assertions++;
         TestSupport.assertEquals(
-                requestA.body().replaceAll("\\"request_id\\":\\"[^\\"]+\\"", "\"request_id\":\"<volatile>\""),
-                requestB.body().replaceAll("\\"request_id\\":\\"[^\\"]+\\"", "\"request_id\":\"<volatile>\""),
+                requestA.body().replaceAll("\"request_id\":\"[^\"]+\"", "\"request_id\":\"<volatile>\""),
+                requestB.body().replaceAll("\"request_id\":\"[^\"]+\"", "\"request_id\":\"<volatile>\""),
                 "request-id-only fixture differs only in body request_id");
         assertions++;
         TestSupport.assertContains(requestA.body(), "\"timestamp\":\"2026-09-25T00:00:00Z\"",
