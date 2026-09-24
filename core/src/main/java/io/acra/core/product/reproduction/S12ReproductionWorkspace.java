@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 public final class S12ReproductionWorkspace {
     private final TreeMap<String, S12ReproductionPackage> packages = new TreeMap<>();
+    private final TreeMap<String, String> candidatePackages = new TreeMap<>();
     private final S12ReproductionPackageFactory packageFactory = new S12ReproductionPackageFactory();
     private final S12ReproductionJsonExporter jsonExporter = new S12ReproductionJsonExporter();
     private final S12SarifExporter sarifExporter = new S12SarifExporter();
@@ -24,11 +25,19 @@ public final class S12ReproductionWorkspace {
 
     public synchronized void recordPackage(S12ReproductionPackage value) {
         if (value == null) throw new IllegalArgumentException("reproduction package required");
+
+        String existingPackageId = candidatePackages.get(value.sourceCandidateId());
+        if (existingPackageId != null && !existingPackageId.equals(value.packageId())) {
+            throw new IllegalArgumentException("candidate reproduction package drift");
+        }
+
         S12ReproductionPackage existing = packages.get(value.packageId());
         if (existing != null && !existing.fingerprint().equals(value.fingerprint())) {
             throw new IllegalArgumentException("reproduction package identity collision");
         }
+
         packages.put(value.packageId(), value);
+        candidatePackages.put(value.sourceCandidateId(), value.packageId());
     }
 
     public synchronized S12ReproductionProductSnapshot snapshot() {
@@ -44,5 +53,6 @@ public final class S12ReproductionWorkspace {
 
     public synchronized void clear() {
         packages.clear();
+        candidatePackages.clear();
     }
 }

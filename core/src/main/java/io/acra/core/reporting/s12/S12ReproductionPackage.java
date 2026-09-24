@@ -3,6 +3,7 @@ package io.acra.core.reporting.s12;
 import io.acra.core.domain.authorization.AuthorizationDecision;
 import io.acra.core.domain.finding.FindingCandidateState;
 import io.acra.core.security.TokenFingerprint;
+import io.acra.core.security.UniversalRedactor;
 import java.util.List;
 
 public record S12ReproductionPackage(
@@ -23,20 +24,26 @@ public record S12ReproductionPackage(
         String fingerprint) {
 
     public static final String VERSION = "s12-reproduction-package-v1";
+    private static final UniversalRedactor REDACTOR = new UniversalRedactor();
 
     public S12ReproductionPackage {
-        packageVersion = required(packageVersion, "packageVersion");
-        sourceCandidateId = required(sourceCandidateId, "sourceCandidateId");
+        packageVersion = safeRequired(packageVersion, "packageVersion");
+        sourceCandidateId = safeRequired(sourceCandidateId, "sourceCandidateId");
         candidateState = candidateState == null ? FindingCandidateState.INCONCLUSIVE : candidateState;
-        projectId = required(projectId, "projectId");
-        endpoint = required(endpoint, "endpoint");
-        resourceId = required(resourceId, "resourceId");
+        projectId = safeRequired(projectId, "projectId");
+        endpoint = safeRequired(endpoint, "endpoint");
+        if (endpoint.contains("?") || endpoint.contains("#")) {
+            throw new IllegalArgumentException("endpoint must exclude query and fragment material");
+        }
+        resourceId = safeRequired(resourceId, "resourceId");
         expectedDecision = expectedDecision == null ? AuthorizationDecision.UNKNOWN : expectedDecision;
         observedDecision = observedDecision == null ? AuthorizationDecision.UNKNOWN : observedDecision;
         dimensions = clean(dimensions);
         evidenceIds = clean(evidenceIds);
         policyReferences = clean(policyReferences);
-        confidence = required(confidence == null || confidence.isBlank() ? "INSUFFICIENT" : confidence, "confidence");
+        confidence = safeRequired(
+                confidence == null || confidence.isBlank() ? "INSUFFICIENT" : confidence,
+                "confidence");
         limitations = clean(limitations);
         if (candidateState == FindingCandidateState.CANDIDATE && evidenceIds.isEmpty()) {
             throw new IllegalArgumentException("review candidate requires supporting evidence");
@@ -79,14 +86,19 @@ public record S12ReproductionPackage(
 
     private static List<String> clean(List<String> values) {
         return List.copyOf(values == null ? List.<String>of() : values).stream()
-                .map(value -> required(value, "list value"))
+                .map(value -> safeRequired(value, "list value"))
                 .distinct()
                 .sorted()
                 .toList();
     }
 
-    private static String required(String value, String name) {
+    private static String safeRequired(String value, String name) {
         if (value == null || value.isBlank()) throw new IllegalArgumentException(name + " required");
-        return value.strip();
+        String stripped = value.strip();
+        String redacted = REDACTOR.redactText(stripped);
+        if (!stripped.equals(redacted)) {
+            throw new IllegalArgumentException(name + " contains secret-bearing material");
+        }
+        return stripped;
     }
 }
