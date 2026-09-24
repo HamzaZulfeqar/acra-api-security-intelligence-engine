@@ -143,7 +143,45 @@ Phase 4 invariants:
 Phase 4 verification: GitHub Actions run `36058274408` — SUCCESS at
 `88f7cd78161267a1900ef4b663258938ee208d9b`.
 
-## Phase 5 dependency
+## Phase 5 fixture-readiness boundary
 
-Evidence readiness must be assessed against actual lab/extractor support. A cell may move from PLANNED only when
-the evidence required by its variant can be produced without consulting the independent ground-truth label.
+Fixture readiness is intentionally separate from treatment evidence readiness.
+
+```text
+registered dataset case
+        |
+        v
+existing localhost route/test support
+        |
+        +--> READY
+        +--> PARTIAL
+        +--> MISSING_FIXTURE
+        |
+        v
+NO automatic campaign-cell promotion
+```
+
+Phase 5 invariants:
+
+1. Every dataset case has exactly one readiness record.
+2. READY/PARTIAL states require explicit routes and executable-evidence references.
+3. MISSING_FIXTURE claims neither route nor evidence reference.
+4. Existing combined-effect tests are PARTIAL rather than overstated as isolated controls.
+5. Readiness mapping remains NOT_RUN and executes no experiment.
+6. Fixture readiness alone cannot move a campaign cell to EVIDENCE_READY.
+7. Readiness identity/fingerprint is deterministic.
+
+Verified mapping:
+
+- READY: 3;
+- PARTIAL: 4;
+- MISSING_FIXTURE: 8;
+- EXECUTED: 0.
+
+Phase 5 verification: GitHub Actions run `36058945211` — SUCCESS at
+`022bf71f31f69633b5eac541b230283e8536decd`.
+
+## Phase 6 dependency
+
+The localhost lab must add isolated controls for the four PARTIAL cases and dedicated behaviors for the eight
+MISSING_FIXTURE positive cases. Those fixtures must be independently live-tested before readiness is upgraded.

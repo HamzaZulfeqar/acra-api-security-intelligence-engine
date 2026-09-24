@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–4 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–5 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -202,8 +202,66 @@ Canonical campaign coverage after planning:
 
 Phase 4 is **VERIFIED COMPLETE**.
 
+## Phase 5 — evidence-readiness mapping
+
+Implemented:
+
+- `GT-S11-EVIDENCE-READINESS`;
+- `FixtureReadinessState`;
+- `ResearchFixtureReadiness`;
+- `S11EvidenceReadinessManifest`;
+- exact mapping of all 15 dataset cases to current Sprint 4 lab/test evidence;
+- conservative READY / PARTIAL / MISSING_FIXTURE taxonomy;
+- deterministic readiness identity/fingerprint;
+- explicit rule that fixture readiness does not equal ablation-dimension evidence readiness.
+
+Current evidence-readiness result:
+
+| State | Cases | Interpretation |
+|---|---:|---|
+| READY | 3 | dedicated/current live behavior sufficiently matches the registered control |
+| PARTIAL | 4 | relevant live behavior exists, but two effects are currently combined |
+| MISSING_FIXTURE | 8 | no dedicated executable fixture currently maps the registered positive case |
+
+READY cases:
+
+- `S4-FP-PUBLIC`;
+- `S4-FP-SOFT-DENY`;
+- `S4-FP-REPRESENTATION`.
+
+PARTIAL cases:
+
+- `S4-FP-TIMESTAMP` — timestamp and request ID currently vary together;
+- `S4-FP-REQUEST-ID` — request ID and timestamp currently vary together;
+- `S4-FP-ORDERING` — order and formatting currently change together;
+- `S4-FP-FORMATTING` — formatting and order currently change together.
+
+All eight registered false-negative/positive research controls remain `MISSING_FIXTURE`.
+
+### Phase 5 verification
+
+GitHub Actions run `36058945211`: **SUCCESS** at source commit
+`022bf71f31f69633b5eac541b230283e8536decd`.
+
+Verified:
+
+- repository-backed readiness contract: PASS, ready=3 / partial=4 / missing=8 / executed=0;
+- `Sprint11EvidenceReadinessManifestTestSuite`: PASS, 57 assertions;
+- Phase 4 campaign plan: PASS, 416 assertions;
+- Phase 3 prediction adapter: PASS, 59 assertions;
+- Phase 2 dataset manifest: PASS, 41 assertions;
+- Phase 1 protocol: PASS, 43 assertions;
+- exact Java 21 compilation with warnings as errors: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 5 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 5 must establish evidence-readiness for the 15 registered cases against actual ACRA-Lab support. It must mark
-ready vs missing fixture coverage explicitly and may not transition any campaign cell to EXECUTED until required
-baseline/dimension evidence can be produced without ground-truth leakage.
+Phase 6 must expand controlled localhost research fixtures before any campaign execution:
+
+1. isolate timestamp-only and request-ID-only negative controls;
+2. isolate ordering-only and formatting-only negative controls;
+3. add dedicated executable fixtures for the eight missing positive research controls;
+4. add live tests proving each fixture independently;
+5. keep all A0–A7 experiment results NOT_RUN until treatment-specific evidence collectors are complete.

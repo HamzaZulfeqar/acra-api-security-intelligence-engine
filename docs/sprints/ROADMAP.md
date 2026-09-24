@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
+**Sprint 11 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
@@ -13,6 +13,7 @@ Canonical Sprint 11 evidence:
 - Phase 2 verification run: `36057476360` — SUCCESS at `dff822e02299b887869bc43923d93a62d9e7d35f`;
 - Phase 3 verification run: `36057869888` — SUCCESS at `dc3c081bf033b14afcea3185c3d54fb241be1772`;
 - Phase 4 verification run: `36058274408` — SUCCESS at `88f7cd78161267a1900ef4b663258938ee208d9b`;
+- Phase 5 verification run: `36058945211` — SUCCESS at `022bf71f31f69633b5eac541b230283e8536decd`;
 - S11 ablation foundation: PASS, 43 assertions;
 - A0–A7 exact cumulative protocol: VERIFIED;
 - required research metric contract: VERIFIED;
@@ -51,12 +52,22 @@ Verified Phase 4:
 - campaign-plan suite: PASS, 416 assertions;
 - research metrics: NOT_RUN / NOT CLAIMED.
 
+Verified Phase 5:
+- all 15 dataset cases mapped to existing lab/test support: PASS;
+- READY = 3;
+- PARTIAL = 4;
+- MISSING_FIXTURE = 8;
+- executed campaign cells = 0;
+- readiness mapping does not promote campaign cells: PASS;
+- readiness manifest suite: PASS, 57 assertions;
+- research metrics: NOT_RUN / NOT CLAIMED.
+
 Next dependency-ordered milestone:
-1. register evidence-readiness per dataset case from actual lab support;
-2. distinguish READY / MISSING_FIXTURE / PARTIAL without inferring readiness;
-3. map readiness to campaign cells without executing them;
-4. expand controlled lab fixtures only where the registered dataset lacks executable evidence support;
-5. keep metrics disabled until evidence completeness is sufficient for a controlled campaign.
+1. isolate the four currently combined false-positive controls;
+2. implement the eight missing positive-control fixtures on localhost only;
+3. prove each fixture with dedicated live assertions;
+4. update readiness only from executable evidence;
+5. do not execute A0–A7 metrics until treatment-dimension evidence collection is separately complete.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
 
