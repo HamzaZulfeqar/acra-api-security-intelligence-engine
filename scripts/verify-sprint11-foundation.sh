@@ -25,4 +25,11 @@ java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectReportingExp
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectSecurityHardeningTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint5.Sprint5FinalClosureTestSuite
 
-python3 -m json.tool "$BUILD/reporting/S11-FINDING-REPRODUCTION.sarif" >/dev/null\n\nif grep -Eq "siteMap\\(\\)\\.add|siteMap\\.add|\\.siteMap\\(\\).*add" extension/burp-extension/src/main/java/io/acra/burp/reporting/S11BurpIssueAdapter.java; then\n  echo "ERROR: Sprint 11 Burp adapter must not publish directly to SiteMap" >&2\n  exit 1\nfi\n\necho "SPRINT11_FINDING_LIFECYCLE_FOUNDATION_VERIFICATION PASS"
+python3 -m json.tool "$BUILD/reporting/S11-FINDING-REPRODUCTION.sarif" >/dev/null
+
+if grep -Eq 'siteMap\(\)\.add|siteMap\.add|\.siteMap\(\).*add'     extension/burp-extension/src/main/java/io/acra/burp/reporting/S11BurpIssueAdapter.java; then
+  echo "ERROR: Sprint 11 Burp adapter must not publish directly to SiteMap" >&2
+  exit 1
+fi
+
+echo "SPRINT11_FINDING_LIFECYCLE_FOUNDATION_VERIFICATION PASS"
