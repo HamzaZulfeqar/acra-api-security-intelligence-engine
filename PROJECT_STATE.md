@@ -2,9 +2,14 @@
 
 ## Current state — 2026-09-25
 
-**Current release boundary:** Sprint 11 — Research Evaluation & Ablation — SOFTWARE COMPLETE.  
-**Decision:** S11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.  
-**Working branch:** `s11-research-evaluation-ablation`.  
+**Current sprint:** Sprint 12 — Reproduction Export & Interoperability (in progress).  
+**Decision:** S12 PHASE 1 VERIFIED COMPLETE; reproduction-package and FR-013 export-target contracts are defined.  
+**Working branch:** `s12-reproduction-export-interoperability`.  
+**Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
+**Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 11 post-closure revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
+**Sprint 11 final-status ZIP SHA-256:** `ea3d65bbce6134dee6e03b75939b57b7b7cf26cf9988d22b17abef91aeb3622f` — 986 entries, archive integrity PASS.  
+**Sprint 12 Phase 1 verification:** GitHub Actions run `36071724705` — SUCCESS at source commit `3c61578f5fa8b0635313ae6c0cbffe7c870aef40`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -35,6 +40,25 @@
 **Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
 **Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
 **Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
+
+### Sprint 12 verified progress
+
+Phase 1 reproduction/export foundation is **VERIFIED COMPLETE**:
+
+- versioned `acra-reproduction-package-v1`;
+- deterministic package ID and SHA-256 fingerprint;
+- evidence-backed `FindingCandidate` projection;
+- review-only invariant; no automatic confirmed-vulnerability semantics;
+- endpoint/resource/expected/observed decisions, dimensions, policy references and evidence IDs retained;
+- defensive universal redaction on export-facing strings;
+- exact FR-013 target contracts: JSON, SARIF and BURP_ISSUE;
+- all targets remain `CONTRACT_DEFINED` until renderer-specific verification;
+- supporting evidence is mandatory;
+- focused suite: PASS, 24 assertions;
+- retained Sprint 11 verification: PASS;
+- Maven core test compilation: PASS.
+
+Next dependency: deterministic generic reproduction JSON; SARIF and Burp Issue remain contract-only.
 
 ### Sprint 11 final closure
 
