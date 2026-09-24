@@ -8,6 +8,7 @@ on:
       - 'core/**'
       - 'lab/**'
       - 'scripts/verify-sprint7-foundation.sh'
+      - 'scripts/verify-sprint7-controlled-execution.sh'
       - '.github/workflows/sprint7-ci.yml'
       - 'docs/sprints/sprint-07.md'
       - 'docs/architecture/s7-workflow-token-binding.md'
@@ -30,8 +31,10 @@ jobs:
           cache: maven
       - name: Normalize scripts
         run: chmod +x ./scripts/*.sh
-      - name: Verify Sprint 7 workflow/token-binding foundation and controlled execution
+      - name: Verify Sprint 7 workflow/token-binding foundation
         run: bash ./scripts/verify-sprint7-foundation.sh
+      - name: Verify Sprint 7 controlled workflow planning and execution
+        run: bash ./scripts/verify-sprint7-controlled-execution.sh
       - name: Verify retained Sprint 6 foundation
         run: bash ./scripts/verify-sprint6-foundation.sh
       - name: Upload Sprint 7 controlled workflow logs
