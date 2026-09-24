@@ -445,3 +445,27 @@ Authoritative Phase 6 gate: GitHub Actions run `35960583660`. Timing and memory 
 | TEST-S7-BURP-001 | real Burp desktop runtime | separate runtime lane | UNVERIFIED / DEFERRED |
 
 Closure candidate checkpoint SHA-256 from run `35960826621`: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`. The canonical final-status digest is emitted by the external sidecar after the final-status documentation commit is verified.
+
+
+### Sprint 8 — routing normalization and authorization-path intelligence
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S8-NORM-001 | ordered RAW_URI → PROXY → GATEWAY → FRAMEWORK → APPLICATION trace | `Sprint8RoutingNormalizationFoundationTestSuite` | PASS |
+| TEST-S8-NORM-002 | canonical-equivalent representation change | same suite | PASS |
+| TEST-S8-NORM-003 | directly observed canonical route divergence | same suite | PASS |
+| TEST-S8-NORM-004 | missing-stage attribution remains INCONCLUSIVE | same suite | PASS |
+| TEST-S8-NORM-005 | duplicate stage / missing provenance / query leakage fail closed | same suite | PASS |
+| TEST-S8-BOUNDARY-001 | stable adjacent route + authorization context | `Sprint8AuthorizationPathDifferentialTestSuite` | PASS |
+| TEST-S8-BOUNDARY-002 | route-only normalization differential | same suite | PASS |
+| TEST-S8-BOUNDARY-003 | HTTP method change | same suite | PASS |
+| TEST-S8-BOUNDARY-004 | host and API-version changes | same suite | PASS |
+| TEST-S8-BOUNDARY-005 | authorization-only boundary change | same suite | PASS |
+| TEST-S8-BOUNDARY-006 | combined route + authorization differential | same suite | PASS |
+| TEST-S8-BOUNDARY-007 | stage gaps remain INCONCLUSIVE | same suite | PASS |
+| TEST-S8-BOUNDARY-008 | unknown authorization evidence remains INCONCLUSIVE | same suite | PASS |
+| TEST-S8-BOUNDARY-009 | host/path input hardening | same suite | PASS |
+| TEST-S8-REG-001 | retained Sprint 3 route/core behavior | run `35965612498` | PASS |
+| TEST-S8-REG-002 | retained Sprint 7 foundation | run `35965612498` | PASS |
+
+Authoritative Phase 2 gate: GitHub Actions run `35965612498`.
