@@ -343,7 +343,40 @@ Measured controlled results:
 - A6–A7: TP=8, TN=7, FP=0, FN=0, precision=1, recall=1, F1=1;
 - evidence completeness: 1.0 for every variant.
 
-## Phase 10 dependency
+## Phase 10 reporting boundary
 
-Reporting must preserve the evaluation's deterministic provenance and limitations while excluding raw/secret
-material. Report generation must not recompute or alter prediction/evaluation outcomes.
+The reporting layer projects only minimized evaluation state:
+
+```text
+protocol + dataset + immutable evaluation
+        |
+        v
+S11ResearchReportGenerator
+        |
+        v
+minimized S11ResearchReport
+        |
+        +--> canonical JSON + SHA-256
+        +--> deterministic Markdown + SHA-256
+```
+
+Phase 10 invariants:
+
+1. Report generation does not recompute predictions or metrics.
+2. Report identity derives from immutable protocol/dataset/evaluation provenance and metric rows.
+3. Raw HTTP request/response bodies are not report fields.
+4. Authorization headers, bearer tokens and synthetic token material are not report fields.
+5. Dataset-scope limitations are mandatory.
+6. Real-world scanner accuracy and novelty are explicitly not claimed.
+7. JSON and Markdown exports are deterministic and digest-addressable.
+
+Phase 10 verification: GitHub Actions run `36065934911` — SUCCESS at
+`bcc41630fa4d7c9a4f11023e9aeb8b6561f67310`.
+
+- JSON SHA-256: `595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d`;
+- Markdown SHA-256: `1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`.
+
+## Final-closure dependency
+
+Sprint 11 may be promoted to SOFTWARE COMPLETE only after a dedicated closure workflow verifies the entire S11
+stack, retained regressions, official package build and deterministic archive integrity.
