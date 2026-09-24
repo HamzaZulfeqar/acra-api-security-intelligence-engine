@@ -2,12 +2,13 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 10 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
 - immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 - Phase 1 verification run: `36004146212` — SUCCESS
+- Phase 2 verification run: `36004574331` — SUCCESS
 - per-item batch authorization reasoning: VERIFIED
 - mixed batch outcomes preserved: VERIFIED
 - indirect reference fingerprint/resolution reasoning: VERIFIED
@@ -22,15 +23,21 @@ Roadmap reconciliation:
 - Property = completed in Sprint 9;
 - S10 current scope = remaining Batch + Indirect Authorization.
 
-Next dependency-ordered milestone:
-1. define fixed localhost batch and indirect-reference ground truth;
-2. implement secure and deliberately vulnerable ACRA-Lab cases;
-3. prove per-item batch decisions independently of batch HTTP status;
-4. prove indirect authorization after explicit key-to-resource resolution;
-5. only then connect controlled tests to the existing S4 planner/safety/executor.
+Verified Phase 2:
+- fixed localhost batch/indirect ground truth: PASS;
+- per-item batch authorization versus aggregate HTTP status: PASS;
+- secure/vulnerable resolved-target authorization: PASS;
+- authentication controls and non-persistent batch fixture: PASS;
+- lab evidence upload: PASS.
 
-No identifier guessing, alias enumeration, external-target probing or automatic vulnerability confirmation is in
-the Phase 2 boundary.
+Next dependency-ordered milestone:
+1. audit existing S4 BATCH / INDIRECT_REFERENCE contracts and mutation safety;
+2. generate only fixed policy-backed Sprint 10 test seeds;
+3. preserve exact request-equivalence invariants;
+4. execute only against authorized localhost ACRA-Lab;
+5. keep batch/indirect findings review-only until later provenance-gated promotion.
+
+No identifier guessing, alias enumeration or external-target probing is permitted.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
