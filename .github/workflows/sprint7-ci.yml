@@ -59,4 +59,5 @@ jobs:
             build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json
             build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json.sha256
             build/s7-foundation/reporting/S7-WORKFLOW-REPORT.md
+            build/s7-foundation/performance/performance-s7.csv
           if-no-files-found: warn
