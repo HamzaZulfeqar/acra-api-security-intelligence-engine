@@ -376,7 +376,23 @@ Phase 10 verification: GitHub Actions run `36065934911` — SUCCESS at
 - JSON SHA-256: `595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d`;
 - Markdown SHA-256: `1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`.
 
-## Final-closure dependency
+## Final closure
 
-Sprint 11 may be promoted to SOFTWARE COMPLETE only after a dedicated closure workflow verifies the entire S11
-stack, retained regressions, official package build and deterministic archive integrity.
+Sprint 11 is **SOFTWARE COMPLETE** after dedicated final closure run `36066400016` succeeded at
+closure-candidate source commit `f832af1defde242530408589bd9f8732cef533d5`.
+
+Closure invariants verified:
+
+1. The complete Sprint 11 protocol→dataset→fixture→evidence→prediction→evaluation→report chain remains green.
+2. Retained Sprint 10 / 9 / 8 / 7 / 6 foundations remain green.
+3. Official Maven packaging succeeds.
+4. Retained Sprint 2 / Sprint 3 regressions and headless Sprint 4 / 6 / 7 / 8 / 9 / 10 UI suites remain green.
+5. The deterministic source checkpoint contains 986 source entries.
+6. Unsafe paths = 0 and duplicate entries = 0.
+7. Clean extraction equality and per-file SHA-256 equality = PASS.
+8. Closure-candidate ZIP SHA-256 =
+   `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba`.
+9. Controlled research scope remains explicit; no real-world accuracy or novelty claim is promoted by closure.
+10. Real Burp desktop runtime remains UNVERIFIED / DEFERRED.
+
+No subsequent architecture scope is implied by this closure.
