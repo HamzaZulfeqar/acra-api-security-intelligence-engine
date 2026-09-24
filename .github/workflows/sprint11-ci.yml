@@ -9,6 +9,7 @@ on:
       - 'lab/ground-truth/GT-S4-RESEARCH-FIXTURES.json'
       - 'lab/ground-truth/GT-S11-ABLATION-DATASET.json'
       - 'lab/ground-truth/GT-S11-EVIDENCE-READINESS.json'
+      - 'lab/ground-truth/GT-S11-RESEARCH-LAB-FIXTURES.json'
       - 'lab/ground-truth/GT-EXEC-S4.json'
       - 'lab/common/basic_api.py'
       - 'core/src/test/java/io/acra/core/tests/sprint4/Sprint4LocalhostIntegrationTestSuite.java'
