@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-standards-export`;
@@ -11,6 +11,7 @@ Canonical Sprint 12 evidence:
 - Sprint 11 final-status ZIP SHA-256: `ea3d65bbce6134dee6e03b75939b57b7b7cf26cf9988d22b17abef91aeb3622f`;
 - Phase 1 verification: `36068186039` — SUCCESS at `a8d442aa95c5d8946035586cf2b212e27f9ebf79`;
 - Phase 2 verification: `36068996138` — SUCCESS at `e57c8dbb0e62b4f1acc59210ff04ee8e8333b85a`;
+- Phase 3 verification: `36069442716` — SUCCESS at `45554b8c912f9f5fb23b39267606c3fb5dd110a6`;
 - standards foundation: PASS, 34 assertions;
 - deterministic JSON reproduction export: PASS;
 - deterministic SARIF 2.1.0 review export: PASS;
@@ -25,12 +26,21 @@ Verified Phase 2:
 - publication method absent: PASS;
 - real Burp publication: UNVERIFIED / NOT ENABLED.
 
+Verified Phase 3:
+- explicit approval-gated publication service: PASS;
+- injected factory/sink boundary: PASS;
+- denied/mismatch → zero publication side effects: PASS;
+- approved → exactly one headless sink add: PASS;
+- deterministic IMPORTED_REVIEW_CANDIDATE receipt: PASS;
+- ACRAExtension auto-wiring absent: PASS;
+- real desktop SiteMap publication: UNVERIFIED / DEFERRED.
+
 Next dependency-ordered milestone:
-1. introduce an explicit issue-publication service with an injectable sink/factory;
-2. call SiteMap.add only behind validated approval;
-3. keep publication service unregistered from ACRAExtension bootstrap;
-4. return a deterministic review-publication receipt without mutating candidate state;
-5. preserve real desktop runtime as a separate evidence gate.
+1. create a synchronized reproduction workspace;
+2. expose JSON / SARIF / Burp review projections as read-only product surfaces;
+3. keep candidate state and publication state visibly separate;
+4. headless-test the new Burp UI surface;
+5. keep real desktop publication controls outside the verified claim until runtime validation.
 
 ## Previous release boundary — Sprint 11
 

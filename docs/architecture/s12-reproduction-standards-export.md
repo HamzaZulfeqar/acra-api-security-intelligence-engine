@@ -63,7 +63,42 @@ Phase 2 invariants:
 
 Phase 2 verification: run `36068996138` — SUCCESS.
 
-## Phase 3 dependency
+## Phase 3 publication boundary
 
-An injected publication service may wrap `SiteMap.add(AuditIssue)` after approval validation. It must remain
-unregistered from automatic application flows and preserve a deterministic receipt/audit trail.
+```text
+projection + explicit approval
+        |
+        v
+S12MontoyaAuditIssueAdapter
+        |
+        v
+S12MontoyaAuditIssueFactory
+        |
+        v
+S12AuditIssueSink
+        |
+        v
+review-publication receipt
+```
+
+The production sink is `S12MontoyaSiteMapAuditIssueSink`, which wraps Montoya `SiteMap.add(AuditIssue)`.
+The publisher itself is not registered in the extension bootstrap.
+
+Phase 3 invariants:
+
+1. Denied approval causes no issue creation or sink invocation.
+2. Candidate mismatch causes no issue creation or sink invocation.
+3. Approved publication produces exactly one issue and one sink invocation.
+4. Publication receipt is deterministic.
+5. Receipt state is `IMPORTED_REVIEW_CANDIDATE`, not confirmed vulnerability.
+6. Publication cannot mutate FindingCandidate state.
+7. Core projection remains `publishable=false`.
+8. ACRAExtension has no publisher/site-map registration.
+9. Real desktop publication remains unverified.
+
+Phase 3 verification: run `36069442716` — SUCCESS.
+
+## Phase 4 dependency
+
+A synchronized product workspace and read-only UI must surface package/export/publication state without creating a
+hidden automatic publication path.

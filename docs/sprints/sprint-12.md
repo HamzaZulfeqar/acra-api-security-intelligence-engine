@@ -1,6 +1,6 @@
 # Sprint 12 — Reproduction & Standards Export
 
-Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–3 VERIFIED**  
 Branch: `s12-reproduction-standards-export`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
@@ -67,12 +67,68 @@ Verified:
 
 Phase 2 is **VERIFIED COMPLETE**.
 
+## Phase 3 — explicit issue-publication boundary
+
+Implemented:
+
+- `S12MontoyaAuditIssueFactory`;
+- `S12DefaultMontoyaAuditIssueFactory`;
+- `S12AuditIssueSink`;
+- `S12MontoyaSiteMapAuditIssueSink`;
+- `S12BurpIssuePublisher`;
+- deterministic `S12BurpIssuePublicationReceipt`.
+
+Publication flow:
+
+```text
+non-publishable core projection
+        +
+candidate-bound approved request
+        |
+        v
+Montoya issue spec
+        |
+        v
+injected AuditIssue factory
+        |
+        v
+injected issue sink
+        |
+        v
+IMPORTED_REVIEW_CANDIDATE receipt
+```
+
+The production sink wraps Montoya `SiteMap.add(AuditIssue)`, but it is not registered in `ACRAExtension`.
+Headless tests inject a fake issue factory and fake sink, so the software gate does not masquerade as real Burp
+desktop validation.
+
+### Phase 3 verification
+
+GitHub Actions run `36069442716`: **SUCCESS** at source commit
+`45554b8c912f9f5fb23b39267606c3fb5dd110a6`.
+
+Verified:
+
+- Phase 1 standards suite: PASS, 34 assertions;
+- Phase 2 Montoya issue adapter: PASS, 13 assertions;
+- Phase 3 publication boundary: PASS, 19 assertions;
+- denied approval → 0 factory calls / 0 sink calls;
+- mismatched approval → 0 factory calls / 0 sink calls;
+- approved publication → exactly 1 factory call / 1 sink call;
+- deterministic review-publication receipt: PASS;
+- candidate/projection state remains review-only after publication;
+- `ACRAExtension` publisher wiring absent: PASS;
+- complete retained Sprint 11 verifier: PASS;
+- Maven extension/core compilation: PASS.
+
+Phase 3 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 3 may add an explicit publication service around Montoya `SiteMap.add(AuditIssue)`, but that service must:
+Phase 4 must turn the three export surfaces into a deterministic product workspace and read-only Burp UI:
 
-1. require the Phase 2 approval object;
-2. remain entirely unregistered from automatic scanning/bootstrap flows;
-3. preserve INFORMATION/TENTATIVE review semantics;
-4. produce a publication receipt without changing FindingCandidate state;
-5. be headless-tested with an injected issue factory/sink while real Burp desktop publication remains separately unverified.
+1. register review-only reproduction packages in a synchronized core workspace;
+2. expose canonical JSON and SARIF previews per selected package;
+3. expose Burp projection/publication state separately from candidate state;
+4. keep publication controls disabled unless explicit approval is supplied through a later runtime action;
+5. headless-test the UI while keeping real Burp desktop interaction separately unverified.
