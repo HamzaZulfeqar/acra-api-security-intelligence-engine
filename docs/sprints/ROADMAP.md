@@ -2,6 +2,33 @@
 
 ## Current gate — 2026-09-24
 
+**Sprint 11 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
+
+Canonical Sprint 11 evidence:
+- branch: `s11-oauth-oidc-intelligence`
+- immutable Sprint 10 promoted base: `7ada67e42c20fcdac21e3af96a9ed80dda422192`
+- Phase 1 run: `36042624760` — SUCCESS
+- Phase 2 run: `36042861693` — SUCCESS
+- passive OAuth/OIDC context model: VERIFIED
+- deterministic context drift correlation: VERIFIED
+- OAuth project/request/test/execution/evidence binding: VERIFIED
+- retained S10/S9/S8 foundations: PASS
+- Maven core test compilation: PASS
+
+Next dependency-ordered milestone:
+1. extract OAuth/OIDC protocol context passively from the existing HTTP transaction pipeline;
+2. keep decoded claims/metadata explicitly unverified unless separately confirmed;
+3. retain raw token/code/state/nonce exclusion;
+4. do not fetch discovery/JWKS or contact external providers in Phase 3.
+
+Sprint 10 remains SOFTWARE COMPLETE.
+
+**Sprint 11 IN PROGRESS.**
+
+Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
+
+# Historical Sprint 10 closure
+
 **Sprint 10 SOFTWARE COMPLETE.**
 
 Canonical Sprint 10 closure evidence:
