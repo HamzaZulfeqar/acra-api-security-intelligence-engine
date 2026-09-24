@@ -15,6 +15,12 @@ public final class FindingLifecycleService {
         if (candidate == null) throw new IllegalArgumentException("candidate required");
         if (risk == null) throw new IllegalArgumentException("risk required");
         if (at == null) throw new IllegalArgumentException("at required");
+        if (candidate.candidateId().isBlank()) {
+            throw new IllegalArgumentException("candidate candidateId required");
+        }
+        if (risk.candidateId().isBlank()) {
+            throw new IllegalArgumentException("risk candidateId required");
+        }
         if (candidate.state() != FindingCandidateState.CANDIDATE) {
             throw new IllegalArgumentException("only review candidates can enter finding lifecycle");
         }
