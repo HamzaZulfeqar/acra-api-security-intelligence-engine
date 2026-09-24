@@ -233,3 +233,47 @@ Phase 4 is **VERIFIED COMPLETE**.
 
 Sprint 9 remains IN PROGRESS. Phase 5 owns property-authorization coverage accounting; absence of an observed
 property/policy combination must remain visible rather than being treated as tested or secure.
+
+
+## Phase 5 — property-authorization coverage accounting
+
+Implemented:
+
+- `PropertyCoverageDisposition`;
+- `PropertyAuthorizationCoverageEntry`;
+- `PropertyAuthorizationCoverageSummary`;
+- `S9PropertyCoverageTracker`;
+- deterministic policy-context identity based on explicit policy reference, endpoint, property, operation, role and tenant;
+- separate READ and UPDATE coverage counts;
+- policy-only / unobserved contexts preserved;
+- observed-but-unassessed contexts preserved;
+- assessed contexts classified as CANDIDATE, REJECTED or INCONCLUSIVE;
+- duplicate policy registration does not inflate the denominator;
+- policy drift for an existing coverage identity is rejected;
+- observation, assessment and finding-projection identity checks;
+- deterministic coverage ordering and discoverable missing/inconclusive coverage IDs.
+
+The denominator is the explicit supplied property-policy universe. Missing execution evidence is never interpreted
+as a secure result.
+
+### Phase 5 verification
+
+GitHub Actions run `35987236797`: **SUCCESS** at commit
+`e76ac4457fbc7343ff8a918bb9d15342847d845b`.
+
+Verified:
+
+- Sprint 9 property coverage test suite: PASS;
+- READ/UPDATE policy-context separation: PASS;
+- unobserved context accounting: PASS;
+- observed-unassessed accounting: PASS;
+- candidate/rejected/inconclusive accounting: PASS;
+- deterministic ordering: PASS;
+- operation-mismatched observation rejection: PASS;
+- full retained Sprint 9 + S5/S6/S7/S8 verification script: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 5 is **VERIFIED COMPLETE**.
+
+Sprint 9 remains IN PROGRESS. Phase 6 owns the property-authorization product workspace / Burp UI projection.
+Real Burp desktop runtime validation remains a separate deferred gate.
