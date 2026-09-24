@@ -6,6 +6,7 @@ import io.acra.core.active.analysis.ExpectedDecisionCandidate;
 import io.acra.core.active.analysis.ExpectedDecisionSource;
 import io.acra.core.active.evidence.EvidenceChainEntry;
 import io.acra.core.active.evidence.EvidenceStage;
+import io.acra.core.active.evidence.EvidenceReferenceValidator;
 import io.acra.core.active.evidence.ExecutionEvidenceStore;
 import io.acra.core.active.evidence.SafetyAuditLog;
 import io.acra.core.active.execution.BackoffPolicy;
@@ -52,6 +53,8 @@ import io.acra.core.domain.endpoint.ApiEndpointRecord;
 import io.acra.core.domain.endpoint.DocumentationStatus;
 import io.acra.core.domain.endpoint.Endpoint;
 import io.acra.core.domain.endpoint.RiskTier;
+import io.acra.core.domain.finding.FindingCandidate;
+import io.acra.core.domain.finding.FindingCandidateState;
 import io.acra.core.domain.evidence.EvidenceSource;
 import io.acra.core.domain.http.HttpHeader;
 import io.acra.core.domain.http.HttpMethod;
@@ -64,10 +67,12 @@ import io.acra.core.domain.resource.Resource;
 import io.acra.core.domain.tenant.Tenant;
 import io.acra.core.domain.workflow.WorkflowState;
 import io.acra.core.engine.PolicyValidationEvaluator;
+import io.acra.core.engine.S9PropertyFindingCandidateEvaluator;
 import io.acra.core.graph.SecurityContextGraph;
 import io.acra.core.property.PropertyAccessObservation;
 import io.acra.core.property.S9PropertyAuthorizationAnalysis;
 import io.acra.core.property.S9PropertyAuthorizationAnalyzer;
+import io.acra.core.property.S9PropertyFindingRequest;
 import io.acra.core.recon.SecurityContextFingerprint;
 import io.acra.core.tests.TestSupport;
 import java.nio.charset.StandardCharsets;
@@ -132,6 +137,13 @@ public final class Sprint9ControlledPropertyExecutionTestSuite {
                 secureAnalysis.assessments().getFirst().state(),
                 "secure property assessment remains explicitly denied");
         assertions++;
+        FindingCandidate secureFinding = propertyFinding(secure, secureAnalysis, PROJECT);
+        TestSupport.assertEquals(FindingCandidateState.REJECTED, secureFinding.state(),
+                "verified secure property control must be rejected as a finding candidate");
+        assertions++;
+        TestSupport.assertContains(secureFinding.rationale(), "not an automatically confirmed vulnerability",
+                "secure property finding projection preserves review-only language");
+        assertions++;
 
         ExecutionResult vulnerable = execute(18081, "vulnerable");
         TestSupport.assertEquals(io.acra.core.domain.testing.TestState.COMPLETED, vulnerable.result().state(),
@@ -155,6 +167,21 @@ public final class Sprint9ControlledPropertyExecutionTestSuite {
         assertions++;
         TestSupport.assertTrue(vulnerableAnalysis.assessments().getFirst().violationCandidate(),
                 "controlled vulnerable property assessment must retain review-only candidate semantics");
+        assertions++;
+        FindingCandidate vulnerableFinding = propertyFinding(vulnerable, vulnerableAnalysis, PROJECT);
+        TestSupport.assertEquals(FindingCandidateState.CANDIDATE, vulnerableFinding.state(),
+                "verified vulnerable property mismatch must project to a review-only FindingCandidate");
+        assertions++;
+        TestSupport.assertEquals("HIGH", vulnerableFinding.confidence(),
+                "provenance-verified property candidate receives high internal confidence");
+        assertions++;
+        TestSupport.assertContains(vulnerableFinding.rationale(), "not an automatically confirmed vulnerability",
+                "property candidate must never be presented as automatically confirmed");
+        assertions++;
+
+        FindingCandidate crossProjectFinding = propertyFinding(vulnerable, vulnerableAnalysis, "other-project");
+        TestSupport.assertEquals(FindingCandidateState.INCONCLUSIVE, crossProjectFinding.state(),
+                "cross-project provenance must fail closed at finding projection");
         assertions++;
 
         S9PropertyAuthorizationAnalysis crossProject = propertyAnalysis(vulnerable, "other-project");
@@ -202,6 +229,29 @@ public final class Sprint9ControlledPropertyExecutionTestSuite {
                 + " observed=" + vulnerable.result().observation().observedDecision()
                 + " differential=" + vulnerable.result().observation().differences().classification());
         return assertions;
+    }
+
+    private static FindingCandidate propertyFinding(
+            ExecutionResult execution,
+            S9PropertyAuthorizationAnalysis analysis,
+            String projectId) {
+        var assessment = analysis.assessments().getFirst();
+        S9PropertyFindingRequest request = new S9PropertyFindingRequest(
+                projectId,
+                execution.test().testId(),
+                execution.result().executionId(),
+                execution.result().observation().observationId(),
+                ENDPOINT_PATH,
+                "user-a",
+                "user-a",
+                "tenant-a",
+                assessment.policyReference(),
+                assessment.expectedDecision(),
+                assessment.observedDecision(),
+                evidenceObjectIds(execution));
+        return new S9PropertyFindingCandidateEvaluator(
+                new EvidenceReferenceValidator(execution.evidence()))
+                .evaluate(assessment, request);
     }
 
     private static S9PropertyAuthorizationAnalysis propertyAnalysis(ExecutionResult execution, String projectId) {
