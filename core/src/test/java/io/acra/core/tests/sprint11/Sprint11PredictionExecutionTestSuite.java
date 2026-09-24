@@ -108,6 +108,15 @@ public final class Sprint11PredictionExecutionTestSuite {
                 "semantic treatment resolves timestamp-only variation as negative");
         assertions++;
 
+        var case14A3 = result(snapshot, "S11-EVAL-014", "A3");
+        var case14A6 = result(snapshot, "S11-EVAL-014", "A6");
+        TestSupport.assertEquals(ResearchPrediction.POSITIVE, case14A3.prediction(),
+                "collection membership change is positive once ownership/tenant context is added");
+        assertions++;
+        TestSupport.assertEquals(ResearchPrediction.POSITIVE, case14A6.prediction(),
+                "semantic equivalence cannot erase earlier ownership/tenant conflict");
+        assertions++;
+
         var case8A0 = result(snapshot, "S11-EVAL-008", "A0");
         var case8A6 = result(snapshot, "S11-EVAL-008", "A6");
         TestSupport.assertEquals(ResearchPrediction.POSITIVE, case8A0.prediction(),
