@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
+**Sprint 10 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
@@ -10,6 +10,7 @@ Canonical Sprint 10 Phase 1 evidence:
 - Phase 1 verification run: `36004146212` — SUCCESS
 - Phase 2 verification run: `36004574331` — SUCCESS
 - Phase 3 verification run: `36048381112` — SUCCESS at `608490cfc1211057e879f6c6457ea62fd648b405`
+- Phase 4 verification run: `36048837246` — SUCCESS at `abb57d0320fcdc161992297415978bde6c769bee`
 - per-item batch authorization reasoning: VERIFIED
 - mixed batch outcomes preserved: VERIFIED
 - indirect reference fingerprint/resolution reasoning: VERIFIED
@@ -41,12 +42,22 @@ Verified Phase 3:
 - cross-project provenance fail-closed behavior: PASS;
 - no identifier guessing, alias enumeration or external-target probing: PASS.
 
+Verified Phase 4:
+- batch finding projection with provenance revalidation: PASS;
+- indirect finding projection with provenance revalidation: PASS;
+- secure controls → REJECTED: PASS;
+- verified DENY→ALLOW → review-only CANDIDATE: PASS;
+- cross-project and request mismatch → INCONCLUSIVE: PASS;
+- deterministic candidate identity/fingerprint: PASS;
+- raw indirect alias excluded from projected candidate: PASS;
+- automatic confirmed-vulnerability state: NOT PRESENT.
+
 Next dependency-ordered milestone:
-1. project verified batch item assessments into the existing review-only FindingCandidate model;
-2. project verified indirect resolved-target assessments into the same model;
-3. require valid project/test/execution/observation/evidence lineage before candidate promotion;
-4. preserve secure controls as REJECTED and provenance failures as INCONCLUSIVE;
-5. keep confirmed-finding count at zero.
+1. define the explicit batch-item and indirect resolved-target policy coverage universe;
+2. separate observed, assessed, candidate, rejected and inconclusive coverage states;
+3. preserve unobserved and observed-unassessed gaps;
+4. produce deterministic aggregate coverage summaries;
+5. do not infer coverage from aggregate HTTP success or identifier opacity.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 
