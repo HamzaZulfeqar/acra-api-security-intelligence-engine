@@ -1,0 +1,59 @@
+name: Sprint 7 Final Closure
+
+on:
+  push:
+    branches:
+      - s7-workflow-token-binding
+    paths:
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'lab/**'
+      - 'tests/**'
+      - 'scripts/verify-sprint7-final.sh'
+      - 'scripts/verify-sprint7-foundation.sh'
+      - 'scripts/verify-sprint7-controlled-execution.sh'
+      - 'scripts/verify-sprint7-lab-contract.sh'
+      - 'scripts/package-sprint7.sh'
+      - '.github/workflows/sprint7-final.yml'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - 'docs/sprints/sprint-07-requirements-traceability.md'
+      - 'docs/sprints/sprint-07-final-software-audit.md'
+      - 'docs/sprints/sprint-07.md'
+      - 'PROJECT_STATE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize scripts
+        run: chmod +x ./scripts/*.sh
+      - name: Run Sprint 7 final verification
+        run: bash ./scripts/verify-sprint7-final.sh
+      - name: Upload Sprint 7 final checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-07-final-checkpoint
+          path: |
+            build/s7-final-package/acra-sprint-07-final.zip
+            build/s7-final-package/acra-sprint-07-final.zip.sha256
+            build/s7-final-package/sprint7-package-manifest.txt
+            build/s7-final-package/sprint7-package-verification.json
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json.sha256
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.md
+            build/s7-foundation/performance/performance-s7.csv
+            build/s7-foundation/lab/*.log
+          if-no-files-found: warn
