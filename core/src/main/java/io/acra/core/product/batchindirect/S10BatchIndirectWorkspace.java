@@ -10,6 +10,11 @@ import io.acra.core.domain.finding.FindingCandidate;
 import io.acra.core.reference.IndirectReferenceAuthorizationAssessment;
 import io.acra.core.reference.IndirectReferencePolicy;
 import io.acra.core.reference.IndirectReferenceResolution;
+import io.acra.core.reporting.s10.S10BatchIndirectExportArtifact;
+import io.acra.core.reporting.s10.S10BatchIndirectReport;
+import io.acra.core.reporting.s10.S10BatchIndirectReportExporter;
+import io.acra.core.reporting.s10.S10BatchIndirectReportGenerator;
+import java.time.Instant;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -22,6 +27,8 @@ public final class S10BatchIndirectWorkspace {
     private final TreeMap<String, IndirectReferenceAuthorizationAssessment> indirectAssessments = new TreeMap<>();
     private final TreeMap<String, FindingCandidate> candidates = new TreeMap<>();
     private final TreeMap<String, S10AuthorizationCoverageEntry> coverage = new TreeMap<>();
+    private final S10BatchIndirectReportGenerator reportGenerator = new S10BatchIndirectReportGenerator();
+    private final S10BatchIndirectReportExporter reportExporter = new S10BatchIndirectReportExporter();
 
     public synchronized void recordPolicy(BatchItemPolicy policy) {
         if (policy == null) throw new IllegalArgumentException("batch policy required");
@@ -92,6 +99,18 @@ public final class S10BatchIndirectWorkspace {
             S10AuthorizationCoverageEntry entry = S10AuthorizationCoverageEntry.from(policy);
             coverage.put(entry.coverageId(), entry);
         }
+    }
+
+    public synchronized S10BatchIndirectReport report(Instant at) {
+        return reportGenerator.generate(snapshot(), at);
+    }
+
+    public synchronized S10BatchIndirectExportArtifact exportJson(Instant at) {
+        return reportExporter.json(report(at));
+    }
+
+    public synchronized S10BatchIndirectExportArtifact exportMarkdown(Instant at) {
+        return reportExporter.markdown(report(at));
     }
 
     public synchronized S10BatchIndirectProductSnapshot snapshot() {
