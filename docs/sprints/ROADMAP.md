@@ -2,12 +2,13 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 9 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
 - immutable Sprint 8 base: `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`
 - Phase 1 verification run: `35985518829` — SUCCESS
+- Phase 2 verification run: `35986020761` — SUCCESS
 - evidence-backed property observations: VERIFIED
 - deterministic property-policy correlation: VERIFIED
 - cross-project provenance rejection: VERIFIED
@@ -17,13 +18,21 @@ Canonical Sprint 9 Phase 1 evidence:
 
 Sprint 8 remains SOFTWARE COMPLETE.
 
-Next dependency-ordered milestone:
-1. define controlled Sprint 9 property-level ground truth in ACRA-Lab;
-2. implement secure and deliberately vulnerable READ/UPDATE property cases;
-3. validate evidence-backed property outcomes locally;
-4. only then connect safe property mutations to the existing S4 planner/queue/executor.
+Verified Phase 2:
+- five-case controlled property ground truth: PASS;
+- secure/vulnerable localhost READ exposure behavior: PASS;
+- secure/vulnerable privileged UPDATE behavior: PASS;
+- positive allowed-property UPDATE control: PASS;
+- cross-object control remains DENY: PASS.
 
-Do not start UI/reporting or broad property fuzzing before the controlled execution contract exists.
+Next dependency-ordered milestone:
+1. audit existing S4 mutation types/adapters and request-equivalence guards;
+2. reuse the existing planner/queue/scope/safety/executor path;
+3. add only the minimum explicit property mutation needed by the controlled S9 fixture;
+4. prove secure DENY versus vulnerable ALLOW through the existing evidence chain;
+5. preserve review-only classification.
+
+Do not start UI/reporting or broad property fuzzing before Phase 3 active-engine integration is verified.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
