@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–10 VERIFIED**  
+Status: **SOFTWARE COMPLETE — Phases 1–10 + final closure VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -505,9 +505,53 @@ Canonical digests:
 
 Phase 10 is **VERIFIED COMPLETE**.
 
-## Next dependency
+## Sprint 11 final closure
 
-Sprint 11 final closure must re-run the complete S11 stack plus retained regressions, execute official Maven
-packaging, create a deterministic source checkpoint, verify archive path/duplicate/extraction/per-file integrity,
-and preserve the controlled-research scope limitations. Only that closure gate may promote Sprint 11 to SOFTWARE
-COMPLETE.
+Sprint 11 is **SOFTWARE COMPLETE**.
+
+Dedicated final closure: GitHub Actions run `36066400016` — **SUCCESS** at closure-candidate source commit
+`f832af1defde242530408589bd9f8732cef533d5`.
+
+Closure evidence:
+
+- complete Sprint 11 verifier: PASS;
+- controlled fixtures: PASS, 65 assertions;
+- treatment evidence collection: PASS, 725 assertions;
+- prediction execution: PASS, 384 assertions;
+- controlled ablation evaluation: PASS, 99 assertions;
+- research report/export: PASS, 31 assertions;
+- retained Sprint 10 / 9 / 8 / 7 / 6 foundations: PASS;
+- official Maven package: PASS;
+- Sprint 2 / Sprint 3 regressions: PASS;
+- Sprint 4 UI: PASS, 26 tests;
+- Sprint 6 Authorization UI: PASS, 27 assertions;
+- Sprint 7 Workflow UI: PASS, 20 assertions;
+- Sprint 8 Routing UI: PASS, 23 assertions;
+- Sprint 9 Property UI: PASS, 59 assertions;
+- Sprint 10 Batch & Indirect UI: PASS, 230 assertions;
+- deterministic source checkpoint: PASS;
+- archive safety and extraction equality: PASS.
+
+Closure-candidate checkpoint:
+
+- file: `acra-sprint-11-final.zip`;
+- SHA-256: `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba`;
+- entries: 986;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS.
+
+Research report digests remain:
+
+- JSON: `595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d`;
+- Markdown: `1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`.
+
+### Final interpretation boundary
+
+The measured A0–A7 results apply only to the registered 15-case controlled synthetic localhost dataset. Sprint 11
+does not establish real-world scanner accuracy, production vulnerability prevalence, external-target safety or
+research novelty. Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
+
+No later sprint or roadmap scope is started or claimed by this Sprint 11 closure. Any next scope requires a
+separate explicit definition and evidence gate.
