@@ -98,7 +98,33 @@ Phase 3 invariants:
 
 Phase 3 verification: run `36069442716` — SUCCESS.
 
-## Phase 4 dependency
+## Phase 4 product/UI boundary
 
-A synchronized product workspace and read-only UI must surface package/export/publication state without creating a
-hidden automatic publication path.
+```text
+S12ReproductionWorkspace
+        |
+        +--> package table
+        +--> JSON preview
+        +--> SARIF preview
+        +--> Burp review projection
+        |
+        +--> extension receipt ledger
+                read-only display
+```
+
+Phase 4 invariants:
+
+1. Core workspace stores only reproduction packages and deterministic export/projection state.
+2. Montoya publication receipts remain extension-layer state.
+3. Core Burp projections remain non-publishable.
+4. Receipt display cannot mutate candidate/package state.
+5. The panel exposes no publish/import/add-issue action control.
+6. Earlier AcraSuiteTab constructor callers remain source-compatible.
+7. Real desktop UI/site-map interaction is not inferred from headless Swing verification.
+
+Phase 4 verification: run `36070071498` — SUCCESS.
+
+## Phase 5 dependency
+
+Security hardening and reproducibility must pressure-test the export/publication boundary before Sprint 12 final
+closure.

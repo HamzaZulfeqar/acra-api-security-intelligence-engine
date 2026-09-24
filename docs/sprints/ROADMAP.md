@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-standards-export`;
@@ -12,6 +12,7 @@ Canonical Sprint 12 evidence:
 - Phase 1 verification: `36068186039` — SUCCESS at `a8d442aa95c5d8946035586cf2b212e27f9ebf79`;
 - Phase 2 verification: `36068996138` — SUCCESS at `e57c8dbb0e62b4f1acc59210ff04ee8e8333b85a`;
 - Phase 3 verification: `36069442716` — SUCCESS at `45554b8c912f9f5fb23b39267606c3fb5dd110a6`;
+- Phase 4 verification: `36070071498` — SUCCESS at `a3328f7df32391f6aaa4a2f867de8590ba6fab52`;
 - standards foundation: PASS, 34 assertions;
 - deterministic JSON reproduction export: PASS;
 - deterministic SARIF 2.1.0 review export: PASS;
@@ -35,12 +36,20 @@ Verified Phase 3:
 - ACRAExtension auto-wiring absent: PASS;
 - real desktop SiteMap publication: UNVERIFIED / DEFERRED.
 
+Verified Phase 4:
+- synchronized reproduction workspace: PASS;
+- deterministic JSON/SARIF/Burp product projections: PASS;
+- read-only Reproduction UI: PASS, 34 assertions;
+- publication receipts separated from candidate/package state: PASS;
+- publish/import/add-issue UI control absent: PASS;
+- real desktop publication: UNVERIFIED / DEFERRED.
+
 Next dependency-ordered milestone:
-1. create a synchronized reproduction workspace;
-2. expose JSON / SARIF / Burp review projections as read-only product surfaces;
-3. keep candidate state and publication state visibly separate;
-4. headless-test the new Burp UI surface;
-5. keep real desktop publication controls outside the verified claim until runtime validation.
+1. adversarially harden endpoint/URL/approval/export boundaries;
+2. verify secret/minimization defenses across JSON, SARIF, issue spec and receipts;
+3. verify workspace collision and side-effect isolation;
+4. archive deterministic JSON/SARIF evidence;
+5. record bounded engineering observations without claiming performance SLOs.
 
 ## Previous release boundary — Sprint 11
 

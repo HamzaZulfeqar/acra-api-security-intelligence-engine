@@ -1,6 +1,6 @@
 # Sprint 12 — Reproduction & Standards Export
 
-Status: **IN PROGRESS — Phases 1–3 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–4 VERIFIED**  
 Branch: `s12-reproduction-standards-export`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
@@ -123,12 +123,45 @@ Verified:
 
 Phase 3 is **VERIFIED COMPLETE**.
 
+## Phase 4 — reproduction product workspace and read-only UI
+
+Implemented:
+
+- `S12ReproductionProductEntry`;
+- immutable `S12ReproductionProductSnapshot`;
+- synchronized `S12ReproductionWorkspace`;
+- `S12ReproductionPanel`;
+- top-level `Reproduction` tab in `AcraSuiteTab`;
+- Packages / JSON Export / SARIF Export / Burp Review / Publication Receipts surfaces;
+- extension-only receipt display separated from core package state;
+- default constructor chaining preserves all earlier S4–S10 UI callers.
+
+UI safety boundaries:
+
+- core Burp projections remain `publishable=false`;
+- no publish/import/add-issue action control exists in the Sprint 12 panel;
+- recording a publication receipt does not mutate FindingCandidate/reproduction-package state;
+- review candidate and rejected control counts remain distinct;
+- real Burp runtime wording remains explicitly separate.
+
+### Phase 4 verification
+
+GitHub Actions run `36070071498`: **SUCCESS** at source commit
+`a3328f7df32391f6aaa4a2f867de8590ba6fab52`.
+
+Verified:
+
+- Phase 1 standards suite: PASS, 34 assertions;
+- Phase 2 Montoya adapter: PASS, 13 assertions;
+- Phase 3 publication boundary: PASS, 19 assertions;
+- Phase 4 reproduction UI: PASS, 34 assertions;
+- complete retained Sprint 11 verifier: PASS;
+- Maven core/extension compilation: PASS.
+
+Phase 4 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 4 must turn the three export surfaces into a deterministic product workspace and read-only Burp UI:
-
-1. register review-only reproduction packages in a synchronized core workspace;
-2. expose canonical JSON and SARIF previews per selected package;
-3. expose Burp projection/publication state separately from candidate state;
-4. keep publication controls disabled unless explicit approval is supplied through a later runtime action;
-5. headless-test the UI while keeping real Burp desktop interaction separately unverified.
+Phase 5 is the pre-closure hardening/reproducibility gate. It must adversarially test export minimization,
+endpoint/URL/approval validation, receipt integrity, workspace collisions and publication side-effect isolation;
+then produce deterministic JSON/SARIF evidence artifacts and bounded engineering observations before final closure.

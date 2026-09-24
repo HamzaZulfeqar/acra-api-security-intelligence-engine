@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 12 — Reproduction & Standards Export (in progress).  
-**Decision:** S12 PHASES 1–3 VERIFIED COMPLETE; explicit approval-gated issue publication boundary verified headlessly.  
+**Decision:** S12 PHASES 1–4 VERIFIED COMPLETE; deterministic reproduction workspace and read-only Burp UI verified.  
 **Working branch:** `s12-reproduction-standards-export`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -12,6 +12,7 @@
 **Sprint 12 Phase 1 verification:** GitHub Actions run `36068186039` — SUCCESS at source commit `a8d442aa95c5d8946035586cf2b212e27f9ebf79`.  
 **Sprint 12 Phase 2 verification:** GitHub Actions run `36068996138` — SUCCESS at source commit `e57c8dbb0e62b4f1acc59210ff04ee8e8333b85a`.  
 **Sprint 12 Phase 3 verification:** GitHub Actions run `36069442716` — SUCCESS at source commit `45554b8c912f9f5fb23b39267606c3fb5dd110a6`.  
+**Sprint 12 Phase 4 verification:** GitHub Actions run `36070071498` — SUCCESS at source commit `a3328f7df32391f6aaa4a2f867de8590ba6fab52`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -82,6 +83,18 @@ Sprint 12 Phase 3 explicit publication boundary is **VERIFIED COMPLETE**:
 
 No real Burp desktop/site-map publication validation is claimed. Phase 3 proves the software boundary with injected
 factory/sink doubles while compiling the real Montoya SiteMap wrapper.
+
+Sprint 12 Phase 4 reproduction product workspace/UI is **VERIFIED COMPLETE**:
+
+- synchronized `S12ReproductionWorkspace` with immutable product snapshots;
+- deterministic package → JSON / SARIF / Burp-review projections;
+- read-only top-level `Reproduction` tab;
+- Overview / Packages / JSON Export / SARIF Export / Burp Review / Publication Receipts views;
+- core publishable projection count remains zero;
+- explicit receipts are displayed separately without mutating package/candidate state;
+- UI contains no publish/import/add-issue action control;
+- headless UI suite: PASS, 34 assertions;
+- real Burp desktop/site-map runtime remains separately UNVERIFIED / DEFERRED.
 
 ### Sprint 11 final closure
 
