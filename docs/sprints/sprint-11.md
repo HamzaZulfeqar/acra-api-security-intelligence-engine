@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–8 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–9 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -405,9 +405,71 @@ Canonical prediction-execution state:
 
 Phase 8 is **VERIFIED COMPLETE**.
 
+## Phase 9 — one-way ablation evaluation and controlled metrics
+
+Implemented:
+
+- `S11VariantEvaluation`;
+- `S11AblationEvaluationReport`;
+- `S11AblationEvaluator`;
+- live `Sprint11AblationEvaluationTestSuite`;
+- one-way prediction→ground-truth join after Phase 8 execution;
+- 120 labelled `ResearchExecutionRecord` entries;
+- one independent evaluation summary per A0–A7 variant;
+- TP / TN / FP / FN;
+- precision / recall / F1 with existing `OptionalDouble` denominator semantics;
+- evidence completeness kept separate from classification accuracy;
+- deterministic evaluation identity/fingerprint;
+- immutability checks proving evaluation does not modify prediction execution artifacts.
+
+### Phase 9 verification
+
+GitHub Actions run `36065439110`: **SUCCESS** at source commit
+`2f17a994e4c481b48ae8ff11734a2ee17e32b84d`.
+
+Verified evidence:
+
+- `Sprint11AblationEvaluationTestSuite`: PASS, 99 assertions;
+- prediction execution: PASS, 384 assertions;
+- treatment evidence collection: PASS, 725 assertions;
+- controlled research fixture suite: PASS, 65 assertions;
+- Phase 1 protocol: PASS, 43 assertions;
+- Phase 2 dataset: PASS, 41 assertions;
+- Phase 3 adapter: PASS, 59 assertions;
+- Phase 4 campaign plan: PASS, 416 assertions;
+- Phase 5 readiness manifest: PASS, 72 assertions;
+- Maven core `test-compile`: PASS.
+
+### Controlled measured results
+
+| Variant | TP | TN | FP | FN | Precision | Recall | F1 | Evidence completeness |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| A0 | 8 | 0 | 7 | 0 | 0.533333 | 1.000000 | 0.695652 | 1.000000 |
+| A1 | 8 | 0 | 7 | 0 | 0.533333 | 1.000000 | 0.695652 | 1.000000 |
+| A2 | 8 | 0 | 7 | 0 | 0.533333 | 1.000000 | 0.695652 | 1.000000 |
+| A3 | 8 | 0 | 7 | 0 | 0.533333 | 1.000000 | 0.695652 | 1.000000 |
+| A4 | 8 | 0 | 7 | 0 | 0.533333 | 1.000000 | 0.695652 | 1.000000 |
+| A5 | 8 | 0 | 7 | 0 | 0.533333 | 1.000000 | 0.695652 | 1.000000 |
+| A6 | 8 | 7 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 | 1.000000 |
+| A7 | 8 | 7 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 | 1.000000 |
+
+Interpretation is intentionally limited: on this controlled synthetic dataset, semantic evidence at A6 removes
+the raw-differential false positives while cumulative contextual conflict evidence prevents semantic equivalence
+from erasing authorization-relevant collection-membership changes. The dataset is too small and synthetic to
+support real-world accuracy or novelty claims.
+
+### Defect found by the evaluation gate
+
+The first Phase 9 run exposed a cumulative-ablation defect: A6 semantic equivalence replaced earlier contextual
+ownership/tenant signals, producing one false negative in the collection-membership control. The implementation was
+corrected so semantic evidence is cumulative rather than destructive, and a Phase 8 regression now protects that
+case.
+
+Phase 9 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 9 must perform a one-way evaluation join between the immutable Phase 8 prediction results and the independently
-registered `GT-S11-ABLATION-DATASET` labels. Only this evaluation layer may construct
-`ResearchExecutionRecord`/confusion-matrix records and compute TP/TN/FP/FN, precision, recall, F1 and evidence
-completeness. Evaluation output must not alter prediction IDs, predictions, evidence bundles or campaign execution.
+Phase 10 must produce a deterministic, minimized research evaluation report/export containing protocol identity,
+dataset identity, prediction-execution identity, per-variant metrics, evidence completeness and limitations. It
+must not include raw response bodies, credentials or synthetic token material. The report must explicitly state
+that measurements apply only to the registered controlled localhost dataset.

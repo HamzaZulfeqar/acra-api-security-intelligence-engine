@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–8 VERIFIED COMPLETE; all 120 campaign cells have deterministic predictions, metric evaluation remains NOT_RUN.  
+**Decision:** S11 PHASES 1–9 VERIFIED COMPLETE; controlled A0–A7 evaluation is measured on the registered 15-case dataset.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -17,6 +17,7 @@
 **Sprint 11 Phase 6 verification:** GitHub Actions run `36060118721` — SUCCESS at source commit `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`.  
 **Sprint 11 Phase 7 verification:** GitHub Actions run `36064434979` — SUCCESS at source commit `9f9af8ce15e5035def2605c98d8f8153728c3eed`.  
 **Sprint 11 Phase 8 verification:** GitHub Actions run `36064798175` — SUCCESS at source commit `c742014ab97d024be42425fb4e49866f565389ec`.  
+**Sprint 11 Phase 9 verification:** GitHub Actions run `36065439110` — SUCCESS at source commit `2f17a994e4c481b48ae8ff11734a2ee17e32b84d`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -127,9 +128,27 @@ Sprint 11 Phase 8 ground-truth-free prediction execution is **VERIFIED COMPLETE*
 - Phase 8 suite: PASS, 382 assertions;
 - A0–A7 confusion-matrix and aggregate metrics remain NOT_RUN.
 
-The next dependency is an evaluation-only join: combine the immutable prediction snapshot with the independently
-registered dataset labels after prediction execution, then compute TP/TN/FP/FN, precision, recall, F1 and evidence
-completeness per A0–A7. That evaluation layer must not feed labels back into predictions.
+Sprint 11 Phase 9 one-way ablation evaluation is **VERIFIED COMPLETE**:
+
+- immutable prediction results are joined to immutable dataset labels only after Phase 8 execution;
+- 120 labelled `ResearchExecutionRecord` values are produced;
+- each A0–A7 variant evaluates all 15 cases with 0 inconclusive cells;
+- evidence completeness is 1.0 for every variant and is tracked independently from classification accuracy;
+- A0–A5: TP=8, TN=0, FP=7, FN=0, precision=0.533333..., recall=1.0, F1=0.695652...;
+- A6–A7: TP=8, TN=7, FP=0, FN=0, precision=1.0, recall=1.0, F1=1.0;
+- evaluation cannot mutate prediction execution identity, prediction fingerprints or classification outputs;
+- deliberately removing one evidence bundle lowers evidence completeness without altering classification metrics;
+- Phase 9 suite: PASS, 99 assertions.
+
+During Phase 9, a cumulative-ablation defect was detected and corrected: semantic equivalence had been replacing
+earlier ownership/tenant conflict evidence. The corrected A6/A7 logic preserves earlier contextual conflicts while
+using semantic equivalence to suppress raw-difference-only false positives.
+
+These results are valid **only for the registered 15-case controlled synthetic localhost dataset**. They do not
+establish real-world API-scanner accuracy, production vulnerability prevalence, external-target safety, or novelty.
+
+The next dependency is deterministic evaluation reporting/export with immutable provenance and explicit scope
+limitations, followed by Sprint 11 security/reproducibility review and closure.
 
 Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 software verification.
 

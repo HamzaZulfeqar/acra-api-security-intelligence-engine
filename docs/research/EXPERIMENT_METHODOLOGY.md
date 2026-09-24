@@ -54,3 +54,21 @@ forbidden until actual controlled execution against registered ground truth.
 
 Phase 1 verification: GitHub Actions run `36056957706` — SUCCESS.
 
+
+## Sprint 11 measured controlled evaluation — 2026-09-25
+
+A0–A7 were evaluated only after prediction execution was frozen and joined one-way to
+`GT-S11-ABLATION-DATASET`.
+
+- Dataset: 15 synthetic localhost cases (8 positive, 7 negative).
+- A0–A5: TP=8, TN=0, FP=7, FN=0, precision=.533333, recall=1, F1=.695652.
+- A6–A7: TP=8, TN=7, FP=0, FN=0, precision=1, recall=1, F1=1.
+- Evidence completeness: 1.0 for all variants.
+
+The initial evaluation exposed a cumulative-composition defect in which A6 semantic equivalence could erase an
+earlier ownership/tenant conflict. That defect was corrected before accepting the measurement. The result therefore
+measures the corrected cumulative treatment contract.
+
+These numbers are controlled synthetic measurements only. They must not be presented as real-world scanner
+accuracy, external API prevalence, production effectiveness or proof of research novelty.
+

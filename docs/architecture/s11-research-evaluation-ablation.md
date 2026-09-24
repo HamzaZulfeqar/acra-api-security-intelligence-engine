@@ -301,8 +301,49 @@ Phase 8 verification: GitHub Actions run `36064798175` — SUCCESS at
 
 Verified state: 120 prediction results / 120 EXECUTED cells / metrics NOT_RUN.
 
-## Phase 9 dependency
+## Phase 9 evaluation boundary
 
-Evaluation must be a separate one-way join from immutable prediction results to immutable dataset labels. Ground
-truth may enter only at that boundary. The evaluation layer may compute metrics but must not change predictions,
-evidence bundles or campaign execution state.
+Ground truth enters Sprint 11 only after predictions are complete:
+
+```text
+immutable prediction execution
+        +
+immutable GT-S11-ABLATION-DATASET
+        |
+        v
+S11AblationEvaluator
+        |
+        +--> 120 labelled ResearchExecutionRecord values
+        +--> A0..A7 confusion matrices
+        +--> precision / recall / F1
+        +--> evidence completeness
+        |
+        v
+deterministic S11AblationEvaluationReport
+```
+
+Phase 9 invariants:
+
+1. Ground truth is introduced only after prediction execution.
+2. Evaluation cannot change prediction IDs, fingerprints or values.
+3. Every variant keeps a fixed fifteen-case denominator.
+4. Evidence completeness is independent of classification metrics.
+5. Missing evidence can reduce evidence completeness without silently changing TP/TN/FP/FN.
+6. Evaluation identity/fingerprint is deterministic.
+7. Controlled metrics cannot be generalized beyond the registered synthetic localhost dataset.
+8. Ablation treatment is cumulative: semantic evidence may suppress raw-only differences but cannot erase earlier
+   ownership/tenant conflict evidence.
+
+Phase 9 verification: GitHub Actions run `36065439110` — SUCCESS at
+`2f17a994e4c481b48ae8ff11734a2ee17e32b84d`.
+
+Measured controlled results:
+
+- A0–A5: TP=8, TN=0, FP=7, FN=0, precision=.533333, recall=1, F1=.695652;
+- A6–A7: TP=8, TN=7, FP=0, FN=0, precision=1, recall=1, F1=1;
+- evidence completeness: 1.0 for every variant.
+
+## Phase 10 dependency
+
+Reporting must preserve the evaluation's deterministic provenance and limitations while excluding raw/secret
+material. Report generation must not recompute or alter prediction/evaluation outcomes.

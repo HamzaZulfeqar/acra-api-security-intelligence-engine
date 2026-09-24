@@ -16,14 +16,14 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
-| EXP-A1 | + Identity | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
-| EXP-A2 | + Ownership | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
-| EXP-A3 | + Tenant | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
-| EXP-A4 | + Role | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
-| EXP-A5 | + Workflow | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
-| EXP-A6 | + Semantic evidence | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
-| EXP-A7 | Full ACRA correlation | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A0 | Naive differential baseline | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=0/FP=7/FN=0; P=.533333/R=1/F1=.695652; evidence completeness=1 |
+| EXP-A1 | + Identity | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=0/FP=7/FN=0; P=.533333/R=1/F1=.695652; evidence completeness=1 |
+| EXP-A2 | + Ownership | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=0/FP=7/FN=0; P=.533333/R=1/F1=.695652; evidence completeness=1 |
+| EXP-A3 | + Tenant | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=0/FP=7/FN=0; P=.533333/R=1/F1=.695652; evidence completeness=1 |
+| EXP-A4 | + Role | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=0/FP=7/FN=0; P=.533333/R=1/F1=.695652; evidence completeness=1 |
+| EXP-A5 | + Workflow | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=0/FP=7/FN=0; P=.533333/R=1/F1=.695652; evidence completeness=1 |
+| EXP-A6 | + Semantic evidence | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=7/FP=0/FN=0; P=1/R=1/F1=1; evidence completeness=1 |
+| EXP-A7 | Full ACRA correlation | COMPLETED_CONTROLLED_LOCAL | GT-S11-ABLATION-DATASET | TP=8/TN=7/FP=0/FN=0; P=1/R=1/F1=1; evidence completeness=1 |
 
 ## Sprint 11 protocol status — 2026-09-25
 
@@ -73,6 +73,13 @@ GitHub Actions run `36064798175` verified 120 deterministic A0–A7 prediction r
 campaign cells to EXECUTED. State `PREDICTIONS_EXECUTED` means prediction software ran over the controlled
 evidence; it does **not** mean predictions have been compared with ground truth. Result state
 `METRICS_NOT_RUN` means TP/TN/FP/FN, precision, recall, F1 and evidence-completeness evaluation remain pending.
+
+## Sprint 11 controlled ablation result — 2026-09-25
+
+GitHub Actions run `36065439110` verified the first complete A0–A7 evaluation on the registered 15-case
+synthetic localhost dataset. A0–A5 retain seven false positives; A6–A7 classify all fifteen controlled cases
+correctly after cumulative semantic/context correlation. These measurements are dataset-scoped only and do not
+establish real-world scanner accuracy, production vulnerability prevalence or novelty.
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 

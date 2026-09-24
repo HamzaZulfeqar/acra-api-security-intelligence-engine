@@ -5,7 +5,7 @@
 Sprint 11 — **Research Evaluation & Ablation** is IN PROGRESS on
 `s11-research-evaluation-ablation`.
 
-Phases 1–8 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36064798175`.
+Phases 1–9 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36065439110`.
 
 Current evidence boundary:
 
@@ -17,9 +17,10 @@ Current evidence boundary:
 - experiment execution state remains NOT_RUN;
 - no A0–A7 scientific result or real-world accuracy claim exists yet;
 - fixture readiness is 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE;
-- prediction execution is 120 EXECUTED / 0 EVIDENCE_READY;
-- prediction snapshots remain ground-truth-free and metric-free;
-- next dependency is one-way evaluation/metric aggregation against immutable labels.
+- controlled evaluation is now measured on 15 synthetic localhost cases;
+- A0–A5: TP8/TN0/FP7/FN0, precision .533333, recall 1, F1 .695652;
+- A6–A7: TP8/TN7/FP0/FN0, precision/recall/F1 = 1 within the controlled dataset;
+- next dependency is deterministic research report/export and release hardening.
 
 Sprint 10 remains the frozen SOFTWARE COMPLETE release base at
 `59022c4a25718f38ea7ec2f010911344d1aa0698`.
