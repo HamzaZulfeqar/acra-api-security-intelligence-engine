@@ -56,6 +56,7 @@ PY
 CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9PropertyAuthorizationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9ControlledPropertyLabTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9PropertyPlannerExecutionTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9ControlledPropertyExecutionTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9PropertyCoverageTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9PropertyReportingExportTestSuite
