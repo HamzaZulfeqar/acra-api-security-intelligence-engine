@@ -1,17 +1,22 @@
-# Sprint 7 Final Software Audit — Candidate
+# Sprint 7 Final Software Audit
 
-Audit state: **FINAL RUN PENDING**  
+Audit state: **S7 SOFTWARE COMPLETE**  
 Branch: `s7-workflow-token-binding`
 
-## Candidate decision
+## Final decision
 
-The Sprint 7 workflow-authorization, delegation and token-binding software scope is implementation-complete at
-the source/focused-verification level across policy reasoning, assessment/finding integration, controlled active
-execution, coverage intelligence, product UI, deterministic report/export, security hardening and bounded
-performance observations.
+**S7 SOFTWARE COMPLETE**
 
-A final `S7 SOFTWARE COMPLETE` decision is withheld until the dedicated full regression and reproducible-package
-workflow succeeds on the exact current branch state.
+The Sprint 7 workflow-authorization, delegation and token-binding software scope is complete for the defined
+software boundary. GitHub Actions run `35960826621` passed the dedicated full regression, official Maven package,
+retained legacy lanes, headless UI regressions, deterministic packaging and clean-extraction verification.
+
+Final checkpoint: `acra-sprint-07-final.zip`  
+SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`  
+Package entries: **791**  
+Unsafe paths: **0**  
+Clean extraction equality: **PASS**  
+Per-file SHA-256 equality: **PASS**
 
 ## Required final gates
 
@@ -32,3 +37,11 @@ Real Burp desktop load/handler/UI runtime and external-target validation remain 
 not replaced by localhost execution or headless Swing verification.
 
 No real-world accuracy, capacity, production-authentication or automatic confirmed-vulnerability claim is made.
+
+
+## Final gate result
+
+All ten required final gates passed in GitHub Actions run `35960826621`.
+
+The separate real-Burp desktop runtime and external-target lanes remain explicitly UNVERIFIED / DEFERRED and
+do not alter the Sprint 7 software-completion decision.

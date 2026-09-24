@@ -429,3 +429,19 @@ Authoritative Phase 5 gate: GitHub Actions run `35960316132`.
 | TEST-S7-PERF-003 | 10,000 workflow contexts resolve/cover/report | same suite | PASS |
 
 Authoritative Phase 6 gate: GitHub Actions run `35960583660`. Timing and memory values are observational only.
+
+
+### Sprint 7 final closure
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S7-FINAL-001 | exact Java 21 S7/core retained regression | `scripts/verify-sprint7-final.sh` / run `35960826621` | PASS |
+| TEST-S7-FINAL-002 | official Maven package | run `35960826621` | PASS |
+| TEST-S7-FINAL-003 | retained Sprint 2 local-contract regression | run `35960826621` | PASS |
+| TEST-S7-FINAL-004 | retained Sprint 3 local-contract regression | run `35960826621` | PASS |
+| TEST-S7-FINAL-005 | retained S4/S6/S7 UI regressions | run `35960826621` | PASS |
+| TEST-S7-PACKAGE-001 | deterministic source ZIP + manifest + SHA-256 | `package-sprint7.sh` | PASS |
+| TEST-S7-PACKAGE-002 | safe paths / clean extraction / per-file equality | run `35960826621` | PASS — 791 entries, 0 unsafe paths |
+| TEST-S7-BURP-001 | real Burp desktop runtime | separate runtime lane | UNVERIFIED / DEFERRED |
+
+Candidate checkpoint SHA-256 from run `35960826621`: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`.

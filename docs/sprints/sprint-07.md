@@ -1,6 +1,6 @@
 # Sprint 7 — Workflow Authorization, Delegation and Token Binding
 
-Status: IN PROGRESS  
+Status: SOFTWARE COMPLETE  
 Branch: `s7-workflow-token-binding`  
 Immutable base: `s6-final-software-2026-09-23` @ `8d996a2b2b1bb47372490945aec197dd9e20ff36`
 
@@ -268,3 +268,29 @@ real-world capacity claims.
 
 Phase 6 is complete. Remaining Sprint 7 work is the final requirements traceability, retained S1–S7
 regression, reproducible package verification and final software audit.
+
+
+## Final closure — S7 SOFTWARE COMPLETE
+
+GitHub Actions run `35960826621` passed the dedicated Sprint 7 final closure workflow.
+
+Final verification included:
+- exact Temurin Java 21 compilation with warnings as errors
+- all Sprint 7 foundation/assessment/coverage/report/security/performance suites
+- controlled secure/vulnerable workflow execution
+- retained core/S3/S4/S5/S6 verification
+- official Maven package
+- retained Sprint 2 and Sprint 3 local-contract regressions
+- Sprint 4 / Sprint 6 / Sprint 7 headless UI regressions
+- deterministic source checkpoint generation
+- archive safe-path, clean-extraction and per-file SHA-256 equality verification
+
+Checkpoint: `acra-sprint-07-final.zip`  
+SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`  
+Entries: **791**  
+Unsafe paths: **0**  
+Clean extraction: **PASS**  
+Per-file SHA-256 equality: **PASS**
+
+Real Burp desktop runtime/load/handler/UI validation remains a separate UNVERIFIED / DEFERRED validation lane.
+Sprint 8 is **NOT STARTED** by this closure.

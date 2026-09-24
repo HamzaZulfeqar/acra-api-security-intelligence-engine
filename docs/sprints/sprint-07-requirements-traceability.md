@@ -1,12 +1,12 @@
 # Sprint 7 Requirements Traceability
 
-Status: **FINAL-CLOSURE CANDIDATE**  
+Status: **S7 SOFTWARE COMPLETE**  
 Branch: `s7-workflow-token-binding`  
 Immutable Sprint 6 base: `8d996a2b2b1bb47372490945aec197dd9e20ff36`
 
-PASS means source implementation plus focused executable evidence exists. The final full-regression/package rows
-remain pending until the dedicated Sprint 7 final workflow succeeds. Real Burp desktop runtime is a separate
-validation lane and is not inferred from localhost or headless UI evidence.
+PASS means source implementation plus executable evidence exists. Final closure was verified by GitHub Actions
+run `35960826621`. Real Burp desktop runtime remains a separate validation lane and is not inferred from localhost
+or headless UI evidence.
 
 | ID | Requirement | Implementation evidence | Verification evidence | Status |
 |---|---|---|---|---|
@@ -40,8 +40,8 @@ validation lane and is not inferred from localhost or headless UI evidence.
 | S7-27 | Deterministic report/export | S7WorkflowReportGenerator / exporter / Reporter | run 35960316132 | PASS |
 | S7-28 | Security hardening | fail-closed workflow security contracts | run 35960583660, 15 assertions | PASS |
 | S7-29 | 100/1k/10k performance observations | Sprint7WorkflowPerformanceObservationTestSuite | run 35960583660, 12 assertions | PASS |
-| S7-30 | Retained S1–S7 final regression + Maven package | scripts/verify-sprint7-final.sh | final workflow pending | PENDING FINAL RUN |
-| S7-31 | Reproducible S7 ZIP + manifest + SHA-256 + clean extraction | scripts/package-sprint7.sh | final workflow pending | PENDING FINAL RUN |
+| S7-30 | Retained S1–S7 final regression + Maven package | scripts/verify-sprint7-final.sh | run 35960826621 | PASS |
+| S7-31 | Reproducible S7 ZIP + manifest + SHA-256 + clean extraction | scripts/package-sprint7.sh | run 35960826621; SHA-256 `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d` | PASS |
 | S7-32 | Real Burp desktop load/handler/UI runtime | separate runtime gate | no current desktop Burp execution | UNVERIFIED / DEFERRED |
 
 ## Non-blocking exclusions
@@ -59,3 +59,15 @@ The Sprint 7 software-completion decision does not claim:
 - real Burp desktop runtime validation.
 
 Those remain later roadmap or separate validation lanes.
+
+
+## Final closure evidence
+
+- GitHub Actions run: `35960826621` — SUCCESS
+- final checkpoint: `acra-sprint-07-final.zip`
+- checkpoint SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`
+- packaged entries: 791
+- unsafe archive paths: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- build/Git artifacts excluded from source checkpoint: PASS

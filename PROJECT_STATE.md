@@ -3,11 +3,11 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 7 — Workflow Authorization, Delegation and Token Binding.  
-**Decision:** S7 IN PROGRESS.  
+**Decision:** S7 SOFTWARE COMPLETE.  
 **Working branch:** `s7-workflow-token-binding`.  
 **Immutable Sprint 5 base:** `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`.  
 **Sprint 5:** SOFTWARE COMPLETE and preserved separately.  
-**Sprint 7:** IN PROGRESS.
+**Sprint 7:** SOFTWARE COMPLETE.
 
 ### Implemented S6 capabilities
 
@@ -122,9 +122,9 @@ Current CI:
 
 ### Sprint 7 verified progress
 
-Phase 1, Phase 2 and Phase 3 are complete on `s7-workflow-token-binding`.
+Phases 1–6 and the final Sprint 7 closure are complete on `s7-workflow-token-binding`.
 
-Latest verified gate: GitHub Actions run `35959256852`.
+Latest verified gate: GitHub Actions run `35960826621`.
 
 Phase 3 now adds:
 - controlled secure/vulnerable workflow transition fixtures
@@ -149,14 +149,21 @@ Phase 4 now adds:
 
 These are controlled localhost validation results only and do not establish real-world scanner accuracy.
 
-### Remaining Sprint 7 work
+### Sprint 7 final closure
 
-- deterministic workflow report/export integration
-- expanded workflow/token-binding security-hardening tests
-- performance observations and bounded workload evidence
-- requirements/architecture/decision traceability closure
-- full retained regression and Maven/package verification
-- final Sprint 7 audit, reproducible package, manifest and SHA-256 freeze
+- final workflow: GitHub Actions run `35960826621` — SUCCESS
+- final checkpoint: `acra-sprint-07-final.zip`
+- SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`
+- package entries: 791
+- unsafe paths: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- official Maven package: PASS
+- retained Sprint 2 / Sprint 3 local-contract regressions: PASS
+- retained Sprint 4 / Sprint 6 / Sprint 7 UI regressions: PASS
+- Sprint 8: NOT STARTED
 
-Real Burp desktop runtime validation remains a separate unverified gate and is not promoted by the controlled
-localhost evidence.
+### Residual validation debt
+
+Real Burp desktop runtime/load/handler/UI validation remains UNVERIFIED / DEFERRED. Controlled localhost fixtures
+do not establish real-world scanner accuracy, production authentication behavior or external-target safety.

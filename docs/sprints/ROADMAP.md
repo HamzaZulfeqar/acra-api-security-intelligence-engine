@@ -1,5 +1,16 @@
 # ROADMAP
 
+## Current gate — 2026-09-24
+
+**Sprint 7 SOFTWARE COMPLETE.** Dedicated final closure run `35960826621` passed full regression, Maven packaging,
+retained legacy/UI lanes and reproducible checkpoint verification.
+
+Final Sprint 7 checkpoint SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`.
+
+Sprint 8 is **NOT STARTED**. No Sprint 8 implementation is included in the Sprint 7 checkpoint.
+
+The historical roadmap entries below are retained for provenance.
+
 ## Current gate — 2026-09-09
 
 S5 SOFTWARE PARTIAL. Defensive guard/correlation/serialization work is verified by the current test artifact. Missing context normalization/binding and tenant/workflow/property/finding/severity/orchestration/end-to-end work remain explicit in `sprint-05-final-software-closure.md`. S6 has not started. The earlier completion list below is historical and is superseded by the current source audit.
