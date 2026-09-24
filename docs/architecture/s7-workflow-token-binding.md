@@ -74,3 +74,34 @@ execution, test and observation ownership. Policy conflicts and evidence failure
 
 The downstream S7 result stores binding IDs and delegation IDs, but not raw authentication material or the
 token-context fingerprint itself.
+
+## Phase 3 active-validation path
+
+```
+WorkflowAuthorizationResolution (baseline ALLOW)
+        +
+WorkflowAuthorizationResolution (target state DENY)
+        ↓
+S7WorkflowPlanningCandidate
+        ↓
+S7WorkflowTestSeedFactory
+        ↓
+WORKFLOW_TRANSITION / BODY / STATE_CHANGING
+        ↓
+S7WorkflowPlanningBridge
+        ↓
+existing S4 TestPlanner → ExecutionQueue → MutationValidator → TestExecutor
+        ↓
+secure/vulnerable localhost ACRA-Lab
+        ↓
+Observation + MultiWayDifferential
+```
+
+The generated transition test is deliberately constrained to one mutable workflow dimension: the target state.
+Workflow ID, principal, tenant, resource, action and source state must remain equivalent. A conflicting or
+incomplete policy cannot produce an active seed. DELETE is not auto-generated, and the existing local execution
+policy still requires an explicitly authorized loopback LAB target.
+
+The controlled secure fixture denies `DRAFT → APPROVED` when the declared action is `SUBMIT`; the deliberately
+vulnerable fixture models a target-state validation defect and permits the same request. This yields a reproducible
+expected-vs-unexpected differential without claiming real-world scanner accuracy.
