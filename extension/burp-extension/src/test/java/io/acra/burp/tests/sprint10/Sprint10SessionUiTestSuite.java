@@ -73,7 +73,9 @@ public final class Sprint10SessionUiTestSuite {
         assertions++;
 
         JTabbedPane sessionTabs = find(tab.component(), JTabbedPane.class, "s10-session-tabs");
-        for (String title : Set.of("Overview", "Sessions", "Correlations", "Assessments", "Candidates", "Coverage")) {
+        for (String title : Set.of(
+                "Overview", "Sessions", "Correlations", "Assessments", "Candidates", "Coverage",
+                "Report", "JSON Export")) {
             check(indexOf(sessionTabs, title) >= 0, "session sub-tab installed: " + title);
             assertions++;
         }
@@ -130,6 +132,29 @@ public final class Sprint10SessionUiTestSuite {
         assertions++;
         check(rows(tab, "s10-session-coverage-table") == 3,
                 "coverage table includes the unobserved target");
+        assertions++;
+
+        JTextArea report = find(tab.component(), JTextArea.class, "s10-session-report-view");
+        check(report.getText().contains("Confirmed findings: 0"),
+                "session report view preserves zero confirmed findings");
+        assertions++;
+        check(report.getText().contains("Unobserved targets: 1"),
+                "session report view preserves coverage gaps");
+        assertions++;
+        check(!report.getText().contains("session-r") && !report.getText().contains("session-k"),
+                "session report view excludes raw session identifiers");
+        assertions++;
+
+        JTextArea jsonExport = find(tab.component(), JTextArea.class, "s10-session-json-export-view");
+        check(jsonExport.getText().contains("\"confirmedFindingCount\":0"),
+                "session JSON export view preserves zero confirmed findings");
+        assertions++;
+        check(jsonExport.getText().contains("\"unobservedTargetCount\":1"),
+                "session JSON export view preserves unobserved coverage");
+        assertions++;
+        check(!jsonExport.getText().contains("\"tokenFingerprint\"")
+                        && !jsonExport.getText().contains("\"sessionId\""),
+                "session JSON export schema excludes token fingerprint and raw session ID fields");
         assertions++;
 
         JTable candidates = find(tab.component(), JTable.class, "s10-session-candidate-table");
