@@ -24,6 +24,8 @@ import javax.swing.table.AbstractTableModel;
 public final class S10SessionPanel extends JPanel {
     private final S10SessionWorkspace workspace;
     private final JTextArea overview = view("s10-session-overview");
+    private final JTextArea reportView = view("s10-session-report-view");
+    private final JTextArea jsonExportView = view("s10-session-json-export-view");
     private final ObservationModel observationModel = new ObservationModel();
     private final CorrelationModel correlationModel = new CorrelationModel();
     private final AssessmentModel assessmentModel = new AssessmentModel();
@@ -56,6 +58,9 @@ public final class S10SessionPanel extends JPanel {
         assessmentModel.update(snapshot.assessments());
         candidateModel.update(snapshot.candidates());
         coverageModel.update(snapshot.coverageEntries());
+        java.time.Instant previewAt = java.time.Instant.EPOCH;
+        reportView.setText(workspace.exportMarkdown(previewAt).content());
+        jsonExportView.setText(workspace.exportJson(previewAt).content());
     }
 
     private JTabbedPane buildTabs() {
@@ -67,6 +72,8 @@ public final class S10SessionPanel extends JPanel {
         tabs.addTab("Assessments", table(assessmentModel, "s10-session-assessment-table"));
         tabs.addTab("Candidates", table(candidateModel, "s10-session-candidate-table"));
         tabs.addTab("Coverage", table(coverageModel, "s10-session-coverage-table"));
+        tabs.addTab("Report", new JScrollPane(reportView));
+        tabs.addTab("JSON Export", new JScrollPane(jsonExportView));
         return tabs;
     }
 
