@@ -1,6 +1,6 @@
 # Sprint 10 — Authentication, Session & Token-Context Intelligence
 
-Status: IN PROGRESS — Phase 1 VERIFIED COMPLETE  
+Status: SOFTWARE COMPLETE  
 Branch: `s10-auth-session-intelligence`  
 Immutable Sprint 9 base: `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`
 
@@ -451,3 +451,37 @@ These timing/memory values are engineering observations only and are not benchma
 scanner-accuracy evidence or real-world capacity claims.
 
 Phase 10 verification is pending the current GitHub Actions gate.
+
+
+## Final closure — S10 SOFTWARE COMPLETE
+
+GitHub Actions run `36041511898` passed the dedicated Sprint 10 final closure workflow at source commit
+`2a7e753a3866ffb869df17abb53a9d2cc93dd876`.
+
+Final verification included:
+
+- exact Temurin Java 21 Sprint 10 verification;
+- all authentication/session foundation, evidence, controlled-lab, hydration, assessment, finding, coverage,
+  reporting, security-hardening and performance-observation suites;
+- retained Sprint 9 / Sprint 8 / Sprint 7 / Sprint 6 foundations;
+- official Maven package;
+- retained Sprint 2 and Sprint 3 local-contract regressions;
+- Sprint 4 / 6 / 7 / 8 / 9 / 10 headless UI regressions;
+- deterministic source checkpoint generation;
+- archive safe-path and duplicate-entry validation;
+- clean-extraction equality;
+- per-file SHA-256 equality.
+
+Closure-candidate checkpoint: `acra-sprint-10-final.zip`  
+Closure-candidate SHA-256: `3e1352ca886096ff2df01d6e8fdbc3f281eb29794651ff6bba23205b7a70d26b`  
+Entries: **924**  
+Unsafe paths: **0**  
+Duplicate entries: **0**  
+Clean extraction: **PASS**  
+Per-file SHA-256 equality: **PASS**
+
+Sprint 11 is **NOT STARTED** by this closure.
+
+Real Burp desktop runtime/load/handler/UI validation remains a separate **UNVERIFIED / DEFERRED** validation
+lane. Controlled localhost and headless UI evidence do not establish production OAuth/session behavior,
+external-target safety, real-world scanner accuracy/capacity, or automatic confirmed vulnerabilities.
