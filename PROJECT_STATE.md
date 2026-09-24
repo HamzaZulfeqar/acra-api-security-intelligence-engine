@@ -3,14 +3,15 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASES 1–3 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Decision:** S10 PHASES 1–4 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
 **Sprint 10 Phase 1 verification:** GitHub Actions run `36004146212` — SUCCESS.  
 **Sprint 10 Phase 2 verification:** GitHub Actions run `36004574331` — SUCCESS.  
-**Sprint 10 Phase 3 verification:** GitHub Actions run `36048381112` — SUCCESS at source commit `608490cfc1211057e879f6c6457ea62fd648b405`.
+**Sprint 10 Phase 3 verification:** GitHub Actions run `36048381112` — SUCCESS at source commit `608490cfc1211057e879f6c6457ea62fd648b405`.  
+**Sprint 10 Phase 4 verification:** GitHub Actions run `36048837246` — SUCCESS at source commit `abb57d0320fcdc161992297415978bde6c769bee`.
 
 ### Sprint 10 verified progress
 
@@ -53,7 +54,19 @@ Sprint 10 Phase 3 safe planner/executor integration is **VERIFIED COMPLETE**:
 - cross-project provenance remains fail-closed;
 - no identifier guessing, alias enumeration, external-target probing or automatic vulnerability confirmation.
 
-The next dependency is Phase 4 provenance-gated `FindingCandidate` projection for batch and indirect assessments.
+Sprint 10 Phase 4 provenance-gated finding projection is **VERIFIED COMPLETE**:
+
+- batch and indirect projection requests are secret-safe and evidence-bound;
+- evidence plus observation lineage is revalidated before projection;
+- projection-request/assessment mismatches fail closed as INCONCLUSIVE;
+- verified secure controls project to REJECTED;
+- verified DENY→ALLOW mismatches project to review-only CANDIDATE;
+- deterministic candidate identifiers/fingerprints are preserved;
+- cross-project provenance projects to INCONCLUSIVE;
+- projected indirect candidates contain no raw alias material;
+- no confirmed-vulnerability state is introduced.
+
+The next dependency is Phase 5 deterministic batch/indirect coverage accounting.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
