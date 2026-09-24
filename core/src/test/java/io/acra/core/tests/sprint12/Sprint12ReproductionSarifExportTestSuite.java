@@ -91,6 +91,13 @@ public final class Sprint12ReproductionSarifExportTestSuite {
                 "SARIF digest is deterministic");
         assertions++;
 
+        TestSupport.assertEquals(
+                io.acra.core.reproduction.ReproductionExportCapabilityState.IMPLEMENTED,
+                new io.acra.core.reproduction.ReproductionExportRegistry()
+                        .capability(ReproductionExportTarget.SARIF).state(),
+                "verified SARIF renderer is promoted to IMPLEMENTED");
+        assertions++;
+
         ReproductionSarifReporter reporter = new ReproductionSarifReporter();
         TestSupport.assertEquals("acra-reproduction-sarif-v1", reporter.id(),
                 "SARIF Reporter ID is versioned");

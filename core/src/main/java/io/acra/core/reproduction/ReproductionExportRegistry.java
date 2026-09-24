@@ -12,7 +12,7 @@ public final class ReproductionExportRegistry {
                         "acra-reproduction-json-v1"),
                 new ReproductionExportCapability(
                         ReproductionExportTarget.SARIF,
-                        ReproductionExportCapabilityState.CONTRACT_DEFINED,
+                        ReproductionExportCapabilityState.IMPLEMENTED,
                         "sarif-2.1.0"),
                 new ReproductionExportCapability(
                         ReproductionExportTarget.BURP_ISSUE,

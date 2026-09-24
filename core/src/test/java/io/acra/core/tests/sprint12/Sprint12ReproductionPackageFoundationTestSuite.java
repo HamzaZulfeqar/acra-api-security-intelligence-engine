@@ -95,9 +95,9 @@ public final class Sprint12ReproductionPackageFoundationTestSuite {
                     "registry resolves each export target");
             assertions++;
             ReproductionExportCapabilityState expectedState =
-                    target == ReproductionExportTarget.JSON
-                            ? ReproductionExportCapabilityState.IMPLEMENTED
-                            : ReproductionExportCapabilityState.CONTRACT_DEFINED;
+                    target == ReproductionExportTarget.BURP_ISSUE
+                            ? ReproductionExportCapabilityState.CONTRACT_DEFINED
+                            : ReproductionExportCapabilityState.IMPLEMENTED;
             TestSupport.assertEquals(expectedState, capability.state(),
                     "registry capability state matches verified renderer progress");
             assertions++;
