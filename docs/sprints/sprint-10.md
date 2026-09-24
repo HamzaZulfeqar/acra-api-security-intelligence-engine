@@ -112,3 +112,40 @@ Phase 1 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 2 owns project/test/execution/evidence provenance binding for passive
 authentication/session observations.
+
+## Phase 2 — session evidence provenance binding
+
+Implemented:
+
+- `SessionEvidenceBinding`;
+- `S10SessionEvidenceValidator`;
+- project ownership validation;
+- execution/test ownership validation;
+- session observation object/type/stage validation;
+- evidence-object lineage validation;
+- duplicate and unknown evidence rejection;
+- observation/evidence-set contradiction rejection;
+- cross-project fail-closed behavior;
+- existing generic S4 `EvidenceReferenceValidator` left unchanged.
+
+### Phase 2 verification
+
+GitHub Actions run `36031909153`: **SUCCESS** at commit
+`4646bbf434422a6b90e3a8b2947cd519c869812a`.
+
+Verified:
+
+- Sprint 10 Phase 1 foundation: PASS;
+- session evidence binding suite: PASS;
+- valid project/test/execution lineage: PASS;
+- cross-project rejection: PASS;
+- execution/test mismatch rejection: PASS;
+- unknown and duplicate evidence rejection: PASS;
+- wrong observation type rejection: PASS;
+- contradictory evidence-set rejection: PASS;
+- retained Sprint 6/7/8/9 foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 3 owns controlled synthetic ACRA-Lab token/session rotation ground truth.
