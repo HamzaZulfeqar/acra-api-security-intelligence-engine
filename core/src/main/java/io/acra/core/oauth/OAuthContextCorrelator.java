@@ -25,6 +25,10 @@ public final class OAuthContextCorrelator {
             return result(previous, current, OAuthContextCorrelationState.INCONCLUSIVE,
                     List.of(), List.of("CLIENT_ID_UNKNOWN"));
         }
+        if ("UNKNOWN".equals(previous.issuer()) || "UNKNOWN".equals(current.issuer())) {
+            return result(previous, current, OAuthContextCorrelationState.INCONCLUSIVE,
+                    List.of(), List.of("ISSUER_UNKNOWN"));
+        }
         if (!previous.clientId().equals(current.clientId())) {
             return result(previous, current, OAuthContextCorrelationState.INCONCLUSIVE,
                     List.of(), List.of("DIFFERENT_CLIENT_CONTEXT"));
