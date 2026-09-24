@@ -1,6 +1,6 @@
 # Sprint 8 — Routing Normalization & Authorization-Path Intelligence
 
-Status: IN PROGRESS — PHASE 2 VERIFIED  
+Status: IN PROGRESS — PHASE 3 VERIFIED  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
@@ -112,3 +112,41 @@ GitHub Actions run `35965612498`: **SUCCESS**.
 - exact Temurin Java 21 verification: PASS
 
 Phase 2 is complete. Sprint 8 remains IN PROGRESS.
+
+
+## Phase 3 — controlled route-equivalence differential validation
+
+Implemented:
+- controlled Sprint 8 ACRA-Lab routing ground truth
+- canonical and duplicate-separator route representations for the same admin route family
+- secure fixture preserves authorization across equivalent URI representations
+- deliberately vulnerable fixture models a route-normalization authorization mismatch
+- existing `EQUIVALENT_ROUTE_REPRESENTATION` mutation type reused
+- existing `UriMutationAdapter`, `RequestEquivalenceGuard`, planner, queue, safety validation and `TestExecutor` reused
+- explicit authorized localhost scope includes both canonical and equivalent route prefixes
+- no scope-guard bypass or external-target execution
+- raw bearer material remains excluded from serialized test state
+
+Controlled route pair:
+
+```
+/api/v1/s8/admin
+/api//v1/s8/admin
+```
+
+Ground truth requires the non-admin viewer to remain denied on both representations.
+
+### Phase 3 verification
+
+GitHub Actions run `35966112820`: **SUCCESS**.
+
+- routing ground-truth contract: PASS, 3 cases
+- routing normalization foundation: PASS, 16 assertions
+- authorization-path differential suite: PASS, 19 assertions
+- controlled live routing differential: PASS, 10 assertions
+- secure fixture: expected DENY, observed DENY, `NO_CHANGE`
+- deliberately vulnerable fixture: expected DENY, observed ALLOW, `UNEXPECTED_CHANGE`
+- retained Sprint 3 core: PASS, 47 tests
+- retained Sprint 7 foundation/assessment/coverage/reporting/security/performance: PASS
+
+Phase 3 is complete. Sprint 8 remains IN PROGRESS.
