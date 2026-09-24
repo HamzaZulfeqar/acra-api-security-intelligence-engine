@@ -1,5 +1,18 @@
 # Known Issues and Technical Debt
 
+## Sprint 11 residual validation and research debt — 2026-09-25
+
+- Sprint 11 software is complete under the verified local/software boundary; final executable closure run `36064082001` passed.
+- Real Burp desktop loading and `SiteMap.add(AuditIssue)` publication remain UNVERIFIED / DEFERRED; Sprint 11 verifies only the Montoya materialization contract and explicitly prevents automatic publication.
+- `GT-S11-AUTHORIZATION-RESEARCH` is a synthetic localhost dataset. Its 16 oracle cases establish controlled ground-truth readiness, not real-world scanner accuracy.
+- EXP-A0 through EXP-A7 remain NOT_RUN. Sprint 11 TP/TN/FP/FN, precision, recall and F1 remain NOT_MEASURED.
+- Finding review workspace state is in-memory; durable multi-user persistence and concurrency control remain future product hardening.
+- The current redaction model protects recognized credential/token forms and structurally excludes reviewer/reason fields from reproduction exports; arbitrary opaque secrets that do not match protected structures remain a general sanitization limitation.
+- Sprint 11 performance values are controlled CI observations only, not benchmarks, SLOs or capacity guarantees.
+- Real external-target authorization validation remains outside the Sprint 11 boundary.
+- Sprint 12 should execute the registered A0-A7 research design without backfilling metrics into Sprint 11.
+
+
 ## Sprint 7 residual validation debt — 2026-09-24
 
 - Sprint 7 software is complete under the defined software boundary; the closure candidate was proven by GitHub Actions run `35960826621`.
