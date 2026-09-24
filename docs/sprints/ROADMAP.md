@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phases 1–7 VERIFIED COMPLETE.**
+**Sprint 9 IN PROGRESS — Phases 1–8 VERIFIED COMPLETE; final closure pending.**
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
@@ -14,6 +14,7 @@ Canonical Sprint 9 Phase 1 evidence:
 - Phase 5 verification run: `35987236797` — SUCCESS
 - Phase 6 verification run: `36001111468` — SUCCESS
 - Phase 7 verification run: `36001743072` — SUCCESS
+- Phase 8 verification run: `36002106088` — SUCCESS
 - evidence-backed property observations: VERIFIED
 - deterministic property-policy correlation: VERIFIED
 - cross-project provenance rejection: VERIFIED
@@ -67,12 +68,21 @@ Verified Phase 7:
 - confirmedFindingCount fixed at 0: PASS;
 - property values excluded from report/export views: PASS.
 
-Next dependency-ordered milestone:
-1. security-hardening suite for property metadata, policy ambiguity, provenance isolation and mutation safety;
-2. bounded 100 / 1,000 / 10,000 property-policy workspace/report observations;
-3. write performance CSV as engineering evidence only, not benchmark/SLO claims;
-4. retain S5/S6/S7/S8 core and S4/S6/S7/S8/S9 UI regressions;
-5. only after Phase 8 passes, perform final traceability, packaging and Sprint 9 software audit.
+Verified Phase 8:
+- property metadata / provenance / mutation hardening: PASS;
+- exact-one property BODY mutation safety: PASS;
+- report non-confirmation boundary: PASS;
+- 100 / 1,000 / 10,000 property-policy engineering observations: PASS;
+- performance evidence artifact upload: PASS.
+
+Final closure milestone:
+1. freeze the Sprint 9 requirements traceability matrix;
+2. execute full S9 + retained S8/S7/S6 foundations;
+3. run official Maven package and retained Sprint 2/Sprint 3 regressions;
+4. run S4/S6/S7/S8/S9 headless UI regressions;
+5. generate deterministic Sprint 9 source checkpoint, manifest and SHA-256;
+6. verify safe archive paths, no duplicate entries, clean extraction and per-file SHA-256 equality;
+7. publish final software audit only after the dedicated closure gate passes.
 
 Do not claim Burp desktop validation from headless UI tests.
 
