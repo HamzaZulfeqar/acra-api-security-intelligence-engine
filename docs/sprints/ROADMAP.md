@@ -47,11 +47,17 @@ Phase 6 verified by GitHub Actions run `36033267339`:
 - cross-project / attribution mismatch → INCONCLUSIVE: PASS;
 - no automatic confirmed-vulnerability state: PASS.
 
+Phase 7 verified by GitHub Actions run `36033819097`:
+- explicit coverage universe: PASS;
+- lifecycle gap states: PASS;
+- candidate/rejected/inconclusive accounting: PASS;
+- redaction-safe auth-context resource identity: PASS.
+
 Next dependency-ordered milestone:
-1. define the explicit session-context coverage universe;
-2. keep unobserved baselines/rotations/drift contexts visible;
-3. distinguish observed-unassessed, rejected, candidate and inconclusive states;
-4. make coverage deterministic before product UI/reporting.
+1. build one read-only Sprint 10 product workspace from session observations/correlations/assessments/findings/coverage;
+2. add Burp Authentication/Session views without new active execution controls;
+3. keep raw tokens and secret values out of UI projections;
+4. retain real Burp desktop runtime as a separate validation lane.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
