@@ -519,3 +519,21 @@ Phase 4 controlled suite: **22 assertions PASS**. Authoritative gate: GitHub Act
 | TEST-S8-UI-REG-003 | retained Sprint 7 Workflow UI | run `35970306700` | PASS — 20 |
 
 Sprint 8 Routing UI: **17 assertions PASS**. Authoritative gate: GitHub Actions run `35970306700`.
+
+### Sprint 8 Phase 6 — deterministic reporting/export
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S8-REPORT-001 | deterministic routing report identity/model | `Sprint8RoutingReportingExportTestSuite` | PASS |
+| TEST-S8-REPORT-002 | routing/boundary/assessment/candidate aggregation | same suite | PASS |
+| TEST-S8-REPORT-003 | canonical JSON + stable SHA-256 | same suite | PASS |
+| TEST-S8-REPORT-004 | deterministic Markdown review report | same suite | PASS |
+| TEST-S8-REPORT-005 | raw-secret exclusion / redaction | same suite | PASS |
+| TEST-S8-REPORT-006 | `confirmedFindingCount = 0` review-only boundary | same suite | PASS |
+| TEST-S8-REPORT-007 | Reporter plugin adapter | `S8RoutingJsonReporter` | PASS |
+| TEST-S8-REPORT-UI-001 | Routing Report + JSON Export product views | `Sprint8RoutingUiTestSuite` | PASS |
+| TEST-S8-REDACT-001 | embedded Authorization text does not truncate later JSON fields | shared `UniversalRedactor` regression + report suite | PASS |
+| TEST-S8-UI-REG-004 | retained S4/S6/S7 UI after report integration | run `35970917885` | PASS |
+
+Routing reporting/export: **19 assertions PASS**. Routing UI: **23 assertions PASS**.
+Authoritative Phase 6 gate: GitHub Actions run `35970917885`.
