@@ -1,0 +1,128 @@
+{
+  "id": "GT-S11-RESEARCH-LAB-FIXTURES",
+  "version": "1",
+  "scope": "controlled localhost ACRA-Lab only",
+  "independent_of_treatment_output": true,
+  "execution_state": "NOT_RUN",
+  "notes": [
+    "Neutral route identifiers do not encode positive/negative research labels.",
+    "Ground truth lives in this manifest and must not be passed to prediction adapters.",
+    "All fixtures are read-only and synthetic.",
+    "Fixture execution evidence is not an A0-A7 metric result."
+  ],
+  "cases": [
+    {
+      "case_id": "S11-EVAL-003",
+      "route": "/api/v1/s11/research/case-003",
+      "kind": "NEGATIVE_CONTROL",
+      "expected_candidate": false,
+      "secure_expectation": "NO_AUTHORIZATION_CHANGE",
+      "vulnerable_expectation": "NO_AUTHORIZATION_CHANGE",
+      "invariant": "only body timestamp differs between variants a and b"
+    },
+    {
+      "case_id": "S11-EVAL-004",
+      "route": "/api/v1/s11/research/case-004",
+      "kind": "NEGATIVE_CONTROL",
+      "expected_candidate": false,
+      "secure_expectation": "NO_AUTHORIZATION_CHANGE",
+      "vulnerable_expectation": "NO_AUTHORIZATION_CHANGE",
+      "invariant": "only body request_id differs between variants a and b"
+    },
+    {
+      "case_id": "S11-EVAL-005",
+      "route": "/api/v1/s11/research/case-005",
+      "kind": "NEGATIVE_CONTROL",
+      "expected_candidate": false,
+      "secure_expectation": "NO_AUTHORIZATION_CHANGE",
+      "vulnerable_expectation": "NO_AUTHORIZATION_CHANGE",
+      "invariant": "only JSON field ordering differs between variants a and b"
+    },
+    {
+      "case_id": "S11-EVAL-006",
+      "route": "/api/v1/s11/research/case-006",
+      "kind": "NEGATIVE_CONTROL",
+      "expected_candidate": false,
+      "secure_expectation": "NO_AUTHORIZATION_CHANGE",
+      "vulnerable_expectation": "NO_AUTHORIZATION_CHANGE",
+      "invariant": "only JSON whitespace formatting differs between variants a and b"
+    },
+    {
+      "case_id": "S11-EVAL-008",
+      "route": "/api/v1/s11/research/case-008",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "DENY_HTTP_200",
+      "vulnerable_expectation": "ALLOW_FOREIGN_HTTP_200",
+      "invariant": "secure and vulnerable modes use the same HTTP status"
+    },
+    {
+      "case_id": "S11-EVAL-009",
+      "route": "/api/v1/s11/research/case-009",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "SOFT_DENY_HTTP_200",
+      "vulnerable_expectation": "ALLOW_FOREIGN_HTTP_200",
+      "invariant": "secure denial is application-level rather than HTTP 403"
+    },
+    {
+      "case_id": "S11-EVAL-010",
+      "route": "/api/v1/s11/research/case-010",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "DENY_HTTP_200_DYNAMIC_LENGTH",
+      "vulnerable_expectation": "ALLOW_FOREIGN_HTTP_200_DYNAMIC_LENGTH",
+      "invariant": "padding changes body length without changing each mode's authorization meaning"
+    },
+    {
+      "case_id": "S11-EVAL-011",
+      "route": "/api/v1/s11/research/case-011",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "DENY_HTTP_200",
+      "vulnerable_expectation": "ALLOW_FOREIGN_REORDERED_JSON",
+      "invariant": "vulnerable response can reorder fields without changing the foreign-resource meaning"
+    },
+    {
+      "case_id": "S11-EVAL-012",
+      "route": "/api/v1/s11/research/case-012",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "DENY_OPAQUE_REFERENCE",
+      "vulnerable_expectation": "ALLOW_FOREIGN_OPAQUE_RESOURCE",
+      "invariant": "opaque identifier remains stable across secure/vulnerable modes"
+    },
+    {
+      "case_id": "S11-EVAL-013",
+      "route": "/api/v1/s11/research/case-013",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "DENY_NESTED_REFERENCE",
+      "vulnerable_expectation": "ALLOW_FOREIGN_NESTED_RESOURCE",
+      "invariant": "foreign resource is nested rather than top-level"
+    },
+    {
+      "case_id": "S11-EVAL-014",
+      "route": "/api/v1/s11/research/case-014",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "ALLOW_OWNED_COLLECTION",
+      "vulnerable_expectation": "ALLOW_COLLECTION_WITH_FOREIGN_MEMBER",
+      "invariant": "HTTP status remains 200 while unauthorized collection membership changes"
+    },
+    {
+      "case_id": "S11-EVAL-015",
+      "route": "/api/v1/s11/research/case-015",
+      "kind": "POSITIVE_CONTROL",
+      "expected_candidate": true,
+      "secure_expectation": "DENY_CUSTOM_AUTH_CONTEXT",
+      "vulnerable_expectation": "ALLOW_FOREIGN_CUSTOM_AUTH_CONTEXT",
+      "invariant": "synthetic X-S11-Principal header is used instead of Authorization"
+    }
+  ],
+  "summary": {
+    "new_isolated_negative_controls": 4,
+    "new_positive_controls": 8,
+    "total_new_fixtures": 12
+  }
+}
