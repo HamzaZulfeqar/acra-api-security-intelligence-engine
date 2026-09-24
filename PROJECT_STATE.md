@@ -3,13 +3,14 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASE 1 VERIFIED COMPLETE; A0–A7 protocol defined, experiments remain NOT_RUN.  
+**Decision:** S11 PHASES 1–2 VERIFIED COMPLETE; protocol + controlled evaluation dataset registered, experiments remain NOT_RUN.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 10 post-documentation final revalidation:** GitHub Actions run `36056032234` — SUCCESS.  
 **Sprint 10 final-status checkpoint SHA-256:** `f8d15ed72dec06e8e66b14afe749f392a51a3fb628a9e70ebd290ef032df28d4`.  
 **Sprint 11 Phase 1 verification:** GitHub Actions run `36056957706` — SUCCESS at source commit `c4cff92b7668a75db2eb70ea550e7dd807d5a755`.  
+**Sprint 11 Phase 2 verification:** GitHub Actions run `36057476360` — SUCCESS at source commit `dff822e02299b887869bc43923d93a62d9e7d35f`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -37,10 +38,22 @@ Phase 1 deterministic research-ablation protocol is **VERIFIED COMPLETE**:
 - invalid order, missing metrics and fingerprint tampering fail closed;
 - retained S10/S9/S8/S7/S6/S5 foundations remain green.
 
-No A0–A7 metric is currently claimed. Phase 2 must register the controlled evaluation dataset before any research
-execution or result promotion.
+Sprint 11 Phase 2 controlled evaluation dataset registration is **VERIFIED COMPLETE**:
 
-Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 protocol verification.
+- canonical `GT-S11-ABLATION-DATASET` registered;
+- all 15 independently labelled S4 research fixtures included exactly once;
+- ground-truth mapping is derived only from source `expected_candidate` booleans;
+- 8 POSITIVE and 7 NEGATIVE controls;
+- source-case provenance is explicit and deterministic;
+- dataset identity/fingerprint is deterministic;
+- treatment output is explicitly forbidden from modifying ground truth;
+- S6/S7/S8/S9/S10 policy fixtures are excluded because policy ALLOW/DENY is not automatically a vulnerability label;
+- dataset and A0–A7 execution state remain NOT_RUN.
+
+No A0–A7 metric is currently claimed. Phase 3 owns deterministic treatment adapters/prediction contracts; it must
+not execute or publish the full A0–A7 campaign yet.
+
+Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 protocol or dataset verification.
 
 ### Sprint 10 verified progress
 

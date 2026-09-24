@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 11 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
@@ -10,6 +10,7 @@ Canonical Sprint 11 evidence:
 - S10 post-documentation closure run: `36056032234` — SUCCESS;
 - S10 final-status checkpoint SHA-256: `f8d15ed72dec06e8e66b14afe749f392a51a3fb628a9e70ebd290ef032df28d4`;
 - Phase 1 verification run: `36056957706` — SUCCESS at `c4cff92b7668a75db2eb70ea550e7dd807d5a755`;
+- Phase 2 verification run: `36057476360` — SUCCESS at `dff822e02299b887869bc43923d93a62d9e7d35f`;
 - S11 ablation foundation: PASS, 43 assertions;
 - A0–A7 exact cumulative protocol: VERIFIED;
 - required research metric contract: VERIFIED;
@@ -17,12 +18,21 @@ Canonical Sprint 11 evidence:
 - experiment execution state: NOT_RUN;
 - measured A0–A7 metrics: NOT CLAIMED.
 
+Verified Phase 2:
+- canonical controlled dataset manifest: PASS;
+- exact source-label cross-check: PASS;
+- 15 cases = 8 positive + 7 negative: PASS;
+- deterministic case ordering/fingerprint: PASS;
+- independent source provenance: PASS;
+- treatment-output label mutation: FORBIDDEN;
+- A0–A7 execution state: NOT_RUN.
+
 Next dependency-ordered milestone:
-1. define a controlled evaluation dataset manifest;
-2. reuse compatible registered ground truth without changing labels from treatment output;
-3. define deterministic case inclusion/exclusion and ordering;
-4. bind every case to provenance and expected binary research ground truth;
-5. keep A0–A7 execution disabled until dataset validation passes.
+1. define one deterministic prediction adapter contract shared by A0–A7;
+2. guarantee each variant can access only its enabled dimensions;
+3. keep ground truth unavailable to prediction logic;
+4. preserve per-case prediction provenance/evidence references;
+5. verify deterministic predictions without yet aggregating or publishing A0–A7 metrics.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
 

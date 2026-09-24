@@ -16,21 +16,26 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | PROTOCOL_DEFINED | OPEN | NOT_RUN |
-| EXP-A1 | + Identity | PROTOCOL_DEFINED | OPEN | NOT_RUN |
-| EXP-A2 | + Ownership | PROTOCOL_DEFINED | OPEN | NOT_RUN |
-| EXP-A3 | + Tenant | PROTOCOL_DEFINED | OPEN | NOT_RUN |
-| EXP-A4 | + Role | PROTOCOL_DEFINED | OPEN | NOT_RUN |
-| EXP-A5 | + Workflow | PROTOCOL_DEFINED | OPEN | NOT_RUN |
-| EXP-A6 | + Semantic evidence | PROTOCOL_DEFINED | OPEN | NOT_RUN |
-| EXP-A7 | Full ACRA correlation | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A0 | Naive differential baseline | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A1 | + Identity | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A2 | + Ownership | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A3 | + Tenant | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A4 | + Role | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A5 | + Workflow | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A6 | + Semantic evidence | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A7 | Full ACRA correlation | DATASET_REGISTERED | GT-S11-ABLATION-DATASET | NOT_RUN |
 
 ## Sprint 11 protocol status — 2026-09-25
 
 GitHub Actions run `36056957706` verified the machine-enforced A0–A7 protocol contract. Registry state
-`PROTOCOL_DEFINED` means the treatment definition is executable and deterministic; it does **not** mean the
-experiment ran. Dataset remains OPEN and all A0–A7 results remain NOT_RUN until a controlled dataset manifest and
-execution evidence are separately verified.
+`DATASET_REGISTERED` means both the deterministic treatment protocol and controlled independently labelled dataset are registered; it does **not** mean the experiment ran. All A0–A7 results remain NOT_RUN until treatment adapters and controlled execution evidence are separately verified.
+
+## Sprint 11 dataset status — 2026-09-25
+
+GitHub Actions run `36057476360` verified `GT-S11-ABLATION-DATASET`: 15 source-backed cases, 8 POSITIVE and
+7 NEGATIVE. Labels are cross-checked against independent S4 `expected_candidate` booleans. S6–S10 policy fixtures
+remain excluded from binary vulnerability labelling. No A0–A7 prediction or metric result is claimed by dataset
+registration.
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 

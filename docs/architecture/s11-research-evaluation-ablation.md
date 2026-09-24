@@ -21,7 +21,7 @@ S11AblationProtocol
         +--> A7 + evidence correlation
         |
         v
-future registered evaluation dataset
+S11EvaluationDatasetManifest
         |
         v
 future controlled treatment adapters
@@ -58,8 +58,27 @@ machine-auditable and prevents “full” from becoming an undefined label.
 GitHub Actions run `36056957706` — SUCCESS at
 `c4cff92b7668a75db2eb70ea550e7dd807d5a755`.
 
-## Phase 2 dependency
+## Phase 2 dataset boundary
 
-The protocol is intentionally dataset-independent. Phase 2 must register a controlled dataset manifest with
-independent labels, provenance, inclusion/exclusion rules and deterministic case ordering before treatment
-execution is enabled.
+Sprint 11 now registers `GT-S11-ABLATION-DATASET` and a deterministic
+`S11EvaluationDatasetManifest`.
+
+Phase 2 invariants:
+
+1. Dataset labels are independent of treatment output.
+2. Every dataset case points back to exactly one source case in `GT-S4-RESEARCH-FIXTURES`.
+3. Source `expected_candidate=true` maps to POSITIVE and `false` maps to NEGATIVE.
+4. All 15 source cases are included exactly once.
+5. Dataset composition is 8 POSITIVE and 7 NEGATIVE controls.
+6. Dataset order, identity and fingerprint are deterministic.
+7. The dataset manifest cannot self-promote execution from NOT_RUN.
+8. S6–S10 policy-decision fixtures are excluded from binary vulnerability labelling unless a separate mapping is registered.
+9. Dataset registration does not calculate or publish A0–A7 metrics.
+
+Phase 2 verification: GitHub Actions run `36057476360` — SUCCESS at
+`dff822e02299b887869bc43923d93a62d9e7d35f`.
+
+## Phase 3 dependency
+
+Treatment adapters must consume case evidence and enabled ablation dimensions without receiving the independent
+ground-truth label as prediction input. Prediction generation and metric aggregation remain separate boundaries.

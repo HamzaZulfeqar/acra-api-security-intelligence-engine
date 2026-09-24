@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phase 1 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -81,8 +81,46 @@ Phase 1 does **not** claim:
 
 The registry state is **PROTOCOL_DEFINED / NOT_RUN**.
 
+## Phase 2 — controlled evaluation dataset manifest
+
+Implemented:
+
+- `GT-S11-ABLATION-DATASET`;
+- `ResearchDatasetCase`;
+- `S11EvaluationDatasetManifest`;
+- deterministic 15-case ordering and dataset fingerprint;
+- source provenance to `GT-S4-RESEARCH-FIXTURES`;
+- exact source-label cross-check against `expected_candidate`;
+- binary mapping: `true → POSITIVE`, `false → NEGATIVE`;
+- 8 positive / 7 negative controls;
+- explicit `NOT_RUN` state;
+- explicit exclusion of S6–S10 policy ground truth from binary vulnerability labelling;
+- fail-closed duplicate-source, single-class, self-promotion and fingerprint-tamper checks.
+
+Why only the S4 research fixture is admitted:
+
+`GT-S4-RESEARCH-FIXTURES` already declares an independent binary `expected_candidate` value for every case.
+S6–S10 fixtures declare authorization policy outcomes such as ALLOW/DENY/INCONCLUSIVE; those are not automatically
+equivalent to vulnerability-positive/vulnerability-negative research labels. Sprint 11 therefore excludes them
+until a separate research-label mapping is explicitly registered.
+
+### Phase 2 verification
+
+GitHub Actions run `36057476360`: **SUCCESS** at source commit
+`dff822e02299b887869bc43923d93a62d9e7d35f`.
+
+Verified:
+
+- JSON source/manifest cross-check: PASS, 15 cases / 8 positive / 7 negative;
+- `Sprint11EvaluationDatasetManifestTestSuite`: PASS, 41 assertions;
+- Phase 1 ablation foundation: PASS, 43 assertions;
+- exact Java 21 compilation with warnings as errors: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 2 must define a controlled, independently labelled evaluation dataset manifest before any A0–A7 metric can
-be produced. It must reuse registered ground truth where compatible, preserve case provenance, prevent treatment
-output from becoming ground truth, and keep dataset selection deterministic and reviewable.
+Phase 3 must implement deterministic treatment/prediction adapters for A0–A7. Those adapters may transform
+registered case evidence into `ResearchPrediction` values, but Phase 3 must still keep the overall campaign
+state NOT_RUN and must not publish measured A0–A7 metrics until a later controlled execution phase.
