@@ -537,3 +537,22 @@ Sprint 8 Routing UI: **17 assertions PASS**. Authoritative gate: GitHub Actions 
 
 Routing reporting/export: **19 assertions PASS**. Routing UI: **23 assertions PASS**.
 Authoritative Phase 6 gate: GitHub Actions run `35970917885`.
+
+### Sprint 8 Phase 7 — security hardening and performance
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S8-SEC-PATH-001 | query/fragment leakage rejected at route-stage boundary | `Sprint8RoutingSecurityHardeningTestSuite` | PASS |
+| TEST-S8-SEC-PROVENANCE-001 | provenance-free route stage rejected | same suite | PASS |
+| TEST-S8-SEC-HOST-001 | scheme/path/user-info host values rejected | same suite | PASS |
+| TEST-S8-SEC-STAGE-001 | duplicate processing stage rejected | same suite | PASS |
+| TEST-S8-SEC-INCONCLUSIVE-001 | unknown auth / stage gaps fail closed | same suite | PASS |
+| TEST-S8-SEC-CANDIDATE-001 | route-stable auth change not promoted as routing candidate | same suite | PASS |
+| TEST-S8-SEC-MUTATION-001 | non-equivalent/authority/fragment URI mutations rejected | same suite | PASS |
+| TEST-S8-SEC-REDACT-001 | embedded bearer redaction preserves subsequent report fields | same suite | PASS |
+| TEST-S8-SEC-REPORT-001 | report confirmation count remains zero | same suite | PASS |
+| TEST-S8-PERF-001 | 100 routing contexts analyze/report | `Sprint8RoutingPerformanceObservationTestSuite` | PASS |
+| TEST-S8-PERF-002 | 1,000 routing contexts analyze/report | same suite | PASS |
+| TEST-S8-PERF-003 | 10,000 routing contexts analyze/report | same suite | PASS |
+
+Authoritative Phase 7 gate: GitHub Actions run `35971212640`. Timing and memory values are observational only.
