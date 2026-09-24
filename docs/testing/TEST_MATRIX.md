@@ -469,3 +469,20 @@ Closure candidate checkpoint SHA-256 from run `35960826621`: `0f69ce2e770dc5010f
 | TEST-S8-REG-002 | retained Sprint 7 foundation | run `35965612498` | PASS |
 
 Authoritative Phase 2 gate: GitHub Actions run `35965612498`.
+
+
+### Sprint 8 Phase 3 — controlled route-equivalence execution
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S8-LAB-001 | controlled routing ground truth | `GT-S8-ROUTING-NORMALIZATION.json` | PASS — 3 cases |
+| TEST-S8-ACTIVE-001 | canonical → duplicate-separator URI mutation | `Sprint8ControlledRoutingDifferentialTestSuite` | PASS |
+| TEST-S8-ACTIVE-002 | equivalent-route mutation uses existing `UriMutationAdapter` | same suite | PASS |
+| TEST-S8-ACTIVE-003 | explicit localhost scope includes both route representations | existing `HardScopeGuard` + controlled target | PASS |
+| TEST-S8-ACTIVE-004 | secure fixture preserves viewer DENY | run `35966112820` | PASS — DENY / `NO_CHANGE` |
+| TEST-S8-ACTIVE-005 | deliberately vulnerable fixture exposes normalization authorization mismatch | run `35966112820` | PASS — ALLOW / `UNEXPECTED_CHANGE` |
+| TEST-S8-ACTIVE-006 | raw bearer material excluded from serialized routing test | focused suite | PASS |
+| TEST-S8-REG-003 | retained Sprint 3 core | run `35966112820` | PASS — 47 tests |
+| TEST-S8-REG-004 | retained Sprint 7 foundation through performance suites | run `35966112820` | PASS |
+
+Phase 3 focused active suite: **10 assertions PASS**. Authoritative gate: GitHub Actions run `35966112820`.
