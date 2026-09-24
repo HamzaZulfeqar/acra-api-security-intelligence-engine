@@ -41,11 +41,17 @@ Phase 5 verified by GitHub Actions run `36032923048`:
 - verified context-drift candidate assessment: PASS;
 - unverified or provenance-invalid drift remains inconclusive: PASS.
 
+Phase 6 verified by GitHub Actions run `36033267339`:
+- safe token rotation finding projection → REJECTED: PASS;
+- verified context-drift finding projection → CANDIDATE: PASS;
+- cross-project / attribution mismatch → INCONCLUSIVE: PASS;
+- no automatic confirmed-vulnerability state: PASS.
+
 Next dependency-ordered milestone:
-1. project only provenance-valid session drift assessments into the existing FindingCandidate model;
-2. preserve safe rotation as rejected/non-finding state;
-3. keep unverified/provenance-invalid session changes inconclusive;
-4. prohibit automatic confirmed-vulnerability promotion.
+1. define the explicit session-context coverage universe;
+2. keep unobserved baselines/rotations/drift contexts visible;
+3. distinguish observed-unassessed, rejected, candidate and inconclusive states;
+4. make coverage deterministic before product UI/reporting.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
