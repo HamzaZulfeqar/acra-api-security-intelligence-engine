@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
+**Sprint 9 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
@@ -10,6 +10,7 @@ Canonical Sprint 9 Phase 1 evidence:
 - Phase 1 verification run: `35985518829` — SUCCESS
 - Phase 2 verification run: `35986020761` — SUCCESS
 - Phase 3 verification run: `35986668193` — SUCCESS
+- Phase 4 verification run: `35986888660` — SUCCESS
 - evidence-backed property observations: VERIFIED
 - deterministic property-policy correlation: VERIFIED
 - cross-project provenance rejection: VERIFIED
@@ -34,14 +35,21 @@ Verified Phase 3:
 - live executor evidence → property policy assessment: PASS;
 - cross-project provenance rejection: PASS.
 
-Next dependency-ordered milestone:
-1. reuse the existing FindingCandidate domain model;
-2. require verified execution/test/observation/evidence provenance;
-3. project DENY→ALLOW property mismatches as review-only candidates;
-4. reject secure controls;
-5. remain INCONCLUSIVE when provenance or policy attribution is incomplete.
+Verified Phase 4:
+- property-specific FindingCandidate projector: PASS;
+- secure verified control → REJECTED: PASS;
+- verified DENY→ALLOW property mismatch → CANDIDATE: PASS;
+- cross-project provenance → INCONCLUSIVE: PASS;
+- no automatic confirmed-vulnerability state: PASS.
 
-Do not start property UI/reporting until Phase 4 finding projection is verified.
+Next dependency-ordered milestone:
+1. define the explicit property-policy universe supplied to an assessment;
+2. account for observed, assessed, candidate, rejected, inconclusive and unobserved property-policy combinations;
+3. keep READ and UPDATE coverage distinct;
+4. never interpret missing coverage as a secure result;
+5. expose deterministic coverage snapshots for later UI/reporting.
+
+Do not start property UI/reporting until Phase 5 coverage accounting is verified.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
