@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–3 VERIFIED COMPLETE; protocol + dataset + prediction adapters verified, experiments remain NOT_RUN.  
+**Decision:** S11 PHASES 1–4 VERIFIED COMPLETE; protocol + dataset + adapters + 120-cell campaign plan verified, experiments remain NOT_RUN.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -12,6 +12,7 @@
 **Sprint 11 Phase 1 verification:** GitHub Actions run `36056957706` — SUCCESS at source commit `c4cff92b7668a75db2eb70ea550e7dd807d5a755`.  
 **Sprint 11 Phase 2 verification:** GitHub Actions run `36057476360` — SUCCESS at source commit `dff822e02299b887869bc43923d93a62d9e7d35f`.  
 **Sprint 11 Phase 3 verification:** GitHub Actions run `36057869888` — SUCCESS at source commit `dc3c081bf033b14afcea3185c3d54fb241be1772`.  
+**Sprint 11 Phase 4 verification:** GitHub Actions run `36058274408` — SUCCESS at source commit `88f7cd78161267a1900ef4b663258938ee208d9b`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -60,6 +61,17 @@ Sprint 11 Phase 3 deterministic treatment/prediction adapters are **VERIFIED COM
 - duplicate dimension evidence is rejected;
 - result identity/fingerprint is deterministic;
 - prediction result evidence remains explicit and ordered.
+
+Sprint 11 Phase 4 deterministic campaign planning is **VERIFIED COMPLETE**:
+
+- exact campaign denominator: 15 registered dataset cases × 8 ablation variants = 120 cells;
+- deterministic case-major / A0→A7 ordering;
+- deterministic unique cell IDs;
+- required dimensions tied exactly to the verified protocol;
+- initial coverage state: 120 PLANNED, 0 EVIDENCE_READY, 0 EXECUTED, 0 INCONCLUSIVE, 0 BLOCKED;
+- campaign cell schema contains neither ground truth nor prediction fields;
+- duplicate case/variant cells and protocol-dimension drift fail closed;
+- campaign plan identity/fingerprint is deterministic.
 
 No A0–A7 metric is currently claimed. Existing ACRA-Lab source does not yet implement all 15 registered research
 fixtures as executable evidence-producing cases, so measured campaign execution remains blocked by that evidence

@@ -114,7 +114,36 @@ Phase 3 invariants:
 Phase 3 verification: GitHub Actions run `36057869888` — SUCCESS at
 `dc3c081bf033b14afcea3185c3d54fb241be1772`.
 
-## Phase 4 dependency
+## Phase 4 campaign-plan boundary
 
-A deterministic campaign matrix must enumerate every dataset-case × variant pair before execution. This creates a
-fixed denominator and makes missing evidence/execution visible without treating planned cells as measured results.
+`S11AblationCampaignPlan` fixes the experiment denominator before evidence collection:
+
+```text
+15 dataset cases
+      x
+8 ablation variants
+      =
+120 deterministic campaign cells
+```
+
+Each cell carries only case ID, variant ID, required dimensions and lifecycle state. It carries neither
+`ResearchGroundTruth` nor a prediction.
+
+Phase 4 invariants:
+
+1. Every dataset case has exactly eight A0–A7 cells.
+2. Every variant spans exactly fifteen cases.
+3. Required dimensions must match the verified protocol exactly.
+4. Cell IDs and campaign fingerprints are deterministic.
+5. Initial canonical coverage is 120 PLANNED and 0 EXECUTED.
+6. Planning cannot generate research metrics.
+7. Ground truth remains outside the campaign-cell schema.
+8. Duplicate case/variant cells fail closed.
+
+Phase 4 verification: GitHub Actions run `36058274408` — SUCCESS at
+`88f7cd78161267a1900ef4b663258938ee208d9b`.
+
+## Phase 5 dependency
+
+Evidence readiness must be assessed against actual lab/extractor support. A cell may move from PLANNED only when
+the evidence required by its variant can be produced without consulting the independent ground-truth label.

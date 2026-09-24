@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–3 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–4 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -160,8 +160,50 @@ Repository inspection after Phase 3 confirmed that the current S4 ACRA-Lab expos
 described by the 15-case research fixture. Therefore Sprint 11 does **not** promote the campaign to executed and
 does not manufacture per-dimension evidence.
 
+## Phase 4 — deterministic campaign plan and coverage denominator
+
+Implemented:
+
+- `AblationCampaignCellState`;
+- `AblationCampaignCell`;
+- `AblationCampaignCoverage`;
+- `S11AblationCampaignPlan`;
+- exact 15 × 8 = 120 campaign cells;
+- deterministic case-major ordering with A0→A7 inside each case;
+- deterministic unique cell IDs;
+- required dimensions bound to the verified protocol;
+- explicit campaign states: PLANNED / EVIDENCE_READY / EXECUTED / INCONCLUSIVE / BLOCKED;
+- canonical initial state with all 120 cells PLANNED;
+- no ground-truth or prediction fields in campaign cells;
+- duplicate-cell and protocol-dimension-drift rejection.
+
+### Phase 4 verification
+
+GitHub Actions run `36058274408`: **SUCCESS** at source commit
+`88f7cd78161267a1900ef4b663258938ee208d9b`.
+
+Verified:
+
+- `Sprint11AblationCampaignPlanTestSuite`: PASS, 416 assertions;
+- Phase 3 prediction adapter: PASS, 59 assertions;
+- Phase 2 dataset manifest: PASS, 41 assertions;
+- Phase 1 protocol foundation: PASS, 43 assertions;
+- exact Java 21 compilation with warnings as errors: PASS;
+- Maven core `test-compile`: PASS.
+
+Canonical campaign coverage after planning:
+
+- total: 120;
+- PLANNED: 120;
+- EVIDENCE_READY: 0;
+- EXECUTED: 0;
+- INCONCLUSIVE: 0;
+- BLOCKED: 0.
+
+Phase 4 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 4 will create a deterministic campaign plan/coverage matrix for all 15 dataset cases × 8 ablation variants
-(120 planned cells). The plan will keep every cell PLANNED, expose evidence-readiness gaps explicitly, and provide
-the execution denominator without producing research metrics.
+Phase 5 must establish evidence-readiness for the 15 registered cases against actual ACRA-Lab support. It must mark
+ready vs missing fixture coverage explicitly and may not transition any campaign cell to EXECUTED until required
+baseline/dimension evidence can be produced without ground-truth leakage.

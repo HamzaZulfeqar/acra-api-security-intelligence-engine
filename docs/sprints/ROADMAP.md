@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
+**Sprint 11 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
@@ -12,6 +12,7 @@ Canonical Sprint 11 evidence:
 - Phase 1 verification run: `36056957706` — SUCCESS at `c4cff92b7668a75db2eb70ea550e7dd807d5a755`;
 - Phase 2 verification run: `36057476360` — SUCCESS at `dff822e02299b887869bc43923d93a62d9e7d35f`;
 - Phase 3 verification run: `36057869888` — SUCCESS at `dc3c081bf033b14afcea3185c3d54fb241be1772`;
+- Phase 4 verification run: `36058274408` — SUCCESS at `88f7cd78161267a1900ef4b663258938ee208d9b`;
 - S11 ablation foundation: PASS, 43 assertions;
 - A0–A7 exact cumulative protocol: VERIFIED;
 - required research metric contract: VERIFIED;
@@ -41,12 +42,21 @@ Execution readiness finding:
 - current S4 ACRA-Lab does not expose all 15 research fixture behaviors as executable cases;
 - full A0–A7 metric execution therefore remains blocked by controlled evidence collection, not by prediction software.
 
+Verified Phase 4:
+- exact 120-cell campaign denominator: PASS;
+- deterministic cell identity/order: PASS;
+- protocol-dimension binding: PASS;
+- initial coverage = 120 PLANNED / 0 EXECUTED: PASS;
+- campaign cell ground-truth/prediction exclusion: PASS;
+- campaign-plan suite: PASS, 416 assertions;
+- research metrics: NOT_RUN / NOT CLAIMED.
+
 Next dependency-ordered milestone:
-1. generate the exact 15×8 = 120-cell campaign plan;
-2. assign deterministic cell identities and required dimensions;
-3. expose planned/executable/executed/inconclusive coverage states;
-4. keep every initial cell PLANNED;
-5. calculate no research metric from planned cells.
+1. register evidence-readiness per dataset case from actual lab support;
+2. distinguish READY / MISSING_FIXTURE / PARTIAL without inferring readiness;
+3. map readiness to campaign cells without executing them;
+4. expand controlled lab fixtures only where the registered dataset lacks executable evidence support;
+5. keep metrics disabled until evidence completeness is sufficient for a controlled campaign.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
 

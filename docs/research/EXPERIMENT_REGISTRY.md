@@ -16,14 +16,14 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A1 | + Identity | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A2 | + Ownership | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A3 | + Tenant | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A4 | + Role | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A5 | + Workflow | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A6 | + Semantic evidence | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A7 | Full ACRA correlation | ADAPTER_VERIFIED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A0 | Naive differential baseline | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A1 | + Identity | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A2 | + Ownership | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A3 | + Tenant | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A4 | + Role | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A5 | + Workflow | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A6 | + Semantic evidence | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A7 | Full ACRA correlation | CAMPAIGN_PLANNED | GT-S11-ABLATION-DATASET | NOT_RUN |
 
 ## Sprint 11 protocol status — 2026-09-25
 
@@ -42,6 +42,12 @@ registration.
 GitHub Actions run `36057869888` verified the ground-truth-free A0–A7 prediction adapter contract. State
 `ADAPTER_VERIFIED` means treatment filtering/prediction software is verified; it does **not** mean any A0–A7
 campaign cell executed. Full research results remain NOT_RUN.
+
+## Sprint 11 campaign-plan status — 2026-09-25
+
+GitHub Actions run `36058274408` verified the fixed 120-cell A0–A7 campaign denominator. State
+`CAMPAIGN_PLANNED` means every dataset-case × variant cell exists deterministically; all cells remain PLANNED and
+no experiment result has executed or been measured.
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
