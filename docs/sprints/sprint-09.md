@@ -149,3 +149,50 @@ Phase 2 is **VERIFIED COMPLETE**.
 
 Sprint 9 remains IN PROGRESS. Phase 3 must reuse the existing S4 planner/safety/executor path for controlled
 property mutation; it must not introduce an ad-hoc HTTP execution engine.
+
+
+## Phase 3 — existing active-engine property execution integration
+
+Implemented:
+
+- reuse of existing `TestContract.PROPERTY`;
+- reuse of existing `MutationType.PROPERTY`;
+- reuse of existing BODY mutation support and exact-one replacement;
+- reuse of `RequestEquivalenceGuard`, planner, queue, consent, scope, budget, concurrency, rate-limit and kill-switch gates;
+- `STATE_CHANGING` classification for the controlled privileged property update;
+- authorized localhost LAB target only;
+- no destructive-operation approval path used;
+- `Sprint9ControlledPropertyExecutionTestSuite`;
+- secure fixture: explicit property policy DENY, observed DENY;
+- deliberately vulnerable fixture: explicit property policy DENY, observed ALLOW;
+- executor evidence converted to object references for property-policy validation;
+- cross-project live evidence fails closed;
+- raw synthetic bearer material excluded from serialized test state.
+
+During Phase 3 integration, a provenance-boundary mismatch was identified: executor `Observation.evidenceIds()`
+contain evidence-chain IDs, while `EvidenceReferenceValidator.validateEvidenceReferences` validates stored object
+references. Sprint 9 now follows the existing Sprint 8 pattern by validating evidence object references and
+Observation lineage independently rather than weakening either invariant.
+
+### Phase 3 verification
+
+GitHub Actions run `35986668193`: **SUCCESS** at commit
+`abfb40e4e0b754d231a15b136576ac5474b8f380`.
+
+Verified:
+
+- exact Java 21 compilation with warnings as errors: PASS;
+- Sprint 9 Phase 1 foundation: PASS;
+- controlled property lab: PASS;
+- controlled active property execution: PASS;
+- secure DENY path: PASS;
+- vulnerable ALLOW / unexpected differential path: PASS;
+- live evidence → property assessment correlation: PASS;
+- cross-project provenance rejection: PASS;
+- retained Sprint 5/6/7/8 foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 3 is **VERIFIED COMPLETE**.
+
+Sprint 9 remains IN PROGRESS. Phase 4 must project provenance-verified property assessments into the existing
+review-only `FindingCandidate` model without adding an automatic confirmed-vulnerability state.
