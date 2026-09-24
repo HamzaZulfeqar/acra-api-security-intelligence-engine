@@ -1,6 +1,6 @@
 # Sprint 12 — Reproduction Export & Interoperability
 
-Status: **IN PROGRESS — Phases 1–4 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–5 VERIFIED; final closure pending**  
 Branch: `s12-reproduction-export-interoperability`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
@@ -110,8 +110,37 @@ Verification:
 - promotion run `36073182973`: SUCCESS at `2f893b6b4a8fb10ea752dd7308f74a8404b644bb`;
 - capability state: **IMPLEMENTED_RUNTIME_UNVERIFIED**.
 
+## Phase 5 — cross-format interoperability and security hardening
+
+Implemented:
+
+- `ReproductionInteroperabilityBundle`;
+- `ReproductionInteroperabilityService`;
+- deterministic JSON / SARIF / Burp Issue bundle identity;
+- package/candidate/evidence lineage consistency validation;
+- review-only consistency validation;
+- exact capability-state validation;
+- secret-redaction checks across every output surface;
+- fail-closed invalid lifecycle/origin/artifact checks.
+
+### Verification
+
+Run `36073674429`: **SUCCESS** at `7f29fbba178f1e3a4461e40503f79d53719a5a5f`.
+
+- foundation: PASS, 24 assertions;
+- JSON: PASS, 21 assertions;
+- SARIF: PASS, 28 assertions;
+- Burp Issue: PASS, 23 assertions;
+- interoperability hardening: PASS, 39 assertions;
+- official Montoya adapter compilation: PASS;
+- Maven core compilation: PASS.
+
+Phase 5 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 5 must harden cross-format interoperability: one candidate must project consistently across JSON, SARIF and
-Burp Issue; secrets must remain absent across all surfaces; capability states must remain exact; and invalid
-candidate/evidence/origin inputs must fail closed. After Phase 5, Sprint 12 can enter final closure.
+Sprint 12 now enters final closure. The closure must re-run the complete Sprint 12 verifier, retained Sprint 11
+software verification, full Maven packaging, Sprint 2/Sprint 3 regressions, retained headless UI regressions,
+deterministic source packaging, safe-path/duplicate validation, clean extraction and per-file SHA-256 equality.
+
+Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** validation lane.
