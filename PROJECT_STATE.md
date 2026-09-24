@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–9 VERIFIED COMPLETE; controlled A0–A7 evaluation is measured on the registered 15-case dataset.  
+**Decision:** S11 PHASES 1–10 VERIFIED COMPLETE; controlled A0–A7 evaluation reporting/export is deterministic and archived.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -18,6 +18,7 @@
 **Sprint 11 Phase 7 verification:** GitHub Actions run `36064434979` — SUCCESS at source commit `9f9af8ce15e5035def2605c98d8f8153728c3eed`.  
 **Sprint 11 Phase 8 verification:** GitHub Actions run `36064798175` — SUCCESS at source commit `c742014ab97d024be42425fb4e49866f565389ec`.  
 **Sprint 11 Phase 9 verification:** GitHub Actions run `36065439110` — SUCCESS at source commit `2f17a994e4c481b48ae8ff11734a2ee17e32b84d`.  
+**Sprint 11 Phase 10 verification:** GitHub Actions run `36065934911` — SUCCESS at source commit `bcc41630fa4d7c9a4f11023e9aeb8b6561f67310`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -147,8 +148,21 @@ using semantic equivalence to suppress raw-difference-only false positives.
 These results are valid **only for the registered 15-case controlled synthetic localhost dataset**. They do not
 establish real-world API-scanner accuracy, production vulnerability prevalence, external-target safety, or novelty.
 
-The next dependency is deterministic evaluation reporting/export with immutable provenance and explicit scope
-limitations, followed by Sprint 11 security/reproducibility review and closure.
+Sprint 11 Phase 10 deterministic research reporting/export is **VERIFIED COMPLETE**:
+
+- minimized `s11-research-evaluation-report-v1` schema;
+- protocol/dataset/prediction/evaluation provenance retained;
+- per-variant TP/TN/FP/FN, precision, recall, F1 and evidence completeness retained;
+- raw HTTP bodies, credentials and synthetic token material excluded;
+- canonical JSON + deterministic Markdown exports;
+- JSON SHA-256: `595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d`;
+- Markdown SHA-256: `1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`;
+- report/export suite: PASS, 31 assertions;
+- CI report artifact upload: PASS.
+
+The next dependency is Sprint 11 final security/reproducibility review and closure. Closure must re-run the complete
+S11 verification stack, retained regressions, official Maven packaging, deterministic source checkpointing and
+archive integrity checks before SOFTWARE COMPLETE can be claimed.
 
 Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 software verification.
 
