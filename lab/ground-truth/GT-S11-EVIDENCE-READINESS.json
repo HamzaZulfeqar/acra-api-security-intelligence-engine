@@ -1,0 +1,141 @@
+{
+  "id": "GT-S11-EVIDENCE-READINESS",
+  "version": "1",
+  "dataset_id": "GT-S11-ABLATION-DATASET",
+  "execution_state": "NOT_RUN",
+  "scope": "controlled localhost ACRA-Lab evidence-readiness only",
+  "cases": [
+    {
+      "case_id": "S11-EVAL-001",
+      "source_case_id": "S4-FP-PUBLIC",
+      "state": "READY",
+      "routes": ["/api/v1/s4/public"],
+      "evidence": ["GT-EXEC-S4#false_positive_preparation:public resource", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "reason": "public-resource endpoint exists and is exercised as a live false-positive control"
+    },
+    {
+      "case_id": "S11-EVAL-002",
+      "source_case_id": "S4-FP-SOFT-DENY",
+      "state": "READY",
+      "routes": ["/api/v1/s4/application-denial"],
+      "evidence": ["GT-EXEC-S4#false_positive_preparation:HTTP 200 application denial", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "reason": "live HTTP 200 application denial is explicitly normalized to DENY"
+    },
+    {
+      "case_id": "S11-EVAL-003",
+      "source_case_id": "S4-FP-TIMESTAMP",
+      "state": "PARTIAL",
+      "routes": ["/api/v1/s4/documents/Document-A"],
+      "evidence": ["GT-EXEC-S4#false_positive_preparation:dynamic timestamp", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "reason": "dynamic timestamp is present but current live test changes timestamp and request_id together"
+    },
+    {
+      "case_id": "S11-EVAL-004",
+      "source_case_id": "S4-FP-REQUEST-ID",
+      "state": "PARTIAL",
+      "routes": ["/api/v1/s4/documents/Document-A"],
+      "evidence": ["GT-EXEC-S4#false_positive_preparation:dynamic request identifier", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "reason": "dynamic request_id is present but current live test changes request_id and timestamp together"
+    },
+    {
+      "case_id": "S11-EVAL-005",
+      "source_case_id": "S4-FP-ORDERING",
+      "state": "PARTIAL",
+      "routes": ["/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"],
+      "evidence": ["GT-EXEC-S4#false_positive_preparation:response ordering and formatting variation", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "reason": "variant pair changes field order and formatting together rather than isolating ordering"
+    },
+    {
+      "case_id": "S11-EVAL-006",
+      "source_case_id": "S4-FP-FORMATTING",
+      "state": "PARTIAL",
+      "routes": ["/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"],
+      "evidence": ["GT-EXEC-S4#false_positive_preparation:response ordering and formatting variation", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "reason": "variant pair changes formatting and field order together rather than isolating formatting"
+    },
+    {
+      "case_id": "S11-EVAL-007",
+      "source_case_id": "S4-FP-REPRESENTATION",
+      "state": "READY",
+      "routes": ["/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"],
+      "evidence": ["GT-EXEC-S4#false_positive_preparation:public resource", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "reason": "same public resource is exercised in two raw representations and verified semantically equivalent"
+    },
+    {
+      "case_id": "S11-EVAL-008",
+      "source_case_id": "S4-FN-SAME-STATUS",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    },
+    {
+      "case_id": "S11-EVAL-009",
+      "source_case_id": "S4-FN-SOFT-DENIAL",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    },
+    {
+      "case_id": "S11-EVAL-010",
+      "source_case_id": "S4-FN-DYNAMIC-LENGTH",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    },
+    {
+      "case_id": "S11-EVAL-011",
+      "source_case_id": "S4-FN-REORDERED-JSON",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    },
+    {
+      "case_id": "S11-EVAL-012",
+      "source_case_id": "S4-FN-OPAQUE-ID",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    },
+    {
+      "case_id": "S11-EVAL-013",
+      "source_case_id": "S4-FN-NESTED",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    },
+    {
+      "case_id": "S11-EVAL-014",
+      "source_case_id": "S4-FN-COLLECTION",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    },
+    {
+      "case_id": "S11-EVAL-015",
+      "source_case_id": "S4-FN-NONSTANDARD-AUTH",
+      "state": "MISSING_FIXTURE",
+      "routes": [],
+      "evidence": [],
+      "reason": "no dedicated executable fixture currently maps this positive research case"
+    }
+  ],
+  "summary": {
+    "cases": 15,
+    "ready": 3,
+    "partial": 4,
+    "missing_fixture": 8,
+    "executed": 0
+  },
+  "notes": [
+    "Fixture readiness is not ablation-dimension evidence readiness.",
+    "No campaign cell is promoted to EVIDENCE_READY by this manifest alone.",
+    "No A0-A7 experiment has executed and no research metric is measured."
+  ]
+}
