@@ -1,0 +1,16 @@
+{
+  "id": "GT-S8-ROUTING-NORMALIZATION",
+  "scope": "controlled localhost ACRA-Lab only",
+  "version": "1",
+  "route_family": "/api/v1/s8/admin",
+  "notes": [
+    "Ground truth is declared independently of observed HTTP responses.",
+    "Equivalent URI representations must preserve the same authorization decision.",
+    "A routing differential is an observation and is not automatically a confirmed vulnerability."
+  ],
+  "cases": [
+    {"id":"S8-GT-001","path":"/api/v1/s8/admin","role":"viewer","expected":"DENY","label":"CANONICAL_VIEWER_DENY"},
+    {"id":"S8-GT-002","path":"/api//v1/s8/admin","role":"viewer","expected":"DENY","label":"EQUIVALENT_ROUTE_VIEWER_DENY"},
+    {"id":"S8-GT-003","path":"/api/v1/s8/admin","role":"admin","expected":"ALLOW","label":"CANONICAL_ADMIN_ALLOW"}
+  ]
+}
