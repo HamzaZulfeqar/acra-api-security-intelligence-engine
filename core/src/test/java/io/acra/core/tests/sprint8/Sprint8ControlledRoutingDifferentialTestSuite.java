@@ -24,6 +24,7 @@ import io.acra.core.active.model.TargetDescriptor;
 import io.acra.core.active.model.TestContract;
 import io.acra.core.active.model.TestProfile;
 import io.acra.core.active.model.TestProfileDefinition;
+import io.acra.core.active.model.UserMode;
 import io.acra.core.active.planning.PlanningInput;
 import io.acra.core.active.planning.TestSeed;
 import io.acra.core.active.product.ActiveEngineWorkspace;
@@ -132,6 +133,7 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
         Clock clock = Clock.fixed(NOW, ZoneOffset.UTC);
         Harness harness = harness(clock, port);
         ActiveEngineWorkspace workspace = new ActiveEngineWorkspace(clock, harness.executor());
+        workspace.configureMode(UserMode.RESEARCHER);
         workspace.configureProfile(TestProfile.ROUTING_DIFFERENTIAL);
         var planning = workspace.plan(planningInput(port));
         TestSupport.assertEquals(1, planning.plan().tests().size(),
