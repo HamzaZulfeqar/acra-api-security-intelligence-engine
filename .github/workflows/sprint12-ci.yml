@@ -6,6 +6,7 @@ on:
       - s12-reproduction-export-interoperability
     paths:
       - 'core/**'
+      - 'extension/burp-extension/**'
       - 'scripts/verify-sprint12-foundation.sh'
       - 'scripts/verify-sprint11-foundation.sh'
       - '.github/workflows/sprint12-ci.yml'
@@ -37,3 +38,5 @@ jobs:
         run: bash ./scripts/verify-sprint12-foundation.sh
       - name: Verify Maven core test compilation
         run: mvn --batch-mode --no-transfer-progress -pl core test-compile
+      - name: Verify official Montoya Burp adapter compilation
+        run: mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
