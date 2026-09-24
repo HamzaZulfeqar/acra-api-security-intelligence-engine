@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public final class IndirectReferenceResponseProjector {
     private static final Pattern RESOLVED =
-            Pattern.compile("\\"resolved_resource_id\\"\\s*:\\s*\\\"([^\\\"]+)\\\"");
+            Pattern.compile("\"resolved_resource_id\"\\s*:\\s*\"([^\"]+)\"");
 
     public IndirectReferenceResolution project(
             ResponseSnapshot response,
