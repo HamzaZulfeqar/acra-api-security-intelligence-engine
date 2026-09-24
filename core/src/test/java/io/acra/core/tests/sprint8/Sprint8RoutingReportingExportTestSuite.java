@@ -28,7 +28,7 @@ public final class Sprint8RoutingReportingExportTestSuite {
 
     private Sprint8RoutingReportingExportTestSuite() { }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         int assertions = 0;
         S8RoutingWorkspace workspace = fixtureWorkspace();
 
