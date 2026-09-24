@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
+**Sprint 9 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
@@ -11,6 +11,7 @@ Canonical Sprint 9 Phase 1 evidence:
 - Phase 2 verification run: `35986020761` — SUCCESS
 - Phase 3 verification run: `35986668193` — SUCCESS
 - Phase 4 verification run: `35986888660` — SUCCESS
+- Phase 5 verification run: `35987236797` — SUCCESS
 - evidence-backed property observations: VERIFIED
 - deterministic property-policy correlation: VERIFIED
 - cross-project provenance rejection: VERIFIED
@@ -42,14 +43,21 @@ Verified Phase 4:
 - cross-project provenance → INCONCLUSIVE: PASS;
 - no automatic confirmed-vulnerability state: PASS.
 
-Next dependency-ordered milestone:
-1. define the explicit property-policy universe supplied to an assessment;
-2. account for observed, assessed, candidate, rejected, inconclusive and unobserved property-policy combinations;
-3. keep READ and UPDATE coverage distinct;
-4. never interpret missing coverage as a secure result;
-5. expose deterministic coverage snapshots for later UI/reporting.
+Verified Phase 5:
+- explicit property-policy coverage universe: PASS;
+- READ/UPDATE separation: PASS;
+- unobserved and observed-unassessed states: PASS;
+- candidate/rejected/inconclusive assessed states: PASS;
+- deterministic coverage snapshot: PASS.
 
-Do not start property UI/reporting until Phase 5 coverage accounting is verified.
+Next dependency-ordered milestone:
+1. inspect existing Sprint 7/8 product workspace and Burp UI patterns;
+2. add property-policy, observations, findings and coverage as a read-only product projection;
+3. preserve existing mode/profile/safety controls instead of adding parallel controls;
+4. represent unobserved/inconclusive coverage explicitly;
+5. keep real Burp desktop runtime validation separate from software/UI tests.
+
+Do not claim Burp desktop validation from headless UI tests.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
