@@ -16,14 +16,14 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | PLANNED | OPEN | NOT_RUN |
-| EXP-A1 | + Identity | PLANNED | OPEN | NOT_RUN |
-| EXP-A2 | + Ownership | PLANNED | OPEN | NOT_RUN |
-| EXP-A3 | + Tenant | PLANNED | OPEN | NOT_RUN |
-| EXP-A4 | + Role | PLANNED | OPEN | NOT_RUN |
-| EXP-A5 | + Workflow | PLANNED | OPEN | NOT_RUN |
-| EXP-A6 | + Semantic evidence | PLANNED | OPEN | NOT_RUN |
-| EXP-A7 | Full ACRA correlation | PLANNED | OPEN | NOT_RUN |
+| EXP-A0 | Naive differential baseline | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A1 | + Identity | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A2 | + Ownership | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A3 | + Tenant | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A4 | + Role | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A5 | + Workflow | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A6 | + Semantic evidence | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A7 | Full ACRA correlation | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -36,3 +36,19 @@ The Phase 3 software verification proves only the labelled-record and safe-metri
 
 `EXP-S6-TENANT-RBAC-001` is the first measured Sprint 6 tenant/RBAC campaign. Metrics are valid only for the
 ten labelled localhost cases in `GT-S6-TENANT-RBAC`; they do not establish real-world scanner accuracy.
+
+
+## Sprint 11 research-dataset readiness — 2026-09-25
+
+`GT-S11-AUTHORIZATION-RESEARCH` is the registered dataset for the later A0-A7 campaign.
+The dataset contains 16 controlled localhost cases: one positive and one negative case for each of
+eight authorization dimensions (object, tenant, RBAC, workflow, routing, property, batch and
+indirect-reference authorization).
+
+Sprint 11 verification executes the secure and intentionally vulnerable ACRA-Lab fixtures only to
+validate the independent ground-truth oracle. It does **not** execute A0-A7 detector configurations
+and does not produce TP/TN/FP/FN, precision, recall or F1 results for those experiments.
+
+All EXP-A0 through EXP-A7 rows therefore remain `NOT_RUN`. Their state
+`SOFTWARE_READY / RESEARCH_NOT_RUN` means only that a registered, executable ground-truth dataset
+is available for the later controlled research campaign.
