@@ -393,3 +393,20 @@ foundation, lab contract and retained Sprint 6 regression. These are controlled 
 | TEST-S7-MAVEN-001 | real extension module test compilation on Java 21 | run `35959256852` | PASS |
 
 Authoritative Phase 4 UI gate: GitHub Actions run `35959256852`.
+
+### Sprint 7 Phase 5 — workflow reporting/export
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S7-REPORT-001 | deterministic workflow report identity/model | `Sprint7WorkflowReportingExportTestSuite` | PASS |
+| TEST-S7-REPORT-002 | policy/resolution/assessment/coverage/candidate/risk aggregation | same suite | PASS |
+| TEST-S7-REPORT-003 | canonical JSON + stable SHA-256 | same suite | PASS |
+| TEST-S7-REPORT-004 | deterministic Markdown review report | same suite | PASS |
+| TEST-S7-REPORT-005 | raw-secret exclusion / redaction | same suite | PASS |
+| TEST-S7-REPORT-006 | `confirmedFindingCount = 0` review-only boundary | same suite | PASS |
+| TEST-S7-REPORT-007 | coverage lifecycle exported separately from severity/finding state | same suite | PASS |
+| TEST-S7-REPORT-008 | Reporter plugin adapter | `S7WorkflowJsonReporter` | PASS |
+| TEST-S7-REPORT-UI-001 | Workflow Report + JSON Export product views | `Sprint7WorkflowUiTestSuite` | PASS |
+| TEST-S7-REPORT-CI-001 | report JSON / digest / Markdown artifact bundle | GitHub Actions run `35960316132` | PASS |
+
+Authoritative Phase 5 gate: GitHub Actions run `35960316132`.
