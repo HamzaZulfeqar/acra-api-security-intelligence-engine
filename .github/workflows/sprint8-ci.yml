@@ -53,4 +53,5 @@ jobs:
           name: sprint8-routing-validation
           path: |
             build/s8-foundation/lab/*.log
+            build/s8-foundation/performance/performance-s8.csv
           if-no-files-found: warn
