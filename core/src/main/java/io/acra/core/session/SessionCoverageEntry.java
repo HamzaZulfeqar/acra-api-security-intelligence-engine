@@ -93,7 +93,7 @@ public record SessionCoverageEntry(
         }
         if (!finding.assessmentIds().contains(assessment.assessmentId())
                 || !finding.dimensions().contains("AUTHENTICATION_SESSION")
-                || !finding.resourceId().equals("session:" + target.sessionId())
+                || !finding.resourceId().equals("auth-context:" + target.sessionId())
                 || !finding.policyReferences().contains(target.ruleReference())) {
             throw new IllegalArgumentException("session finding does not match coverage assessment");
         }
