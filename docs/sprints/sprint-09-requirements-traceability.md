@@ -1,6 +1,6 @@
 # Sprint 9 Requirements Traceability
 
-Status: **PHASES 1–8 VERIFIED — final closure pending**  
+Status: **SOFTWARE COMPLETE — final closure verified**  
 Branch: `s9-property-authorization`  
 Immutable Sprint 8 base: `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`
 
@@ -45,8 +45,8 @@ validation lane and is not inferred from localhost or headless Swing evidence.
 | S9-32 | Confirmed finding count remains zero | S9 report summary / UI / hardening | Phase 7/8 | PASS |
 | S9-33 | Property metadata/provenance/mutation security hardening | S9 security suite | Phase 8 / run `36002106088` | PASS |
 | S9-34 | 100/1k/10k bounded engineering observations | S9 performance suite | run `36002106088` | PASS |
-| S9-35 | Retained S2/S3/S4/S6/S7/S8 plus S9 final regression and official Maven package | `scripts/verify-sprint9-final.sh` | dedicated final closure | PENDING |
-| S9-36 | Reproducible S9 ZIP + manifest + SHA-256 + clean extraction | `scripts/package-sprint9.sh` | dedicated final closure | PENDING |
+| S9-35 | Retained S2/S3/S4/S6/S7/S8 plus S9 final regression and official Maven package | `scripts/verify-sprint9-final.sh` | run `36002545177` | PASS |
+| S9-36 | Reproducible S9 ZIP + manifest + SHA-256 + clean extraction | `scripts/package-sprint9.sh` | run `36002545177` | PASS |
 | S9-37 | Real Burp desktop load/handler/UI runtime | separate runtime gate | no current desktop Burp execution | UNVERIFIED / DEFERRED |
 
 ## Verified phase gates
@@ -77,4 +77,35 @@ Sprint 9 does not claim:
 
 ## Final closure gate
 
-Pending dedicated Sprint 9 final closure workflow.
+GitHub Actions run `36002545177` completed successfully at source commit
+`9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`.
+
+Final closure evidence:
+
+- exact Temurin Java 21 Sprint 9 verification: PASS;
+- all Sprint 9 foundation/live/finding/coverage/report/security/performance suites: PASS;
+- official Maven package: PASS;
+- retained Sprint 2 local-contract regression: PASS, 52 tests;
+- retained Sprint 3 core regression: PASS, 47 tests;
+- retained Sprint 3 adapter regression: PASS, 11 tests;
+- Sprint 4 UI regression: PASS, 26 tests;
+- Sprint 6 Authorization UI: PASS, 27 assertions;
+- Sprint 7 Workflow UI: PASS, 20 assertions;
+- Sprint 8 Routing UI: PASS, 23 assertions;
+- Sprint 9 Property UI: PASS, 59 assertions;
+- Sprint 9 property foundation: PASS, 15 assertions;
+- Sprint 9 property coverage: PASS, 21 assertions;
+- Sprint 9 property reporting/export: PASS, 28 assertions;
+- Sprint 9 property security hardening: PASS, 14 assertions;
+- Sprint 9 property performance observation suite: PASS, 16 assertions;
+- deterministic checkpoint entries: 873;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- closure-candidate source ZIP SHA-256:
+  `04eaadbfb2e132eb386ab52ff775fb5e1c56f0313b610721a28f2fb63bf8e531`.
+
+The source hash above identifies the successful closure-candidate snapshot. Final-status documentation changes alter
+the source archive by definition; a post-documentation digest is therefore emitted through the external
+`.sha256` sidecar rather than embedded recursively inside the package.
