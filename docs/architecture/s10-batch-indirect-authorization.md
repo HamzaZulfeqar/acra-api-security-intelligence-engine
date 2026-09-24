@@ -147,6 +147,50 @@ opacity or format of the alias.
 Phase 3 verification: GitHub Actions run `36048381112` — SUCCESS at
 `608490cfc1211057e879f6c6457ea62fd648b405`.
 
+## Phase 6 product workspace / UI boundary
+
+Sprint 10 now has a dedicated read-only product workspace that consumes the already-produced domain objects.
+The workspace does not perform policy resolution, active execution or finding promotion.
+
+```text
+BatchItemPolicy / IndirectReferencePolicy
+BatchItemObservation / IndirectReferenceResolution
+BatchItemAuthorizationAssessment / IndirectReferenceAuthorizationAssessment
+FindingCandidate
+S10AuthorizationCoverageEntry
+        |
+        v
+S10BatchIndirectWorkspace
+        |
+        v
+immutable S10BatchIndirectProductSnapshot
+        |
+        v
+S10BatchIndirectPanel
+        |
+        +--> Overview
+        +--> Policies
+        +--> Observations
+        +--> Assessments
+        +--> Candidates
+        +--> Coverage
+```
+
+Phase 6 invariants:
+
+1. The UI is read-only.
+2. Batch and indirect policy/observation/assessment families remain distinguishable.
+3. Candidate and coverage lifecycle is shared without collapsing the two authorization families.
+4. Raw indirect aliases are not rendered; the UI may show only SHA-256 reference fingerprints and resolved resources.
+5. Aggregate HTTP success is never presented as per-item authorization.
+6. Unobserved coverage is never presented as secure.
+7. Candidate is never presented as a confirmed vulnerability.
+8. Report/export surfaces are deferred to Phase 7 rather than fabricated in Phase 6.
+9. Headless Swing verification does not establish real Burp desktop runtime validation.
+
+Phase 6 verification: GitHub Actions run `36051856008` — SUCCESS at
+`a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.
+
 ## Future Sprint 10 slices
 
 Later phases may add controlled ACRA-Lab ground truth, safe S4 planner/executor integration, provenance-gated
