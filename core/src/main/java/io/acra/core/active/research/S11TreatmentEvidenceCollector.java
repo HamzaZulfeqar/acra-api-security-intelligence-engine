@@ -37,7 +37,7 @@ public final class S11TreatmentEvidenceCollector {
                 evidenceId("baseline-right", caseId, route,
                         right.status() + "|" + TokenFingerprint.sha256(right.bodyUtf8())),
                 evidenceId("baseline-differential", caseId, route,
-                        semanticDiff.equivalent() + "|" + semanticDiff.changedDimensions()));
+                        semanticDiff.equivalent() + "|" + semanticDiff.changedSignals()));
 
         List<AblationDimensionEvidenceReference> dimensions = new ArrayList<>();
         dimensions.add(contextEvidence(
