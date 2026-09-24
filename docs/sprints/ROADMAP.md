@@ -2,6 +2,29 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 12 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+
+Canonical Sprint 12 evidence:
+- branch: `s12-reproduction-standards-export`;
+- immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`;
+- Sprint 11 post-documentation final closure: `36067012832` — SUCCESS;
+- Sprint 11 final-status ZIP SHA-256: `ea3d65bbce6134dee6e03b75939b57b7b7cf26cf9988d22b17abef91aeb3622f`;
+- Phase 1 verification: `36068186039` — SUCCESS at `a8d442aa95c5d8946035586cf2b212e27f9ebf79`;
+- standards foundation: PASS, 34 assertions;
+- deterministic JSON reproduction export: PASS;
+- deterministic SARIF 2.1.0 review export: PASS;
+- non-publishable Burp Issue projection: PASS;
+- real Burp issue publication: UNVERIFIED / NOT ENABLED.
+
+Next dependency-ordered milestone:
+1. create Montoya-specific issue adapter only in the extension module;
+2. require explicit publication approval separate from FindingCandidate state;
+3. compile against the accepted Montoya API;
+4. keep automatic issue publication disabled;
+5. retain real Burp desktop publication/runtime as a separate validation gate.
+
+## Previous release boundary — Sprint 11
+
 **Sprint 11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.**
 
 Canonical Sprint 11 evidence:

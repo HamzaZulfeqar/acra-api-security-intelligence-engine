@@ -148,3 +148,15 @@ RB-0 remains authoritative. Sprint 1 adds stable implementation requirements wit
 - **RES-014** No A0–A7 metric may be recorded as an actual result before corresponding controlled execution evidence exists.
 - **RES-015** Controlled-dataset results shall not be generalized to real-world scanner accuracy or novelty without separate evidence.
 
+
+
+## Sprint 12 reproduction and standards-export requirements
+
+- **FR-064** A review-only reproduction package shall preserve candidate identity, endpoint/resource context, expected/observed decisions, dimensions, policy references and supporting evidence without persisting raw principal identifiers or candidate rationale.
+- **FR-065** Reproduction packages shall provide deterministic JSON and SARIF 2.1.0 exports with stable SHA-256 content identities.
+- **FR-066** SARIF projection shall preserve ACRA review semantics; unconfirmed candidates shall not be emitted as `kind=fail`.
+- **FR-067** Burp Issue projection shall be isolated from core and shall not make a review candidate automatically publishable.
+- **NFR-013** Reproduction export ordering, package identity, fingerprints and digests shall be deterministic.
+- **SAFE-011** Reproduction export shall perform no active network replay by default.
+- **SEC-014** Reproduction/SARIF/Burp projections shall exclude raw credentials, raw principal identifiers and candidate rationale unless a later explicitly authorized local-only artifact policy is defined.
+- **RES-016** Standards-format interoperability evidence shall not be represented as vulnerability-detection accuracy evidence.

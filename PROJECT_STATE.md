@@ -2,9 +2,14 @@
 
 ## Current state — 2026-09-25
 
-**Current release boundary:** Sprint 11 — Research Evaluation & Ablation — SOFTWARE COMPLETE.  
-**Decision:** S11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.  
-**Working branch:** `s11-research-evaluation-ablation`.  
+**Current sprint:** Sprint 12 — Reproduction & Standards Export (in progress).  
+**Decision:** S12 PHASE 1 VERIFIED COMPLETE; JSON/SARIF/Burp-neutral reproduction contracts verified.  
+**Working branch:** `s12-reproduction-standards-export`.  
+**Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
+**Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 11 post-documentation final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
+**Sprint 11 final-status checkpoint SHA-256:** `ea3d65bbce6134dee6e03b75939b57b7b7cf26cf9988d22b17abef91aeb3622f`.  
+**Sprint 12 Phase 1 verification:** GitHub Actions run `36068186039` — SUCCESS at source commit `a8d442aa95c5d8946035586cf2b212e27f9ebf79`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -35,6 +40,22 @@
 **Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
 **Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
 **Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
+
+### Sprint 12 verified progress
+
+Phase 1 deterministic reproduction/standards export is **VERIFIED COMPLETE**:
+
+- review-only `S12ReproductionPackage`;
+- deterministic JSON export + SHA-256;
+- deterministic SARIF 2.1.0 export + SHA-256;
+- CANDIDATE/INCONCLUSIVE map to SARIF review; REJECTED maps to informational;
+- all non-fail SARIF results use level none;
+- Burp issue-neutral projection remains `publishable=false`;
+- raw principal IDs, rationale and secret-bearing content are excluded;
+- review candidates without supporting evidence fail closed;
+- core remains Montoya-independent.
+
+No real Burp issue publication or desktop runtime validation is claimed.
 
 ### Sprint 11 final closure
 
