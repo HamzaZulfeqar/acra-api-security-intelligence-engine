@@ -3,12 +3,13 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASE 1 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Decision:** S10 PHASES 1–2 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
-**Sprint 10 Phase 1 verification:** GitHub Actions run `36004146212` — SUCCESS.
+**Sprint 10 Phase 1 verification:** GitHub Actions run `36004146212` — SUCCESS.  
+**Sprint 10 Phase 2 verification:** GitHub Actions run `36004574331` — SUCCESS.
 
 ### Sprint 10 verified progress
 
@@ -36,8 +37,7 @@ Indirect-reference foundation:
 Verification run `36004146212` passed the new 25-assertion S10 foundation suite, retained S9/S8/S6/S5
 foundations, exact Java 21 compilation with warnings as errors and Maven core test compilation.
 
-Sprint 10 Phase 2 has **NOT STARTED** by this state record. The next dependency is controlled localhost
-ACRA-Lab batch and indirect-reference ground truth before any active mutation/planning work.
+Sprint 10 Phase 2 controlled localhost batch/indirect ground truth is **VERIFIED COMPLETE**. The next dependency is safe planning/execution through the existing S4 active engine; no external-target or enumeration behavior is authorized.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
