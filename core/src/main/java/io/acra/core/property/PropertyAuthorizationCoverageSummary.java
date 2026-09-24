@@ -1,5 +1,8 @@
 package io.acra.core.property;
 
+import io.acra.core.engine.PolicyValidationEvaluator;
+import java.util.List;
+
 public record PropertyAuthorizationCoverageSummary(
         int totalPolicyContexts,
         int readPolicyContexts,
@@ -34,6 +37,51 @@ public record PropertyAuthorizationCoverageSummary(
         if (observedUnassessedContexts != observedContexts - assessedContexts) {
             throw new IllegalArgumentException("observed-unassessed count is inconsistent");
         }
+    }
+
+    public static PropertyAuthorizationCoverageSummary fromEntries(
+            List<PropertyAuthorizationCoverageEntry> values) {
+        List<PropertyAuthorizationCoverageEntry> entries =
+                List.copyOf(values == null ? List.of() : values);
+        int read = 0;
+        int update = 0;
+        int observed = 0;
+        int assessed = 0;
+        int candidate = 0;
+        int rejected = 0;
+        int inconclusive = 0;
+        int unobserved = 0;
+        int observedUnassessed = 0;
+
+        for (PropertyAuthorizationCoverageEntry entry : entries) {
+            if (entry.operation() == PolicyValidationEvaluator.PropertyOperation.READ) read++;
+            else update++;
+            switch (entry.disposition()) {
+                case UNOBSERVED -> unobserved++;
+                case OBSERVED_UNASSESSED -> {
+                    observed++;
+                    observedUnassessed++;
+                }
+                case CANDIDATE -> {
+                    observed++;
+                    assessed++;
+                    candidate++;
+                }
+                case REJECTED -> {
+                    observed++;
+                    assessed++;
+                    rejected++;
+                }
+                case INCONCLUSIVE -> {
+                    observed++;
+                    assessed++;
+                    inconclusive++;
+                }
+            }
+        }
+        return new PropertyAuthorizationCoverageSummary(
+                entries.size(), read, update, observed, assessed, candidate, rejected,
+                inconclusive, unobserved, observedUnassessed);
     }
 
     public double observationRatio() {
