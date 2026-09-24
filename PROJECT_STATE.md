@@ -3,13 +3,14 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 12 — Reproduction & Standards Export (in progress).  
-**Decision:** S12 PHASE 1 VERIFIED COMPLETE; JSON/SARIF/Burp-neutral reproduction contracts verified.  
+**Decision:** S12 PHASES 1–2 VERIFIED COMPLETE; standards exports plus explicit-approval Montoya issue adapter verified.  
 **Working branch:** `s12-reproduction-standards-export`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-documentation final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
 **Sprint 11 final-status checkpoint SHA-256:** `ea3d65bbce6134dee6e03b75939b57b7b7cf26cf9988d22b17abef91aeb3622f`.  
 **Sprint 12 Phase 1 verification:** GitHub Actions run `36068186039` — SUCCESS at source commit `a8d442aa95c5d8946035586cf2b212e27f9ebf79`.  
+**Sprint 12 Phase 2 verification:** GitHub Actions run `36068996138` — SUCCESS at source commit `e57c8dbb0e62b4f1acc59210ff04ee8e8333b85a`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -54,6 +55,17 @@ Phase 1 deterministic reproduction/standards export is **VERIFIED COMPLETE**:
 - raw principal IDs, rationale and secret-bearing content are excluded;
 - review candidates without supporting evidence fail closed;
 - core remains Montoya-independent.
+
+Sprint 12 Phase 2 Montoya issue adapter is **VERIFIED COMPLETE**:
+
+- Montoya-specific types remain isolated to `extension/burp-extension`;
+- adapter compiles against Montoya API 2026.7 `AuditIssue`;
+- explicit approval object is separate from FindingCandidate/reproduction package state;
+- approval must be true, candidate-matched and carry an absolute HTTP(S) base URL;
+- issue spec remains INFORMATION / TENTATIVE and review-only;
+- default core projection remains `publishable=false`;
+- adapter exposes no `publish` / `addToSiteMap` method;
+- no `SiteMap.add(AuditIssue)` call exists in Phase 2.
 
 No real Burp issue publication or desktop runtime validation is claimed.
 

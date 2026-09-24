@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-standards-export`;
@@ -10,18 +10,27 @@ Canonical Sprint 12 evidence:
 - Sprint 11 post-documentation final closure: `36067012832` — SUCCESS;
 - Sprint 11 final-status ZIP SHA-256: `ea3d65bbce6134dee6e03b75939b57b7b7cf26cf9988d22b17abef91aeb3622f`;
 - Phase 1 verification: `36068186039` — SUCCESS at `a8d442aa95c5d8946035586cf2b212e27f9ebf79`;
+- Phase 2 verification: `36068996138` — SUCCESS at `e57c8dbb0e62b4f1acc59210ff04ee8e8333b85a`;
 - standards foundation: PASS, 34 assertions;
 - deterministic JSON reproduction export: PASS;
 - deterministic SARIF 2.1.0 review export: PASS;
 - non-publishable Burp Issue projection: PASS;
 - real Burp issue publication: UNVERIFIED / NOT ENABLED.
 
+Verified Phase 2:
+- real Montoya 2026.7 AuditIssue compile boundary: PASS;
+- explicit approval/candidate binding: PASS;
+- absolute publication URL validation: PASS;
+- INFORMATION/TENTATIVE mapping: PASS;
+- publication method absent: PASS;
+- real Burp publication: UNVERIFIED / NOT ENABLED.
+
 Next dependency-ordered milestone:
-1. create Montoya-specific issue adapter only in the extension module;
-2. require explicit publication approval separate from FindingCandidate state;
-3. compile against the accepted Montoya API;
-4. keep automatic issue publication disabled;
-5. retain real Burp desktop publication/runtime as a separate validation gate.
+1. introduce an explicit issue-publication service with an injectable sink/factory;
+2. call SiteMap.add only behind validated approval;
+3. keep publication service unregistered from ACRAExtension bootstrap;
+4. return a deterministic review-publication receipt without mutating candidate state;
+5. preserve real desktop runtime as a separate evidence gate.
 
 ## Previous release boundary — Sprint 11
 

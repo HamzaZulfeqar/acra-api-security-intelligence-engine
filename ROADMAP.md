@@ -5,7 +5,7 @@
 Sprint 12 — **Reproduction & Standards Export** is IN PROGRESS on
 `s12-reproduction-standards-export`.
 
-Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36068186039`.
+Phases 1–2 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36068996138`.
 
 Current evidence boundary:
 
@@ -14,6 +14,8 @@ Current evidence boundary:
 - SARIF 2.1.0 export: VERIFIED;
 - SARIF review/informational semantics: VERIFIED;
 - Burp Issue-neutral projection: VERIFIED, `publishable=false`;
+- Montoya 2026.7 AuditIssue adapter with explicit approval gate: VERIFIED;
+- adapter contains no publication method / SiteMap.add call;
 - raw principal/rationale/secret-bearing material excluded;
 - real Burp issue publication and desktop runtime remain UNVERIFIED / DEFERRED.
 
