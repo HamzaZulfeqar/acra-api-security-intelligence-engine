@@ -5,6 +5,8 @@ import io.acra.core.active.analysis.DifferentialClassification;
 import io.acra.core.active.analysis.ExpectedDecisionCandidate;
 import io.acra.core.active.analysis.ExpectedDecisionSource;
 import io.acra.core.active.evidence.ExecutionEvidenceStore;
+import io.acra.core.active.evidence.EvidenceStage;
+import io.acra.core.active.evidence.EvidenceReferenceValidator;
 import io.acra.core.active.evidence.SafetyAuditLog;
 import io.acra.core.active.execution.BackoffPolicy;
 import io.acra.core.active.execution.DelayController;
@@ -45,13 +47,23 @@ import io.acra.core.domain.endpoint.ApiEndpointRecord;
 import io.acra.core.domain.endpoint.DocumentationStatus;
 import io.acra.core.domain.endpoint.Endpoint;
 import io.acra.core.domain.endpoint.RiskTier;
+import io.acra.core.domain.finding.FindingCandidateState;
 import io.acra.core.domain.http.HttpHeader;
 import io.acra.core.domain.http.HttpMethod;
 import io.acra.core.domain.http.HttpProtocol;
 import io.acra.core.domain.http.HttpRequest;
 import io.acra.core.domain.identity.AuthenticationType;
+import io.acra.core.engine.S8RoutingAnalysisRequest;
+import io.acra.core.engine.S8RoutingAssessmentEvaluator;
+import io.acra.core.engine.S8RoutingFindingCandidateEvaluator;
 import io.acra.core.graph.SecurityContextGraph;
 import io.acra.core.recon.SecurityContextFingerprint;
+import io.acra.core.route.RouteSecurityBoundaryState;
+import io.acra.core.route.RouteSecurityBoundaryAnalyzer;
+import io.acra.core.route.RouteProcessingStage;
+import io.acra.core.route.RouteObservationSource;
+import io.acra.core.route.RouteBoundaryObservation;
+import io.acra.core.route.RouteAuthorizationAssessmentState;
 import io.acra.core.tests.TestSupport;
 import java.nio.charset.StandardCharsets;
 import java.time.Clock;
@@ -124,6 +136,62 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
                 "controlled route representation mutation remains safe read-only");
         assertions++;
 
+        S8RoutingAssessmentEvaluator assessmentEvaluator = new S8RoutingAssessmentEvaluator();
+
+        var secureBoundary = boundaryTransition(secure, AuthorizationDecision.DENY);
+        TestSupport.assertEquals(RouteSecurityBoundaryState.ROUTING_DIVERGENCE, secureBoundary.state(),
+                "secure control retains routing representation change without authorization boundary change");
+        assertions++;
+        var secureAssessment = assessmentEvaluator.evaluate(
+                secureBoundary.transitions().getFirst(),
+                AuthorizationDecision.DENY,
+                AuthorizationDecision.DENY,
+                evidenceObjectIds(secure));
+        TestSupport.assertEquals(RouteAuthorizationAssessmentState.NO_VIOLATION, secureAssessment.state(),
+                "secure routing control must not become a violation candidate");
+        assertions++;
+        var secureFinding = new S8RoutingFindingCandidateEvaluator(
+                new EvidenceReferenceValidator(secure.evidence())).evaluate(
+                secureAssessment,
+                analysisRequest(secure, secureBoundary.transitions().getFirst(),
+                        AuthorizationDecision.DENY, evidenceObjectIds(secure), PROJECT));
+        TestSupport.assertEquals(FindingCandidateState.REJECTED, secureFinding.state(),
+                "verified secure routing evidence must be rejected as a finding candidate");
+        assertions++;
+
+        var vulnerableBoundary = boundaryTransition(vulnerable, AuthorizationDecision.ALLOW);
+        TestSupport.assertEquals(RouteSecurityBoundaryState.COMBINED_DIVERGENCE, vulnerableBoundary.state(),
+                "vulnerable fixture must preserve combined routing and authorization differential");
+        assertions++;
+        var vulnerableAssessment = assessmentEvaluator.evaluate(
+                vulnerableBoundary.transitions().getFirst(),
+                AuthorizationDecision.DENY,
+                AuthorizationDecision.ALLOW,
+                evidenceObjectIds(vulnerable));
+        TestSupport.assertEquals(RouteAuthorizationAssessmentState.CANDIDATE, vulnerableAssessment.state(),
+                "verified DENY-to-ALLOW routing mismatch becomes an assessment candidate");
+        assertions++;
+        var findingEvaluator = new S8RoutingFindingCandidateEvaluator(
+                new EvidenceReferenceValidator(vulnerable.evidence()));
+        var vulnerableFinding = findingEvaluator.evaluate(
+                vulnerableAssessment,
+                analysisRequest(vulnerable, vulnerableBoundary.transitions().getFirst(),
+                        AuthorizationDecision.ALLOW, evidenceObjectIds(vulnerable), PROJECT));
+        TestSupport.assertEquals(FindingCandidateState.CANDIDATE, vulnerableFinding.state(),
+                "provenance-verified controlled routing mismatch becomes a FindingCandidate");
+        assertions++;
+        TestSupport.assertContains(vulnerableFinding.rationale(), "not an automatically confirmed vulnerability",
+                "routing FindingCandidate must preserve the review-only boundary");
+        assertions++;
+
+        var crossProjectFinding = findingEvaluator.evaluate(
+                vulnerableAssessment,
+                analysisRequest(vulnerable, vulnerableBoundary.transitions().getFirst(),
+                        AuthorizationDecision.ALLOW, evidenceObjectIds(vulnerable), "other-project"));
+        TestSupport.assertEquals(FindingCandidateState.INCONCLUSIVE, crossProjectFinding.state(),
+                "cross-project provenance mismatch must fail closed");
+        assertions++;
+
         String rawViewer = token("viewer-a", "tenant-a", "viewer");
         String serialized = new io.acra.core.serialization.DomainSerializer().serialize(vulnerable.test());
         TestSupport.assertNotContains(serialized, rawViewer,
@@ -160,7 +228,7 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
                 List.of("s8-route-policy-evidence"),
                 1.0);
         var result = workspace.executeNextLocal(List.of(expected)).orElseThrow();
-        return new ExecutionResult(test, result);
+        return new ExecutionResult(test, result, harness.evidence());
     }
 
     private static PlanningInput planningInput(int port) {
@@ -302,7 +370,7 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
         ScopedRateLimiter rate = new ScopedRateLimiter();
         MutationValidator validator = new MutationValidator(
                 PROJECT, Set.of(ExecutionEnvironment.LAB), kill, budgets, concurrency, rate, audit);
-        ExecutionEvidenceStore evidence = new ExecutionEvidenceStore(clock);
+        ExecutionEvidenceStore evidence = new ExecutionEvidenceStore(clock, PROJECT);
         DelayController noDelay = duration -> { };
         TestExecutor executor = new TestExecutor(
                 clock,
@@ -318,7 +386,7 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
                 new MutationBudgetTracker(20),
                 audit,
                 evidence);
-        return new Harness(executor, kill, budgets, concurrency, rate);
+        return new Harness(executor, kill, budgets, concurrency, rate, evidence);
     }
 
     private static void configureExecutionGuards(Harness harness, io.acra.core.active.model.SecurityTest test) {
@@ -349,6 +417,69 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
         }
     }
 
+
+    private static io.acra.core.route.RouteSecurityBoundaryTrace boundaryTransition(
+            ExecutionResult execution,
+            AuthorizationDecision applicationObserved) {
+        List<String> evidence = evidenceObjectIds(execution);
+        return new RouteSecurityBoundaryAnalyzer().analyze(
+                "S8-BOUNDARY-" + execution.result().executionId(),
+                List.of(
+                        new RouteBoundaryObservation(
+                                "S8-FRAMEWORK-" + execution.result().executionId(),
+                                RouteProcessingStage.FRAMEWORK,
+                                "/api/v1/s8/admin",
+                                HttpMethod.GET,
+                                "localhost",
+                                "v1",
+                                AuthorizationDecision.DENY,
+                                AuthorizationDecision.DENY,
+                                "s8-route-equivalence-policy",
+                                RouteObservationSource.CONFIGURED,
+                                evidence),
+                        new RouteBoundaryObservation(
+                                "S8-APPLICATION-" + execution.result().executionId(),
+                                RouteProcessingStage.APPLICATION,
+                                "/api//v1/s8/admin",
+                                HttpMethod.GET,
+                                "localhost",
+                                "v1",
+                                AuthorizationDecision.DENY,
+                                applicationObserved,
+                                "s8-route-equivalence-policy",
+                                RouteObservationSource.OBSERVED,
+                                evidence)));
+    }
+
+    private static List<String> evidenceObjectIds(ExecutionResult execution) {
+        return execution.evidence().chain(execution.result().executionId()).stream()
+                .filter(entry -> entry.stage() != EvidenceStage.OBSERVATION)
+                .map(io.acra.core.active.evidence.EvidenceChainEntry::objectId)
+                .toList();
+    }
+
+    private static S8RoutingAnalysisRequest analysisRequest(
+            ExecutionResult execution,
+            io.acra.core.route.RouteBoundaryTransition transition,
+            AuthorizationDecision observed,
+            List<String> evidenceIds,
+            String projectId) {
+        return new S8RoutingAnalysisRequest(
+                projectId,
+                execution.test().testId(),
+                execution.result().executionId(),
+                execution.result().observation().observationId(),
+                "/api/v1/s8/admin",
+                "route:s8-admin",
+                "viewer-a",
+                "tenant-a",
+                "s8-route-equivalence-policy",
+                transition,
+                AuthorizationDecision.DENY,
+                observed,
+                evidenceIds);
+    }
+
     private static String token(String sub, String tenant, String role) {
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         String header = encoder.encodeToString("{\"alg\":\"none\",\"typ\":\"JWT\"}"
@@ -363,9 +494,11 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
             KillSwitch kill,
             HierarchicalBudgetManager budgets,
             HierarchicalConcurrencyController concurrency,
-            ScopedRateLimiter rate) { }
+            ScopedRateLimiter rate,
+            ExecutionEvidenceStore evidence) { }
 
     private record ExecutionResult(
             io.acra.core.active.model.SecurityTest test,
-            io.acra.core.active.execution.TestExecutionResult result) { }
+            io.acra.core.active.execution.TestExecutionResult result,
+            ExecutionEvidenceStore evidence) { }
 }
