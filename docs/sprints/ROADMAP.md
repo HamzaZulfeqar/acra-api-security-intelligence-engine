@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
+**Sprint 10 IN PROGRESS — Phases 1–6 VERIFIED COMPLETE.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
@@ -12,6 +12,7 @@ Canonical Sprint 10 Phase 1 evidence:
 - Phase 3 verification run: `36048381112` — SUCCESS at `608490cfc1211057e879f6c6457ea62fd648b405`
 - Phase 4 verification run: `36048837246` — SUCCESS at `abb57d0320fcdc161992297415978bde6c769bee`
 - Phase 5 verification run: `36049247018` — SUCCESS at `16169367c3e7c3b179a6d8541dfc88698fde6b81`
+- Phase 6 verification run: `36051856008` — SUCCESS at `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`
 - per-item batch authorization reasoning: VERIFIED
 - mixed batch outcomes preserved: VERIFIED
 - indirect reference fingerprint/resolution reasoning: VERIFIED
@@ -61,12 +62,24 @@ Verified Phase 5:
 - deterministic coverage ordering and ratios: PASS;
 - aggregate HTTP success excluded from coverage inference: PASS.
 
+Verified Phase 6:
+- read-only Sprint 10 product workspace and immutable snapshot: PASS;
+- Batch & Indirect top-level Burp tab: PASS;
+- Overview / Policies / Observations / Assessments / Candidates / Coverage: PASS;
+- raw indirect alias exclusion from all UI tables: PASS;
+- candidate != confirmed vulnerability: PASS;
+- aggregate HTTP success != per-item authorization: PASS;
+- retained S6/S7/S8/S9 UI regressions: PASS;
+- Sprint 10 headless UI: PASS, 218 assertions;
+- real Burp desktop runtime remains UNVERIFIED / DEFERRED.
+
 Next dependency-ordered milestone:
-1. create a read-only Sprint 10 batch/indirect product workspace;
-2. expose Overview / Policies / Observations / Assessments / Candidates / Coverage views;
-3. preserve raw indirect-alias exclusion in all UI projections;
-4. retain review-only candidate semantics and coverage gaps;
-5. verify through existing headless Burp UI tests while keeping real desktop runtime explicitly unverified.
+1. define deterministic Sprint 10 report model/version;
+2. project policy, observation, assessment, candidate and coverage state without raw aliases;
+3. emit canonical JSON with stable SHA-256 identity;
+4. emit deterministic Markdown for human review;
+5. add read-only Report / JSON Export UI surfaces;
+6. preserve confirmed-finding count at zero and coverage gaps exactly.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 
