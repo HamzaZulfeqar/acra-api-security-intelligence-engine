@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASES 1–4 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Decision:** S10 PHASES 1–5 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -11,7 +11,8 @@
 **Sprint 10 Phase 1 verification:** GitHub Actions run `36004146212` — SUCCESS.  
 **Sprint 10 Phase 2 verification:** GitHub Actions run `36004574331` — SUCCESS.  
 **Sprint 10 Phase 3 verification:** GitHub Actions run `36048381112` — SUCCESS at source commit `608490cfc1211057e879f6c6457ea62fd648b405`.  
-**Sprint 10 Phase 4 verification:** GitHub Actions run `36048837246` — SUCCESS at source commit `abb57d0320fcdc161992297415978bde6c769bee`.
+**Sprint 10 Phase 4 verification:** GitHub Actions run `36048837246` — SUCCESS at source commit `abb57d0320fcdc161992297415978bde6c769bee`.  
+**Sprint 10 Phase 5 verification:** GitHub Actions run `36049247018` — SUCCESS at source commit `16169367c3e7c3b179a6d8541dfc88698fde6b81`.
 
 ### Sprint 10 verified progress
 
@@ -66,7 +67,17 @@ Sprint 10 Phase 4 provenance-gated finding projection is **VERIFIED COMPLETE**:
 - projected indirect candidates contain no raw alias material;
 - no confirmed-vulnerability state is introduced.
 
-The next dependency is Phase 5 deterministic batch/indirect coverage accounting.
+Sprint 10 Phase 5 deterministic coverage accounting is **VERIFIED COMPLETE**:
+
+- one explicit policy-universe denominator spans batch-item and indirect resolved-target policies;
+- duplicate policy registration is deterministic and non-expanding;
+- UNOBSERVED and OBSERVED_UNASSESSED gaps remain explicit;
+- assessed contexts are separated into CANDIDATE, REJECTED and INCONCLUSIVE;
+- aggregate HTTP success does not count as item/resolution coverage;
+- coverage entries validate observation, assessment and finding consistency;
+- combined coverage ordering and summary ratios are deterministic.
+
+The next dependency is Phase 6 batch/indirect product workspace and headless Burp UI projection.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
