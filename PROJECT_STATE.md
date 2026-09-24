@@ -2,8 +2,8 @@
 
 ## Current state — 2026-09-24
 
-**Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
-**Decision:** S8 IN PROGRESS — Phase 7 VERIFIED.  
+**Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence (closed).  
+**Decision:** S8 SOFTWARE COMPLETE.  
 **Working branch:** `s8-routing-normalization`.  
 **Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
 **Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
@@ -96,6 +96,33 @@ Phase 7 adds:
 - retained core/live/report/UI regressions.
 
 Observed timing/memory values are engineering observations only and are not release thresholds.
+
+### Sprint 8 final closure
+
+Sprint 8 is **SOFTWARE COMPLETE**.
+
+Dedicated final closure: GitHub Actions run `35971753523` — SUCCESS at source commit
+`f6a0c19358b00672711532ec7effe1eed3800e3e`.
+
+Final closure evidence:
+- exact Temurin Java 21 verification: PASS
+- all S8 core/live/assessment/report/security/performance suites: PASS
+- retained Sprint 6 and Sprint 7 foundation: PASS
+- official Maven package: PASS
+- retained Sprint 2: PASS, 52 tests
+- retained Sprint 3: PASS, 47 core + 11 adapter tests
+- retained Sprint 4 / Sprint 6 / Sprint 7 / Sprint 8 UI: PASS, 26 / 27 / 20 / 23
+- deterministic source checkpoint: PASS
+- checkpoint entries: 836
+- unsafe paths: 0
+- duplicate entries: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- closure-candidate ZIP SHA-256:
+  `e063217d3c8795a59ce1cd7e052a2c9b0475a86836239973ef1d470a6c627af7`
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**. Sprint 9 is
+**NOT STARTED** by this closure.
 
 ### Sprint 7 frozen closure
 
