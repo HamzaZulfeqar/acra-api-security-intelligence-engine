@@ -5,7 +5,7 @@
 Sprint 11 — **Research Evaluation & Ablation** is IN PROGRESS on
 `s11-research-evaluation-ablation`.
 
-Phases 1–9 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36065439110`.
+Phases 1–10 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36065934911`.
 
 Current evidence boundary:
 
@@ -20,7 +20,8 @@ Current evidence boundary:
 - controlled evaluation is now measured on 15 synthetic localhost cases;
 - A0–A5: TP8/TN0/FP7/FN0, precision .533333, recall 1, F1 .695652;
 - A6–A7: TP8/TN7/FP0/FN0, precision/recall/F1 = 1 within the controlled dataset;
-- next dependency is deterministic research report/export and release hardening.
+- deterministic JSON/Markdown research reporting is verified and archived;
+- next dependency is the dedicated Sprint 11 final closure/checkpoint gate.
 
 Sprint 10 remains the frozen SOFTWARE COMPLETE release base at
 `59022c4a25718f38ea7ec2f010911344d1aa0698`.
