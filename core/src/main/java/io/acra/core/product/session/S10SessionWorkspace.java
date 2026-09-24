@@ -7,6 +7,11 @@ import io.acra.core.session.SessionCorrelationResult;
 import io.acra.core.session.SessionCoverageEntry;
 import io.acra.core.session.SessionCoverageSummary;
 import io.acra.core.session.SessionSecurityAssessment;
+import io.acra.core.reporting.s10.S10SessionExportArtifact;
+import io.acra.core.reporting.s10.S10SessionReport;
+import io.acra.core.reporting.s10.S10SessionReportExporter;
+import io.acra.core.reporting.s10.S10SessionReportGenerator;
+import java.time.Instant;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -16,6 +21,8 @@ public final class S10SessionWorkspace {
     private final TreeMap<String, SessionSecurityAssessment> assessments = new TreeMap<>();
     private final TreeMap<String, FindingCandidate> candidates = new TreeMap<>();
     private final TreeMap<String, SessionCoverageEntry> coverage = new TreeMap<>();
+    private final S10SessionReportGenerator reportGenerator = new S10SessionReportGenerator();
+    private final S10SessionReportExporter reportExporter = new S10SessionReportExporter();
 
     public synchronized void recordObservation(AuthenticationSessionObservation observation) {
         if (observation == null) throw new IllegalArgumentException("session observation required");
@@ -62,6 +69,18 @@ public final class S10SessionWorkspace {
                 targets.put(entry.target().coverageId(), SessionCoverageEntry.from(entry.target())));
         coverage.clear();
         coverage.putAll(targets);
+    }
+
+    public synchronized S10SessionReport report(Instant at) {
+        return reportGenerator.generate(snapshot(), at);
+    }
+
+    public synchronized S10SessionExportArtifact exportJson(Instant at) {
+        return reportExporter.json(report(at));
+    }
+
+    public synchronized S10SessionExportArtifact exportMarkdown(Instant at) {
+        return reportExporter.markdown(report(at));
     }
 
     public synchronized S10SessionProductSnapshot snapshot() {
