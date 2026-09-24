@@ -34,7 +34,10 @@ Phase 2 adds session-specific immutable project/test/execution/evidence lineage 
 existing HTTP Observation validator. Controlled synthetic ACRA-Lab token/session rotation ground truth is **VERIFIED COMPLETE** by GitHub Actions
 run `36032231484` at commit `1fd2d12604bbfdc475b01460683a95150571f290`.
 
-The next dependency is passive traffic/session hydration through the existing collection/reconnaissance model.
+Passive traffic/session hydration is **VERIFIED COMPLETE** by GitHub Actions run `36032676285` at commit
+`f2026b4866f5117d758631b620c829c20dc230ff`.
+
+The next dependency is explicit refresh/rotation and verified session-context drift assessment.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
