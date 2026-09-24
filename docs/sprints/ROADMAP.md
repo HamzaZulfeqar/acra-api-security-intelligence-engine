@@ -2,129 +2,60 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phases 1–10 VERIFIED COMPLETE.**
+**Sprint 11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
 - immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`;
-- S10 post-documentation closure run: `36056032234` — SUCCESS;
-- S10 final-status checkpoint SHA-256: `f8d15ed72dec06e8e66b14afe749f392a51a3fb628a9e70ebd290ef032df28d4`;
-- Phase 1 verification run: `36056957706` — SUCCESS at `c4cff92b7668a75db2eb70ea550e7dd807d5a755`;
-- Phase 2 verification run: `36057476360` — SUCCESS at `dff822e02299b887869bc43923d93a62d9e7d35f`;
-- Phase 3 verification run: `36057869888` — SUCCESS at `dc3c081bf033b14afcea3185c3d54fb241be1772`;
-- Phase 4 verification run: `36058274408` — SUCCESS at `88f7cd78161267a1900ef4b663258938ee208d9b`;
-- Phase 5 verification run: `36058945211` — SUCCESS at `022bf71f31f69633b5eac541b230283e8536decd`;
-- Phase 6 verification run: `36060118721` — SUCCESS at `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`;
-- Phase 7 verification run: `36064434979` — SUCCESS at `9f9af8ce15e5035def2605c98d8f8153728c3eed`;
-- Phase 8 verification run: `36064798175` — SUCCESS at `c742014ab97d024be42425fb4e49866f565389ec`;
-- Phase 9 verification run: `36065439110` — SUCCESS at `2f17a994e4c481b48ae8ff11734a2ee17e32b84d`;
-- Phase 10 verification run: `36065934911` — SUCCESS at `bcc41630fa4d7c9a4f11023e9aeb8b6561f67310`;
-- S11 ablation foundation: PASS, 43 assertions;
-- A0–A7 exact cumulative protocol: VERIFIED;
-- required research metric contract: VERIFIED;
-- deterministic protocol identity/fingerprint: VERIFIED;
-- experiment execution state: NOT_RUN;
-- measured A0–A7 metrics: NOT CLAIMED.
+- Phase 1 run: `36056957706` — SUCCESS;
+- Phase 2 run: `36057476360` — SUCCESS;
+- Phase 3 run: `36057869888` — SUCCESS;
+- Phase 4 run: `36058274408` — SUCCESS;
+- Phase 5 run: `36058945211` — SUCCESS;
+- Phase 6 run: `36060118721` — SUCCESS;
+- Phase 7 run: `36064434979` — SUCCESS;
+- Phase 8 run: `36064798175` — SUCCESS;
+- Phase 9 run: `36065439110` — SUCCESS;
+- Phase 10 run: `36065934911` — SUCCESS;
+- dedicated final closure run: `36066400016` — SUCCESS at closure-candidate source `f832af1defde242530408589bd9f8732cef533d5`.
 
-Verified Phase 2:
-- canonical controlled dataset manifest: PASS;
-- exact source-label cross-check: PASS;
-- 15 cases = 8 positive + 7 negative: PASS;
-- deterministic case ordering/fingerprint: PASS;
-- independent source provenance: PASS;
-- treatment-output label mutation: FORBIDDEN;
-- A0–A7 execution state: NOT_RUN.
+Final closure:
+- complete Sprint 11 verifier: PASS;
+- controlled research fixtures: PASS, 65 assertions;
+- treatment evidence collection: PASS, 725 assertions;
+- prediction execution: PASS, 384 assertions;
+- controlled ablation evaluation: PASS, 99 assertions;
+- research report/export: PASS, 31 assertions;
+- retained Sprint 10 / 9 / 8 / 7 / 6 foundations: PASS;
+- official Maven package: PASS;
+- Sprint 2 / Sprint 3 regressions: PASS;
+- retained Sprint 4 / 6 / 7 / 8 / 9 / 10 headless UI suites: PASS;
+- deterministic source checkpoint: PASS;
+- closure-candidate ZIP SHA-256: `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba`;
+- archive entries: 986;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS.
 
-Verified Phase 3:
-- ground-truth-free prediction input schema: PASS;
-- cumulative A0–A7 evidence isolation: PASS;
-- disabled dimension leakage prevention: PASS;
-- missing enabled evidence → INCONCLUSIVE: PASS;
-- deterministic prediction identity/fingerprint: PASS;
-- prediction adapter suite: PASS, 59 assertions;
-- A0–A7 research results: NOT_RUN / NOT CLAIMED.
+Final controlled research state:
+- registered dataset: 15 synthetic localhost cases, 8 positive / 7 negative;
+- fixture readiness: 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE;
+- treatment evidence: complete for all A0–A7 cells;
+- prediction campaign: 120 EXECUTED cells;
+- A0–A5: TP=8, TN=0, FP=7, FN=0, precision=.533333, recall=1, F1=.695652;
+- A6–A7: TP=8, TN=7, FP=0, FN=0, precision=1, recall=1, F1=1;
+- evidence completeness: 1.0 for A0–A7;
+- report JSON SHA-256: `595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d`;
+- report Markdown SHA-256: `1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`.
 
-Execution readiness finding:
-- current S4 ACRA-Lab does not expose all 15 research fixture behaviors as executable cases;
-- full A0–A7 metric execution therefore remains blocked by controlled evidence collection, not by prediction software.
+Interpretation boundary:
+- measurements apply only to the registered controlled synthetic localhost dataset;
+- they do not establish real-world scanner accuracy, production vulnerability prevalence, external-target safety or research novelty;
+- real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
-Verified Phase 4:
-- exact 120-cell campaign denominator: PASS;
-- deterministic cell identity/order: PASS;
-- protocol-dimension binding: PASS;
-- initial coverage = 120 PLANNED / 0 EXECUTED: PASS;
-- campaign cell ground-truth/prediction exclusion: PASS;
-- campaign-plan suite: PASS, 416 assertions;
-- research metrics: NOT_RUN / NOT CLAIMED.
-
-Verified Phase 5:
-- all 15 dataset cases mapped to existing lab/test support: PASS;
-- READY = 3;
-- PARTIAL = 4;
-- MISSING_FIXTURE = 8;
-- executed campaign cells = 0;
-- readiness mapping does not promote campaign cells: PASS;
-- readiness manifest suite: PASS, 57 assertions;
-- research metrics: NOT_RUN / NOT CLAIMED.
-
-Verified Phase 6:
-- 4 isolated negative-control fixtures: PASS;
-- 8 dedicated positive-control fixtures: PASS;
-- neutral label-free live route identifiers: PASS;
-- secure/vulnerable localhost startup: PASS;
-- controlled live fixture suite: PASS, 65 assertions;
-- readiness map = 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE: PASS;
-- campaign cells remain 120 PLANNED / 0 EXECUTED: PASS;
-- A0–A7 metrics: NOT_RUN / NOT CLAIMED.
-
-Verified Phase 7:
-- hash-only live evidence collection: PASS;
-- stable normalization of volatile response data: PASS;
-- complete baseline + seven-dimension accounting for all 15 cases: PASS;
-- evidence bundle ground-truth/prediction exclusion: PASS;
-- campaign projection = 120 EVIDENCE_READY / 0 EXECUTED: PASS;
-- treatment-evidence suite: PASS, 725 assertions;
-- A0–A7 metrics: NOT_RUN / NOT CLAIMED.
-
-Verified Phase 8:
-- 120 prediction results from 120 evidence-ready cells: PASS;
-- deterministic prediction/execution identity: PASS;
-- campaign state = 120 EXECUTED: PASS;
-- ground-truth-free execution schema: PASS;
-- metric-free execution schema: PASS;
-- prediction execution suite: PASS, 382 assertions;
-- A0–A7 metrics: NOT_RUN / NOT CLAIMED.
-
-Verified Phase 9:
-- one-way post-prediction ground-truth join: PASS;
-- 120 labelled evaluation records: PASS;
-- evidence completeness independent from accuracy: PASS;
-- A0–A5 = TP8/TN0/FP7/FN0, P=.533333/R=1/F1=.695652;
-- A6–A7 = TP8/TN7/FP0/FN0, P=1/R=1/F1=1;
-- evidence completeness = 1.0 for A0–A7;
-- evaluation immutability: PASS;
-- evaluation suite: PASS, 99 assertions;
-- scope: controlled synthetic 15-case localhost dataset only.
-
-Verified Phase 10:
-- minimized deterministic research report: PASS;
-- canonical JSON export: PASS;
-- deterministic Markdown export: PASS;
-- JSON SHA-256: 595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d;
-- Markdown SHA-256: 1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b;
-- raw body/credential/token exclusion: PASS;
-- report/export suite: PASS, 31 assertions;
-- CI evidence artifact upload: PASS.
-
-Next dependency-ordered milestone:
-1. run dedicated Sprint 11 final closure;
-2. run full S11 verification and retained regression stacks;
-3. run official Maven package;
-4. produce deterministic source checkpoint ZIP;
-5. verify safe paths, no duplicates, clean extraction and per-file SHA-256 equality;
-6. freeze final status without converting controlled synthetic results into real-world accuracy claims.
-
-Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
+No later sprint or roadmap scope is started or claimed by this closure. Any next scope requires a separate explicit
+definition and evidence gate.
 
 ## Previous release boundary — Sprint 10
 
