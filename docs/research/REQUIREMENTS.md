@@ -148,3 +148,14 @@ RB-0 remains authoritative. Sprint 1 adds stable implementation requirements wit
 - **RES-014** No A0–A7 metric may be recorded as an actual result before corresponding controlled execution evidence exists.
 - **RES-015** Controlled-dataset results shall not be generalized to real-world scanner accuracy or novelty without separate evidence.
 
+
+
+## Sprint 12 reproduction/export interoperability requirements
+
+- **FR-064** A generic reproduction package shall project evidence-backed finding candidates into a versioned, deterministic, export-neutral model.
+- **FR-065** Reproduction packages shall retain candidate state and explicitly remain review-only so exports cannot imply automatic vulnerability confirmation.
+- **FR-066** Sprint 12 shall implement the existing FR-013 JSON, SARIF and Burp Issue targets through separately verified adapters.
+- **NFR-013** Reproduction package identifiers, fingerprints and export artifacts shall be deterministic for identical sanitized input.
+- **SEC-014** Reproduction packages and derived exports shall redact or exclude raw bearer, cookie, session, API-key and equivalent credential material.
+- **SEC-015** Format-specific exporters shall consume the export-neutral reproduction package rather than raw scanner/runtime objects.
+- **RES-016** Export-format verification demonstrates interoperability behavior only; it does not establish detection accuracy or Burp desktop runtime behavior.
