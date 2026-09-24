@@ -71,7 +71,7 @@ public final class S10SessionFindingCandidateEvaluator {
 
         FindingFingerprint fingerprint = FindingFingerprint.of(
                 request.endpoint(),
-                "session:" + correlation.sessionId(),
+                "auth-context:" + correlation.sessionId(),
                 request.principalId(),
                 request.tenantId(),
                 String.join("+", dimensions),
@@ -87,7 +87,7 @@ public final class S10SessionFindingCandidateEvaluator {
                 java.util.List.of(assessment.assessmentId()),
                 dimensions.stream().toList(),
                 request.endpoint(),
-                "session:" + correlation.sessionId(),
+                "auth-context:" + correlation.sessionId(),
                 request.principalId(),
                 request.tenantId(),
                 AuthorizationDecision.UNKNOWN,
