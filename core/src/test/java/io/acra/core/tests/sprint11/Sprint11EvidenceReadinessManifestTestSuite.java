@@ -6,7 +6,6 @@ import io.acra.core.active.research.ResearchFixtureReadiness;
 import io.acra.core.active.research.S11AblationCampaignPlan;
 import io.acra.core.active.research.S11EvidenceReadinessManifest;
 import io.acra.core.tests.TestSupport;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Sprint11EvidenceReadinessManifestTestSuite {
@@ -75,18 +74,15 @@ public final class Sprint11EvidenceReadinessManifestTestSuite {
                 "readiness fingerprint is deterministic");
         assertions++;
 
-        List<ResearchFixtureReadiness> tampered = new ArrayList<>(manifest.cases());
-        ResearchFixtureReadiness first = tampered.getFirst();
-        tampered.set(0, new ResearchFixtureReadiness(
-                first.caseId(),
-                first.sourceCaseId(),
-                FixtureReadinessState.READY,
-                List.of(),
-                first.evidenceReferences(),
-                first.reason()));
+        ResearchFixtureReadiness first = manifest.cases().getFirst();
         TestSupport.assertThrows(IllegalArgumentException.class,
-                () -> new S11EvidenceReadinessManifest(
-                        "bad-ready", "1", manifest.datasetId(), AblationExecutionState.NOT_RUN, tampered, ""),
+                () -> new ResearchFixtureReadiness(
+                        first.caseId(),
+                        first.sourceCaseId(),
+                        FixtureReadinessState.READY,
+                        List.of(),
+                        first.evidenceReferences(),
+                        first.reason()),
                 "READY status without route fails closed");
         assertions++;
 
