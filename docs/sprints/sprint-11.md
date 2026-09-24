@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–9 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–10 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -467,9 +467,47 @@ case.
 
 Phase 9 is **VERIFIED COMPLETE**.
 
+## Phase 10 — deterministic research report/export
+
+Implemented:
+
+- `S11ResearchVariantMetric`;
+- `S11ResearchReport`;
+- `S11ResearchReportGenerator`;
+- `S11ResearchExportArtifact`;
+- `S11ResearchReportExporter`;
+- `Sprint11ResearchReportExportTestSuite`;
+- minimized report schema with protocol/dataset/prediction/evaluation provenance only;
+- canonical JSON export;
+- deterministic Markdown export;
+- mandatory controlled-dataset and non-generalization limitations;
+- raw HTTP bodies, Authorization material, bearer tokens and synthetic fixture payload identifiers excluded;
+- CI evidence artifact upload.
+
+### Phase 10 verification
+
+GitHub Actions run `36065934911`: **SUCCESS** at source commit
+`bcc41630fa4d7c9a4f11023e9aeb8b6561f67310`.
+
+Verified:
+
+- report/export suite: PASS, 31 assertions;
+- prediction execution: PASS, 384 assertions;
+- ablation evaluation: PASS, 99 assertions;
+- full retained Sprint 11 verifier: PASS;
+- Maven core `test-compile`: PASS;
+- JSON/Markdown artifact upload: PASS.
+
+Canonical digests:
+
+- JSON: `595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d`;
+- Markdown: `1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`.
+
+Phase 10 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 10 must produce a deterministic, minimized research evaluation report/export containing protocol identity,
-dataset identity, prediction-execution identity, per-variant metrics, evidence completeness and limitations. It
-must not include raw response bodies, credentials or synthetic token material. The report must explicitly state
-that measurements apply only to the registered controlled localhost dataset.
+Sprint 11 final closure must re-run the complete S11 stack plus retained regressions, execute official Maven
+packaging, create a deterministic source checkpoint, verify archive path/duplicate/extraction/per-file integrity,
+and preserve the controlled-research scope limitations. Only that closure gate may promote Sprint 11 to SOFTWARE
+COMPLETE.
