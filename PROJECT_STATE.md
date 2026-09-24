@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
-**Decision:** S8 IN PROGRESS — Phase 5 VERIFIED.  
+**Decision:** S8 IN PROGRESS — Phase 6 VERIFIED.  
 **Working branch:** `s8-routing-normalization`.  
 **Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
 **Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
@@ -72,6 +72,19 @@ Phase 5 adds:
 - Maven extension compilation and controlled routing log artifact upload.
 
 The Routing UI is read-only and introduces no new active-execution capability.
+
+Phase 6 verification: GitHub Actions run `35970917885` — SUCCESS.
+
+Phase 6 adds:
+- deterministic routing report model and summary;
+- canonical JSON/SHA-256 and Markdown exports;
+- Reporter plugin adapter;
+- Routing Report / JSON Export product views;
+- confirmedFindingCount fixed at 0;
+- shared redaction hardening preventing embedded Authorization text from truncating later JSON fields;
+- retained core/live and S4/S6/S7/S8 UI regressions PASS.
+
+Reports preserve routing observations and review-only candidates without automatic finding confirmation.
 
 ### Sprint 7 frozen closure
 
