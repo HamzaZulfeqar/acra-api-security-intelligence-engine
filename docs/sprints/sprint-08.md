@@ -1,6 +1,6 @@
 # Sprint 8 — Routing Normalization & Authorization-Path Intelligence
 
-Status: IN PROGRESS — PHASE 3 VERIFIED  
+Status: IN PROGRESS — PHASE 4 VERIFIED  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
@@ -150,3 +150,37 @@ GitHub Actions run `35966112820`: **SUCCESS**.
 - retained Sprint 7 foundation/assessment/coverage/reporting/security/performance: PASS
 
 Phase 3 is complete. Sprint 8 remains IN PROGRESS.
+
+## Phase 4 — provenance-gated routing assessment and FindingCandidate
+
+Implemented:
+- `RouteAuthorizationAssessmentState`
+- `RouteAuthorizationAssessment`
+- `S8RoutingAssessmentEvaluator`
+- `S8RoutingAnalysisRequest`
+- `S8RoutingFindingCandidateEvaluator`
+- routing-only candidate rule: an evidence-backed routing change must exist
+- candidate rule requires explicit expected `DENY` and observed `ALLOW`
+- routing-stable authorization differences are not promoted as Sprint 8 routing candidates
+- incomplete routing/authorization attribution remains `INCONCLUSIVE`
+- evidence object ownership and observation lineage validated through the existing `EvidenceReferenceValidator`
+- cross-project provenance mismatch fails closed
+- FindingCandidate remains review-only; no automatic confirmed-vulnerability state is introduced
+- secure controlled routing evidence resolves to `REJECTED`
+- deliberately vulnerable controlled routing evidence resolves to `CANDIDATE`
+
+### Phase 4 verification
+
+GitHub Actions run `35969974964`: **SUCCESS**.
+
+- routing ground-truth contract: PASS
+- routing normalization foundation: PASS, 16 assertions
+- authorization-path differential suite: PASS, 19 assertions
+- controlled live routing + assessment/provenance integration: PASS, 22 assertions
+- secure fixture: DENY / `NO_CHANGE` → routing assessment `NO_VIOLATION` → finding `REJECTED`
+- deliberately vulnerable fixture: ALLOW / `UNEXPECTED_CHANGE` → routing assessment `CANDIDATE` → provenance-verified FindingCandidate `CANDIDATE`
+- cross-project provenance tampering: `INCONCLUSIVE`
+- retained Sprint 3 core: PASS, 47 tests
+- retained Sprint 7 foundation/assessment/coverage/reporting/security/performance: PASS
+
+Phase 4 is complete. Sprint 8 remains IN PROGRESS.
