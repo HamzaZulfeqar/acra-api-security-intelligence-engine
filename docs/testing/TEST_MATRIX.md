@@ -1,5 +1,36 @@
 # Test Matrix
 
+## Sprint 11 finding lifecycle, reproduction and ground-truth closure — 2026-09-25
+
+Final executable closure: GitHub Actions run `36064082001` — **PASS**.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Sprint11FindingLifecycleFoundationTestSuite | lifecycle transition safety and human-review boundary | PASS, 40 assertions |
+| Sprint11FindingReviewWorkspaceTestSuite | project isolation, idempotent intake, state accounting | PASS, 29 assertions |
+| Sprint11FindingReproductionPackageTestSuite | minimized deterministic reproduction package | PASS, 38 assertions |
+| Sprint11FindingReproductionJsonExportTestSuite | canonical JSON, SHA-256, Reporter adapter | PASS, 34 assertions |
+| Sprint11FindingReproductionSarifExportTestSuite | SARIF 2.1.0 mapping and deterministic export | PASS, 41 assertions |
+| Sprint11FindingBurpIssueDraftTestSuite | Burp issue draft eligibility/severity/confidence boundary | PASS, 39 assertions |
+| Sprint11FindingSecurityHardeningTestSuite | secret exclusion, identity validation, immutability, determinism | PASS, 37 assertions |
+| Sprint11FindingPerformanceObservationTestSuite | 1,000 intake / 2,000 JSON+SARIF repetitions | PASS, observational |
+| Sprint11FindingReviewUiTestSuite | read-only Findings / History / JSON / SARIF / Burp Draft views | PASS, 47 assertions |
+| Sprint 11 ground-truth verifier | 16 cases, balanced positive/negative, 8 authorization dimensions | PASS |
+| Official Maven package | Montoya 2026.7 extension compile/package | PASS |
+| Legacy Sprint 2 contract CI | local stubs + official Maven package | PASS |
+| Legacy Sprint 3 contract CI | local stubs + official Maven package | PASS |
+| Deterministic Sprint 11 checkpoint | ZIP integrity / unsafe paths / duplicate paths / clean extraction / SHA-256 equality | PASS |
+| Real Burp desktop issue publication | separate runtime lane | UNVERIFIED / DEFERRED |
+| EXP-A0…EXP-A7 measured campaign | later research lane | NOT_RUN / NOT_MEASURED |
+
+Final-run bounded observation: intake 246 ms for 1,000 records; 1,597 ms for 2,000 JSON+SARIF export repetitions;
+JSON 1,256 bytes; SARIF 2,196 bytes. These are controlled CI engineering observations, not benchmarks or SLOs.
+
+Executable closure package at commit `a1f22eb438f5517731cf0f6d16dc87bfd3e2f8c2`:
+SHA-256 `3ca60a82888a0b7649da8433ad670df4dc62f0f168bd88dc814199731ff4fcfd`, 974 entries,
+0 unsafe paths, 0 duplicates, clean extraction equality PASS, per-file SHA-256 equality PASS.
+
+
 ## Sprint 10 batch & indirect authorization — 2026-09-25
 
 Authoritative pre-final verification through Phase 8 is GitHub Actions run `36055037223`.
