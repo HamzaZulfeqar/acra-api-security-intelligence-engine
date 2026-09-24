@@ -130,3 +130,32 @@ coverage only; they do not imply vulnerability likelihood, finding severity or r
 The Burp product projection uses `S7WorkflowWorkspace` as its source of truth. UI tables render policy rules,
 resolved transitions, explicit conflicts and coverage entries without reconstructing or guessing authorization
 state in Swing code.
+
+## Phase 5 reporting/export boundary
+
+```
+S7WorkflowProductSnapshot
+        ↓
+S7WorkflowReportGenerator
+        ↓
+S7WorkflowReport
+   ├── workflow policy
+   ├── deterministic resolutions
+   ├── transition assessments
+   ├── coverage lifecycle
+   ├── FindingCandidate (review only)
+   ├── risk assessments
+   ├── evidence IDs
+   └── explicit limitations
+        ↓
+S7WorkflowReportExporter
+   ├── canonical JSON + SHA-256
+   └── deterministic Markdown
+        ↓
+S7WorkflowJsonReporter / Workflow UI
+```
+
+Report identity is derived from stable policy/resolution/coverage/candidate identities rather than wall-clock
+time. The generated timestamp is report metadata, not part of the report identity. Coverage lifecycle state
+remains distinct from finding state and severity. The report explicitly records zero confirmed findings because
+Sprint 7 produces review candidates, not automatic vulnerability confirmation.
