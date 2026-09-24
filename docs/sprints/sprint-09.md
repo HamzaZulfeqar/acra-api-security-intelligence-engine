@@ -277,3 +277,47 @@ Phase 5 is **VERIFIED COMPLETE**.
 
 Sprint 9 remains IN PROGRESS. Phase 6 owns the property-authorization product workspace / Burp UI projection.
 Real Burp desktop runtime validation remains a separate deferred gate.
+
+
+## Phase 6 — property product workspace and Burp UI
+
+Implemented:
+
+- `S9PropertyProductSnapshot`;
+- `S9PropertyWorkspace` as the single read-only product projection source;
+- `S9PropertyPanel`;
+- top-level Burp `Properties` product area;
+- Overview / Policies / Observations / Assessments / Candidates / Coverage views;
+- explicit READ versus UPDATE coverage counts;
+- explicit unobserved and observed-unassessed coverage states;
+- candidate / rejected / inconclusive projections without confirmed-vulnerability promotion;
+- property-value minimization boundary: property values are not rendered by the workspace;
+- backward-compatible `AcraSuiteTab` integration;
+- `Sprint9PropertyUiTestSuite`.
+
+### Phase 6 verification
+
+GitHub Actions run `36001111468`: **SUCCESS** at commit
+`18f3cb03dddf59b0cd054b9184e607be934127f6`.
+
+Verified:
+
+- full Sprint 9 core/lab/property verification: PASS;
+- Maven core test compilation: PASS;
+- Maven Burp extension test compilation: PASS;
+- retained Sprint 4 UI: PASS;
+- retained Sprint 6 Authorization UI: PASS;
+- retained Sprint 7 Workflow UI: PASS;
+- retained Sprint 8 Routing UI: PASS;
+- Sprint 9 Property UI: PASS;
+- candidate != confirmed vulnerability wording: PASS;
+- unobserved != secure wording: PASS;
+- property-value non-rendering checks: PASS.
+
+Phase 6 is **VERIFIED COMPLETE**.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**. Headless Swing verification
+does not replace real Burp desktop validation.
+
+Sprint 9 remains IN PROGRESS. Phase 7 owns deterministic property report/export from the same S9 workspace source
+of truth.
