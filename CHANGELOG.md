@@ -1,3 +1,18 @@
+## 2026-09-25 — Sprint 11 software completion
+
+- Added evidence-backed finding lifecycle: NEEDS_REVIEW, VALIDATED, CONFIRMED, FALSE_POSITIVE and ACCEPTED_RISK.
+- Added project-isolated finding review workspace and immutable audit history.
+- Added minimized deterministic finding reproduction packages.
+- Added canonical JSON + SHA-256 and SARIF 2.1.0 reproduction exports.
+- Added Burp Issue draft generation and Montoya AuditIssue materialization adapter without automatic SiteMap publication.
+- Added read-only Findings & Reproduction UI.
+- Added GT-S11-AUTHORIZATION-RESEARCH with 16 controlled cases across 8 authorization dimensions.
+- Added security hardening and bounded engineering observation suites.
+- Added deterministic Sprint 11 checkpoint packaging and final closure workflow.
+- Final executable closure run `36064082001`: PASS.
+- EXP-A0 through EXP-A7 remain NOT_RUN; Sprint 11 research metrics remain NOT_MEASURED.
+- Real Burp desktop publication/runtime remains UNVERIFIED / DEFERRED.
+
 ## 2026-09-23 — Sprint 5 software completion
 
 - Added authoritative Authorization Context normalization/completeness/fact-state assessment.
