@@ -2,6 +2,28 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 12 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+
+Canonical Sprint 12 evidence:
+- branch: `s12-reproduction-export-interoperability`;
+- immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`;
+- Phase 1 verification: `36071724705` — SUCCESS at `3c61578f5fa8b0635313ae6c0cbffe7c870aef40`;
+- reproduction package foundation: PASS, 24 assertions;
+- target contracts: JSON / SARIF / BURP_ISSUE;
+- review-only boundary: VERIFIED;
+- renderer implementation state: CONTRACT_DEFINED.
+
+Next dependency:
+1. deterministic generic reproduction JSON;
+2. stable artifact metadata and SHA-256;
+3. secret-safe minimized content;
+4. promote JSON only after verification;
+5. then SARIF, then Burp Issue projection.
+
+Real Burp desktop runtime remains UNVERIFIED / DEFERRED.
+
+## Previous release boundary — Sprint 11
+
 **Sprint 11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.**
 
 Canonical Sprint 11 evidence:
