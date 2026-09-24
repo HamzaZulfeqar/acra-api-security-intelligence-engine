@@ -58,7 +58,7 @@ public final class Sprint12ReproductionPackageFoundationTestSuite {
         TestSupport.assertTrue(pkg.packageId().startsWith("rp-"),
                 "package ID uses deterministic prefix");
         assertions++;
-        TestSupport.assertEquals(67, pkg.fingerprint().length(),
+        TestSupport.assertEquals(64, pkg.fingerprint().length(),
                 "package fingerprint is SHA-256");
         assertions++;
 
