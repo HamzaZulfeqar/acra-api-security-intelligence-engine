@@ -61,6 +61,8 @@ java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10ControlledIndirectExecuti
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10FindingCandidateProjectionTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10CoverageAccountingTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectReportingExportTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectSecurityHardeningTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectPerformanceObservationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9PropertyAuthorizationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingNormalizationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint7.Sprint7WorkflowAuthorizationFoundationTestSuite
