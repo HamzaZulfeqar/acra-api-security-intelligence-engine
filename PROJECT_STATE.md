@@ -3,13 +3,14 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 9 — Property-Level Authorization & Field Policy Intelligence (in progress).  
-**Decision:** S9 PHASES 1–3 VERIFIED COMPLETE; Sprint 9 remains IN PROGRESS.  
+**Decision:** S9 PHASES 1–4 VERIFIED COMPLETE; Sprint 9 remains IN PROGRESS.  
 **Working branch:** `s9-property-authorization`.  
 **Immutable Sprint 8 base:** `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`.  
 **Sprint 8:** SOFTWARE COMPLETE and preserved as the previous verified release boundary.  
 **Sprint 9 Phase 1 verification:** GitHub Actions run `35985518829` — SUCCESS.  
 **Sprint 9 Phase 2 verification:** GitHub Actions run `35986020761` — SUCCESS.  
-**Sprint 9 Phase 3 verification:** GitHub Actions run `35986668193` — SUCCESS.
+**Sprint 9 Phase 3 verification:** GitHub Actions run `35986668193` — SUCCESS.  
+**Sprint 9 Phase 4 verification:** GitHub Actions run `35986888660` — SUCCESS.
 
 ### Sprint 9 verified progress
 
@@ -35,7 +36,7 @@ Verification run `35985518829` passed exact Java 21 compilation with warnings as
 foundation suite, retained Sprint 5 final closure, Sprint 6 policy foundation, Sprint 7 workflow foundation,
 Sprint 8 routing-normalization foundation, and Maven core test compilation.
 
-Sprint 9 Phase 3 active-engine property execution is **VERIFIED COMPLETE**. The next dependency is Phase 4: provenance-gated projection of property assessments into the existing review-only FindingCandidate model; no automatic confirmed-vulnerability state is permitted.
+Sprint 9 Phase 4 provenance-gated property FindingCandidate projection is **VERIFIED COMPLETE**. The next dependency is Phase 5 property-authorization coverage accounting; unobserved properties must remain explicitly untested.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
