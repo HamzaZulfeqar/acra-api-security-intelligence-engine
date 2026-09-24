@@ -159,3 +159,13 @@ Report identity is derived from stable policy/resolution/coverage/candidate iden
 time. The generated timestamp is report metadata, not part of the report identity. Coverage lifecycle state
 remains distinct from finding state and severity. The report explicitly records zero confirmed findings because
 Sprint 7 produces review candidates, not automatic vulnerability confirmation.
+
+## Phase 6 hardening/performance boundary
+
+Active generation remains fail-closed if the mutation cannot be proven to change exactly the intended workflow
+target state. Context drift, policy conflict, ambiguous state occurrences and destructive DELETE transitions do
+not become active tests. Coverage credit additionally requires a previously registered matching planned test.
+
+Performance verification intentionally exercises the pure resolver → coverage → report path at bounded
+100/1,000/10,000 context sizes. The recorded wall-clock and JVM-memory observations are diagnostic engineering
+evidence only; they are not used as release thresholds.
