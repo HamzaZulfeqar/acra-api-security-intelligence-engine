@@ -19,6 +19,7 @@ java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionPackageFounda
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionJsonExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionSarifExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12BurpIssueProjectionTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12InteroperabilityHardeningTestSuite
 python3 - <<'PY'
 import json
 from pathlib import Path
