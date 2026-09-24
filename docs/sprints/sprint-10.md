@@ -264,3 +264,41 @@ Verified:
 Phase 5 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 6 owns projection into the existing review-only `FindingCandidate` model.
+
+## Phase 6 — provenance-gated session FindingCandidate projection
+
+Implemented:
+
+- `S10SessionFindingRequest`;
+- `S10SessionFindingCandidateEvaluator`;
+- reuse of the existing `FindingCandidate` / `FindingFingerprint` contracts;
+- Phase 2 session-specific evidence lineage required before promotion;
+- safe verified token rotation → FindingCandidate `REJECTED`;
+- verified context-drift assessment → review-only FindingCandidate `CANDIDATE`;
+- cross-project provenance → `INCONCLUSIVE`;
+- assessment/correlation/request attribution mismatch → `INCONCLUSIVE`;
+- session dimensions preserve token rotation plus principal/role/tenant/scope drift;
+- explicit SEC-003 rule reference retained;
+- candidate rationale explicitly states that it is not an automatically confirmed vulnerability.
+
+### Phase 6 verification
+
+GitHub Actions run `36033267339`: **SUCCESS** at commit
+`2521cb7fa21193fc177f2cfc08f6a44352fe3f3b`.
+
+Verified:
+
+- context-preserving token rotation → REJECTED: PASS;
+- provenance-valid verified context drift → CANDIDATE: PASS;
+- drift dimensions preserved: PASS;
+- cross-project session evidence → INCONCLUSIVE: PASS;
+- attribution mismatch → INCONCLUSIVE: PASS;
+- deterministic candidate ID/fingerprint: PASS;
+- full Sprint 10 Phases 1–5 verification: PASS;
+- retained Sprint 6/7/8/9 foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 6 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 7 owns explicit session-context coverage accounting; absence of observation
+must remain visible rather than being treated as stable or secure.
