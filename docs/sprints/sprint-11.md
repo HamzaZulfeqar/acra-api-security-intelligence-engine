@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–6 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–7 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -303,9 +303,65 @@ The canonical campaign still remains:
 
 Fixture readiness is necessary but is still not equivalent to treatment-dimension evidence readiness.
 
+## Phase 7 — treatment evidence collection and campaign readiness
+
+Implemented:
+
+- `AblationEvidenceDisposition`;
+- `AblationDimensionEvidenceReference`;
+- `AblationEvidenceBundle`;
+- `S11TreatmentEvidenceCollector`;
+- `S11CampaignEvidenceReadinessProjector`;
+- live `Sprint11TreatmentEvidenceCollectionTestSuite`;
+- stable response normalization before evidence hashing;
+- hash-only persisted evidence references;
+- explicit `OBSERVED` / `NOT_APPLICABLE` dimension accounting;
+- deterministic baseline evidence and bundle fingerprints;
+- ground-truth-free and prediction-free evidence-bundle schema;
+- deterministic campaign promotion from PLANNED to EVIDENCE_READY only when required evidence is complete.
+
+Evidence completeness behavior:
+
+- all 15 controlled cases produce bundles;
+- every bundle contains baseline evidence;
+- every bundle accounts for all 7 cumulative A1–A7 dimensions;
+- all bundles are complete through A7;
+- public controls explicitly mark identity/role as NOT_APPLICABLE;
+- non-workflow research routes explicitly mark workflow as NOT_APPLICABLE;
+- authenticated controls record identity/role as OBSERVED;
+- persisted evidence IDs are SHA-256-derived and do not contain raw principal, tenant or response resource values.
+
+### Phase 7 verification
+
+GitHub Actions run `36064434979`: **SUCCESS** at source commit
+`9f9af8ce15e5035def2605c98d8f8153728c3eed`.
+
+Verified evidence:
+
+- `Sprint11TreatmentEvidenceCollectionTestSuite`: PASS, 725 assertions;
+- controlled research fixture suite: PASS, 65 assertions;
+- Phase 1 protocol: PASS, 43 assertions;
+- Phase 2 dataset: PASS, 41 assertions;
+- Phase 3 prediction adapter: PASS, 59 assertions;
+- Phase 4 campaign plan: PASS, 416 assertions;
+- Phase 5 readiness manifest: PASS, 72 assertions;
+- Maven core `test-compile`: PASS;
+- Core CI / Sprint 2 CI: PASS at exact Phase 7 head;
+- Sprint 3 CI remained running at the moment Phase 7 was recorded and is not used as the Phase 7 acceptance gate.
+
+Canonical campaign state after evidence projection:
+
+- EVIDENCE_READY: 120;
+- PLANNED: 0;
+- EXECUTED: 0;
+- INCONCLUSIVE: 0;
+- BLOCKED: 0.
+
+Phase 7 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 7 must build deterministic, ground-truth-free evidence collectors for the registered research cases. Each
-case needs baseline evidence plus the dimension evidence required by A1–A7. Only complete evidence bundles may
-promote corresponding campaign cells from PLANNED to EVIDENCE_READY; Phase 7 must still not calculate or publish
-A0–A7 metrics.
+Phase 8 must execute the verified A0–A7 prediction adapters across all 120 evidence-ready cells while keeping
+independent ground truth outside prediction logic. Phase 8 may persist deterministic prediction results and mark
+cells EXECUTED, but it must still defer TP/TN/FP/FN, precision, recall, F1 and evidence-completeness metric
+aggregation to a separate later phase.

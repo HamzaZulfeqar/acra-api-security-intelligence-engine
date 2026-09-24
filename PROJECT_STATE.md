@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–6 VERIFIED COMPLETE; all 15 controlled research fixtures are live-verified and READY, experiments remain NOT_RUN.  
+**Decision:** S11 PHASES 1–7 VERIFIED COMPLETE; all 120 campaign cells are evidence-ready, execution and metrics remain NOT_RUN.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -15,6 +15,7 @@
 **Sprint 11 Phase 4 verification:** GitHub Actions run `36058274408` — SUCCESS at source commit `88f7cd78161267a1900ef4b663258938ee208d9b`.  
 **Sprint 11 Phase 5 verification:** GitHub Actions run `36058945211` — SUCCESS at source commit `022bf71f31f69633b5eac541b230283e8536decd`.  
 **Sprint 11 Phase 6 verification:** GitHub Actions run `36060118721` — SUCCESS at source commit `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`.  
+**Sprint 11 Phase 7 verification:** GitHub Actions run `36064434979` — SUCCESS at source commit `9f9af8ce15e5035def2605c98d8f8153728c3eed`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -99,9 +100,23 @@ Sprint 11 Phase 6 controlled research-lab expansion is **VERIFIED COMPLETE**:
 - campaign denominator remains 120 PLANNED / 0 EXECUTED;
 - A0–A7 experiment state remains NOT_RUN.
 
-No A0–A7 metric is currently claimed. The next dependency is treatment-specific evidence collection: each case must
-produce baseline evidence and the cumulative identity/ownership/tenant/role/workflow/semantic/correlation evidence
-needed by A0–A7 before campaign cells may become EVIDENCE_READY.
+Sprint 11 Phase 7 treatment-evidence collection is **VERIFIED COMPLETE**:
+
+- live fixture pairs are converted to hash-only, secret-safe evidence references;
+- raw bodies, raw principals, raw tenant values, ground truth and predictions are excluded from persisted evidence bundles;
+- volatile legacy timestamps/request IDs are normalized before evidence hashing;
+- every case receives deterministic baseline evidence;
+- every case accounts for identity, ownership, tenant, role, workflow, semantic and correlation dimensions;
+- non-applicable dimensions are explicit rather than silently absent;
+- all 15 bundles are complete through A7;
+- campaign readiness projection = 120 EVIDENCE_READY / 0 PLANNED / 0 EXECUTED;
+- removing one case bundle leaves exactly its 8 A0–A7 cells PLANNED;
+- treatment evidence suite: PASS, 725 assertions;
+- A0–A7 experiment execution and metrics remain NOT_RUN.
+
+No A0–A7 metric is currently claimed. The next dependency is controlled prediction execution over the verified
+120 evidence-ready cells. Prediction execution must remain separated from independent ground truth and metric
+aggregation; a later gate will join predictions to labels only for evaluation.
 
 Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 software verification.
 

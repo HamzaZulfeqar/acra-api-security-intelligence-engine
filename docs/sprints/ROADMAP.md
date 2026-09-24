@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phases 1–6 VERIFIED COMPLETE.**
+**Sprint 11 IN PROGRESS — Phases 1–7 VERIFIED COMPLETE.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
@@ -15,6 +15,7 @@ Canonical Sprint 11 evidence:
 - Phase 4 verification run: `36058274408` — SUCCESS at `88f7cd78161267a1900ef4b663258938ee208d9b`;
 - Phase 5 verification run: `36058945211` — SUCCESS at `022bf71f31f69633b5eac541b230283e8536decd`;
 - Phase 6 verification run: `36060118721` — SUCCESS at `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`;
+- Phase 7 verification run: `36064434979` — SUCCESS at `9f9af8ce15e5035def2605c98d8f8153728c3eed`;
 - S11 ablation foundation: PASS, 43 assertions;
 - A0–A7 exact cumulative protocol: VERIFIED;
 - required research metric contract: VERIFIED;
@@ -73,12 +74,21 @@ Verified Phase 6:
 - campaign cells remain 120 PLANNED / 0 EXECUTED: PASS;
 - A0–A7 metrics: NOT_RUN / NOT CLAIMED.
 
+Verified Phase 7:
+- hash-only live evidence collection: PASS;
+- stable normalization of volatile response data: PASS;
+- complete baseline + seven-dimension accounting for all 15 cases: PASS;
+- evidence bundle ground-truth/prediction exclusion: PASS;
+- campaign projection = 120 EVIDENCE_READY / 0 EXECUTED: PASS;
+- treatment-evidence suite: PASS, 725 assertions;
+- A0–A7 metrics: NOT_RUN / NOT CLAIMED.
+
 Next dependency-ordered milestone:
-1. build ground-truth-free baseline evidence extraction for all 15 cases;
-2. build identity / ownership / tenant / role / workflow / semantic / correlation evidence collectors;
-3. keep variant evidence isolated by the verified A0–A7 protocol;
-4. promote only complete cells to EVIDENCE_READY;
-5. keep metric aggregation disabled until the 120-cell evidence-readiness gate is independently verified.
+1. execute deterministic A0–A7 predictions for all 120 evidence-ready cells;
+2. keep independent research labels unavailable to prediction execution;
+3. persist prediction result IDs/fingerprints/evidence references only;
+4. mark a cell EXECUTED only after a resolved or explicit inconclusive prediction exists;
+5. defer confusion-matrix and metric aggregation to a separate evaluation phase.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
 

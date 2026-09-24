@@ -216,8 +216,56 @@ Phase 6 invariants:
 Phase 6 verification: GitHub Actions run `36060118721` — SUCCESS at
 `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`.
 
-## Phase 7 dependency
+## Phase 7 treatment-evidence boundary
 
-A treatment-specific evidence layer must now convert live fixture observations into ground-truth-free
-`AblationCaseEvidence`. Baseline and dimension evidence must be explicit, deterministic and sufficient for each
-variant before campaign cells can transition to EVIDENCE_READY.
+Phase 7 persists only evidence references and applicability state.
+
+```text
+live response pair + non-secret request context
+        |
+        v
+stable response normalization
+        |
+        v
+hash-only baseline evidence
+        |
+        +--> identity
+        +--> ownership
+        +--> tenant
+        +--> role
+        +--> workflow
+        +--> semantic evidence
+        +--> correlation
+        |
+        v
+AblationEvidenceBundle
+        |
+        v
+campaign readiness projection
+        |
+        +--> complete -> EVIDENCE_READY
+        +--> incomplete -> PLANNED
+```
+
+Phase 7 invariants:
+
+1. Ground truth is not a collector input or evidence-bundle field.
+2. Prediction is not an evidence-bundle field.
+3. Raw response bodies are not persisted as evidence references.
+4. Raw principal/tenant/resource values do not appear in evidence IDs.
+5. Volatile response fields are normalized before deterministic hashing.
+6. NOT_APPLICABLE is explicit and still evidence-backed.
+7. A cell may become EVIDENCE_READY only when baseline and all required dimensions are accounted for.
+8. Evidence projection cannot produce EXECUTED state.
+9. Removing one case bundle removes readiness from exactly that case's eight A0–A7 cells.
+
+Phase 7 verification: GitHub Actions run `36064434979` — SUCCESS at
+`9f9af8ce15e5035def2605c98d8f8153728c3eed`.
+
+Verified campaign readiness: 120 EVIDENCE_READY / 0 EXECUTED.
+
+## Phase 8 dependency
+
+Prediction execution may now consume the evidence-ready bundles through the already verified
+`S11AblationPredictionAdapter`. Independent labels and metric aggregation must remain outside that execution
+boundary.

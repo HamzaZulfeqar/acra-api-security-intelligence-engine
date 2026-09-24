@@ -16,14 +16,14 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A1 | + Identity | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A2 | + Ownership | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A3 | + Tenant | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A4 | + Role | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A5 | + Workflow | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A6 | + Semantic evidence | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A7 | Full ACRA correlation | FIXTURES_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A0 | Naive differential baseline | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A1 | + Identity | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A2 | + Ownership | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A3 | + Tenant | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A4 | + Role | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A5 | + Workflow | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A6 | + Semantic evidence | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A7 | Full ACRA correlation | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
 
 ## Sprint 11 protocol status — 2026-09-25
 
@@ -59,6 +59,13 @@ GitHub Actions run `36060118721` verified 12 new controlled research fixtures an
 readiness map to 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE. State `FIXTURES_READY` means every registered case has
 live localhost fixture evidence; it does **not** mean A0–A7 treatment evidence has been collected or any experiment
 cell executed. Campaign coverage remains 120 PLANNED / 0 EXECUTED and all research metrics remain NOT_RUN.
+
+## Sprint 11 treatment-evidence status — 2026-09-25
+
+GitHub Actions run `36064434979` verified ground-truth-free treatment evidence collection for all 15 cases.
+All 120 case×variant campaign cells are now EVIDENCE_READY, but 0 are EXECUTED. State `EVIDENCE_READY` does
+**not** mean predictions were evaluated against ground truth or that any research metric exists. A0–A7 results
+remain NOT_RUN pending controlled prediction execution and a separate later metric-aggregation gate.
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
