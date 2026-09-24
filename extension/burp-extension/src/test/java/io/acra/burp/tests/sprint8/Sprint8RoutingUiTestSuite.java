@@ -62,7 +62,7 @@ public final class Sprint8RoutingUiTestSuite {
         assertions++;
 
         JTabbedPane routingTabs = find(tab.component(), JTabbedPane.class, "s8-routing-tabs");
-        for (String title : Set.of("Overview", "Stage Traces", "Boundary Matrix", "Assessments", "Candidates")) {
+        for (String title : Set.of("Overview", "Stage Traces", "Boundary Matrix", "Assessments", "Candidates", "Report", "JSON Export")) {
             check(indexOf(routingTabs, title) >= 0, "routing sub-tab installed: " + title);
             assertions++;
         }
@@ -103,6 +103,22 @@ public final class Sprint8RoutingUiTestSuite {
         check(tab.routingWorkspace().snapshot().candidateCount() == 1,
                 "routing workspace exposes one candidate without confirmation promotion");
         assertions++;
+        JTextArea report = find(tab.component(), JTextArea.class, "s8-routing-report-view");
+        check(report.getText().contains("ACRA Sprint 8 Routing Normalization Report"),
+                "routing report view renders canonical Markdown");
+        assertions++;
+        check(report.getText().contains("Confirmed findings: 0"),
+                "routing report preserves zero confirmed findings");
+        assertions++;
+
+        JTextArea json = find(tab.component(), JTextArea.class, "s8-routing-json-export-view");
+        check(json.getText().contains("s8-routing-report-v1"),
+                "routing JSON export view renders canonical report version");
+        assertions++;
+        check(json.getText().contains("\"confirmedFindingCount\":0"),
+                "routing JSON export preserves review-only boundary");
+        assertions++;
+
     }
 
     private static S8RoutingWorkspace fixtureWorkspace() {
