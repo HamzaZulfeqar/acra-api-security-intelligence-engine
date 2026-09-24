@@ -125,3 +125,34 @@ authorized in the localhost target descriptor before the mutation can dispatch.
 Secure behavior preserves DENY across equivalent representations. The deliberately vulnerable fixture returns
 ALLOW only for the duplicate-separator representation, creating an evidence-backed `UNEXPECTED_CHANGE`.
 This remains a controlled research observation and is not automatically promoted to a confirmed vulnerability.
+
+## Phase 4 assessment and finding gate
+
+```
+RouteBoundaryTransition
+        +
+expected policy decision
+        +
+observed authorization outcome
+        ↓
+S8RoutingAssessmentEvaluator
+        ↓
+RouteAuthorizationAssessment
+        ↓
+EvidenceReferenceValidator
+  execution ownership
+  test ownership
+  observation lineage
+  project ownership
+        ↓
+S8RoutingFindingCandidateEvaluator
+        ↓
+FindingCandidate
+```
+
+Promotion is deliberately conservative. A Sprint 8 routing candidate requires both a routing change and an
+explicit DENY→ALLOW policy mismatch. Missing stage attribution, unknown authorization state, invalid evidence,
+or cross-project provenance produces `INCONCLUSIVE`. A route-stable authorization difference is outside this
+Sprint 8 routing-candidate gate.
+
+The resulting `FindingCandidate` is review-only. It does not represent an automatically confirmed vulnerability.
