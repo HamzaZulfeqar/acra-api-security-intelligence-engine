@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
-**Decision:** S8 IN PROGRESS — Phase 4 VERIFIED.  
+**Decision:** S8 IN PROGRESS — Phase 5 VERIFIED.  
 **Working branch:** `s8-routing-normalization`.  
 **Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
 **Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
@@ -61,6 +61,17 @@ Phase 4 adds:
 - retained Sprint 3 and Sprint 7 regressions PASS.
 
 FindingCandidate remains review-only and is not an automatically confirmed vulnerability.
+
+Phase 5 verification: GitHub Actions run `35970306700` — SUCCESS.
+
+Phase 5 adds:
+- S8 routing product workspace and immutable snapshot;
+- Burp Routing area with Overview / Stage Traces / Boundary Matrix / Assessments / Candidates;
+- backward-compatible suite-tab constructor integration;
+- retained Sprint 4/6/7 UI regressions;
+- Maven extension compilation and controlled routing log artifact upload.
+
+The Routing UI is read-only and introduces no new active-execution capability.
 
 ### Sprint 7 frozen closure
 
