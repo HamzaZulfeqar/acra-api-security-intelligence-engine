@@ -102,6 +102,26 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed=urlparse(self.path); path=parsed.path; query=parse_qs(parsed.query)
         if path=='/health': return self._json(200,{'status':'ok','mode':MODE})
+        if path=='/api/v1/s10/session-context':
+            ident=self._require_identity()
+            if not ident:return
+            auth=self.headers.get('Authorization','')
+            token=auth[7:].strip()
+            scope=claim(token,'scope')
+            if isinstance(scope,str):
+                scopes=sorted([part for part in scope.split(' ') if part])
+            elif isinstance(scope,list):
+                scopes=sorted([str(part) for part in scope if str(part)])
+            else:
+                scopes=[]
+            session_id=self.headers.get('X-Session-ID','UNKNOWN')
+            return self._json(200,{'session_id':session_id,
+                                   'principal_id':ident.get('sub'),
+                                   'role':ident.get('role'),
+                                   'tenant_id':ident.get('tenant_id'),
+                                   'scopes':scopes,
+                                   'authentication_type':'OAUTH',
+                                   'authorization_mode':MODE})
         if path=='/api/v1/s4/application-denial':
             ident=self._require_identity()
             if not ident:return
