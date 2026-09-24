@@ -2,12 +2,40 @@
 
 ## Current state — 2026-09-24
 
-**Current sprint:** Sprint 7 — Workflow Authorization, Delegation and Token Binding.  
-**Decision:** S7 SOFTWARE COMPLETE.  
-**Working branch:** `s7-workflow-token-binding`.  
-**Immutable Sprint 5 base:** `89ceb1eec0aca7ebb2c5db60b4bfce43251d0f84`.  
-**Sprint 5:** SOFTWARE COMPLETE and preserved separately.  
-**Sprint 7:** SOFTWARE COMPLETE.
+**Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
+**Decision:** S8 IN PROGRESS — Phase 1 foundation candidate.  
+**Working branch:** `s8-routing-normalization`.  
+**Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
+**Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
+**Sprint 7 canonical final verification:** GitHub Actions run `35961314354`.  
+**Sprint 7 canonical checkpoint SHA-256:** `5e77654d6467cc45c60825cb44bd7c3aa1d4f33c8705d41216d7f258a8187189`.
+
+### Sprint 8 Phase 1 candidate
+
+The existing Sprint 3 route/template/equivalence layer is reused. New source adds an evidence-backed processing
+trace across `RAW_URI → PROXY → GATEWAY → FRAMEWORK → APPLICATION`.
+
+Current candidate capabilities:
+- explicit processing-stage observations with provenance evidence;
+- deterministic stage ordering and missing-stage accounting;
+- representation change vs route-family variation vs canonical divergence;
+- stage-gap attribution marked INCONCLUSIVE;
+- path-only observation boundary;
+- duplicate-stage and provenance-free observations rejected;
+- no bypass generation, external-target probing or vulnerability promotion.
+
+Phase 1 is not promoted to verified until the Sprint 8 Java 21 CI lane and retained Sprint 7 foundation pass.
+
+### Sprint 7 frozen closure
+
+- canonical final workflow: GitHub Actions run `35961314354` — SUCCESS
+- canonical final checkpoint: `acra-sprint-07-final.zip`
+- canonical SHA-256: `5e77654d6467cc45c60825cb44bd7c3aa1d4f33c8705d41216d7f258a8187189`
+- entries: 791
+- unsafe paths: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- real Burp desktop runtime: UNVERIFIED / DEFERRED
 
 ### Implemented S6 capabilities
 

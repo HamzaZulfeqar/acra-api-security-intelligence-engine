@@ -2,12 +2,26 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 7 SOFTWARE COMPLETE.** Dedicated final closure run `35960826621` passed full regression, Maven packaging,
-retained legacy/UI lanes and reproducible checkpoint verification.
+**Sprint 7 SOFTWARE COMPLETE** and frozen at commit `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.
 
-Sprint 7 closure candidate checkpoint SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`. The canonical final-status package digest is emitted by the external sidecar after final-status verification.
+Canonical Sprint 7 closure:
+- GitHub Actions run `35961314354`
+- checkpoint SHA-256 `5e77654d6467cc45c60825cb44bd7c3aa1d4f33c8705d41216d7f258a8187189`
+- 791 entries, 0 unsafe paths, clean/per-file equality PASS
 
-Sprint 8 is **NOT STARTED**. No Sprint 8 implementation is included in the Sprint 7 checkpoint.
+**Sprint 8 IN PROGRESS** on `s8-routing-normalization`.
+
+Sprint 8 scope: **Routing Normalization & Authorization-Path Intelligence**.
+
+Dependency order:
+1. Phase 1 — evidence-backed staged normalization trace foundation;
+2. controlled multi-stage route fixtures and provenance import;
+3. authorization-path divergence reasoning without vulnerability promotion;
+4. guarded route-variant planning only after explicit safety/equivalence contracts;
+5. product UI/reporting/coverage;
+6. security/performance validation and final closure.
+
+Current Phase 1 remains a candidate until its dedicated Java 21 CI and retained Sprint 7 foundation gates pass.
 
 The historical roadmap entries below are retained for provenance.
 
