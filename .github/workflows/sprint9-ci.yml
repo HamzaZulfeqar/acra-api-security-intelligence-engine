@@ -48,3 +48,13 @@ jobs:
         run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint8.Sprint8RoutingUiTestSuite
       - name: Verify Sprint 9 property UI
         run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint9.Sprint9PropertyUiTestSuite
+      - name: Upload Sprint 9 performance observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint9-property-validation
+          path: |
+            build/s9-foundation/performance/performance-s9.csv
+            build/s9-foundation/secure-lab.log
+            build/s9-foundation/vulnerable-lab.log
+          if-no-files-found: warn
