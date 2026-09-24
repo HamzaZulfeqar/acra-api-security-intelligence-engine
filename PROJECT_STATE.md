@@ -3,14 +3,14 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
-**Decision:** S8 IN PROGRESS — Phase 1 foundation candidate.  
+**Decision:** S8 IN PROGRESS — Phase 2 VERIFIED.  
 **Working branch:** `s8-routing-normalization`.  
 **Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
 **Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
 **Sprint 7 canonical final verification:** GitHub Actions run `35961314354`.  
 **Sprint 7 canonical checkpoint SHA-256:** `5e77654d6467cc45c60825cb44bd7c3aa1d4f33c8705d41216d7f258a8187189`.
 
-### Sprint 8 Phase 1 candidate
+### Sprint 8 verified progress
 
 The existing Sprint 3 route/template/equivalence layer is reused. New source adds an evidence-backed processing
 trace across `RAW_URI → PROXY → GATEWAY → FRAMEWORK → APPLICATION`.
@@ -24,7 +24,18 @@ Current candidate capabilities:
 - duplicate-stage and provenance-free observations rejected;
 - no bypass generation, external-target probing or vulnerability promotion.
 
-Phase 1 is not promoted to verified until the Sprint 8 Java 21 CI lane and retained Sprint 7 foundation pass.
+Phase 1 verification: GitHub Actions run `35961851498` — SUCCESS.
+
+Phase 2 verification: GitHub Actions run `35965612498` — SUCCESS.
+
+Phase 2 adds:
+- evidence-backed path/method/host/API-version/authorization observations across routing stages;
+- routing-only vs authorization-only vs combined boundary differential states;
+- fail-closed handling for stage gaps and unknown authorization context;
+- host/path input hardening;
+- retained Sprint 3 route/core and Sprint 7 foundation regressions.
+
+No bypass generation, external-target probing or vulnerability promotion is claimed by Phase 2.
 
 ### Sprint 7 frozen closure
 
