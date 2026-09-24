@@ -36,6 +36,7 @@ fi
 EXT_CP="extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/test-classes:core/target/classes:$MONTOYA_JAR"
 java -ea -cp "$EXT_CP" io.acra.burp.tests.sprint12.Sprint12MontoyaIssueAdapterTestSuite
 java -ea -cp "$EXT_CP" io.acra.burp.tests.sprint12.Sprint12BurpIssuePublicationBoundaryTestSuite
+java -ea -Djava.awt.headless=true -cp "$EXT_CP" io.acra.burp.tests.sprint12.Sprint12ReproductionUiTestSuite
 
 if grep -E "S12BurpIssuePublisher|S12MontoyaSiteMapAuditIssueSink|siteMap\\(" extension/burp-extension/src/main/java/io/acra/burp/ACRAExtension.java >/dev/null 2>&1; then
   echo "Sprint 12 publisher must remain unregistered from ACRAExtension bootstrap" >&2
