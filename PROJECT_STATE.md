@@ -27,8 +27,12 @@ Phase 1 implements passive deterministic authentication/session correlation:
 Verification run `36031651777` passed exact Java 21 compilation, the Sprint 10 foundation suite,
 retained Sprint 6/7/8/9 foundations and Maven core test compilation.
 
-Sprint 10 Phase 2 is **NOT STARTED**. The next dependency is evidence-store binding for passive
-authentication/session observations.
+Sprint 10 Phase 2 is **VERIFIED COMPLETE** by GitHub Actions run `36031909153` at commit
+`4646bbf434422a6b90e3a8b2947cd519c869812a`.
+
+Phase 2 adds session-specific immutable project/test/execution/evidence lineage validation without weakening the
+existing HTTP Observation validator. The next dependency is controlled synthetic ACRA-Lab token/session rotation
+ground truth.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
