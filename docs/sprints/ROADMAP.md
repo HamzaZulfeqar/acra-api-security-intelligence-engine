@@ -17,11 +17,16 @@ Canonical Sprint 10 Phase 1 evidence:
 
 Sprint 9 remains SOFTWARE COMPLETE.
 
+Phase 2 verified by GitHub Actions run `36031909153`:
+- session observation evidence-store binding: PASS;
+- project/test/execution lineage validation: PASS;
+- unknown/duplicate/cross-project/contradictory evidence rejection: PASS.
+
 Next dependency-ordered milestone:
-1. bind session observations to project/test/execution/evidence provenance;
-2. reject unknown, duplicate, cross-project or contradictory lineage;
-3. retain token fingerprints as correlation handles only;
-4. then define controlled ACRA-Lab token rotation/session ground truth.
+1. define controlled synthetic ACRA-Lab token/session rotation ground truth;
+2. observe stable rotation and context-drift cases without raw credential persistence;
+3. feed those observations through the verified Phase 1 analyzer and Phase 2 provenance gate;
+4. preserve synthetic-lab authentication as non-production evidence.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
