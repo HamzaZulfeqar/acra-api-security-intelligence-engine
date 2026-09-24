@@ -2,20 +2,28 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 8 SOFTWARE COMPLETE.**
+**Sprint 9 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
 
-Canonical closure evidence:
-- branch: `s8-routing-normalization`
-- final closure run: `35971753523` — SUCCESS
-- closure source commit: `f6a0c19358b00672711532ec7effe1eed3800e3e`
-- closure-candidate checkpoint SHA-256: `e063217d3c8795a59ce1cd7e052a2c9b0475a86836239973ef1d470a6c627af7`
-- 836 entries, 0 unsafe paths, 0 duplicate entries
-- clean extraction and per-file SHA-256 equality: PASS
-- official Maven package and retained S2/S3/S4/S6/S7/S8 verification: PASS
+Canonical Sprint 9 Phase 1 evidence:
+- branch: `s9-property-authorization`
+- immutable Sprint 8 base: `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`
+- Phase 1 verification run: `35985518829` — SUCCESS
+- evidence-backed property observations: VERIFIED
+- deterministic property-policy correlation: VERIFIED
+- cross-project provenance rejection: VERIFIED
+- missing/ambiguous policy fail-closed behavior: VERIFIED
+- retained S5/S6/S7/S8 foundations: PASS
+- Maven core test compilation: PASS
 
-Sprint 7 remains frozen at `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.
+Sprint 8 remains SOFTWARE COMPLETE.
 
-**Sprint 9 is NOT STARTED.** No Sprint 9 implementation is included in the Sprint 8 closure checkpoint.
+Next dependency-ordered milestone:
+1. define controlled Sprint 9 property-level ground truth in ACRA-Lab;
+2. implement secure and deliberately vulnerable READ/UPDATE property cases;
+3. validate evidence-backed property outcomes locally;
+4. only then connect safe property mutations to the existing S4 planner/queue/executor.
+
+Do not start UI/reporting or broad property fuzzing before the controlled execution contract exists.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
