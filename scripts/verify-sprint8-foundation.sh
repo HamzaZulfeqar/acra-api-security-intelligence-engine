@@ -54,7 +54,7 @@ CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingNormalizationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8AuthorizationPathDifferentialTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8ControlledRoutingDifferentialTestSuite
-java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingReportingExportTestSuite
+ACRA_S8_REPORT_OUTPUT_DIR="$BUILD/reporting" java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingReportingExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingSecurityHardeningTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingPerformanceObservationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint3.Sprint3CoreTestSuite
