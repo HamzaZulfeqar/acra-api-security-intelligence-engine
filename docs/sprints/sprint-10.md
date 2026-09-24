@@ -348,3 +348,46 @@ Verified:
 Phase 7 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 8 owns the read-only authentication/session product workspace and Burp UI.
+
+## Phase 8 — authentication/session product workspace and Burp UI
+
+Implemented:
+
+- `S10SessionProductSnapshot`;
+- `S10SessionWorkspace`;
+- `S10SessionPanel`;
+- top-level Burp `Authentication` product area;
+- Overview / Sessions / Correlations / Assessments / Candidates / Coverage views;
+- backward-compatible `AcraSuiteTab` constructor chain with optional injected Sprint 10 workspace;
+- read-only projection of session observations, correlation state, review-only assessments/findings and coverage;
+- raw token and token-fingerprint values intentionally omitted from all Sprint 10 UI table models;
+- redaction-safe `auth-context:` candidate resource identity retained;
+- runtime-state clear preserves explicit coverage targets as UNOBSERVED;
+- no new active authentication controls introduced by the Sprint 10 UI.
+
+### Phase 8 verification
+
+GitHub Actions run `36034257857`: **SUCCESS** at commit
+`93718c2b0ac7510c2a265608901d92db4406fe3b`.
+
+Verified:
+
+- full Sprint 10 core suite: PASS;
+- Maven core test compilation: PASS;
+- real extension Maven test compilation: PASS;
+- retained Sprint 4 UI: PASS;
+- retained Sprint 6 Authorization UI: PASS;
+- retained Sprint 7 Workflow UI: PASS;
+- retained Sprint 8 Routing UI: PASS;
+- retained Sprint 9 Property UI: PASS;
+- Sprint 10 Authentication UI: PASS;
+- explicit coverage denominator/gaps rendered: PASS;
+- review-only candidate / rejected-control states rendered: PASS;
+- raw synthetic token not rendered: PASS;
+- SHA-256 token fingerprint not rendered: PASS;
+- redaction-safe auth-context resource identity rendered without weakening secret redaction: PASS.
+
+Phase 8 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 9 owns deterministic secret-safe JSON/SHA-256 and Markdown report/export
+generated from the same `S10SessionWorkspace` source of truth.
