@@ -58,21 +58,29 @@ public final class S9PropertyAuthorizationAnalyzer {
 
         for (PropertyAccessObservation observation : observationList) {
             evidenceIds.addAll(observation.evidenceIds());
-            EvidenceReferenceValidation evidence = evidenceValidator.validate(
+            EvidenceReferenceValidation evidence = evidenceValidator.validateEvidenceReferences(
                     observation.evidenceIds(),
+                    observation.executionId(),
+                    observation.testId(),
+                    projectId);
+            EvidenceReferenceValidation observationLineage = evidenceValidator.validateObservation(
                     observation.observationId(),
                     observation.executionId(),
                     observation.testId(),
                     projectId);
 
-            if (!evidence.valid()) {
+            if (!evidence.valid() || !observationLineage.valid()) {
+                List<String> provenanceReasons = new ArrayList<>();
+                provenanceReasons.addAll(evidence.reasons());
+                provenanceReasons.addAll(observationLineage.reasons());
+                provenanceReasons = List.copyOf(new LinkedHashSet<>(provenanceReasons));
                 assessments.add(manualAssessment(
                         observation,
                         context,
                         PolicyValidationState.INCONCLUSIVE,
                         "Property observation provenance could not be validated",
-                        evidence.reasons()));
-                aggregateReasons.addAll(evidence.reasons());
+                        provenanceReasons));
+                aggregateReasons.addAll(provenanceReasons);
                 continue;
             }
 
