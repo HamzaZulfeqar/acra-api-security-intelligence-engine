@@ -364,3 +364,55 @@ Phase 7 is **VERIFIED COMPLETE**.
 
 Sprint 9 remains IN PROGRESS. Phase 8 owns security hardening and bounded performance observations before final
 traceability, reproducible packaging and software closure.
+
+
+## Phase 8 — security hardening and bounded performance observations
+
+Security-hardening coverage:
+
+- property observation query material rejected;
+- property observation fragment material rejected;
+- provenance-free property observations rejected;
+- duplicate evidence references rejected;
+- secret-bearing property metadata rejected;
+- operation-mismatched coverage observations rejected;
+- policy decision drift for an existing coverage identity rejected;
+- controlled property BODY mutation requires exact-one replacement;
+- duplicate matching property occurrences fail closed;
+- privileged property mutation remains `STATE_CHANGING`;
+- property workspace rejects non-property FindingCandidate projections;
+- property report cannot auto-confirm findings;
+- embedded bearer secret redaction preserves later report fields.
+
+Bounded engineering observations cover 100 / 1,000 / 10,000 explicit property-policy contexts across:
+
+- property workspace / coverage population;
+- deterministic property report generation.
+
+### Phase 8 verification
+
+GitHub Actions run `36002106088`: **SUCCESS** at commit
+`6fd524f349ff77005efac42e8ae5b96201ab7c1b`.
+
+- `Sprint9PropertySecurityHardeningTestSuite`: PASS, 14 assertions;
+- `Sprint9PropertyPerformanceObservationTestSuite`: PASS;
+- Maven core and extension compilation: PASS;
+- retained S4/S6/S7/S8 UI regressions: PASS;
+- S9 Property UI regression: PASS;
+- performance CSV artifact upload: PASS.
+
+Observed CI values:
+
+| Property-policy contexts | Workspace population | Report generation | Approx JVM memory delta |
+|---:|---:|---:|---:|
+| 100 | 98 ms | 27 ms | 3,187,608 bytes |
+| 1,000 | 109 ms | 6 ms | 2,381,752 bytes |
+| 10,000 | 228 ms | 40 ms | 114,832,128 bytes |
+
+These values are engineering observations from one CI environment. They are not benchmarks, SLOs, release
+thresholds, real-world capacity claims, or evidence of scanner accuracy.
+
+Phase 8 is **VERIFIED COMPLETE**.
+
+Remaining Sprint 9 work is final requirements traceability, retained regression, reproducible source packaging
+and final software audit. Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane.
