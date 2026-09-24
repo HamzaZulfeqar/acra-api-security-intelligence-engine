@@ -1,6 +1,6 @@
 # ACRA Project State
 
-## Current state — 2026-09-23
+## Current state — 2026-09-24
 
 **Current sprint:** Sprint 7 — Workflow Authorization, Delegation and Token Binding.  
 **Decision:** S7 IN PROGRESS.  
@@ -120,16 +120,36 @@ Current CI:
 - official Maven test compilation excludes the legacy local-Montoya-stub suites because those suites target the preserved stub contract rather than the current official Montoya test interface
 - real Burp desktop runtime remains a separate UNVERIFIED/BLOCKED gate
 
-### Remaining S6 closure work
+### Sprint 7 verified progress
 
-- fuller planner→controlled execution product integration
-- UI for policy, role hierarchy, tenant map, effective permissions, conflicts and coverage
-- report/export extension for S6 policy evidence
-- larger performance workloads and memory profiling
-- expanded negative-security and serialization audit
-- requirements traceability / ADR closure
-- full S1–S6 regression and Maven/package verification
-- final Sprint 6 audit
-- reproducible S6 ZIP + SHA-256 + manifest
+Phase 1, Phase 2 and Phase 3 are complete on `s7-workflow-token-binding`.
 
-Historical S2/S3 real Burp runtime validation remains separate and is not promoted by Sprint 6 evidence.
+Latest verified gate: GitHub Actions run `35958482546`.
+
+Phase 3 now adds:
+- controlled secure/vulnerable workflow transition fixtures
+- automatic policy-aware `WORKFLOW_TRANSITION` planning
+- one-variable target-state mutation with request-equivalence invariants
+- state-changing safety classification without destructive auto-execution
+- existing Sprint 4 planner/queue/safety/executor reuse
+- secure DENY / `EXPECTED_CHANGE` control
+- deliberately vulnerable ALLOW / `UNEXPECTED_CHANGE` control
+- secret-safe generated-test serialization
+- fail-closed conflict handling
+- retained Sprint 6 regression PASS
+
+These are controlled localhost validation results only and do not establish real-world scanner accuracy.
+
+### Remaining Sprint 7 work
+
+- workflow coverage matrix and coverage product model
+- Burp product UI for workflow map, transition matrix, conflicts and coverage
+- deterministic workflow report/export integration
+- expanded workflow/token-binding security-hardening tests
+- performance observations and bounded workload evidence
+- requirements/architecture/decision traceability closure
+- full retained regression and Maven/package verification
+- final Sprint 7 audit, reproducible package, manifest and SHA-256 freeze
+
+Real Burp desktop runtime validation remains a separate unverified gate and is not promoted by the controlled
+localhost evidence.
