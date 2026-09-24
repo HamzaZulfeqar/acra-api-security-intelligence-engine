@@ -83,6 +83,12 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
         assertions++;
 
         ExecutionResult secure = execute(18082, "secure");
+        TestSupport.assertEquals(io.acra.core.domain.testing.TestState.COMPLETED, secure.result().state(),
+                "secure controlled routing test must complete before observation assertions");
+        assertions++;
+        TestSupport.assertTrue(secure.result().observation() != null,
+                "secure controlled routing execution must produce an observation");
+        assertions++;
         TestSupport.assertEquals(AuthorizationOutcome.DENY, secure.result().observation().observedDecision(),
                 "secure fixture preserves DENY across equivalent route representation");
         assertions++;
@@ -92,6 +98,12 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
         assertions++;
 
         ExecutionResult vulnerable = execute(18081, "vulnerable");
+        TestSupport.assertEquals(io.acra.core.domain.testing.TestState.COMPLETED, vulnerable.result().state(),
+                "vulnerable controlled routing test must complete before observation assertions");
+        assertions++;
+        TestSupport.assertTrue(vulnerable.result().observation() != null,
+                "vulnerable controlled routing execution must produce an observation");
+        assertions++;
         TestSupport.assertEquals(AuthorizationOutcome.ALLOW, vulnerable.result().observation().observedDecision(),
                 "deliberately vulnerable fixture allows equivalent-route authorization mismatch");
         assertions++;
