@@ -2,20 +2,35 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 SOFTWARE COMPLETE.**
+**Sprint 10 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
 
-Canonical Sprint 9 closure evidence:
-- branch: `s9-property-authorization`
-- final closure run: `36002545177` — SUCCESS
-- closure source commit: `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`
-- closure-candidate checkpoint SHA-256: `04eaadbfb2e132eb386ab52ff775fb5e1c56f0313b610721a28f2fb63bf8e531`
-- 873 entries, 0 unsafe paths, 0 duplicate entries
-- clean extraction and per-file SHA-256 equality: PASS
-- official Maven package and retained S2/S3/S4/S6/S7/S8/S9 verification: PASS
+Canonical Sprint 10 Phase 1 evidence:
+- branch: `s10-batch-indirect-authorization`
+- immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
+- Phase 1 verification run: `36004146212` — SUCCESS
+- per-item batch authorization reasoning: VERIFIED
+- mixed batch outcomes preserved: VERIFIED
+- indirect reference fingerprint/resolution reasoning: VERIFIED
+- raw indirect key storage excluded: VERIFIED
+- cross-project provenance rejection: VERIFIED
+- Maven core test compilation: PASS
 
-Sprint 8 remains SOFTWARE COMPLETE.
+Sprint 9 remains SOFTWARE COMPLETE and its post-documentation final closure revalidation is PASS.
 
-**Sprint 10 is NOT STARTED.** No Sprint 10 implementation is included in the Sprint 9 closure checkpoint.
+Roadmap reconciliation:
+- historical S10 = Property / Batch / Indirect Authorization;
+- Property = completed in Sprint 9;
+- S10 current scope = remaining Batch + Indirect Authorization.
+
+Next dependency-ordered milestone:
+1. define fixed localhost batch and indirect-reference ground truth;
+2. implement secure and deliberately vulnerable ACRA-Lab cases;
+3. prove per-item batch decisions independently of batch HTTP status;
+4. prove indirect authorization after explicit key-to-resource resolution;
+5. only then connect controlled tests to the existing S4 planner/safety/executor.
+
+No identifier guessing, alias enumeration, external-target probing or automatic vulnerability confirmation is in
+the Phase 2 boundary.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
