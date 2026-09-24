@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
+**Sprint 10 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
@@ -11,6 +11,7 @@ Canonical Sprint 10 Phase 1 evidence:
 - Phase 2 verification run: `36004574331` — SUCCESS
 - Phase 3 verification run: `36048381112` — SUCCESS at `608490cfc1211057e879f6c6457ea62fd648b405`
 - Phase 4 verification run: `36048837246` — SUCCESS at `abb57d0320fcdc161992297415978bde6c769bee`
+- Phase 5 verification run: `36049247018` — SUCCESS at `16169367c3e7c3b179a6d8541dfc88698fde6b81`
 - per-item batch authorization reasoning: VERIFIED
 - mixed batch outcomes preserved: VERIFIED
 - indirect reference fingerprint/resolution reasoning: VERIFIED
@@ -52,12 +53,20 @@ Verified Phase 4:
 - raw indirect alias excluded from projected candidate: PASS;
 - automatic confirmed-vulnerability state: NOT PRESENT.
 
+Verified Phase 5:
+- explicit combined batch/indirect policy coverage universe: PASS;
+- batch vs indirect family counts: PASS;
+- unobserved and observed-unassessed gaps: PASS;
+- candidate/rejected/inconclusive assessed states: PASS;
+- deterministic coverage ordering and ratios: PASS;
+- aggregate HTTP success excluded from coverage inference: PASS.
+
 Next dependency-ordered milestone:
-1. define the explicit batch-item and indirect resolved-target policy coverage universe;
-2. separate observed, assessed, candidate, rejected and inconclusive coverage states;
-3. preserve unobserved and observed-unassessed gaps;
-4. produce deterministic aggregate coverage summaries;
-5. do not infer coverage from aggregate HTTP success or identifier opacity.
+1. create a read-only Sprint 10 batch/indirect product workspace;
+2. expose Overview / Policies / Observations / Assessments / Candidates / Coverage views;
+3. preserve raw indirect-alias exclusion in all UI projections;
+4. retain review-only candidate semantics and coverage gaps;
+5. verify through existing headless Burp UI tests while keeping real desktop runtime explicitly unverified.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 
