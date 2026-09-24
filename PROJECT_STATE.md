@@ -2,12 +2,15 @@
 
 ## Current state — 2026-09-24
 
-**Current sprint:** Sprint 10 — Authentication, Session & Token-Context Intelligence (in progress).  
-**Decision:** S10 PHASE 1 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Current sprint:** Sprint 10 — Authentication, Session & Token-Context Intelligence (closed).  
+**Decision:** S10 SOFTWARE COMPLETE.  
 **Working branch:** `s10-auth-session-intelligence`.  
 **Immutable Sprint 9 base:** `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
-**Sprint 10 Phase 1 verification:** GitHub Actions run `36031651777` — SUCCESS.
+**Sprint 10 Phase 1 verification:** GitHub Actions run `36031651777` — SUCCESS.  
+**Sprint 10 final closure:** GitHub Actions run `36041511898` — SUCCESS at source commit `2a7e753a3866ffb869df17abb53a9d2cc93dd876`.  
+**Sprint 10 closure-candidate SHA-256:** `3e1352ca886096ff2df01d6e8fdbc3f281eb29794651ff6bba23205b7a70d26b`.  
+**Sprint 10 checkpoint entries:** 924; unsafe paths: 0; duplicate entries: 0; clean extraction/per-file equality: PASS.
 
 ### Sprint 10 verified progress
 
@@ -49,7 +52,7 @@ commit `538b146b1e9e57334e6d16fe85da6d81ab9ca765`.
 The read-only authentication/session product workspace and Burp UI projection is **VERIFIED COMPLETE** by
 GitHub Actions run `36034257857` at commit `93718c2b0ac7510c2a265608901d92db4406fe3b`.
 
-Deterministic secret-safe JSON/SHA-256 and Markdown report/export is **VERIFIED COMPLETE** by GitHub Actions run `36040768002` at commit `2ce4895c017a022fff81d16346f10c7155c92ef5`.\n\nSprint 10 Phase 10 security hardening and bounded 100 / 1,000 / 10,000 engineering observations are **IMPLEMENTED / VERIFICATION PENDING**. The next dependency after that gate is final traceability, retained regression, official Maven packaging and reproducible Sprint 10 checkpoint closure.
+Deterministic secret-safe JSON/SHA-256 and Markdown report/export is **VERIFIED COMPLETE** by GitHub Actions run `36040768002` at commit `2ce4895c017a022fff81d16346f10c7155c92ef5`.\n\nSprint 10 Phase 10 security hardening and bounded 100 / 1,000 / 10,000 engineering observations are **VERIFIED COMPLETE** by GitHub Actions run `36041238241`.\n\nSprint 10 is **SOFTWARE COMPLETE**. The dedicated final closure passed full retained regression, official Maven packaging and reproducible checkpoint verification. Sprint 11 is **NOT STARTED** by this closure.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
