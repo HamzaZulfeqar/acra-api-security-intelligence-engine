@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phases 1–6 VERIFIED COMPLETE.**
+**Sprint 9 IN PROGRESS — Phases 1–7 VERIFIED COMPLETE.**
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
@@ -13,6 +13,7 @@ Canonical Sprint 9 Phase 1 evidence:
 - Phase 4 verification run: `35986888660` — SUCCESS
 - Phase 5 verification run: `35987236797` — SUCCESS
 - Phase 6 verification run: `36001111468` — SUCCESS
+- Phase 7 verification run: `36001743072` — SUCCESS
 - evidence-backed property observations: VERIFIED
 - deterministic property-policy correlation: VERIFIED
 - cross-project provenance rejection: VERIFIED
@@ -58,13 +59,20 @@ Verified Phase 6:
 - property values excluded from UI projection: PASS;
 - real Burp desktop runtime remains separately UNVERIFIED / DEFERRED.
 
+Verified Phase 7:
+- deterministic property report model: PASS;
+- canonical JSON/SHA-256 and Markdown export: PASS;
+- Reporter plugin adapter: PASS;
+- report/UI coverage-gap preservation: PASS;
+- confirmedFindingCount fixed at 0: PASS;
+- property values excluded from report/export views: PASS.
+
 Next dependency-ordered milestone:
-1. generate a deterministic S9 property report from the workspace snapshot;
-2. add canonical secret-safe JSON + SHA-256 and deterministic Markdown export;
-3. add the Reporter plugin adapter;
-4. preserve policy coverage gaps and review-only candidates in exports;
-5. keep confirmedFindingCount fixed at 0 unless a separate confirmed-finding architecture is explicitly introduced and verified;
-6. project report/export read-only views into the Properties UI after core reporting passes.
+1. security-hardening suite for property metadata, policy ambiguity, provenance isolation and mutation safety;
+2. bounded 100 / 1,000 / 10,000 property-policy workspace/report observations;
+3. write performance CSV as engineering evidence only, not benchmark/SLO claims;
+4. retain S5/S6/S7/S8 core and S4/S6/S7/S8/S9 UI regressions;
+5. only after Phase 8 passes, perform final traceability, packaging and Sprint 9 software audit.
 
 Do not claim Burp desktop validation from headless UI tests.
 
