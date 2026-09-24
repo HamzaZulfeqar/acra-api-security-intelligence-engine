@@ -1,13 +1,12 @@
 # Sprint 8 Requirements Traceability
 
-Status: **FINAL CANDIDATE — closure verification pending**  
+Status: **SOFTWARE COMPLETE — final closure verified**  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
-PASS means source implementation plus executable evidence exists. Final software-completion remains pending until
-the dedicated Sprint 8 closure workflow passes the retained regression, official Maven package and reproducible
-checkpoint gates. Real Burp desktop runtime remains a separate validation lane and is not inferred from localhost
-or headless UI evidence.
+PASS means source implementation plus executable evidence exists. Sprint 8 software completion is established by
+the dedicated final closure workflow. Real Burp desktop runtime remains a separate validation lane and is not
+inferred from localhost or headless UI evidence.
 
 | ID | Requirement | Implementation evidence | Verification evidence | Status |
 |---|---|---|---|---|
@@ -42,8 +41,8 @@ or headless UI evidence.
 | S8-28 | Secret-safe export without JSON truncation | shared `UniversalRedactor` hardening | Phase 6 regression + Phase 7 security | PASS |
 | S8-29 | Routing mutation/security hardening | URI adapter + route/boundary validation | run `35971212640`, 17 assertions | PASS |
 | S8-30 | 100/1k/10k bounded engineering observations | `Sprint8RoutingPerformanceObservationTestSuite` | run `35971212640`, 13 assertions | PASS |
-| S8-31 | Retained S2/S3/S4/S6/S7 plus S8 final regression and official Maven package | `scripts/verify-sprint8-final.sh` | dedicated final workflow | PENDING |
-| S8-32 | Reproducible S8 ZIP + manifest + SHA-256 + clean extraction | `scripts/package-sprint8.sh` | dedicated final workflow | PENDING |
+| S8-31 | Retained S2/S3/S4/S6/S7 plus S8 final regression and official Maven package | `scripts/verify-sprint8-final.sh` | run `35971753523` | PASS |
+| S8-32 | Reproducible S8 ZIP + manifest + SHA-256 + clean extraction | `scripts/package-sprint8.sh` | run `35971753523` | PASS |
 | S8-33 | Real Burp desktop load/handler/UI runtime | separate runtime gate | no current desktop Burp execution | UNVERIFIED / DEFERRED |
 
 ## Verified phase gates
@@ -71,6 +70,26 @@ Sprint 8 does not claim:
 
 ## Final closure gate
 
-S8-31 and S8-32 remain **PENDING** until the dedicated Sprint 8 final workflow completes successfully.
-The canonical final package digest will be emitted in an external `.sha256` sidecar to avoid self-referential
-package-hash mutation.
+GitHub Actions run `35971753523` completed successfully at source commit
+`f6a0c19358b00672711532ec7effe1eed3800e3e`.
+
+Final closure evidence:
+- exact Temurin Java 21 build/verification: PASS
+- official Maven package: PASS
+- Sprint 2 local-contract regression: PASS, 52 tests
+- Sprint 3 core regression: PASS, 47 tests
+- Sprint 3 adapter regression: PASS, 11 tests
+- Sprint 4 UI: PASS, 26 tests
+- Sprint 6 Authorization UI: PASS, 27 assertions
+- Sprint 7 Workflow UI: PASS, 20 assertions
+- Sprint 8 Routing UI: PASS, 23 assertions
+- deterministic checkpoint entries: 836
+- unsafe paths: 0
+- duplicate entries: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- closure-candidate source ZIP SHA-256:
+  `e063217d3c8795a59ce1cd7e052a2c9b0475a86836239973ef1d470a6c627af7`
+
+The canonical final-status package digest is emitted in the external `.sha256` sidecar after final-status
+documentation changes, avoiding self-referential package-hash mutation.
