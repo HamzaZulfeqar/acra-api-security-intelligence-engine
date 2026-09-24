@@ -1,12 +1,10 @@
 # Sprint 10 Requirements Traceability
 
-Status: **CLOSURE CANDIDATE — Phases 1–8 verified; final closure pending**  
+Status: **SOFTWARE COMPLETE — final closure verified**  
 Branch: s10-batch-indirect-authorization  
 Immutable Sprint 9 base: ce81220eb9ea41009973b4072c08d59927ee8c6b
 
-PASS means source implementation plus executable evidence exists. Sprint 10 is not promoted to SOFTWARE COMPLETE until
-the dedicated final closure workflow passes. Real Burp desktop runtime remains a separate validation lane and is
-not inferred from localhost or headless Swing evidence.
+PASS means source implementation plus executable evidence exists. The dedicated Sprint 10 final closure workflow has passed. Real Burp desktop runtime remains a separate validation lane and is not inferred from localhost or headless Swing evidence.
 
 | ID | Requirement | Implementation evidence | Verification evidence | Status |
 |---|---|---|---|---|
@@ -47,10 +45,10 @@ not inferred from localhost or headless Swing evidence.
 | S10-34 | Confirmed finding count remains zero | report summary/UI/hardening | Phase 7/8 | PASS |
 | S10-35 | Batch/indirect input/evidence/coverage hardening | S10 security suite | Phase 8 / run 36055037223 | PASS |
 | S10-36 | 100/1k/10k bounded engineering observations | S10 performance suite | Phase 8 / run 36055037223 | PASS |
-| S10-37 | Full retained S2/S3/S4/S6/S7/S8/S9 plus S10 regression | verify-sprint10-final.sh | final closure workflow | PENDING |
-| S10-38 | Official Maven package in final gate | Maven reactor | final closure workflow | PENDING |
-| S10-39 | Deterministic S10 ZIP + manifest + SHA-256 | package-sprint10.sh | final closure workflow | PENDING |
-| S10-40 | Safe archive / no duplicates / clean extraction / per-file equality | package verifier | final closure workflow | PENDING |
+| S10-37 | Full retained S2/S3/S4/S6/S7/S8/S9 plus S10 regression | verify-sprint10-final.sh | run 36055604554 | PASS |
+| S10-38 | Official Maven package in final gate | Maven reactor | run 36055604554 | PASS |
+| S10-39 | Deterministic S10 ZIP + manifest + SHA-256 | package-sprint10.sh | run 36055604554 | PASS |
+| S10-40 | Safe archive / no duplicates / clean extraction / per-file equality | package verifier | run 36055604554 | PASS |
 | S10-41 | Real Burp desktop load/handler/UI runtime | separate runtime gate | no current desktop Burp execution | UNVERIFIED / DEFERRED |
 
 ## Verified phase gates
@@ -73,4 +71,31 @@ separately implemented and verified.
 
 ## Final closure gate
 
-Pending dedicated Sprint 10 Final Closure workflow verification.
+GitHub Actions run `36055604554` completed successfully at closure-candidate source commit
+`a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.
+
+Final closure evidence:
+
+- exact Temurin Java 21 Sprint 10 verification: PASS;
+- all Sprint 10 foundation/live/finding/coverage/report/security/performance suites: PASS;
+- official Maven package: PASS;
+- retained Sprint 2 local-contract regression: PASS, 52 tests;
+- retained Sprint 3 core regression: PASS, 47 tests;
+- retained Sprint 3 adapter regression: PASS, 11 tests;
+- Sprint 4 UI: PASS, 26 tests;
+- Sprint 6 Authorization UI: PASS, 27 assertions;
+- Sprint 7 Workflow UI: PASS, 20 assertions;
+- Sprint 8 Routing UI: PASS, 23 assertions;
+- Sprint 9 Property UI: PASS, 59 assertions;
+- Sprint 10 Batch & Indirect UI: PASS, 230 assertions;
+- deterministic checkpoint entries: 931;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- closure-candidate source ZIP SHA-256:
+  `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0`.
+
+The source hash identifies the successful closure-candidate source snapshot. Final-status documentation changes
+alter the source archive by definition; the canonical post-documentation digest is emitted through the external
+`.sha256` sidecar.

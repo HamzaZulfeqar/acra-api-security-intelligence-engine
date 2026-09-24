@@ -21,6 +21,30 @@ Authoritative pre-final verification through Phase 8 is GitHub Actions run `3605
 The performance values are engineering observations from one CI environment, not benchmarks, SLOs, capacity or
 scanner-accuracy claims. Sprint 10 does not permit identifier guessing, alias enumeration or external-target probing.
 
+### Sprint 10 final closure
+
+GitHub Actions run `36055604554`: **PASS** at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.
+
+| Final gate | Result |
+|---|---|
+| Sprint 10 full verification | PASS |
+| Retained Sprint 9 / 8 / 7 / 6 foundations | PASS |
+| Official Maven package | PASS |
+| Sprint 2 local-contract regression | PASS — 52 tests |
+| Sprint 3 core / adapter regression | PASS — 47 / 11 |
+| Sprint 4 UI | PASS — 26 tests |
+| Sprint 6 / 7 / 8 / 9 / 10 product UI | PASS — 27 / 20 / 23 / 59 / 230 |
+| Deterministic source ZIP | PASS — 931 entries |
+| Unsafe / duplicate paths | PASS — 0 / 0 |
+| Clean extraction / per-file SHA-256 equality | PASS / PASS |
+| Real Burp desktop runtime | UNVERIFIED / DEFERRED |
+
+Closure-candidate source ZIP SHA-256:
+`dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0`.
+
+The closure-candidate hash identifies the successful pre-final-status source snapshot. Post-documentation packaging
+is represented by the external `.sha256` sidecar to avoid a recursive embedded-hash dependency.
+
 ## Sprint 6 controlled tenant/RBAC validation — 2026-09-23
 
 GitHub Actions run `35878508170`: **PASS** on exact Temurin JDK 21.0.12.1.

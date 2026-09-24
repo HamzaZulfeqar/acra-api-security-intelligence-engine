@@ -1,8 +1,8 @@
 # ROADMAP
 
-## Current gate — 2026-09-24
+## Current gate — 2026-09-25
 
-**Sprint 10 IN PROGRESS — Phases 1–8 VERIFIED COMPLETE.**
+**Sprint 10 SOFTWARE COMPLETE — final closure verified.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
@@ -99,13 +99,21 @@ Verified Phase 8:
 - performance observation suite: PASS, 22 assertions;
 - performance CSV artifact: PASS.
 
-Next dependency-ordered milestone:
-1. freeze Sprint 10 requirements traceability;
-2. run full Sprint 10 plus retained Sprint 9/8/7/6 and S2/S3/S4 regression lanes;
-3. produce official Maven package;
-4. generate deterministic Sprint 10 source checkpoint;
-5. validate safe archive paths, duplicate-entry absence, clean extraction and per-file SHA-256 equality;
-6. publish final Sprint 10 software audit while keeping real Burp desktop runtime separately unverified.
+Final Sprint 10 closure:
+- dedicated closure run: `36055604554` — SUCCESS at `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`;
+- full Sprint 10 plus retained Sprint 9/8/7/6 and S2/S3/S4 regressions: PASS;
+- official Maven package: PASS;
+- deterministic source checkpoint: PASS;
+- closure-candidate ZIP SHA-256: `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0`;
+- entries: 931;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- real Burp desktop runtime remains UNVERIFIED / DEFERRED.
+
+No Sprint 11 scope is started or claimed by this closure. Any next roadmap scope requires a separate explicit
+definition and evidence gate.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 

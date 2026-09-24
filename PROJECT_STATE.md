@@ -1,9 +1,9 @@
 # ACRA Project State
 
-## Current state — 2026-09-24
+## Current state — 2026-09-25
 
-**Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASES 1–8 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Current release boundary:** Sprint 10 — Batch & Indirect Authorization Intelligence — SOFTWARE COMPLETE.  
+**Decision:** S10 SOFTWARE COMPLETE — Phases 1–8 plus dedicated final closure VERIFIED.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -15,7 +15,9 @@
 **Sprint 10 Phase 5 verification:** GitHub Actions run `36049247018` — SUCCESS at source commit `16169367c3e7c3b179a6d8541dfc88698fde6b81`.  
 **Sprint 10 Phase 6 verification:** GitHub Actions run `36051856008` — SUCCESS at source commit `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.  
 **Sprint 10 Phase 7 verification:** GitHub Actions run `36054653296` — SUCCESS at source commit `09d4edb23014c738d6856d46db6e0a72ed5a9e97`.  
-**Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.
+**Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
+**Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
+**Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
 
 ### Sprint 10 verified progress
 
@@ -129,7 +131,32 @@ Observed CI values from run `36055037223`:
 
 These are one-run engineering observations only, not benchmarks, SLOs, release thresholds, scanner-accuracy evidence or real-world capacity claims.
 
-The next dependency is final Sprint 10 requirements traceability, retained regression, reproducible packaging and software audit.
+Sprint 10 final closure is **VERIFIED COMPLETE**:
+
+- exact Temurin Java 21 Sprint 10 verification and all Phase 1–8 suites: PASS;
+- retained Sprint 9 / Sprint 8 / Sprint 7 / Sprint 6 foundations: PASS;
+- official Maven package: PASS;
+- retained Sprint 2 local-contract regression: PASS, 52 tests;
+- retained Sprint 3 core regression: PASS, 47 tests;
+- retained Sprint 3 adapter regression: PASS, 11 tests;
+- Sprint 4 UI: PASS, 26 tests;
+- Sprint 6 Authorization UI: PASS, 27 assertions;
+- Sprint 7 Workflow UI: PASS, 20 assertions;
+- Sprint 8 Routing UI: PASS, 23 assertions;
+- Sprint 9 Property UI: PASS, 59 assertions;
+- Sprint 10 Batch & Indirect UI: PASS, 230 assertions;
+- deterministic Sprint 10 source checkpoint: PASS;
+- archive safe paths / duplicate detection / clean extraction / per-file SHA-256 equality: PASS.
+
+Closure-candidate checkpoint: `acra-sprint-10-final.zip`  
+Closure-candidate source ZIP SHA-256: `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0`  
+Entries: **931**
+
+The source hash identifies the successful pre-promotion closure-candidate snapshot. Final-status documentation changes
+alter the source archive by definition; the canonical post-documentation digest is emitted through the external
+`.sha256` sidecar rather than embedded recursively.
+
+No Sprint 11 scope is started or claimed by this Sprint 10 closure.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
