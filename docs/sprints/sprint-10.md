@@ -227,3 +227,40 @@ Verified:
 Phase 4 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 5 owns explicit refresh/rotation and verified context-drift assessment.
+
+## Phase 5 — refresh/rotation and verified context-drift assessment
+
+Implemented:
+
+- `SessionSecurityAssessmentState`;
+- `SessionSecurityAssessment`;
+- `S10SessionSecurityAssessmentEvaluator`;
+- baseline, stable, safe-rotation, candidate and inconclusive assessment states;
+- provenance required before any candidate promotion;
+- verified principal/role/tenant/scope drift preserved as explicit dimensions;
+- safe context-preserving token rotation remains `SAFE_ROTATION`;
+- unverified identity differences remain `INCONCLUSIVE`;
+- invalid or missing provenance remains `INCONCLUSIVE`;
+- candidate rationale explicitly preserves analyst review and non-confirmation boundary.
+
+### Phase 5 verification
+
+GitHub Actions run `36032923048`: **SUCCESS** at commit
+`6ae158a46c50663e43910041abeaeaa62a433b2a`.
+
+Verified:
+
+- first observation → BASELINE: PASS;
+- stable verified session → STABLE: PASS;
+- verified context-preserving token renewal → SAFE_ROTATION: PASS;
+- verified role/tenant/scope drift → CANDIDATE: PASS;
+- unverified context drift → INCONCLUSIVE: PASS;
+- invalid/missing provenance → INCONCLUSIVE: PASS;
+- deterministic assessment identity: PASS;
+- full Sprint 10 Phases 1–4 verification: PASS;
+- retained Sprint 6/7/8/9 foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 5 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 6 owns projection into the existing review-only `FindingCandidate` model.
