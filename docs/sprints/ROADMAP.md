@@ -53,11 +53,17 @@ Phase 7 verified by GitHub Actions run `36033819097`:
 - candidate/rejected/inconclusive accounting: PASS;
 - redaction-safe auth-context resource identity: PASS.
 
+Phase 8 verified by GitHub Actions run `36034257857`:
+- immutable session product workspace: PASS;
+- backward-compatible Burp Authentication area: PASS;
+- retained S4/S6/S7/S8/S9 UI regressions: PASS;
+- raw token / token fingerprint non-rendering: PASS.
+
 Next dependency-ordered milestone:
-1. build one read-only Sprint 10 product workspace from session observations/correlations/assessments/findings/coverage;
-2. add Burp Authentication/Session views without new active execution controls;
-3. keep raw tokens and secret values out of UI projections;
-4. retain real Burp desktop runtime as a separate validation lane.
+1. generate deterministic Sprint 10 report model from the session workspace;
+2. add canonical secret-safe JSON + SHA-256 and Markdown exports;
+3. keep confirmedFindingCount fixed at 0;
+4. project report/export into the existing Authentication UI without adding execution controls.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
