@@ -114,3 +114,37 @@ GitHub Actions run `35902076454` completed successfully.
 - cross-project evidence ownership mismatch: INCONCLUSIVE, not Candidate
 
 Phase 2 is complete. Sprint 7 remains IN PROGRESS.
+
+## Phase 3 — controlled workflow planning and execution
+
+Implemented:
+- controlled secure and deliberately vulnerable ACRA-Lab workflow-transition fixtures
+- automatic policy-aware `WORKFLOW_TRANSITION` seed generation
+- `S7WorkflowPlanningCandidate`, `S7WorkflowTestSeedFactory` and `S7WorkflowPlanningBridge`
+- one-variable target-state mutation: `SUBMITTED → APPROVED`
+- immutable request-equivalence enforcement through the existing Sprint 4 safety path
+- explicit `STATE_CHANGING` safety classification
+- automatic DELETE rejection for S7 workflow seed generation
+- fail-closed behavior for conflicting/incomplete workflow policy
+- execution through the existing planner, queue, safety validator and `TestExecutor`
+- secure/vulnerable differential evidence correlation
+- raw bearer material excluded from serialized generated-test state
+
+The controlled fixture is intentionally non-persistent. It models state-changing authorization semantics while
+remaining deterministic and repeatable for localhost research validation.
+
+## Phase 3 verification
+
+GitHub Actions run `35958482546` completed successfully on the current Sprint 7 branch.
+
+- Sprint 7 workflow/token-binding foundation: PASS
+- Sprint 7 lab source/ground-truth contract: PASS
+- `Sprint7WorkflowPlannerExecutionIntegrationTestSuite`: PASS, 17 assertions
+- secure ACRA-Lab transition bypass attempt: expected DENY, observed DENY, `EXPECTED_CHANGE`
+- deliberately vulnerable ACRA-Lab transition bypass attempt: expected DENY, observed ALLOW, `UNEXPECTED_CHANGE`
+- conflicting workflow policy: no executable seed generated
+- retained Sprint 6 foundation/regression: PASS
+- controlled workflow logs uploaded by CI
+
+Phase 3 is complete. Sprint 7 remains IN PROGRESS; workflow coverage/product UI, deterministic report/export,
+security/performance closure, traceability and final package freeze remain outstanding.
