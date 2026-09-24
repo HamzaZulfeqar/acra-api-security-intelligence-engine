@@ -52,7 +52,39 @@ never emitted, and the adapter is not automatically invoked by extension initial
 
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** gate.
 
-## Phase 5 dependency
+## Phase 5 interoperability boundary
 
-Cross-format hardening must verify that JSON, SARIF and Burp projections preserve the same package/candidate/evidence
-identity, remain deterministic and secret-safe, and fail closed on invalid state or origin data before final closure.
+```text
+FindingCandidate
+      |
+      v
+ReproductionPackage
+      |
+      v
+ReproductionInteroperabilityService
+      |
+      +--> deterministic JSON artifact
+      +--> deterministic SARIF artifact
+      +--> deterministic Burp Issue projection
+      |
+      v
+ReproductionInteroperabilityBundle
+```
+
+Phase 5 invariants:
+
+1. All three outputs retain the same package/candidate/evidence lineage.
+2. All three remain review-only.
+3. Bundle/artifact/projection identities are deterministic.
+4. Secret material remains absent across JSON, SARIF and Burp surfaces.
+5. Capability states are exact and independently meaningful.
+6. REJECTED/INCONCLUSIVE candidates cannot enter unified Burp interoperability.
+7. Unsafe origins and mismatched artifacts fail closed.
+8. Real Burp desktop insertion is not inferred from source/compile verification.
+
+Verification: `36073674429` — SUCCESS, 39 interoperability assertions.
+
+## Final closure dependency
+
+Final closure must re-run the complete software stack, retained regressions, official Maven packaging and
+deterministic archive-integrity verification before Sprint 12 may be promoted to SOFTWARE COMPLETE.
