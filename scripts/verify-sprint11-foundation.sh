@@ -19,8 +19,11 @@ java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingLifecycleFoundatio
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReviewWorkspaceTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionPackageTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionJsonExportTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionSarifExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectReportingExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectSecurityHardeningTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint5.Sprint5FinalClosureTestSuite
 
 echo "SPRINT11_FINDING_LIFECYCLE_FOUNDATION_VERIFICATION PASS"
+
+python3 -m json.tool "$BUILD/reporting/S11-FINDING-REPRODUCTION.sarif" >/dev/null
