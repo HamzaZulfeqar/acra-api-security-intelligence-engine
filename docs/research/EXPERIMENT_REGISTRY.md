@@ -89,6 +89,25 @@ controlled A0–A7 evaluation. Canonical JSON SHA-256:
 `1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`. Reporting does not broaden the
 dataset-scoped interpretation of the measurements.
 
+## Sprint 11 final closure — 2026-09-25
+
+Dedicated final closure run `36066400016` succeeded at closure-candidate source commit
+`f832af1defde242530408589bd9f8732cef533d5`.
+
+- checkpoint: `acra-sprint-11-final.zip`;
+- ZIP SHA-256: `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba`;
+- entries: 986;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- official Maven package and retained regressions: PASS.
+
+The EXP-A0..EXP-A7 measurements remain valid only for `GT-S11-ABLATION-DATASET`, the registered 15-case
+controlled synthetic localhost dataset. Sprint 11 closure does not generalize those measurements to real-world
+scanner accuracy, production vulnerability prevalence, external targets or research novelty. Real Burp desktop
+runtime remains UNVERIFIED / DEFERRED.
+
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
 `EXP-EXEC-001` is Level 4 evidence only for the controlled local execution-substrate claim. It does not establish real-world vulnerability-detection accuracy, FP/FN rates, or Burp runtime behavior.
