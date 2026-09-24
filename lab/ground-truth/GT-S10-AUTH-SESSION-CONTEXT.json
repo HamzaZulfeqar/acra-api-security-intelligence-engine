@@ -1,0 +1,63 @@
+{
+  "id": "GT-S10-AUTH-SESSION-CONTEXT",
+  "scope": "controlled localhost ACRA-Lab only",
+  "version": "1",
+  "endpoint": "/api/v1/s10/session-context",
+  "notes": [
+    "Synthetic unsigned lab tokens are not production authentication evidence.",
+    "Raw bearer values are runtime-only and are never returned by the lab endpoint.",
+    "Token fingerprints are correlation handles and do not independently verify principal identity.",
+    "Ground truth declares expected context correlation independently of analyzer output."
+  ],
+  "cases": [
+    {
+      "id": "S10-GT-001",
+      "session_id": "session-a",
+      "token": "token-a",
+      "principal_id": "user-a",
+      "role": "viewer",
+      "tenant_id": "tenant-a",
+      "scopes": ["profile.read"],
+      "identity_state": "LAB_CONFIRMED",
+      "expected_state": "BASELINE",
+      "label": "VERIFIED_SESSION_BASELINE"
+    },
+    {
+      "id": "S10-GT-002",
+      "session_id": "session-a",
+      "token": "token-b",
+      "principal_id": "user-a",
+      "role": "viewer",
+      "tenant_id": "tenant-a",
+      "scopes": ["profile.read"],
+      "identity_state": "LAB_CONFIRMED",
+      "expected_state": "TOKEN_ROTATED",
+      "label": "STABLE_CONTEXT_TOKEN_ROTATION"
+    },
+    {
+      "id": "S10-GT-003",
+      "session_id": "session-a",
+      "token": "token-c",
+      "principal_id": "user-a",
+      "role": "admin",
+      "tenant_id": "tenant-b",
+      "scopes": ["admin.write", "profile.read"],
+      "identity_state": "LAB_CONFIRMED",
+      "expected_state": "CONTEXT_DRIFT",
+      "expected_drift": ["ROLE", "TENANT", "SCOPE"],
+      "label": "TOKEN_ROTATION_CONTEXT_DRIFT"
+    },
+    {
+      "id": "S10-GT-004",
+      "session_id": "session-b",
+      "token": "token-d",
+      "principal_id": "user-a",
+      "role": "viewer",
+      "tenant_id": "tenant-a",
+      "scopes": ["profile.read"],
+      "identity_state": "LAB_CONFIRMED",
+      "expected_state": "INCONCLUSIVE",
+      "label": "DIFFERENT_SESSION_BOUNDARY"
+    }
+  ]
+}
