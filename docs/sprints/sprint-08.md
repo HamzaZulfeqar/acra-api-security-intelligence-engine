@@ -1,6 +1,6 @@
 # Sprint 8 — Routing Normalization & Authorization-Path Intelligence
 
-Status: IN PROGRESS — PHASE 5 VERIFIED  
+Status: IN PROGRESS — PHASE 6 VERIFIED  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
@@ -213,3 +213,39 @@ GitHub Actions run `35970306700`: **SUCCESS**.
 - controlled routing logs artifact upload: PASS
 
 Phase 5 is complete. Sprint 8 remains IN PROGRESS.
+
+## Phase 6 — deterministic routing report/export
+
+Implemented:
+- versioned `S8RoutingReport`
+- deterministic `S8RoutingReportSummary`
+- `S8RoutingReportGenerator`
+- canonical secret-safe JSON export + SHA-256
+- deterministic Markdown review report
+- `S8RoutingJsonReporter` adapter on the existing Reporter plugin boundary
+- report/export methods on the single `S8RoutingWorkspace` source of truth
+- Routing UI Report / JSON Export views
+- explicit `confirmedFindingCount = 0`
+- review-only FindingCandidate reporting
+- routing divergence and authorization-boundary counts remain separate from confirmed findings
+- shared redaction bug fixed so embedded Authorization text cannot truncate later JSON fields
+- serialization regression added for non-truncating secret redaction
+
+### Phase 6 verification
+
+GitHub Actions run `35970917885`: **SUCCESS**.
+
+- Sprint 8 controlled routing differential: PASS, 22 assertions
+- Sprint 8 routing reporting/export: PASS, 19 assertions
+- canonical JSON/SHA-256 determinism: PASS
+- Markdown review export: PASS
+- Reporter plugin adapter: PASS
+- raw bearer secret exclusion: PASS
+- `confirmedFindingCount = 0`: PASS
+- extension Maven `test-compile`: PASS
+- retained Sprint 4 UI: PASS, 26
+- retained Sprint 6 Authorization UI: PASS, 27
+- retained Sprint 7 Workflow UI: PASS, 20
+- Sprint 8 Routing UI including Report / JSON Export: PASS, 23 assertions
+
+Phase 6 is complete. Sprint 8 remains IN PROGRESS.
