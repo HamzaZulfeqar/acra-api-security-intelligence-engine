@@ -59,7 +59,6 @@ public final class Sprint8RoutingReportingExportTestSuite {
 
         var jsonA = workspace.exportJson(NOW);
         var jsonB = workspace.exportJson(NOW);
-        System.out.println("SPRINT8_REPORT_JSON " + jsonA.content());
         TestSupport.assertEquals(jsonA.sha256(), jsonB.sha256(),
                 "canonical JSON SHA-256 is stable for identical snapshot/time");
         assertions++;
