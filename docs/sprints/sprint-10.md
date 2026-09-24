@@ -1,6 +1,6 @@
 # Sprint 10 — Batch & Indirect Authorization Intelligence
 
-Status: IN PROGRESS — Phase 1 VERIFIED  
+Status: IN PROGRESS — Phases 1–3 VERIFIED  
 Branch: `s10-batch-indirect-authorization`  
 Immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 
@@ -145,3 +145,44 @@ GitHub Actions run `36004574331`: **SUCCESS** at commit
 Phase 2 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 3 owns safe planner/executor integration through the existing S4 engine.
+
+
+## Phase 3 — safe S4 planner/executor integration
+
+Implemented and verified:
+
+- fixed policy-backed `BATCH` and `INDIRECT_REFERENCE` test seeds;
+- reuse of the existing S4 planner, queue, request builder, executor and evidence store;
+- reuse of existing `MutationType.BATCH` and `MutationType.INDIRECT_REFERENCE`;
+- request-equivalence validation before dispatch;
+- authorized `LAB` loopback execution only;
+- scope, environment, consent, request-budget, mutation-budget, concurrency, rate-limit and kill-switch enforcement;
+- non-persistent batch-read mutation adding only fixed `resource-b` to fixed owned `resource-a`;
+- fixed indirect-reference path substitution `share-a → share-b`;
+- secure and deliberately vulnerable controlled outcomes projected into the existing S10 analyzers;
+- raw bearer material excluded from serialized test state;
+- raw indirect alias excluded from the persisted resolution model; SHA-256 fingerprint retained instead;
+- cross-project analysis remains fail-closed;
+- candidate state remains review-only.
+
+### Phase 3 verification
+
+GitHub Actions run `36048381112`: **SUCCESS** at source commit
+`608490cfc1211057e879f6c6457ea62fd648b405`.
+
+Verified execution evidence:
+
+- `Sprint10ControlledBatchExecutionTestSuite`: PASS, 25 assertions;
+- secure batch: aggregate ALLOW, item candidates = 0;
+- deliberately vulnerable batch: aggregate ALLOW, item candidates = 1;
+- `Sprint10ControlledIndirectExecutionTestSuite`: PASS, 23 assertions;
+- secure indirect resolved-target control: expected DENY, observed DENY, candidates = 0;
+- deliberately vulnerable indirect control: expected DENY, observed ALLOW, candidates = 1;
+- Sprint 10 foundation/lab and retained authorization regressions: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 3 is **VERIFIED COMPLETE**.
+
+No identifier generation, guessing, alias enumeration, external target, destructive mutation or automatic confirmed-vulnerability behavior is introduced.
+
+Sprint 10 remains IN PROGRESS. Phase 4 owns provenance-gated batch/indirect `FindingCandidate` projection.
