@@ -2,6 +2,35 @@
 
 ## Current gate — 2026-09-24
 
+**Sprint 10 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+
+Canonical Sprint 10 Phase 1 evidence:
+- branch: `s10-auth-session-intelligence`
+- immutable Sprint 9 base: `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`
+- Phase 1 verification run: `36031651777` — SUCCESS
+- passive session/token-context model: VERIFIED
+- verified-vs-unverified identity boundary: VERIFIED
+- safe token rotation: VERIFIED
+- principal/role/tenant/scope drift detection: VERIFIED
+- retained S6/S7/S8/S9 foundations: PASS
+- Maven core test compilation: PASS
+
+Sprint 9 remains SOFTWARE COMPLETE.
+
+Next dependency-ordered milestone:
+1. bind session observations to project/test/execution/evidence provenance;
+2. reject unknown, duplicate, cross-project or contradictory lineage;
+3. retain token fingerprints as correlation handles only;
+4. then define controlled ACRA-Lab token rotation/session ground truth.
+
+Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
+
+Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
+
+# ROADMAP
+
+## Current gate — 2026-09-24
+
 **Sprint 9 IN PROGRESS — Phases 1–8 VERIFIED COMPLETE; final closure pending.**
 
 Canonical Sprint 9 Phase 1 evidence:
