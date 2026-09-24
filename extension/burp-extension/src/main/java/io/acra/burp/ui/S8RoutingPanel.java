@@ -25,6 +25,8 @@ import javax.swing.table.AbstractTableModel;
 public final class S8RoutingPanel extends JPanel {
     private final S8RoutingWorkspace workspace;
     private final JTextArea overview = view("s8-routing-overview");
+    private final JTextArea reportView = view("s8-routing-report-view");
+    private final JTextArea jsonExportView = view("s8-routing-json-export-view");
     private final StageTraceModel stageTraceModel = new StageTraceModel();
     private final BoundaryModel boundaryModel = new BoundaryModel();
     private final AssessmentModel assessmentModel = new AssessmentModel();
@@ -55,6 +57,9 @@ public final class S8RoutingPanel extends JPanel {
         boundaryModel.update(snapshot.boundaryTraces());
         assessmentModel.update(snapshot.assessments());
         candidateModel.update(snapshot.candidates());
+        java.time.Instant previewAt = java.time.Instant.EPOCH;
+        reportView.setText(workspace.exportMarkdown(previewAt).content());
+        jsonExportView.setText(workspace.exportJson(previewAt).content());
     }
 
     private JTabbedPane buildTabs() {
@@ -65,6 +70,8 @@ public final class S8RoutingPanel extends JPanel {
         tabs.addTab("Boundary Matrix", table(boundaryModel, "s8-routing-boundary-table"));
         tabs.addTab("Assessments", table(assessmentModel, "s8-routing-assessment-table"));
         tabs.addTab("Candidates", table(candidateModel, "s8-routing-candidate-table"));
+        tabs.addTab("Report", new JScrollPane(reportView));
+        tabs.addTab("JSON Export", new JScrollPane(jsonExportView));
         return tabs;
     }
 
