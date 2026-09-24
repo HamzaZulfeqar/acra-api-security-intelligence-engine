@@ -27,6 +27,8 @@ import javax.swing.table.AbstractTableModel;
 public final class S10BatchIndirectPanel extends JPanel {
     private final S10BatchIndirectWorkspace workspace;
     private final JTextArea overview = view("s10-batch-indirect-overview");
+    private final JTextArea reportView = view("s10-batch-indirect-report-view");
+    private final JTextArea jsonExportView = view("s10-batch-indirect-json-export-view");
     private final PolicyModel policyModel = new PolicyModel();
     private final ObservationModel observationModel = new ObservationModel();
     private final AssessmentModel assessmentModel = new AssessmentModel();
@@ -59,6 +61,9 @@ public final class S10BatchIndirectPanel extends JPanel {
         assessmentModel.update(snapshot.batchAssessments(), snapshot.indirectAssessments());
         candidateModel.update(snapshot.candidates());
         coverageModel.update(snapshot.coverageEntries());
+        java.time.Instant previewAt = java.time.Instant.EPOCH;
+        reportView.setText(workspace.exportMarkdown(previewAt).content());
+        jsonExportView.setText(workspace.exportJson(previewAt).content());
     }
 
     private JTabbedPane buildTabs() {
@@ -70,6 +75,8 @@ public final class S10BatchIndirectPanel extends JPanel {
         tabs.addTab("Assessments", table(assessmentModel, "s10-batch-indirect-assessment-table"));
         tabs.addTab("Candidates", table(candidateModel, "s10-batch-indirect-candidate-table"));
         tabs.addTab("Coverage", table(coverageModel, "s10-batch-indirect-coverage-table"));
+        tabs.addTab("Report", new JScrollPane(reportView));
+        tabs.addTab("JSON Export", new JScrollPane(jsonExportView));
         return tabs;
     }
 
