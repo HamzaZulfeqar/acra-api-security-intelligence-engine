@@ -6,6 +6,7 @@ on:
       - s12-reproduction-standards-export
     paths:
       - 'core/**'
+      - 'extension/burp-extension/**'
       - 'scripts/verify-sprint12-foundation.sh'
       - 'scripts/verify-sprint11-foundation.sh'
       - '.github/workflows/sprint12-ci.yml'
