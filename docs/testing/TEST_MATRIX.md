@@ -556,3 +556,20 @@ Authoritative Phase 6 gate: GitHub Actions run `35970917885`.
 | TEST-S8-PERF-003 | 10,000 routing contexts analyze/report | same suite | PASS |
 
 Authoritative Phase 7 gate: GitHub Actions run `35971212640`. Timing and memory values are observational only.
+
+
+### Sprint 8 final closure
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S8-FINAL-001 | exact Java 21 Sprint 8 + retained S6/S7 verification | `scripts/verify-sprint8-final.sh` / run `35971753523` | PASS |
+| TEST-S8-FINAL-002 | official Maven package | run `35971753523` | PASS |
+| TEST-S8-FINAL-003 | retained Sprint 2 local-contract regression | run `35971753523` | PASS — 52 tests |
+| TEST-S8-FINAL-004 | retained Sprint 3 core/adapter regression | run `35971753523` | PASS — 47 + 11 |
+| TEST-S8-FINAL-005 | retained S4/S6/S7/S8 UI regressions | run `35971753523` | PASS — 26 / 27 / 20 / 23 |
+| TEST-S8-PACKAGE-001 | deterministic source ZIP + manifest + SHA-256 | `package-sprint8.sh` | PASS |
+| TEST-S8-PACKAGE-002 | safe paths / duplicate entries / clean extraction / per-file equality | run `35971753523` | PASS — 836 entries, 0 unsafe, 0 duplicates |
+| TEST-S8-BURP-001 | real Burp desktop runtime | separate runtime lane | UNVERIFIED / DEFERRED |
+
+Closure-candidate source ZIP SHA-256:
+`e063217d3c8795a59ce1cd7e052a2c9b0475a86836239973ef1d470a6c627af7`.
