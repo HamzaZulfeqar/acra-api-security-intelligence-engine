@@ -125,6 +125,19 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(403,{'error':'access_denied','resource_id':doc['id']})
             return self._json(200,{**doc,'timestamp':time.time_ns(),'request_id':f's4-doc-{id(self)}'},
                               {'Set-Cookie':'s4session=synthetic-cookie-secret; Path=/; HttpOnly; SameSite=Strict'})
+        if path in ('/api/v1/s8/admin','/api//v1/s8/admin'):
+            ident=self._require_identity()
+            if not ident:return
+            equivalent=(path=='/api//v1/s8/admin')
+            if ident.get('role')!='admin':
+                if MODE=='vulnerable' and equivalent:
+                    return self._json(200,{'area':'s8-admin','role':ident.get('role'),
+                                           'route_form':'duplicate-separator','authorization_mode':MODE})
+                return self._json(403,{'error':'access_denied','required_role':'admin',
+                                       'route_form':'duplicate-separator' if equivalent else 'canonical'})
+            return self._json(200,{'area':'s8-admin','role':ident.get('role'),
+                                   'route_form':'duplicate-separator' if equivalent else 'canonical',
+                                   'authorization_mode':MODE})
         m=S6_ADMIN_SUMMARY_RE.match(path)
         if m:
             ident=self._require_identity()
