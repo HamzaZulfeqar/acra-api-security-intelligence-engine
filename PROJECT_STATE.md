@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–7 VERIFIED COMPLETE; all 120 campaign cells are evidence-ready, execution and metrics remain NOT_RUN.  
+**Decision:** S11 PHASES 1–8 VERIFIED COMPLETE; all 120 campaign cells have deterministic predictions, metric evaluation remains NOT_RUN.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -16,6 +16,7 @@
 **Sprint 11 Phase 5 verification:** GitHub Actions run `36058945211` — SUCCESS at source commit `022bf71f31f69633b5eac541b230283e8536decd`.  
 **Sprint 11 Phase 6 verification:** GitHub Actions run `36060118721` — SUCCESS at source commit `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`.  
 **Sprint 11 Phase 7 verification:** GitHub Actions run `36064434979` — SUCCESS at source commit `9f9af8ce15e5035def2605c98d8f8153728c3eed`.  
+**Sprint 11 Phase 8 verification:** GitHub Actions run `36064798175` — SUCCESS at source commit `c742014ab97d024be42425fb4e49866f565389ec`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -114,9 +115,21 @@ Sprint 11 Phase 7 treatment-evidence collection is **VERIFIED COMPLETE**:
 - treatment evidence suite: PASS, 725 assertions;
 - A0–A7 experiment execution and metrics remain NOT_RUN.
 
-No A0–A7 metric is currently claimed. The next dependency is controlled prediction execution over the verified
-120 evidence-ready cells. Prediction execution must remain separated from independent ground truth and metric
-aggregation; a later gate will join predictions to labels only for evaluation.
+Sprint 11 Phase 8 ground-truth-free prediction execution is **VERIFIED COMPLETE**:
+
+- 120 evidence-ready case×variant cells produce exactly 120 deterministic prediction results;
+- prediction execution requires every input cell to be EVIDENCE_READY;
+- prediction result IDs/fingerprints and execution snapshot identity are deterministic;
+- every completed result is RESOLVED with an explicit binary prediction in the controlled dataset;
+- executed campaign state = 120 EXECUTED / 0 EVIDENCE_READY / 0 PLANNED;
+- prediction execution snapshot contains no ground-truth or metric fields;
+- missing case evidence and non-evidence-ready plans fail closed;
+- Phase 8 suite: PASS, 382 assertions;
+- A0–A7 confusion-matrix and aggregate metrics remain NOT_RUN.
+
+The next dependency is an evaluation-only join: combine the immutable prediction snapshot with the independently
+registered dataset labels after prediction execution, then compute TP/TN/FP/FN, precision, recall, F1 and evidence
+completeness per A0–A7. That evaluation layer must not feed labels back into predictions.
 
 Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 software verification.
 

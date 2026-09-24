@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–7 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–8 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -359,9 +359,55 @@ Canonical campaign state after evidence projection:
 
 Phase 7 is **VERIFIED COMPLETE**.
 
+## Phase 8 — ground-truth-free prediction execution
+
+Implemented:
+
+- `S11TreatmentPredictionSignalBuilder`;
+- `S11AblationPredictionExecutor`;
+- `S11PredictionExecutionSnapshot`;
+- live `Sprint11PredictionExecutionTestSuite`;
+- deterministic baseline prediction from raw differential behavior;
+- cumulative ownership/tenant refinements from response semantic evidence;
+- semantic-treatment refinement using normalized semantic equivalence;
+- execution only from a fully EVIDENCE_READY campaign;
+- exactly one prediction result for every case×variant cell;
+- deterministic result IDs/fingerprints and execution snapshot identity;
+- executed campaign projection;
+- explicit rejection of missing case evidence and non-evidence-ready plans;
+- prediction-execution schema with no ground-truth or metric fields.
+
+### Phase 8 verification
+
+GitHub Actions run `36064798175`: **SUCCESS** at source commit
+`c742014ab97d024be42425fb4e49866f565389ec`.
+
+Verified evidence:
+
+- `Sprint11PredictionExecutionTestSuite`: PASS, 382 assertions;
+- treatment evidence collection: PASS, 725 assertions;
+- controlled research fixture suite: PASS, 65 assertions;
+- Phase 1 protocol: PASS, 43 assertions;
+- Phase 2 dataset: PASS, 41 assertions;
+- Phase 3 adapter: PASS, 59 assertions;
+- Phase 4 campaign plan: PASS, 416 assertions;
+- Phase 5 readiness manifest: PASS, 72 assertions;
+- Maven core `test-compile`: PASS;
+- Sprint 3 CI: PASS at exact Phase 8 head.
+
+Canonical prediction-execution state:
+
+- results: 120;
+- EXECUTED cells: 120;
+- EVIDENCE_READY cells: 0;
+- PLANNED cells: 0;
+- metric evaluation: NOT_RUN.
+
+Phase 8 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 8 must execute the verified A0–A7 prediction adapters across all 120 evidence-ready cells while keeping
-independent ground truth outside prediction logic. Phase 8 may persist deterministic prediction results and mark
-cells EXECUTED, but it must still defer TP/TN/FP/FN, precision, recall, F1 and evidence-completeness metric
-aggregation to a separate later phase.
+Phase 9 must perform a one-way evaluation join between the immutable Phase 8 prediction results and the independently
+registered `GT-S11-ABLATION-DATASET` labels. Only this evaluation layer may construct
+`ResearchExecutionRecord`/confusion-matrix records and compute TP/TN/FP/FN, precision, recall, F1 and evidence
+completeness. Evaluation output must not alter prediction IDs, predictions, evidence bundles or campaign execution.

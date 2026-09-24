@@ -264,8 +264,45 @@ Phase 7 verification: GitHub Actions run `36064434979` — SUCCESS at
 
 Verified campaign readiness: 120 EVIDENCE_READY / 0 EXECUTED.
 
-## Phase 8 dependency
+## Phase 8 prediction-execution boundary
 
-Prediction execution may now consume the evidence-ready bundles through the already verified
-`S11AblationPredictionAdapter`. Independent labels and metric aggregation must remain outside that execution
-boundary.
+Phase 8 introduces an explicit one-way transition from evidence-ready inputs to executed predictions:
+
+```text
+EVIDENCE_READY campaign + case prediction evidence
+        |
+        v
+S11AblationPredictionAdapter
+        |
+        v
+120 deterministic AblationPredictionResult records
+        |
+        v
+S11PredictionExecutionSnapshot
+        |
+        v
+campaign state = EXECUTED
+```
+
+Phase 8 invariants:
+
+1. Prediction execution accepts only a fully EVIDENCE_READY campaign.
+2. Independent ground truth is not an execution input.
+3. Metric computation is not an execution responsibility.
+4. Every campaign cell receives exactly one explicit prediction result.
+5. Complete controlled evidence produces RESOLVED predictions.
+6. Missing case evidence fails closed.
+7. Execution identity and fingerprint are deterministic.
+8. The execution snapshot contains neither ground-truth nor metric fields.
+9. Prediction execution may change campaign state to EXECUTED but cannot evaluate correctness.
+
+Phase 8 verification: GitHub Actions run `36064798175` — SUCCESS at
+`c742014ab97d024be42425fb4e49866f565389ec`.
+
+Verified state: 120 prediction results / 120 EXECUTED cells / metrics NOT_RUN.
+
+## Phase 9 dependency
+
+Evaluation must be a separate one-way join from immutable prediction results to immutable dataset labels. Ground
+truth may enter only at that boundary. The evaluation layer may compute metrics but must not change predictions,
+evidence bundles or campaign execution state.

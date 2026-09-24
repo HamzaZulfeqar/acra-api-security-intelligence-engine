@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phases 1–7 VERIFIED COMPLETE.**
+**Sprint 11 IN PROGRESS — Phases 1–8 VERIFIED COMPLETE.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
@@ -16,6 +16,7 @@ Canonical Sprint 11 evidence:
 - Phase 5 verification run: `36058945211` — SUCCESS at `022bf71f31f69633b5eac541b230283e8536decd`;
 - Phase 6 verification run: `36060118721` — SUCCESS at `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`;
 - Phase 7 verification run: `36064434979` — SUCCESS at `9f9af8ce15e5035def2605c98d8f8153728c3eed`;
+- Phase 8 verification run: `36064798175` — SUCCESS at `c742014ab97d024be42425fb4e49866f565389ec`;
 - S11 ablation foundation: PASS, 43 assertions;
 - A0–A7 exact cumulative protocol: VERIFIED;
 - required research metric contract: VERIFIED;
@@ -83,12 +84,22 @@ Verified Phase 7:
 - treatment-evidence suite: PASS, 725 assertions;
 - A0–A7 metrics: NOT_RUN / NOT CLAIMED.
 
+Verified Phase 8:
+- 120 prediction results from 120 evidence-ready cells: PASS;
+- deterministic prediction/execution identity: PASS;
+- campaign state = 120 EXECUTED: PASS;
+- ground-truth-free execution schema: PASS;
+- metric-free execution schema: PASS;
+- prediction execution suite: PASS, 382 assertions;
+- A0–A7 metrics: NOT_RUN / NOT CLAIMED.
+
 Next dependency-ordered milestone:
-1. execute deterministic A0–A7 predictions for all 120 evidence-ready cells;
-2. keep independent research labels unavailable to prediction execution;
-3. persist prediction result IDs/fingerprints/evidence references only;
-4. mark a cell EXECUTED only after a resolved or explicit inconclusive prediction exists;
-5. defer confusion-matrix and metric aggregation to a separate evaluation phase.
+1. join predictions to immutable dataset labels only after execution;
+2. create one evaluation record per case×variant prediction;
+3. calculate per-variant confusion matrices;
+4. calculate precision / recall / F1 with undefined-denominator handling;
+5. calculate evidence completeness separately from classification accuracy;
+6. keep evaluation output one-way and unable to mutate prediction artifacts.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
 

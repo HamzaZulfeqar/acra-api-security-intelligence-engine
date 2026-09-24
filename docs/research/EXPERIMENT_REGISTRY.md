@@ -16,14 +16,14 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A1 | + Identity | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A2 | + Ownership | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A3 | + Tenant | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A4 | + Role | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A5 | + Workflow | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A6 | + Semantic evidence | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
-| EXP-A7 | Full ACRA correlation | EVIDENCE_READY | GT-S11-ABLATION-DATASET | NOT_RUN |
+| EXP-A0 | Naive differential baseline | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A1 | + Identity | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A2 | + Ownership | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A3 | + Tenant | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A4 | + Role | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A5 | + Workflow | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A6 | + Semantic evidence | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
+| EXP-A7 | Full ACRA correlation | PREDICTIONS_EXECUTED | GT-S11-ABLATION-DATASET | METRICS_NOT_RUN |
 
 ## Sprint 11 protocol status — 2026-09-25
 
@@ -66,6 +66,13 @@ GitHub Actions run `36064434979` verified ground-truth-free treatment evidence c
 All 120 case×variant campaign cells are now EVIDENCE_READY, but 0 are EXECUTED. State `EVIDENCE_READY` does
 **not** mean predictions were evaluated against ground truth or that any research metric exists. A0–A7 results
 remain NOT_RUN pending controlled prediction execution and a separate later metric-aggregation gate.
+
+## Sprint 11 prediction-execution status — 2026-09-25
+
+GitHub Actions run `36064798175` verified 120 deterministic A0–A7 prediction results and transitioned all 120
+campaign cells to EXECUTED. State `PREDICTIONS_EXECUTED` means prediction software ran over the controlled
+evidence; it does **not** mean predictions have been compared with ground truth. Result state
+`METRICS_NOT_RUN` means TP/TN/FP/FN, precision, recall, F1 and evidence-completeness evaluation remain pending.
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
