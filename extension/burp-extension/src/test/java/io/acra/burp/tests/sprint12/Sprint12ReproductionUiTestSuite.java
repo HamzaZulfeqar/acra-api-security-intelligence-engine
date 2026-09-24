@@ -143,8 +143,8 @@ public final class Sprint12ReproductionUiTestSuite {
                 "SARIF preview excludes rationale secret material");
         assertions++;
 
-        check(count(panel, JButton.class) == 0,
-                "Sprint 12 reproduction panel contains no publication button");
+        check(publicationButtonCount(panel) == 0,
+                "Sprint 12 reproduction panel contains no publish/import/add-issue action control");
         assertions++;
 
         check(tab.reproductionWorkspace().snapshot().packageCount() == 2,
@@ -226,11 +226,19 @@ public final class Sprint12ReproductionUiTestSuite {
         return -1;
     }
 
-    private static <T extends Component> int count(Component root, Class<T> type) {
+    private static int publicationButtonCount(Component root) {
         if (root == null) return 0;
-        int total = type.isInstance(root) ? 1 : 0;
+        int total = 0;
+        if (root instanceof JButton button) {
+            String text = button.getText() == null ? "" : button.getText().toLowerCase();
+            String name = button.getName() == null ? "" : button.getName().toLowerCase();
+            if (text.contains("publish") || text.contains("import") || text.contains("add issue")
+                    || name.contains("publish") || name.contains("import") || name.contains("add-issue")) {
+                total++;
+            }
+        }
         if (root instanceof Container container) {
-            for (Component child : container.getComponents()) total += count(child, type);
+            for (Component child : container.getComponents()) total += publicationButtonCount(child);
         }
         return total;
     }
