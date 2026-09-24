@@ -60,11 +60,12 @@ public final class Sprint10SessionSecurityHardeningTestSuite {
                 "hardening-target", "session-confirmed",
                 SessionCoverageObjective.BASELINE_CONTEXT, "FR-033");
         coverage.recordTarget(target);
+        AuthenticationSessionObservation wrongSession = observation(
+                "obs-wrong-session", "session-other", TokenFingerprint.sha256("wrong-session-token"),
+                IdentityConfidenceState.USER_CONFIRMED);
         TestSupport.assertThrows(IllegalArgumentException.class,
-                () -> coverage.recordTarget(SessionCoverageTarget.of(
-                        "hardening-target", "session-other",
-                        SessionCoverageObjective.BASELINE_CONTEXT, "FR-033")),
-                "coverage identity drift is rejected");
+                () -> io.acra.core.session.SessionCoverageEntry.from(target).withObservation(wrongSession),
+                "coverage entry rejects observation from a different session");
         assertions++;
 
         S10SessionWorkspace workspace = new S10SessionWorkspace();
