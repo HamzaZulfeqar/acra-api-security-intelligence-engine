@@ -196,3 +196,40 @@ Phase 3 is **VERIFIED COMPLETE**.
 
 Sprint 9 remains IN PROGRESS. Phase 4 must project provenance-verified property assessments into the existing
 review-only `FindingCandidate` model without adding an automatic confirmed-vulnerability state.
+
+
+## Phase 4 — provenance-gated property FindingCandidate projection
+
+Implemented:
+
+- `S9PropertyFindingRequest`;
+- `S9PropertyFindingCandidateEvaluator`;
+- independent evidence-object and Observation-lineage validation;
+- endpoint/policy/expected/observed consistency checks between assessment and finding request;
+- dimensions `PROPERTY` plus operation-specific `PROPERTY_READ` / `PROPERTY_UPDATE`;
+- secure verified property assessment → `REJECTED`;
+- verified DENY→ALLOW property mismatch → review-only `CANDIDATE`;
+- missing/invalid provenance or inconsistent attribution → `INCONCLUSIVE`;
+- cross-project evidence → `INCONCLUSIVE`;
+- deterministic candidate/fingerprint generation;
+- explicit rationale that a candidate is not an automatically confirmed vulnerability.
+
+### Phase 4 verification
+
+GitHub Actions run `35986888660`: **SUCCESS** at commit
+`91a6ed9b4ac4bfb9609324b09e5f2f0fa540babe`.
+
+Verified:
+
+- full Sprint 9 verification script: PASS;
+- secure live property evidence → FindingCandidate REJECTED: PASS;
+- vulnerable live DENY→ALLOW property evidence → FindingCandidate CANDIDATE: PASS;
+- cross-project finding provenance → INCONCLUSIVE: PASS;
+- review-only wording: PASS;
+- retained Sprint 5/6/7/8 regression foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 4 is **VERIFIED COMPLETE**.
+
+Sprint 9 remains IN PROGRESS. Phase 5 owns property-authorization coverage accounting; absence of an observed
+property/policy combination must remain visible rather than being treated as tested or secure.
