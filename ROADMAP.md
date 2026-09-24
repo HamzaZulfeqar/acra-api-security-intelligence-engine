@@ -2,31 +2,30 @@
 
 ## Current gate — 2026-09-25
 
-Sprint 11 — **Research Evaluation & Ablation** is IN PROGRESS on
+Sprint 11 — **Research Evaluation & Ablation — SOFTWARE COMPLETE** on
 `s11-research-evaluation-ablation`.
 
-Phases 1–10 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36065934911`.
+Dedicated final closure: GitHub Actions run `36066400016` — SUCCESS at closure-candidate source
+`f832af1defde242530408589bd9f8732cef533d5`.
 
 Current evidence boundary:
 
-- A0–A7 cumulative protocol is machine-defined and deterministic;
-- controlled dataset is registered: 15 cases, 8 positive / 7 negative;
-- ground-truth-free prediction adapters are verified;
-- deterministic campaign denominator is fixed at 120 cells;
-- campaign coverage is 120 PLANNED / 0 EXECUTED;
-- experiment execution state remains NOT_RUN;
-- no A0–A7 scientific result or real-world accuracy claim exists yet;
-- fixture readiness is 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE;
-- controlled evaluation is now measured on 15 synthetic localhost cases;
+- A0–A7 protocol, controlled dataset, fixture layer, evidence collection, prediction execution, evaluation and reporting are verified;
+- 15 controlled synthetic localhost cases: 8 positive / 7 negative;
+- prediction campaign: 120 EXECUTED cells;
 - A0–A5: TP8/TN0/FP7/FN0, precision .533333, recall 1, F1 .695652;
 - A6–A7: TP8/TN7/FP0/FN0, precision/recall/F1 = 1 within the controlled dataset;
+- evidence completeness = 1.0 for A0–A7;
+- closure ZIP SHA-256: `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba`;
+- archive entries: 986; safe paths / duplicate detection / clean extraction / per-file SHA-256 equality: PASS;
 - deterministic JSON/Markdown research reporting is verified and archived;
-- next dependency is the dedicated Sprint 11 final closure/checkpoint gate.
+- real Burp desktop runtime remains UNVERIFIED / DEFERRED;
+- controlled measurements are not real-world scanner-accuracy or novelty claims.
 
-Sprint 10 remains the frozen SOFTWARE COMPLETE release base at
+Sprint 10 remains the frozen previous SOFTWARE COMPLETE release base at
 `59022c4a25718f38ea7ec2f010911344d1aa0698`.
 
-Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
+No next sprint is started by this closure. Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
 
 ---
 
