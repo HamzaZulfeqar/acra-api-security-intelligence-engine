@@ -16,6 +16,9 @@ import io.acra.core.route.RouteProcessingStage;
 import io.acra.core.route.RouteSecurityBoundaryAnalyzer;
 import io.acra.core.route.RouteStageObservation;
 import io.acra.core.tests.TestSupport;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +101,19 @@ public final class Sprint8RoutingReportingExportTestSuite {
         TestSupport.assertEquals(0, empty.summary().confirmedFindingCount(),
                 "empty report also preserves zero confirmed findings");
         assertions++;
+
+        String output = System.getenv("ACRA_S8_REPORT_OUTPUT_DIR");
+        if (output != null && !output.isBlank()) {
+            Path directory = Path.of(output);
+            Files.createDirectories(directory);
+            Files.writeString(directory.resolve("S8-ROUTING-REPORT.json"),
+                    jsonA.content(), StandardCharsets.UTF_8);
+            Files.writeString(directory.resolve("S8-ROUTING-REPORT.json.sha256"),
+                    jsonA.sha256() + "  S8-ROUTING-REPORT.json\n", StandardCharsets.UTF_8);
+            Files.writeString(directory.resolve("S8-ROUTING-REPORT.md"),
+                    markdown.content(), StandardCharsets.UTF_8);
+            System.out.println("SPRINT8_ROUTING_REPORT_ARTIFACT " + directory);
+        }
 
         System.out.println("SPRINT8_ROUTING_REPORTING_EXPORT PASS assertions=" + assertions);
     }
