@@ -486,3 +486,19 @@ Authoritative Phase 2 gate: GitHub Actions run `35965612498`.
 | TEST-S8-REG-004 | retained Sprint 7 foundation through performance suites | run `35966112820` | PASS |
 
 Phase 3 focused active suite: **10 assertions PASS**. Authoritative gate: GitHub Actions run `35966112820`.
+
+### Sprint 8 Phase 4 — routing assessment and provenance
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S8-ASSESS-001 | routing change + expected DENY + observed ALLOW → assessment candidate | controlled live suite | PASS |
+| TEST-S8-ASSESS-002 | secure route-equivalence control → NO_VIOLATION | controlled live suite | PASS |
+| TEST-S8-FINDING-001 | provenance-verified vulnerable routing case → FindingCandidate CANDIDATE | `Sprint8ControlledRoutingDifferentialTestSuite` | PASS |
+| TEST-S8-FINDING-002 | secure routing case → FindingCandidate REJECTED | same suite | PASS |
+| TEST-S8-PROVENANCE-001 | execution/test/observation/project ownership validation | existing `EvidenceReferenceValidator` + live store | PASS |
+| TEST-S8-PROVENANCE-002 | cross-project provenance mismatch → INCONCLUSIVE | same suite | PASS |
+| TEST-S8-REVIEW-001 | candidate rationale preserves non-confirmed review boundary | same suite | PASS |
+| TEST-S8-REG-005 | retained Sprint 3 core | run `35969974964` | PASS — 47 tests |
+| TEST-S8-REG-006 | retained Sprint 7 foundation through performance suites | run `35969974964` | PASS |
+
+Phase 4 controlled suite: **22 assertions PASS**. Authoritative gate: GitHub Actions run `35969974964`.
