@@ -1,6 +1,6 @@
 # Sprint 10 Requirements Traceability
 
-Status: **FINAL CLOSURE CANDIDATE — dedicated closure pending**  
+Status: **SOFTWARE COMPLETE — final closure verified**  
 Branch: `s10-auth-session-intelligence`  
 Immutable Sprint 9 base: `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`
 
@@ -44,8 +44,8 @@ separate validation lane and is not inferred from localhost or headless UI evide
 | S10-32 | Report confirmedFindingCount fixed at 0 | report summary invariant | Phase 9/10 | PASS |
 | S10-33 | Session metadata/secrecy/coverage hardening | hardening suite | Phase 10 / run `36041238241` | PASS |
 | S10-34 | 100/1k/10k bounded engineering observations | performance suite | Phase 10 / run `36041238241` | PASS |
-| S10-35 | Full retained regression + official Maven package | `verify-sprint10-final.sh` | dedicated final closure | PENDING |
-| S10-36 | Reproducible S10 ZIP + manifest + SHA-256 + clean extraction | `package-sprint10.sh` | dedicated final closure | PENDING |
+| S10-35 | Full retained regression + official Maven package | `verify-sprint10-final.sh` | run `36041511898` | PASS |
+| S10-36 | Reproducible S10 ZIP + manifest + SHA-256 + clean extraction | `package-sprint10.sh` | run `36041511898` | PASS |
 | S10-37 | Real Burp desktop load/handler/UI runtime | separate runtime gate | no desktop Burp execution | UNVERIFIED / DEFERRED |
 
 ## Verified phase gates
@@ -87,17 +87,32 @@ Sprint 10 does not claim:
 
 ## Final closure gate
 
-The dedicated final closure must still prove:
+GitHub Actions run `36041511898`: **SUCCESS** at source commit
+`2a7e753a3866ffb869df17abb53a9d2cc93dd876`.
 
-1. exact Temurin Java 21 Sprint 10 verification;
-2. all Sprint 10 foundation/live/finding/coverage/report/security/performance suites;
-3. retained Sprint 9 / 8 / 7 / 6 foundations;
-4. official Maven package;
-5. retained Sprint 2 and Sprint 3 local-contract regressions;
-6. S4/S6/S7/S8/S9/S10 headless UI regressions;
-7. deterministic Sprint 10 source checkpoint;
-8. safe archive paths and no duplicate entries;
-9. clean extraction equality;
-10. per-file SHA-256 equality.
+Final closure evidence:
 
-Do not promote S10 SOFTWARE COMPLETE until that gate passes.
+- exact Temurin Java 21 Sprint 10 verification: PASS;
+- all Sprint 10 foundation/live/finding/coverage/report/security/performance suites: PASS;
+- retained Sprint 9 / 8 / 7 / 6 foundations: PASS;
+- official Maven package: PASS;
+- retained Sprint 2 and Sprint 3 local-contract regressions: PASS;
+- Sprint 4 / 6 / 7 / 8 / 9 / 10 headless UI regressions: PASS;
+- Sprint 6 Authorization UI: 27 assertions PASS;
+- Sprint 7 Workflow UI: 20 assertions PASS;
+- Sprint 8 Routing UI: 23 assertions PASS;
+- Sprint 9 Property UI: 59 assertions PASS;
+- Sprint 10 Authentication UI: 329 assertions PASS;
+- deterministic checkpoint entries: 924;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- closure-candidate source ZIP SHA-256:
+  `3e1352ca886096ff2df01d6e8fdbc3f281eb29794651ff6bba23205b7a70d26b`.
+
+Sprint 10 is **SOFTWARE COMPLETE**.
+
+The source hash above identifies the successful closure-candidate snapshot. Final-status documentation changes
+alter the source archive by definition; the post-documentation digest is therefore emitted externally rather
+than recursively embedded inside the package.
