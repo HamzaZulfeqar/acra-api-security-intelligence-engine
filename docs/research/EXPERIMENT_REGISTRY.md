@@ -81,6 +81,14 @@ synthetic localhost dataset. A0–A5 retain seven false positives; A6–A7 class
 correctly after cumulative semantic/context correlation. These measurements are dataset-scoped only and do not
 establish real-world scanner accuracy, production vulnerability prevalence or novelty.
 
+## Sprint 11 report/export status — 2026-09-25
+
+GitHub Actions run `36065934911` verified deterministic minimized JSON/Markdown reporting for the completed
+controlled A0–A7 evaluation. Canonical JSON SHA-256:
+`595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d`; Markdown SHA-256:
+`1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b`. Reporting does not broaden the
+dataset-scoped interpretation of the measurements.
+
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
 `EXP-EXEC-001` is Level 4 evidence only for the controlled local execution-substrate claim. It does not establish real-world vulnerability-detection accuracy, FP/FN rates, or Burp runtime behavior.
