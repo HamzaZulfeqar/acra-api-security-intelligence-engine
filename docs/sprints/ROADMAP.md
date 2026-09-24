@@ -22,11 +22,18 @@ Phase 2 verified by GitHub Actions run `36031909153`:
 - project/test/execution lineage validation: PASS;
 - unknown/duplicate/cross-project/contradictory evidence rejection: PASS.
 
+Phase 3 verified by GitHub Actions run `36032231484`:
+- controlled synthetic session ground truth: PASS;
+- live localhost capture: PASS;
+- raw token non-disclosure: PASS;
+- provenance-gated stable rotation/context drift: PASS;
+- different-session isolation: PASS.
+
 Next dependency-ordered milestone:
-1. define controlled synthetic ACRA-Lab token/session rotation ground truth;
-2. observe stable rotation and context-drift cases without raw credential persistence;
-3. feed those observations through the verified Phase 1 analyzer and Phase 2 provenance gate;
-4. preserve synthetic-lab authentication as non-production evidence.
+1. audit existing passive traffic/recon models for reusable authentication/session facts;
+2. hydrate Session observations from those facts without creating a second traffic collector;
+3. preserve UNKNOWN identity when evidence is insufficient;
+4. retain provenance and secret-redaction boundaries.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
