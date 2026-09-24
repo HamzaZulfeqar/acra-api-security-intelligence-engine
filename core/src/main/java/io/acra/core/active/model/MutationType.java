@@ -14,5 +14,6 @@ public enum MutationType {
     PROPERTY,
     COLLECTION,
     BATCH,
+    INDIRECT_REFERENCE,
     WORKFLOW_TRANSITION
 }
