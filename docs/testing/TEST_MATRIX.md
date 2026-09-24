@@ -410,3 +410,22 @@ Authoritative Phase 4 UI gate: GitHub Actions run `35959256852`.
 | TEST-S7-REPORT-CI-001 | report JSON / digest / Markdown artifact bundle | GitHub Actions run `35960316132` | PASS |
 
 Authoritative Phase 5 gate: GitHub Actions run `35960316132`.
+
+### Sprint 7 Phase 6 — security hardening and performance
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S7-SEC-TOKEN-001 | reject raw token as workflow token-binding material | `Sprint7WorkflowSecurityHardeningTestSuite` | PASS |
+| TEST-S7-SEC-TOKEN-002 | reject raw token as request token-context fingerprint | same suite | PASS |
+| TEST-S7-SEC-DRIFT-001 | principal/context drift blocks target-state-only mutation | same suite | PASS |
+| TEST-S7-SEC-BODY-001 | repeated source-state value blocks ambiguous auto-mutation | same suite | PASS |
+| TEST-S7-SEC-DESTRUCTIVE-001 | DELETE workflow transitions are not auto-generated | same suite | PASS |
+| TEST-S7-SEC-CONFLICT-001 | conflicting policy generates no active workflow seed | same suite | PASS |
+| TEST-S7-SEC-COVERAGE-001 | policy-resolution drift for same coverage identity fails closed | same suite | PASS |
+| TEST-S7-SEC-COVERAGE-002 | unplanned execution cannot receive workflow coverage credit | same suite | PASS |
+| TEST-S7-SEC-SERIAL-001 | raw token/fingerprint absent from generated workflow test serialization | same suite | PASS |
+| TEST-S7-PERF-001 | 100 workflow contexts resolve/cover/report | `Sprint7WorkflowPerformanceObservationTestSuite` | PASS |
+| TEST-S7-PERF-002 | 1,000 workflow contexts resolve/cover/report | same suite | PASS |
+| TEST-S7-PERF-003 | 10,000 workflow contexts resolve/cover/report | same suite | PASS |
+
+Authoritative Phase 6 gate: GitHub Actions run `35960583660`. Timing and memory values are observational only.
