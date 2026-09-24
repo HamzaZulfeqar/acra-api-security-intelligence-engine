@@ -1,0 +1,64 @@
+{
+  "id": "GT-S9-PROPERTY-AUTHORIZATION",
+  "scope": "controlled localhost ACRA-Lab only",
+  "version": "1",
+  "endpoint": "/api/v1/s9/users/{user}/profile",
+  "notes": [
+    "Ground truth is declared independently of observed HTTP responses.",
+    "Property names are explicit fixtures; Phase 2 performs no hidden-field enumeration.",
+    "A property mismatch is a review signal and is not automatically a confirmed vulnerability.",
+    "Synthetic profile values contain no production or personal data."
+  ],
+  "cases": [
+    {
+      "id": "S9-GT-001",
+      "actor": "user-a",
+      "role": "viewer",
+      "target": "user-a",
+      "operation": "READ",
+      "property": "display_name",
+      "expected": "ALLOW",
+      "label": "SELF_DISPLAY_NAME_READ_ALLOW"
+    },
+    {
+      "id": "S9-GT-002",
+      "actor": "user-a",
+      "role": "viewer",
+      "target": "user-a",
+      "operation": "READ",
+      "property": "salary_band",
+      "expected": "DENY",
+      "label": "SENSITIVE_PROPERTY_READ_DENY"
+    },
+    {
+      "id": "S9-GT-003",
+      "actor": "user-a",
+      "role": "viewer",
+      "target": "user-a",
+      "operation": "UPDATE",
+      "property": "display_name",
+      "expected": "ALLOW",
+      "label": "SELF_DISPLAY_NAME_UPDATE_ALLOW"
+    },
+    {
+      "id": "S9-GT-004",
+      "actor": "user-a",
+      "role": "viewer",
+      "target": "user-a",
+      "operation": "UPDATE",
+      "property": "is_admin",
+      "expected": "DENY",
+      "label": "PRIVILEGED_PROPERTY_UPDATE_DENY"
+    },
+    {
+      "id": "S9-GT-005",
+      "actor": "user-a",
+      "role": "viewer",
+      "target": "user-b",
+      "operation": "READ",
+      "property": "display_name",
+      "expected": "DENY",
+      "label": "CROSS_OBJECT_CONTROL_DENY"
+    }
+  ]
+}
