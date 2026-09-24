@@ -43,7 +43,10 @@ run `36032923048` at commit `6ae158a46c50663e43910041abeaeaa62a433b2a`.
 Provenance-gated projection into the existing review-only FindingCandidate model is **VERIFIED COMPLETE** by
 GitHub Actions run `36033267339` at commit `2521cb7fa21193fc177f2cfc08f6a44352fe3f3b`.
 
-The next dependency is explicit session-context coverage accounting.
+Explicit session-context coverage accounting is **VERIFIED COMPLETE** by GitHub Actions run `36033819097` at
+commit `538b146b1e9e57334e6d16fe85da6d81ab9ca765`.
+
+The next dependency is the read-only authentication/session product workspace and Burp UI projection.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
