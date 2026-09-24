@@ -58,4 +58,7 @@ jobs:
           path: |
             build/s10-foundation/secure-lab.log
             build/s10-foundation/vulnerable-lab.log
+            build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.json
+            build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.json.sha256
+            build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.md
           if-no-files-found: warn
