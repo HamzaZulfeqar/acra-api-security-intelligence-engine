@@ -3,13 +3,14 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASES 1–2 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Decision:** S10 PHASES 1–3 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
 **Sprint 10 Phase 1 verification:** GitHub Actions run `36004146212` — SUCCESS.  
-**Sprint 10 Phase 2 verification:** GitHub Actions run `36004574331` — SUCCESS.
+**Sprint 10 Phase 2 verification:** GitHub Actions run `36004574331` — SUCCESS.  
+**Sprint 10 Phase 3 verification:** GitHub Actions run `36048381112` — SUCCESS at source commit `608490cfc1211057e879f6c6457ea62fd648b405`.
 
 ### Sprint 10 verified progress
 
@@ -37,7 +38,22 @@ Indirect-reference foundation:
 Verification run `36004146212` passed the new 25-assertion S10 foundation suite, retained S9/S8/S6/S5
 foundations, exact Java 21 compilation with warnings as errors and Maven core test compilation.
 
-Sprint 10 Phase 2 controlled localhost batch/indirect ground truth is **VERIFIED COMPLETE**. The next dependency is safe planning/execution through the existing S4 active engine; no external-target or enumeration behavior is authorized.
+Sprint 10 Phase 2 controlled localhost batch/indirect ground truth is **VERIFIED COMPLETE**.
+
+Sprint 10 Phase 3 safe planner/executor integration is **VERIFIED COMPLETE**:
+
+- existing S4 `BATCH` and `INDIRECT_REFERENCE` contracts/mutation families reused;
+- fixed policy-backed seeds only;
+- existing request-equivalence, consent, scope, environment, budget, concurrency, rate-limit and kill-switch gates retained;
+- secure mixed batch: aggregate ALLOW with item-level ALLOW/DENY and 0 candidates;
+- vulnerable mixed batch: foreign item DENY→ALLOW and exactly 1 review candidate;
+- secure fixed indirect alias `share-a → share-b`: resolved foreign target remains DENY and 0 candidates;
+- vulnerable fixed indirect alias: resolved foreign target DENY→ALLOW and exactly 1 review candidate;
+- indirect raw alias remains excluded from persisted resolution state and represented by SHA-256 fingerprint;
+- cross-project provenance remains fail-closed;
+- no identifier guessing, alias enumeration, external-target probing or automatic vulnerability confirmation.
+
+The next dependency is Phase 4 provenance-gated `FindingCandidate` projection for batch and indirect assessments.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
