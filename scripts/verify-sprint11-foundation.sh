@@ -21,6 +21,8 @@ java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionPackag
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionJsonExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionSarifExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingBurpIssueDraftTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingSecurityHardeningTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingPerformanceObservationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectReportingExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectSecurityHardeningTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint5.Sprint5FinalClosureTestSuite
