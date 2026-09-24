@@ -2,13 +2,14 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
+**Sprint 10 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
 - immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 - Phase 1 verification run: `36004146212` — SUCCESS
 - Phase 2 verification run: `36004574331` — SUCCESS
+- Phase 3 verification run: `36048381112` — SUCCESS at `608490cfc1211057e879f6c6457ea62fd648b405`
 - per-item batch authorization reasoning: VERIFIED
 - mixed batch outcomes preserved: VERIFIED
 - indirect reference fingerprint/resolution reasoning: VERIFIED
@@ -30,12 +31,22 @@ Verified Phase 2:
 - authentication controls and non-persistent batch fixture: PASS;
 - lab evidence upload: PASS.
 
+Verified Phase 3:
+- existing S4 BATCH / INDIRECT_REFERENCE contracts and mutation families reused: PASS;
+- fixed policy-backed Sprint 10 seeds only: PASS;
+- exact request-equivalence and existing S4 safety stack retained: PASS;
+- controlled batch execution: secure candidates=0, vulnerable candidates=1;
+- controlled indirect execution: secure DENY/candidates=0, vulnerable ALLOW/candidates=1;
+- raw indirect alias excluded from persisted resolution state: PASS;
+- cross-project provenance fail-closed behavior: PASS;
+- no identifier guessing, alias enumeration or external-target probing: PASS.
+
 Next dependency-ordered milestone:
-1. audit existing S4 BATCH / INDIRECT_REFERENCE contracts and mutation safety;
-2. generate only fixed policy-backed Sprint 10 test seeds;
-3. preserve exact request-equivalence invariants;
-4. execute only against authorized localhost ACRA-Lab;
-5. keep batch/indirect findings review-only until later provenance-gated promotion.
+1. project verified batch item assessments into the existing review-only FindingCandidate model;
+2. project verified indirect resolved-target assessments into the same model;
+3. require valid project/test/execution/observation/evidence lineage before candidate promotion;
+4. preserve secure controls as REJECTED and provenance failures as INCONCLUSIVE;
+5. keep confirmed-finding count at zero.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 
