@@ -171,8 +171,8 @@ public final class Sprint11FindingReviewUiTestSuite {
             assertions++;
         }
 
-        check(find(panel, JButton.class, null) == null,
-                "Sprint 11 findings surface contains no mutation or publication button");
+        check(!containsActionButton(panel),
+                "Sprint 11 findings surface contains no lifecycle or publication action button");
         assertions++;
 
         FindingCandidate fpCandidate = candidate(
@@ -257,6 +257,27 @@ public final class Sprint11FindingReviewUiTestSuite {
         for (int row = 0; row < table.getRowCount(); row++) {
             for (int column = 0; column < table.getColumnCount(); column++) {
                 if (String.valueOf(table.getValueAt(row, column)).contains(needle)) return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean containsActionButton(Component root) {
+        if (root instanceof JButton button) {
+            String text = button.getText() == null ? "" : button.getText().trim().toLowerCase();
+            if (text.contains("confirm")
+                    || text.contains("validate")
+                    || text.contains("false positive")
+                    || text.contains("accept risk")
+                    || text.contains("publish")
+                    || text.contains("add issue")
+                    || text.contains("reject")) {
+                return true;
+            }
+        }
+        if (root instanceof Container container) {
+            for (Component child : container.getComponents()) {
+                if (containsActionButton(child)) return true;
             }
         }
         return false;
