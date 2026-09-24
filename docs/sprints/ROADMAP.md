@@ -36,11 +36,16 @@ Phase 4 verified by GitHub Actions run `36032676285`:
 - confirmation conflict downgrade: PASS;
 - raw credential exclusion: PASS.
 
+Phase 5 verified by GitHub Actions run `36032923048`:
+- baseline/stable/safe-rotation states: PASS;
+- verified context-drift candidate assessment: PASS;
+- unverified or provenance-invalid drift remains inconclusive: PASS.
+
 Next dependency-ordered milestone:
-1. classify safe rotation versus verified context drift;
-2. distinguish unverified differences from evidence-backed drift;
-3. preserve principal/role/tenant/scope dimensions separately;
-4. prepare a review-only assessment boundary before any finding projection.
+1. project only provenance-valid session drift assessments into the existing FindingCandidate model;
+2. preserve safe rotation as rejected/non-finding state;
+3. keep unverified/provenance-invalid session changes inconclusive;
+4. prohibit automatic confirmed-vulnerability promotion.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
