@@ -6,6 +6,7 @@ on:
       - s10-batch-indirect-authorization
     paths:
       - 'core/**'
+      - 'lab/**'
       - 'scripts/verify-sprint10-foundation.sh'
       - '.github/workflows/sprint10-ci.yml'
       - 'docs/sprints/sprint-10.md'
@@ -34,3 +35,12 @@ jobs:
         run: bash ./scripts/verify-sprint10-foundation.sh
       - name: Verify Maven core test compilation
         run: mvn --batch-mode --no-transfer-progress -pl core test-compile
+      - name: Upload Sprint 10 lab evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint10-batch-indirect-validation
+          path: |
+            build/s10-foundation/secure-lab.log
+            build/s10-foundation/vulnerable-lab.log
+          if-no-files-found: warn
