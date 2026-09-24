@@ -43,8 +43,12 @@ S6_TENANT_REPORTS={
 S6_REPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/reports/(?P<report>[^/?]+)$')
 S6_EXPORT_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/admin/export$')
 S6_ADMIN_SUMMARY_RE=re.compile(r'^/api/v1/s6/tenants/(?P<tenant>[^/]+)/admin/summary$')
-S7_WORKFLOW_TRANSITION_RE=re.compile(r'^/api/v1/s7/workflows/(?P<workflow>[^/]+)/resources/(?P<resource>[^/]+)/transition
-
+S7_WORKFLOW_TRANSITION_RE=re.compile(r'^/api/v1/s7/workflows/(?P<workflow>[^/]+)/resources/(?P<resource>[^/]+)/transition$')
+S9_PROFILE_RE=re.compile(r'^/api/v1/s9/users/(?P<user>[^/]+)/profile$')
+S9_PROFILES={
+ 'user-a':{'id':'user-a','display_name':'User A','tenant_id':'tenant-a','is_admin':False,'salary_band':'L2'},
+ 'user-b':{'id':'user-b','display_name':'User B','tenant_id':'tenant-b','is_admin':False,'salary_band':'L3'},
+}
 def claim(token,name):
     try:
         part=token.split('.')[1]
