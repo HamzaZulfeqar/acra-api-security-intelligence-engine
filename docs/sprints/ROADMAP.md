@@ -2,6 +2,36 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 11 SOFTWARE COMPLETE — final executable closure verified.**
+
+Canonical Sprint 11 evidence:
+- branch: `s11-finding-lifecycle-reproduction`;
+- final executable closure run: `36064082001` — SUCCESS;
+- lifecycle 40 assertions PASS;
+- review workspace 29 assertions PASS;
+- reproduction package 38 assertions PASS;
+- JSON export 34 assertions PASS;
+- SARIF export 41 assertions PASS;
+- Burp Issue draft 39 assertions PASS;
+- security hardening 37 assertions PASS;
+- Findings & Reproduction UI 47 assertions PASS;
+- `GT-S11-AUTHORIZATION-RESEARCH`: 16 cases / 8 dimensions PASS;
+- official Montoya Maven package PASS;
+- deterministic closure package PASS.
+
+Research gate after Sprint 11:
+- EXP-A0 through EXP-A7: SOFTWARE_READY / RESEARCH_NOT_RUN;
+- Sprint 11 TP/TN/FP/FN, precision, recall and F1: NOT_MEASURED;
+- Sprint 12 is the next research-execution/evaluation boundary;
+- real Burp desktop issue publication remains UNVERIFIED / DEFERRED.
+
+See:
+- `sprint-11.md`;
+- `sprint-11-requirements-traceability.md`;
+- `sprint-11-final-software-audit.md`.
+
+## Previous Sprint 10 gate
+
 **Sprint 10 SOFTWARE COMPLETE — final closure verified.**
 
 Canonical Sprint 10 Phase 1 evidence:
