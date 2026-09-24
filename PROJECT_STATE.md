@@ -2,22 +2,44 @@
 
 ## Current state — 2026-09-24
 
-**Current sprint:** Sprint 9 — Property-Level Authorization & Field Policy Intelligence (closed).  
-**Decision:** S9 SOFTWARE COMPLETE.  
-**Working branch:** `s9-property-authorization`.  
-**Immutable Sprint 8 base:** `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`.  
-**Sprint 8:** SOFTWARE COMPLETE and preserved as the previous verified release boundary.  
-**Sprint 9 Phase 1 verification:** GitHub Actions run `35985518829` — SUCCESS.  
-**Sprint 9 Phase 2 verification:** GitHub Actions run `35986020761` — SUCCESS.  
-**Sprint 9 Phase 3 verification:** GitHub Actions run `35986668193` — SUCCESS.  
-**Sprint 9 Phase 4 verification:** GitHub Actions run `35986888660` — SUCCESS.  
-**Sprint 9 Phase 5 verification:** GitHub Actions run `35987236797` — SUCCESS.  
-**Sprint 9 Phase 6 verification:** GitHub Actions run `36001111468` — SUCCESS.  
-**Sprint 9 Phase 7 verification:** GitHub Actions run `36001743072` — SUCCESS.  
-**Sprint 9 Phase 8 verification:** GitHub Actions run `36002106088` — SUCCESS.  
-**Sprint 9 final closure:** GitHub Actions run `36002545177` — SUCCESS at source commit `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`.  
-**Sprint 9 closure-candidate SHA-256:** `04eaadbfb2e132eb386ab52ff775fb5e1c56f0313b610721a28f2fb63bf8e531`.  
-**Sprint 9 checkpoint entries:** 873; unsafe paths: 0; duplicate entries: 0; clean extraction/per-file equality: PASS.
+**Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
+**Decision:** S10 PHASE 1 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Working branch:** `s10-batch-indirect-authorization`.  
+**Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
+**Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
+**Sprint 10 Phase 1 verification:** GitHub Actions run `36004146212` — SUCCESS.
+
+### Sprint 10 verified progress
+
+Phase 1 adds the remaining historical Property/Batch/Indirect roadmap scope after property authorization was
+completed in Sprint 9.
+
+Batch foundation:
+- explicit per-item policy and observation models;
+- item-level authorization assessment;
+- mixed ALLOW/DENY outcomes preserved;
+- no aggregate HTTP-success authorization shortcut;
+- missing/ambiguous policy fails closed;
+- cross-project provenance fails closed;
+- deterministic analysis identity.
+
+Indirect-reference foundation:
+- SHA-256 reference fingerprint instead of raw key storage;
+- evidence-backed resolved-resource model;
+- authorization evaluated against resolved target resource;
+- one fingerprint resolving to multiple resources remains explicit conflict;
+- missing/ambiguous resolved-target policy fails closed;
+- cross-project provenance fails closed;
+- deterministic analysis identity.
+
+Verification run `36004146212` passed the new 25-assertion S10 foundation suite, retained S9/S8/S6/S5
+foundations, exact Java 21 compilation with warnings as errors and Maven core test compilation.
+
+Sprint 10 Phase 2 has **NOT STARTED** by this state record. The next dependency is controlled localhost
+ACRA-Lab batch and indirect-reference ground truth before any active mutation/planning work.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
 ### Sprint 9 verified progress
 
