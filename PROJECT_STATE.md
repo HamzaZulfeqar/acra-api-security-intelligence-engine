@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
-**Decision:** S8 IN PROGRESS — Phase 3 VERIFIED.  
+**Decision:** S8 IN PROGRESS — Phase 4 VERIFIED.  
 **Working branch:** `s8-routing-normalization`.  
 **Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
 **Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
@@ -48,6 +48,19 @@ Phase 3 adds:
 - retained Sprint 3 core and Sprint 7 regression PASS.
 
 Phase 3 remains localhost-only and does not establish real-world routing/proxy behavior.
+
+Phase 4 verification: GitHub Actions run `35969974964` — SUCCESS.
+
+Phase 4 adds:
+- routing-specific assessment state separated from raw differential classification;
+- candidate promotion only for evidence-backed routing change plus explicit DENY→ALLOW mismatch;
+- existing evidence-store project/test/execution/observation lineage validation;
+- cross-project provenance failure → INCONCLUSIVE;
+- secure control → FindingCandidate REJECTED;
+- deliberately vulnerable controlled case → review-only FindingCandidate CANDIDATE;
+- retained Sprint 3 and Sprint 7 regressions PASS.
+
+FindingCandidate remains review-only and is not an automatically confirmed vulnerability.
 
 ### Sprint 7 frozen closure
 
