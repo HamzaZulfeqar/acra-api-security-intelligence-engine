@@ -2,9 +2,12 @@
 
 ## Current state — 2026-09-25
 
-**Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–10 VERIFIED COMPLETE; controlled A0–A7 evaluation reporting/export is deterministic and archived.  
+**Current release boundary:** Sprint 11 — Research Evaluation & Ablation — SOFTWARE COMPLETE.  
+**Decision:** S11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.  
 **Working branch:** `s11-research-evaluation-ablation`.  
+**Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
+**Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
+**Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 10 post-documentation final revalidation:** GitHub Actions run `36056032234` — SUCCESS.  
@@ -32,6 +35,46 @@
 **Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
 **Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
 **Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
+
+### Sprint 11 final closure
+
+Sprint 11 is **SOFTWARE COMPLETE**.
+
+Dedicated final closure: GitHub Actions run `36066400016` — SUCCESS at closure-candidate source commit
+`f832af1defde242530408589bd9f8732cef533d5`.
+
+Final closure evidence:
+
+- complete Sprint 11 verification stack: PASS;
+- controlled research lab fixtures: PASS, 65 assertions;
+- treatment evidence collection: PASS, 725 assertions;
+- prediction execution: PASS, 384 assertions;
+- ablation evaluation: PASS, 99 assertions;
+- research report/export: PASS, 31 assertions;
+- retained Sprint 10 and Sprint 9 foundation verification: PASS;
+- retained Sprint 8 / Sprint 7 / Sprint 6 foundations: PASS;
+- official Maven package: PASS;
+- retained Sprint 2 and Sprint 3 regressions: PASS;
+- Sprint 4 / Sprint 6 / Sprint 7 / Sprint 8 / Sprint 9 / Sprint 10 headless UI regressions: PASS;
+- deterministic source checkpoint: PASS;
+- archive entries: 986;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS.
+
+Closure-candidate checkpoint: `acra-sprint-11-final.zip`  
+Closure-candidate ZIP SHA-256: `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba`
+
+Controlled research results remain scoped to the registered 15-case synthetic localhost dataset. They do not
+establish real-world scanner accuracy, production vulnerability prevalence, external-target safety or research
+novelty.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
+
+The source hash above identifies the successful pre-promotion closure-candidate snapshot. Final-status
+documentation changes alter the source archive by definition; post-documentation revalidation is therefore
+tracked as workflow evidence rather than recursively embedding a new source hash.
 
 ### Sprint 11 verified progress
 
