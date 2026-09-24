@@ -16,14 +16,14 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
-| EXP-A1 | + Identity | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
-| EXP-A2 | + Ownership | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
-| EXP-A3 | + Tenant | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
-| EXP-A4 | + Role | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
-| EXP-A5 | + Workflow | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
-| EXP-A6 | + Semantic evidence | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
-| EXP-A7 | Full ACRA correlation | SOFTWARE_READY / RESEARCH_NOT_RUN | GT-S11-AUTHORIZATION-RESEARCH | NOT_RUN |
+| EXP-A0 | Naive differential baseline | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=1/FP=7/FN=0, P=.533333/R=1/F1=.695652 |
+| EXP-A1 | + Identity | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=1/FP=7/FN=0, P=.533333/R=1/F1=.695652 |
+| EXP-A2 | + Ownership | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=4/FP=4/FN=0, P=.666667/R=1/F1=.800000 |
+| EXP-A3 | + Tenant | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=5/FP=3/FN=0, P=.727273/R=1/F1=.842105 |
+| EXP-A4 | + Role | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=6/FP=2/FN=0, P=.800000/R=1/F1=.888889 |
+| EXP-A5 | + Workflow | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=7/FP=1/FN=0, P=.888889/R=1/F1=.941176 |
+| EXP-A6 | + Semantic evidence | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
+| EXP-A7 | Full ACRA correlation | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -49,6 +49,24 @@ Sprint 11 verification executes the secure and intentionally vulnerable ACRA-Lab
 validate the independent ground-truth oracle. It does **not** execute A0-A7 detector configurations
 and does not produce TP/TN/FP/FN, precision, recall or F1 results for those experiments.
 
-All EXP-A0 through EXP-A7 rows therefore remain `NOT_RUN`. Their state
-`SOFTWARE_READY / RESEARCH_NOT_RUN` means only that a registered, executable ground-truth dataset
-is available for the later controlled research campaign.
+At the Sprint 11 closure, EXP-A0 through EXP-A7 remained `NOT_RUN`; that statement is retained as historical context for the Sprint 11 checkpoint. Sprint 12 subsequently executed the registered campaign without modifying the frozen Sprint 11 dataset.
+
+
+## Sprint 12 controlled A0-A7 result — 2026-09-25
+
+GitHub Actions run `36065830981` is the first successful measured Sprint 12 execution on branch
+`s12-a0-a7-research-evaluation`. It evaluated 16 frozen cases across eight cumulative ablation
+variants, producing 128 labelled prediction rows.
+
+The prediction path is separated from the ground-truth join. The predictor is explicitly denied access
+to `groundTruth`, `secureExpected`, `vulnerableExpected` and `expectedCandidate`; it observes only
+the intentionally vulnerable localhost fixture plus non-label case inputs. Ground-truth labels are joined
+after prediction for metric calculation.
+
+The registered authorization dimension is supplied to the campaign, so **dimension discovery is not
+measured**. Results apply only to this balanced synthetic localhost fixture. They do not establish
+real-world scanner accuracy, generalization, Burp runtime behavior or external-target safety.
+
+Repeat execution produced byte-identical JSON, CSV and JSONL research artifacts. The measured progression
+was A0/A1 7 FP, A2 4 FP, A3 3 FP, A4 2 FP, A5 1 FP and A6/A7 0 FP, with 8 TP and 0 FN in every variant.
+A6 and A7 therefore tie on this fixed dataset; no broader superiority claim is made.

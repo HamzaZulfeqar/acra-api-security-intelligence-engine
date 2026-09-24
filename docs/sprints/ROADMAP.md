@@ -2,33 +2,47 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 SOFTWARE COMPLETE — final executable closure verified.**
+**Sprint 12 CONTROLLED RESEARCH EXECUTION COMPLETE — registered synthetic/localhost scope.**
 
-Canonical Sprint 11 evidence:
-- branch: `s11-finding-lifecycle-reproduction`;
-- final executable closure run: `36064082001` — SUCCESS;
-- lifecycle 40 assertions PASS;
-- review workspace 29 assertions PASS;
-- reproduction package 38 assertions PASS;
-- JSON export 34 assertions PASS;
-- SARIF export 41 assertions PASS;
-- Burp Issue draft 39 assertions PASS;
-- security hardening 37 assertions PASS;
-- Findings & Reproduction UI 47 assertions PASS;
-- `GT-S11-AUTHORIZATION-RESEARCH`: 16 cases / 8 dimensions PASS;
-- official Montoya Maven package PASS;
-- deterministic closure package PASS.
+Canonical Sprint 12 evidence:
+- branch: `s12-a0-a7-research-evaluation`;
+- immutable software base: Sprint 11 head `db78f9e458eeabcabb389abf1949a4f597761564`;
+- first measured successful workflow: `36065830981`;
+- dataset: `GT-S11-AUTHORIZATION-RESEARCH`, 16 cases / 8 positive / 8 negative / 8 registered dimensions;
+- 8 cumulative variants and 128 prediction rows;
+- label isolation: predictor cannot consume ground-truth/expected-candidate fields;
+- vulnerable-only localhost treatment observation, labels joined after prediction;
+- deterministic JSON / CSV / JSONL research artifacts and SHA-256 sidecars;
+- repeatability: PASS;
+- Maven product package after research harness: PASS.
 
-Research gate after Sprint 11:
-- EXP-A0 through EXP-A7: SOFTWARE_READY / RESEARCH_NOT_RUN;
-- Sprint 11 TP/TN/FP/FN, precision, recall and F1: NOT_MEASURED;
-- Sprint 12 is the next research-execution/evaluation boundary;
-- real Burp desktop issue publication remains UNVERIFIED / DEFERRED.
+Measured controlled progression:
+- A0: TP=8 / TN=1 / FP=7 / FN=0, P=.533333 / R=1 / F1=.695652;
+- A1: TP=8 / TN=1 / FP=7 / FN=0, P=.533333 / R=1 / F1=.695652;
+- A2: TP=8 / TN=4 / FP=4 / FN=0, P=.666667 / R=1 / F1=.800000;
+- A3: TP=8 / TN=5 / FP=3 / FN=0, P=.727273 / R=1 / F1=.842105;
+- A4: TP=8 / TN=6 / FP=2 / FN=0, P=.800000 / R=1 / F1=.888889;
+- A5: TP=8 / TN=7 / FP=1 / FN=0, P=.888889 / R=1 / F1=.941176;
+- A6: TP=8 / TN=8 / FP=0 / FN=0, P=1 / R=1 / F1=1;
+- A7: TP=8 / TN=8 / FP=0 / FN=0, P=1 / R=1 / F1=1.
+
+Research boundary after Sprint 12:
+- registered dimension is supplied; dimension discovery is NOT MEASURED;
+- synthetic balanced localhost data only;
+- no real-world accuracy/generalization claim;
+- real Burp desktop and external authorized-target validation remain UNVERIFIED / DEFERRED;
+- next research expansion should use blinded/held-out cases, broader negative controls and independently authored fixtures before any external-validity claim.
 
 See:
-- `sprint-11.md`;
-- `sprint-11-requirements-traceability.md`;
-- `sprint-11-final-software-audit.md`.
+- `sprint-12.md`;
+- `../research/sprint-12-a0-a7-protocol.md`;
+- `../research/EXPERIMENT_REGISTRY.md`.
+
+## Previous Sprint 11 gate
+
+Sprint 11 remains **SOFTWARE COMPLETE**. Its historical A0-A7 state was correctly
+`SOFTWARE_READY / RESEARCH_NOT_RUN`; Sprint 12 subsequently executed that registered campaign without
+backfilling the frozen Sprint 11 dataset.
 
 ## Previous Sprint 10 gate
 

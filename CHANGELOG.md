@@ -1,3 +1,16 @@
+## 2026-09-25 — Sprint 12 controlled A0-A7 research execution
+
+- Created `s12-a0-a7-research-evaluation` from the verified Sprint 11 head.
+- Added a controlled A0-A7 cumulative ablation runner over the frozen 16-case authorization dataset.
+- Enforced prediction-label separation: ground-truth and expected-candidate fields are unavailable to the predictor.
+- Executed only the intentionally vulnerable localhost fixture in the prediction path and joined labels afterward.
+- Added deterministic JSON, CSV and JSONL research artifacts with configuration fingerprints and SHA-256 sidecars.
+- Added independent metric recomputation, cardinality checks, secret scans and two-run byte-repeatability verification.
+- First measured workflow `36065830981`: PASS; Maven product package: BUILD SUCCESS.
+- Measured false positives progressed A0/A1=7, A2=4, A3=3, A4=2, A5=1, A6/A7=0; all variants had TP=8 and FN=0 on the fixed dataset.
+- A6/A7 measured P=1/R=1/F1=1 only within the registered synthetic localhost fixture.
+- Registered dimension discovery, external-target validation and real Burp runtime remain outside the measured claim.
+
 ## 2026-09-25 — Sprint 11 software completion
 
 - Added evidence-backed finding lifecycle: NEEDS_REVIEW, VALIDATED, CONFIRMED, FALSE_POSITIVE and ACCEPTED_RISK.

@@ -2,42 +2,55 @@
 
 ## Current state — 2026-09-25
 
-**Current release boundary:** Sprint 11 — Finding Review Lifecycle, Reproduction & Research Ground-Truth Closure — SOFTWARE COMPLETE.  
-**Decision:** S11 SOFTWARE COMPLETE for the verified software/local-synthetic boundary.  
-**Working branch:** `s11-finding-lifecycle-reproduction`.  
-**Verified Sprint 10 base:** `s10-batch-indirect-authorization` — SOFTWARE COMPLETE.  
-**Sprint 11 final executable closure:** GitHub Actions run `36064082001` — SUCCESS.  
-**Executable closure commit:** `a1f22eb438f5517731cf0f6d16dc87bfd3e2f8c2`.  
-**Executable closure ZIP SHA-256:** `3ca60a82888a0b7649da8433ad670df4dc62f0f168bd88dc814199731ff4fcfd` — 974 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
-**Sprint 11 ACRA-Lab ground truth:** 16 cases, 8 positive, 8 negative, 8 dimensions — PASS.  
-**A0-A7 research execution:** NOT_RUN.  
-**Sprint 11 TP/TN/FP/FN, precision, recall, F1:** NOT_MEASURED.  
-**Real Burp desktop issue publication/runtime:** UNVERIFIED / DEFERRED.
+**Current research boundary:** Sprint 12 — Controlled A0-A7 Authorization Ablation Evaluation.  
+**Decision:** S12 CONTROLLED RESEARCH EXECUTION COMPLETE for the registered synthetic/localhost boundary.  
+**Working branch:** `s12-a0-a7-research-evaluation`.  
+**Verified software base:** Sprint 11 `db78f9e458eeabcabb389abf1949a4f597761564` — SOFTWARE COMPLETE.  
+**First successful measured Sprint 12 run:** GitHub Actions `36065830981` — SUCCESS at `ac8b71ba8883489031fbf1181306c663eb197624`.  
+**Dataset:** `GT-S11-AUTHORIZATION-RESEARCH` — 16 cases, 8 positive, 8 negative, 8 registered dimensions.  
+**Dataset SHA-256:** `f42783717bdd38e8d04b7f59cef98a41441005de426ec78ca1fba58098154d4b`.  
+**Prediction rows:** 128 = 16 cases × 8 variants.  
+**Repeatability:** PASS — deterministic JSON/CSV/JSONL across repeated execution.  
+**Product compilation after campaign:** Maven BUILD SUCCESS.  
+**Real Burp desktop runtime/publication:** UNVERIFIED / DEFERRED.  
+**External-target / real-world accuracy validation:** NOT PERFORMED.
 
-### Sprint 11 verified progress
+### Sprint 12 measured controlled results
 
-- finding review lifecycle: PASS, 40 assertions;
-- project-isolated review workspace: PASS, 29 assertions;
-- minimized reproduction package: PASS, 38 assertions;
-- canonical JSON reproduction export: PASS, 34 assertions;
-- SARIF 2.1.0 export: PASS, 41 assertions;
-- Burp Issue draft/materialization contract: PASS, 39 assertions;
-- finding security hardening: PASS, 37 assertions;
-- Findings & Reproduction headless UI: PASS, 47 assertions;
-- bounded engineering observation: 1,000 finding records and 2,000 JSON+SARIF repetitions PASS;
-- official Montoya Maven packaging: PASS;
-- legacy Sprint 2 and Sprint 3 local-contract CI: PASS after local stub compatibility update;
-- full cumulative S6-S10 and UI regression in Sprint 11 final closure: PASS;
-- deterministic Sprint 11 package verification: PASS.
+| Variant | Added capability | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| A0 | observed-response baseline | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A1 | + identity | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A2 | + ownership | 8 | 4 | 4 | 0 | .666667 | 1.000000 | .800000 |
+| A3 | + tenant | 8 | 5 | 3 | 0 | .727273 | 1.000000 | .842105 |
+| A4 | + role | 8 | 6 | 2 | 0 | .800000 | 1.000000 | .888889 |
+| A5 | + workflow | 8 | 7 | 1 | 0 | .888889 | 1.000000 | .941176 |
+| A6 | + semantic evidence | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+| A7 | + correlation | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
 
-Canonical Sprint 11 details:
-- `docs/sprints/sprint-11.md`
-- `docs/sprints/sprint-11-requirements-traceability.md`
-- `docs/sprints/sprint-11-final-software-audit.md`
-- `lab/ground-truth/GT-S11-AUTHORIZATION-RESEARCH.json`
+### Research validity boundary
 
-The executable checkpoint digest above predates the final documentation synchronization. The same final workflow
-revalidates the documentation-correct head and emits its own new deterministic package digest.
+- The predictor never receives `groundTruth`, `secureExpected`, `vulnerableExpected` or `expectedCandidate`.
+- Only the vulnerable localhost ACRA-Lab fixture is observed by the prediction path; labels are joined afterward.
+- The registered authorization dimension is supplied to the campaign. Dimension discovery is therefore **NOT MEASURED**.
+- A1 produced no measured change over A0 in this dataset. Later cumulative capabilities reduced false positives incrementally through A6; A7 produced no additional metric change over A6.
+- The 1.0 A6/A7 fixture values are not evidence of real-world accuracy or external validity.
+- The balanced 16-case dataset is small and synthetic; no statistical-power, confidence-interval or production performance claim is made.
+- Real Burp runtime, external authorized targets, held-out datasets and independent replication remain separate future validation lanes.
+
+Canonical Sprint 12 details:
+- `docs/sprints/sprint-12.md`
+- `docs/research/sprint-12-a0-a7-protocol.md`
+- `scripts/run-sprint12-ablation.py`
+- `scripts/verify-sprint12-research.py`
+- `scripts/verify-sprint12-research.sh`
+- `.github/workflows/sprint12-research.yml`
+
+## Previous Sprint 11 state
+
+Sprint 11 remains **SOFTWARE COMPLETE** at the verified software/local-synthetic boundary. At the Sprint 11
+closure, A0-A7 were correctly recorded as `NOT_RUN / NOT_MEASURED`; Sprint 12 is a later research execution
+layer and does not rewrite the frozen Sprint 11 ground-truth registration artifact.
 
 ## Previous Sprint 10 state
 

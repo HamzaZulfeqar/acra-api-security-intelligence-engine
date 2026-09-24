@@ -1,5 +1,42 @@
 # Test Matrix
 
+## Sprint 12 A0-A7 controlled research evaluation — 2026-09-25
+
+First measured successful workflow: GitHub Actions run `36065830981` — **PASS**.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Sprint 11 frozen ground-truth revalidation | 16 cases / 8 dimensions / balanced labels | PASS |
+| Sprint 12 label-isolation boundary | predictor excludes groundTruth / secureExpected / vulnerableExpected / expectedCandidate | PASS |
+| Vulnerable-only prediction execution | predictor observes localhost vulnerable fixture only | PASS |
+| A0-A7 campaign | 16 cases × 8 variants | PASS, 128 rows |
+| Metric recomputation | independent TP/TN/FP/FN + precision/recall/F1 verification | PASS |
+| Configuration fingerprints | one deterministic fingerprint per variant | PASS |
+| Artifact SHA-256 sidecars | JSON / CSV / JSONL | PASS |
+| Repeatability gate | second execution byte-identical to first | PASS |
+| Research artifact secret scan | bearer/Authorization/synthetic-cookie material excluded | PASS |
+| Maven package | product modules compile/package after research harness | BUILD SUCCESS |
+| Dimension discovery | registered dimension is supplied | NOT MEASURED |
+| Real Burp desktop runtime | separate validation lane | UNVERIFIED / DEFERRED |
+| External-target / real-world accuracy | outside registered campaign | NOT PERFORMED |
+
+### Measured synthetic/local results
+
+| Variant | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| A0 | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A1 | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A2 | 8 | 4 | 4 | 0 | .666667 | 1.000000 | .800000 |
+| A3 | 8 | 5 | 3 | 0 | .727273 | 1.000000 | .842105 |
+| A4 | 8 | 6 | 2 | 0 | .800000 | 1.000000 | .888889 |
+| A5 | 8 | 7 | 1 | 0 | .888889 | 1.000000 | .941176 |
+| A6 | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+| A7 | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+
+These measurements apply only to the frozen 16-case synthetic localhost fixture. A6/A7's 1.0 fixture
+metrics do not establish production accuracy, external validity or superiority on unseen APIs. A7 adds
+correlation but produces no additional metric change over A6 on this dataset.
+
 ## Sprint 11 finding lifecycle, reproduction and ground-truth closure — 2026-09-25
 
 Final executable closure: GitHub Actions run `36064082001` — **PASS**.
@@ -21,7 +58,7 @@ Final executable closure: GitHub Actions run `36064082001` — **PASS**.
 | Legacy Sprint 3 contract CI | local stubs + official Maven package | PASS |
 | Deterministic Sprint 11 checkpoint | ZIP integrity / unsafe paths / duplicate paths / clean extraction / SHA-256 equality | PASS |
 | Real Burp desktop issue publication | separate runtime lane | UNVERIFIED / DEFERRED |
-| EXP-A0…EXP-A7 measured campaign | later research lane | NOT_RUN / NOT_MEASURED |
+| EXP-A0…EXP-A7 measured campaign | later research lane | NOT_RUN / NOT_MEASURED at Sprint 11 closure; executed separately in Sprint 12 |
 
 Final-run bounded observation: intake 246 ms for 1,000 records; 1,597 ms for 2,000 JSON+SARIF export repetitions;
 JSON 1,256 bytes; SARIF 2,196 bytes. These are controlled CI engineering observations, not benchmarks or SLOs.

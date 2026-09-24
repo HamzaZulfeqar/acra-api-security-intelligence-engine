@@ -1,16 +1,30 @@
 # Known Issues and Technical Debt
 
+## Sprint 12 controlled-research limitations — 2026-09-25
+
+- A0-A7 measurements come from a balanced 16-case synthetic localhost ACRA-Lab dataset only.
+- The authorization dimension is supplied to the research runner. Automatic dimension discovery/classification accuracy is **not measured** by this campaign.
+- Later ablations use fixture-specific policy semantics for the registered dimensions; this is a controlled component-ablation study, not a blind production scanner evaluation.
+- A6 and A7 both record TP=8/TN=8/FP=0/FN=0 on this dataset. Those 1.0 precision/recall/F1 values must not be generalized to unseen APIs or treated as a production-accuracy guarantee.
+- A1 produces no measured change over A0 on this fixture set; the dataset does not isolate identity-quality errors strongly enough to estimate identity-context value independently.
+- The dataset is small and deliberately balanced. No statistical-power, confidence-interval, prevalence-adjusted precision or deployment base-rate claim is made.
+- A7's correlation capability produces no additional classification change over A6 on these cases, so this campaign does not independently quantify correlation's incremental value.
+- ACRA-Lab uses unsigned synthetic tokens as execution scaffolding; this is not production authentication evidence.
+- No real Burp desktop runtime, external authorized target, independent third-party dataset or cross-framework fixture was exercised.
+- The next research-strengthening lane should add held-out/blinded cases, independently authored fixtures, harder negative controls, automatic dimension discovery and authorized external validation before broader claims.
+- Real Burp issue publication remains UNVERIFIED / DEFERRED.
+
 ## Sprint 11 residual validation and research debt — 2026-09-25
 
 - Sprint 11 software is complete under the verified local/software boundary; final executable closure run `36064082001` passed.
 - Real Burp desktop loading and `SiteMap.add(AuditIssue)` publication remain UNVERIFIED / DEFERRED; Sprint 11 verifies only the Montoya materialization contract and explicitly prevents automatic publication.
 - `GT-S11-AUTHORIZATION-RESEARCH` is a synthetic localhost dataset. Its 16 oracle cases establish controlled ground-truth readiness, not real-world scanner accuracy.
-- EXP-A0 through EXP-A7 remain NOT_RUN. Sprint 11 TP/TN/FP/FN, precision, recall and F1 remain NOT_MEASURED.
+- At the Sprint 11 closure, EXP-A0 through EXP-A7 were NOT_RUN and their metrics were NOT_MEASURED. Sprint 12 subsequently executed the campaign; the Sprint 11 dataset remains a frozen registration artifact and is intentionally not backfilled.
 - Finding review workspace state is in-memory; durable multi-user persistence and concurrency control remain future product hardening.
 - The current redaction model protects recognized credential/token forms and structurally excludes reviewer/reason fields from reproduction exports; arbitrary opaque secrets that do not match protected structures remain a general sanitization limitation.
 - Sprint 11 performance values are controlled CI observations only, not benchmarks, SLOs or capacity guarantees.
 - Real external-target authorization validation remains outside the Sprint 11 boundary.
-- Sprint 12 should execute the registered A0-A7 research design without backfilling metrics into Sprint 11.
+- Sprint 12 executed the registered A0-A7 research design without backfilling metrics into the Sprint 11 source artifact.
 
 
 ## Sprint 7 residual validation debt — 2026-09-24
