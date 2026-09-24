@@ -37,7 +37,10 @@ run `36032231484` at commit `1fd2d12604bbfdc475b01460683a95150571f290`.
 Passive traffic/session hydration is **VERIFIED COMPLETE** by GitHub Actions run `36032676285` at commit
 `f2026b4866f5117d758631b620c829c20dc230ff`.
 
-The next dependency is explicit refresh/rotation and verified session-context drift assessment.
+Explicit refresh/rotation and verified session-context drift assessment is **VERIFIED COMPLETE** by GitHub Actions
+run `36032923048` at commit `6ae158a46c50663e43910041abeaeaa62a433b2a`.
+
+The next dependency is provenance-gated projection into the existing review-only FindingCandidate model.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
