@@ -1,6 +1,6 @@
 # Sprint 9 — Property-Level Authorization & Field Policy Intelligence
 
-Status: IN PROGRESS — Phase 1 candidate implemented, verification pending  
+Status: IN PROGRESS — Phase 1 VERIFIED  
 Branch: `s9-property-authorization`  
 Immutable Sprint 8 base: `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`
 
@@ -89,8 +89,22 @@ Phase 1 does not:
 - replace the existing S4 safety/consent/scope gates;
 - claim real Burp desktop runtime validation.
 
-## Verification
+## Phase 1 verification
 
-Pending GitHub Actions execution on `s9-property-authorization`.
+GitHub Actions run `35985518829`: **SUCCESS** at commit
+`2487f8600049c6805eda60550e0fb29ec54e5309`.
 
-Until that workflow passes, Phase 1 remains IMPLEMENTED / UNVERIFIED.
+Verified gates:
+
+- exact Temurin Java 21 setup: PASS;
+- all core source/test compilation with `-Xlint:all -Werror`: PASS;
+- `Sprint9PropertyAuthorizationFoundationTestSuite`: PASS;
+- retained Sprint 5 final closure suite: PASS;
+- retained Sprint 6 policy foundation: PASS;
+- retained Sprint 7 workflow-authorization foundation: PASS;
+- retained Sprint 8 routing-normalization foundation: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 1 is therefore **VERIFIED COMPLETE**.
+
+Sprint 9 remains IN PROGRESS. No Phase 2 controlled ACRA-Lab property execution is claimed yet.
