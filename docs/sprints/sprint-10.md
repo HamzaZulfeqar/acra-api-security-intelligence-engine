@@ -149,3 +149,43 @@ Verified:
 Phase 2 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 3 owns controlled synthetic ACRA-Lab token/session rotation ground truth.
+
+## Phase 3 — controlled synthetic session-rotation ground truth
+
+Implemented:
+
+- `GT-S10-AUTH-SESSION-CONTEXT.json` with four independently declared cases;
+- read-only `/api/v1/s10/session-context` ACRA-Lab endpoint;
+- synthetic LAB_CONFIRMED session contexts only;
+- raw bearer token never returned by the lab endpoint;
+- live baseline observation;
+- stable-context token rotation;
+- role/tenant/scope drift during token rotation;
+- different-session boundary control;
+- each live observation stored in `ExecutionEvidenceStore`;
+- Phase 2 provenance validation before Phase 1 correlation;
+- `Sprint10ControlledSessionContextTestSuite`.
+
+### Phase 3 verification
+
+GitHub Actions run `36032231484`: **SUCCESS** at commit
+`1fd2d12604bbfdc475b01460683a95150571f290`.
+
+Verified:
+
+- Python lab syntax: PASS;
+- four-case Sprint 10 session ground-truth contract: PASS;
+- localhost lab readiness: PASS;
+- live synthetic session context capture: PASS;
+- raw token non-disclosure: PASS;
+- immutable evidence binding for every session observation: PASS;
+- stable token rotation → TOKEN_ROTATED: PASS;
+- verified role/tenant/scope drift → CONTEXT_DRIFT: PASS;
+- different session IDs → INCONCLUSIVE: PASS;
+- retained Sprint 6/7/8/9 foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 3 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 4 owns passive traffic/session hydration using the existing collection and
+reconnaissance model; it must not create a parallel traffic collector.
