@@ -14,8 +14,8 @@ import java.util.regex.Pattern;
 
 public final class BatchItemResponseProjector {
     private static final Pattern FLAT_OBJECT = Pattern.compile("\\{[^{}]*}");
-    private static final Pattern RESOURCE = Pattern.compile("\\"resource_id\\"\\s*:\\s*\\\"([^\\\"]+)\\\"");
-    private static final Pattern DECISION = Pattern.compile("\\"decision\\"\\s*:\\s*\\\"(ALLOW|DENY)\\\"");
+    private static final Pattern RESOURCE = Pattern.compile("\"resource_id\"\\s*:\\s*\"([^\"]+)\"");
+    private static final Pattern DECISION = Pattern.compile("\"decision\"\\s*:\\s*\"(ALLOW|DENY)\"");
 
     public List<BatchItemObservation> project(
             ResponseSnapshot response,
