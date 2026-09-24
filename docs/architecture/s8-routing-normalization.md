@@ -91,3 +91,37 @@ Boundary states:
 
 A combined divergence is not a vulnerability verdict. It is an evidence-backed security-boundary observation that
 can be consumed by later controlled differential experiments.
+
+
+## Phase 3 controlled active-validation path
+
+```
+explicit route-equivalence ground truth
+        ↓
+canonical viewer request
+        +
+duplicate-separator viewer mutation
+        ↓
+EQUIVALENT_ROUTE_REPRESENTATION
+        ↓
+UriMutationAdapter
+        ↓
+RequestEquivalenceGuard
+        ↓
+HardScopeGuard
+        ↓
+authorized localhost ACRA-Lab
+        ↓
+secure / deliberately vulnerable comparison
+        ↓
+Observation + MultiWayDifferential
+```
+
+The active test reuses the existing Sprint 4 engine. No new transport or parallel mutation engine is introduced.
+
+The HardScopeGuard remains authoritative. Both canonical and equivalent route prefixes must be explicitly
+authorized in the localhost target descriptor before the mutation can dispatch.
+
+Secure behavior preserves DENY across equivalent representations. The deliberately vulnerable fixture returns
+ALLOW only for the duplicate-separator representation, creating an evidence-backed `UNEXPECTED_CHANGE`.
+This remains a controlled research observation and is not automatically promoted to a confirmed vulnerability.
