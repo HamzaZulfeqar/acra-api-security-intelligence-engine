@@ -1,6 +1,6 @@
 # Sprint 10 — Batch & Indirect Authorization Intelligence
 
-Status: IN PROGRESS — Phase 1 candidate implemented, verification pending  
+Status: IN PROGRESS — Phase 1 VERIFIED  
 Branch: `s10-batch-indirect-authorization`  
 Immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 
@@ -93,8 +93,22 @@ Phase 1 must prove:
 14. retained S5/S6/S7/S8/S9 foundations remain green;
 15. exact Java 21 compilation with warnings as errors and Maven core test compilation pass.
 
-## Verification
+## Phase 1 verification
 
-Pending GitHub Actions execution on `s10-batch-indirect-authorization`.
+GitHub Actions run `36004146212`: **SUCCESS** at commit
+`568daea31e5e1cfba7639efa7135a094dad6fb5f`.
 
-Until that workflow passes, Phase 1 remains IMPLEMENTED / UNVERIFIED.
+Verified gates:
+
+- exact Temurin Java 21 source/test compilation with `-Xlint:all -Werror`: PASS;
+- `Sprint10BatchIndirectFoundationTestSuite`: PASS, 25 assertions;
+- retained Sprint 9 property foundation: PASS, 15 assertions;
+- retained Sprint 8 routing-normalization foundation: PASS, 16 assertions;
+- retained Sprint 6 policy foundation: PASS, 11 assertions;
+- retained Sprint 5 final closure: PASS, 21 assertions;
+- Maven core `test-compile`: PASS.
+
+Phase 1 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 2 owns controlled localhost batch/indirect ground truth; no active
+batch/indirect mutation is claimed yet.
