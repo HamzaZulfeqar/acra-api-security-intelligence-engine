@@ -65,6 +65,7 @@ PY
 CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11ResearchAblationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11EvaluationDatasetManifestTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11AblationPredictionAdapterTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9PropertyAuthorizationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingNormalizationFoundationTestSuite
