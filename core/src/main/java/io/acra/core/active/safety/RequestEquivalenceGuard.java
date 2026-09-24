@@ -127,7 +127,7 @@ public final class RequestEquivalenceGuard {
                     MutationLocation.PATH, MutationLocation.QUERY);
             case METHOD_REPRESENTATION -> EnumSet.of(MutationLocation.METHOD);
             case PROPERTY -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY, MutationLocation.HEADER);
-            case COLLECTION, BATCH -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY,
+            case COLLECTION, BATCH, INDIRECT_REFERENCE -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY,
                     MutationLocation.PATH, MutationLocation.RESOURCE);
             case WORKFLOW_TRANSITION -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY,
                     MutationLocation.PATH, MutationLocation.RESOURCE, MutationLocation.HEADER);
