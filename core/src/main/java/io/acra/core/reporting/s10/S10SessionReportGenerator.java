@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public final class S10SessionReportGenerator {
-    public static final String REPORT_VERSION = "s10-auth-session-report-v1";
+    public static final String REPORT_VERSION = "s10-auth-context-report-v1";
 
     public S10SessionReport generate(S10SessionProductSnapshot snapshot, Instant generatedAt) {
         if (snapshot == null || generatedAt == null) {
