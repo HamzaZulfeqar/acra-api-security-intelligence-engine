@@ -29,7 +29,7 @@ public final class Sprint12MontoyaIssueAdapterTestSuite {
         var adapter = new S12MontoyaAuditIssueAdapter();
         int assertions = 0;
 
-        TestSupport.assertTrue(!projection.publishable(),
+        assertTrue(!projection.publishable(),
                 "core Burp projection remains non-publishable");
         assertions++;
 
@@ -38,7 +38,7 @@ public final class Sprint12MontoyaIssueAdapterTestSuite {
                 false,
                 "approval-denied",
                 "https://acra-lab.invalid/api/v1/documents/1002");
-        TestSupport.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> adapter.spec(projection, denied),
                 "adapter rejects missing explicit approval");
         assertions++;
@@ -48,7 +48,7 @@ public final class Sprint12MontoyaIssueAdapterTestSuite {
                 true,
                 "approval-mismatch",
                 "https://acra-lab.invalid/api/v1/documents/1002");
-        TestSupport.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> adapter.spec(projection, mismatch),
                 "adapter rejects approval for another candidate");
         assertions++;
@@ -60,29 +60,29 @@ public final class Sprint12MontoyaIssueAdapterTestSuite {
                 "https://acra-lab.invalid/api/v1/documents/1002");
         var spec = adapter.spec(projection, approved);
 
-        TestSupport.assertEquals(AuditIssueSeverity.INFORMATION, spec.severity(),
+        assertEquals(AuditIssueSeverity.INFORMATION, spec.severity(),
                 "Montoya issue spec remains informational");
         assertions++;
-        TestSupport.assertEquals(AuditIssueConfidence.TENTATIVE, spec.confidence(),
+        assertEquals(AuditIssueConfidence.TENTATIVE, spec.confidence(),
                 "Montoya issue spec remains tentative");
         assertions++;
-        TestSupport.assertEquals(AuditIssueSeverity.INFORMATION, spec.typicalSeverity(),
+        assertEquals(AuditIssueSeverity.INFORMATION, spec.typicalSeverity(),
                 "typical severity remains informational");
         assertions++;
-        TestSupport.assertEquals(approved.baseUrl(), spec.baseUrl(),
+        assertEquals(approved.baseUrl(), spec.baseUrl(),
                 "explicit approved absolute URL is used for Montoya issue");
         assertions++;
-        TestSupport.assertContains(spec.detail(), "Human verification is required",
+        assertContains(spec.detail(), "Human verification is required",
                 "Montoya issue detail retains human-review boundary");
         assertions++;
-        TestSupport.assertContains(spec.background(), "review-only",
+        assertContains(spec.background(), "review-only",
                 "Montoya issue background explicitly states review-only");
         assertions++;
-        TestSupport.assertNotContains(spec.detail(), "DummyPassword",
+        assertNotContains(spec.detail(), "DummyPassword",
                 "Montoya issue detail excludes candidate rationale secret");
         assertions++;
 
-        TestSupport.assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> new S12BurpIssuePublicationApproval(
                         projection.candidateId(),
                         true,
@@ -95,14 +95,14 @@ public final class Sprint12MontoyaIssueAdapterTestSuite {
                 .filter(method -> method.getName().equals("createAuditIssue"))
                 .findFirst()
                 .orElseThrow();
-        TestSupport.assertEquals(AuditIssue.class, create.getReturnType(),
+        assertEquals(AuditIssue.class, create.getReturnType(),
                 "extension adapter compiles against real Montoya AuditIssue type");
         assertions++;
 
         boolean hasPublishMethod = Arrays.stream(S12MontoyaAuditIssueAdapter.class.getDeclaredMethods())
                 .map(Method::getName)
                 .anyMatch(name -> name.equals("publish") || name.equals("addToSiteMap"));
-        TestSupport.assertTrue(!hasPublishMethod,
+        assertTrue(!hasPublishMethod,
                 "Phase 2 adapter exposes no publication method");
         assertions++;
 
