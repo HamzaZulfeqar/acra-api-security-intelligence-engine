@@ -2,15 +2,35 @@
 
 ## Current state — 2026-09-24
 
-**Current sprint:** Sprint 10 — Authentication, Session & Token-Context Intelligence (closed).  
-**Decision:** S10 SOFTWARE COMPLETE.  
-**Working branch:** `s10-auth-session-intelligence`.  
-**Immutable Sprint 9 base:** `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`.  
-**Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
-**Sprint 10 Phase 1 verification:** GitHub Actions run `36031651777` — SUCCESS.  
-**Sprint 10 final closure:** GitHub Actions run `36041511898` — SUCCESS at source commit `2a7e753a3866ffb869df17abb53a9d2cc93dd876`.  
-**Sprint 10 closure-candidate SHA-256:** `3e1352ca886096ff2df01d6e8fdbc3f281eb29794651ff6bba23205b7a70d26b`.  
-**Sprint 10 checkpoint entries:** 924; unsafe paths: 0; duplicate entries: 0; clean extraction/per-file equality: PASS.
+**Current sprint:** Sprint 11 — OAuth/OIDC Protocol & Authorization-Server Context Intelligence (in progress).  
+**Decision:** S11 PHASES 1–2 VERIFIED COMPLETE; Sprint 11 remains IN PROGRESS.  
+**Working branch:** `s11-oauth-oidc-intelligence`.  
+**Immutable Sprint 10 promoted base:** `7ada67e42c20fcdac21e3af96a9ed80dda422192`.  
+**Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 11 Phase 1 verification:** GitHub Actions run `36042624760` — SUCCESS.  
+**Sprint 11 Phase 2 verification:** GitHub Actions run `36042861693` — SUCCESS.
+
+### Sprint 11 verified progress
+
+Phase 1:
+- passive OAuth2/OIDC context model;
+- issuer/client/resource/audience/scope/flow/PKCE/state/nonce observations;
+- SHA-256 redirect-URI correlation handle instead of raw redirect URI;
+- deterministic context and correlation identifiers;
+- explicit STABLE / CONTEXT_DRIFT / INCONCLUSIVE correlation;
+- decoded/passive context does not independently verify identity;
+- no network dispatch, provider probing or vulnerability promotion.
+
+Phase 2:
+- OAuth-specific immutable evidence binding;
+- project/request/test/execution lineage validation;
+- cross-project / unknown / duplicate / wrong-type / contradictory evidence rejection;
+- existing generic HTTP and Sprint 10 session evidence validators left unchanged.
+
+The next dependency is Phase 3 passive OAuth/OIDC extraction through the existing traffic/parser boundaries.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
+
 
 ### Sprint 10 verified progress
 
