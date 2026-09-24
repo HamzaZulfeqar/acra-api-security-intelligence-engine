@@ -1,0 +1,65 @@
+name: Sprint 11 Final Closure
+
+on:
+  push:
+    branches:
+      - s11-research-evaluation-ablation
+    paths:
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'lab/**'
+      - 'tests/**'
+      - 'scripts/verify-sprint11-final.sh'
+      - 'scripts/verify-sprint11-foundation.sh'
+      - 'scripts/package-sprint11.sh'
+      - 'scripts/verify-sprint10-foundation.sh'
+      - 'scripts/verify-sprint9-foundation.sh'
+      - 'scripts/verify-sprint8-foundation.sh'
+      - 'scripts/verify-sprint7-foundation.sh'
+      - 'scripts/verify-sprint6-foundation.sh'
+      - '.github/workflows/sprint11-final.yml'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - 'docs/sprints/sprint-11.md'
+      - 'docs/architecture/s11-research-evaluation-ablation.md'
+      - 'docs/research/EXPERIMENT_REGISTRY.md'
+      - 'docs/research/EXPERIMENT_METHODOLOGY.md'
+      - 'PROJECT_STATE.md'
+      - 'ROADMAP.md'
+      - 'docs/sprints/ROADMAP.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize scripts
+        run: chmod +x ./scripts/*.sh
+      - name: Run Sprint 11 final verification
+        run: bash ./scripts/verify-sprint11-final.sh
+      - name: Upload Sprint 11 final checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-11-final-checkpoint
+          path: |
+            build/s11-final-package/acra-sprint-11-final.zip
+            build/s11-final-package/acra-sprint-11-final.zip.sha256
+            build/s11-final-package/sprint11-package-manifest.txt
+            build/s11-final-package/sprint11-package-verification.json
+            build/s11-evaluation-report/s11-research-evaluation.json
+            build/s11-evaluation-report/s11-research-evaluation.json.sha256
+            build/s11-evaluation-report/s11-research-evaluation.md
+            build/s11-evaluation-report/s11-research-evaluation.md.sha256
+            build/s11-foundation/*.log
+          if-no-files-found: warn
