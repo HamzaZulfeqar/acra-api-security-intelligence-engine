@@ -1,6 +1,6 @@
 # Sprint 10 — Authentication, Session & Token-Context Intelligence
 
-Status: IN PROGRESS — Phase 1 candidate implemented, verification pending  
+Status: IN PROGRESS — Phase 1 VERIFIED COMPLETE  
 Branch: `s10-auth-session-intelligence`  
 Immutable Sprint 9 base: `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`
 
@@ -86,8 +86,29 @@ Phase 1 does not:
 - scan external targets;
 - auto-confirm broken authentication findings.
 
-## Verification
+## Phase 1 verification
 
-Pending GitHub Actions execution on `s10-auth-session-intelligence`.
+GitHub Actions run `36031651777`: **SUCCESS** at commit
+`e520a631e667fb5885230b094aa9045e6dfd7bf7`.
 
-Until that workflow passes, Phase 1 remains IMPLEMENTED / UNVERIFIED.
+Verified gates:
+
+- exact Temurin Java 21 setup: PASS;
+- core source/test compilation with `-Xlint:all -Werror`: PASS;
+- `Sprint10SessionContextFoundationTestSuite`: PASS;
+- stable verified session correlation: PASS;
+- safe token rotation with stable context: PASS;
+- verified principal/role/tenant/scope drift detection: PASS;
+- unverified token identity fails closed: PASS;
+- different-session boundary: PASS;
+- raw authentication material rejection: PASS;
+- retained Sprint 9 property foundation: PASS;
+- retained Sprint 8 routing foundation: PASS;
+- retained Sprint 7 workflow foundation: PASS;
+- retained Sprint 6 policy foundation: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 1 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 2 owns project/test/execution/evidence provenance binding for passive
+authentication/session observations.
