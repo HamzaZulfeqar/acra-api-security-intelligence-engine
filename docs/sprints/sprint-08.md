@@ -1,6 +1,6 @@
 # Sprint 8 — Routing Normalization & Authorization-Path Intelligence
 
-Status: IN PROGRESS — PHASE 4 VERIFIED  
+Status: IN PROGRESS — PHASE 5 VERIFIED  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
@@ -184,3 +184,32 @@ GitHub Actions run `35969974964`: **SUCCESS**.
 - retained Sprint 7 foundation/assessment/coverage/reporting/security/performance: PASS
 
 Phase 4 is complete. Sprint 8 remains IN PROGRESS.
+
+## Phase 5 — routing product workspace and Burp UI
+
+Implemented:
+- `S8RoutingWorkspace`
+- immutable `S8RoutingProductSnapshot`
+- `S8RoutingPanel`
+- top-level Burp `Routing` product area
+- Overview / Stage Traces / Boundary Matrix / Assessments / Candidates views
+- backward-compatible `AcraSuiteTab` constructor chain
+- read-only projection of normalization traces, boundary transitions, assessments and review-only candidates
+- explicit UI language separating routing divergence from vulnerability severity
+- explicit UI language preserving unknown processing stages as unknown
+- no new active-execution controls introduced by the Routing UI
+
+### Phase 5 verification
+
+GitHub Actions run `35970306700`: **SUCCESS**.
+
+- Sprint 8 core/live verification: PASS
+- retained Sprint 7 foundation: PASS
+- real extension Maven `test-compile`: PASS
+- retained Sprint 4 UI: PASS, 26 checks
+- retained Sprint 6 Authorization UI: PASS, 27 assertions
+- retained Sprint 7 Workflow UI: PASS, 20 assertions
+- Sprint 8 Routing UI: PASS, 17 assertions
+- controlled routing logs artifact upload: PASS
+
+Phase 5 is complete. Sprint 8 remains IN PROGRESS.
