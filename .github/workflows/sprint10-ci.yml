@@ -6,6 +6,7 @@ on:
       - s10-auth-session-intelligence
     paths:
       - 'core/**'
+      - 'lab/**'
       - 'scripts/verify-sprint10-foundation.sh'
       - '.github/workflows/sprint10-ci.yml'
       - 'docs/sprints/sprint-10.md'
