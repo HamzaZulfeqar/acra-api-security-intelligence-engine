@@ -6,6 +6,7 @@ on:
       - s7-workflow-token-binding
     paths:
       - 'core/**'
+      - 'lab/**'
       - 'scripts/verify-sprint7-foundation.sh'
       - '.github/workflows/sprint7-ci.yml'
       - 'docs/sprints/sprint-07.md'
@@ -29,7 +30,15 @@ jobs:
           cache: maven
       - name: Normalize scripts
         run: chmod +x ./scripts/*.sh
-      - name: Verify Sprint 7 workflow/token-binding foundation
+      - name: Verify Sprint 7 workflow/token-binding foundation and controlled execution
         run: bash ./scripts/verify-sprint7-foundation.sh
       - name: Verify retained Sprint 6 foundation
         run: bash ./scripts/verify-sprint6-foundation.sh
+      - name: Upload Sprint 7 controlled workflow logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint7-controlled-workflow
+          path: |
+            build/s7-foundation/lab/*.log
+          if-no-files-found: warn
