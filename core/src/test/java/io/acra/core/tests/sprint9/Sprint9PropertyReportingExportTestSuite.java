@@ -14,6 +14,9 @@ import io.acra.core.reporting.s9.S9PropertyJsonReporter;
 import io.acra.core.reporting.s9.S9PropertyReportStatus;
 import io.acra.core.security.TokenFingerprint;
 import io.acra.core.tests.TestSupport;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +124,23 @@ public final class Sprint9PropertyReportingExportTestSuite {
         TestSupport.assertEquals(report.reportId(), repeated.reportId(),
                 "report identity is deterministic for the same workspace state");
         assertions++;
+
+        try {
+            Path out = Path.of("build", "s9-foundation", "reporting");
+            Files.createDirectories(out);
+            Files.writeString(out.resolve("S9-PROPERTY-REPORT.json"), jsonA.content(), StandardCharsets.UTF_8);
+            Files.writeString(out.resolve("S9-PROPERTY-REPORT.json.sha256"),
+                    jsonA.sha256() + "  S9-PROPERTY-REPORT.json\n", StandardCharsets.UTF_8);
+            Files.writeString(out.resolve("S9-PROPERTY-REPORT.md"), markdown.content(), StandardCharsets.UTF_8);
+            TestSupport.assertTrue(Files.isRegularFile(out.resolve("S9-PROPERTY-REPORT.json")),
+                    "canonical property JSON report artifact written");
+            assertions++;
+            TestSupport.assertTrue(Files.isRegularFile(out.resolve("S9-PROPERTY-REPORT.md")),
+                    "canonical property Markdown report artifact written");
+            assertions++;
+        } catch (java.io.IOException failure) {
+            throw new IllegalStateException("unable to write Sprint 9 report artifacts", failure);
+        }
 
         return assertions;
     }
