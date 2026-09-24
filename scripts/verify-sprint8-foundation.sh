@@ -55,6 +55,8 @@ java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingNormalizationFoundat
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8AuthorizationPathDifferentialTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8ControlledRoutingDifferentialTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingReportingExportTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingSecurityHardeningTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint8.Sprint8RoutingPerformanceObservationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint3.Sprint3CoreTestSuite
 
 cleanup_lab
