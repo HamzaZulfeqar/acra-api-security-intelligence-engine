@@ -2,13 +2,14 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
+**Sprint 9 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
 - immutable Sprint 8 base: `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`
 - Phase 1 verification run: `35985518829` — SUCCESS
 - Phase 2 verification run: `35986020761` — SUCCESS
+- Phase 3 verification run: `35986668193` — SUCCESS
 - evidence-backed property observations: VERIFIED
 - deterministic property-policy correlation: VERIFIED
 - cross-project provenance rejection: VERIFIED
@@ -25,14 +26,22 @@ Verified Phase 2:
 - positive allowed-property UPDATE control: PASS;
 - cross-object control remains DENY: PASS.
 
-Next dependency-ordered milestone:
-1. audit existing S4 mutation types/adapters and request-equivalence guards;
-2. reuse the existing planner/queue/scope/safety/executor path;
-3. add only the minimum explicit property mutation needed by the controlled S9 fixture;
-4. prove secure DENY versus vulnerable ALLOW through the existing evidence chain;
-5. preserve review-only classification.
+Verified Phase 3:
+- existing PROPERTY contract/mutation family reused;
+- state-changing BODY mutation routed through S4 safety/execution stack;
+- secure explicit DENY observed DENY: PASS;
+- vulnerable explicit DENY observed ALLOW: PASS;
+- live executor evidence → property policy assessment: PASS;
+- cross-project provenance rejection: PASS.
 
-Do not start UI/reporting or broad property fuzzing before Phase 3 active-engine integration is verified.
+Next dependency-ordered milestone:
+1. reuse the existing FindingCandidate domain model;
+2. require verified execution/test/observation/evidence provenance;
+3. project DENY→ALLOW property mismatches as review-only candidates;
+4. reject secure controls;
+5. remain INCONCLUSIVE when provenance or policy attribution is incomplete.
+
+Do not start property UI/reporting until Phase 4 finding projection is verified.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
