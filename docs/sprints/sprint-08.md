@@ -1,14 +1,15 @@
 # Sprint 8 — Routing Normalization & Authorization-Path Intelligence
 
-Status: IN PROGRESS  
+Status: IN PROGRESS — PHASE 2 VERIFIED  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
 ## Dependency decision
 
-The repository had no previously assigned Sprint 8 scope. The next dependency is defined from ACRA's established
-Routing Analysis Engine priority and the retained routing limitation that syntactic equivalence does not prove
-identical proxy/gateway/framework/application resolution.
+The recovered ACRA roadmap assigns Sprint 8 to Advanced URI, Routing, Normalization and Security-Boundary
+Differential Analysis. The repository implementation therefore continues the established Routing Analysis Engine
+priority and the retained Sprint 3 limitation that syntactic equivalence does not prove identical
+proxy/gateway/framework/application resolution.
 
 Sprint 8 extends the existing Sprint 3 route layer. It does not replace `RouteTemplateEngine`,
 `RouteEquivalenceEngine`, URI extraction, the security-context graph, or the active-testing engine.
@@ -66,3 +67,48 @@ The foundation must prove:
 8. retained Sprint 7 foundation remains green on exact Java 21.
 
 No external targets, bypass generation, proxy fingerprinting or vulnerability classification are part of Phase 1.
+
+
+## Phase 1 verification
+
+GitHub Actions run `35961851498`: **SUCCESS**.
+
+- exact Java 21 compile with `-Xlint:all -Werror`: PASS
+- `Sprint8RoutingNormalizationFoundationTestSuite`: PASS
+- retained Sprint 3 route/core behavior: PASS
+- retained Sprint 7 foundation: PASS
+
+Phase 1 is complete.
+
+
+## Phase 2 — authorization-path differential intelligence
+
+Implemented:
+- `RouteBoundaryObservation` for evidence-backed path/method/host/API-version/authorization observations
+- `RouteSecurityBoundaryAnalyzer`
+- `RouteBoundaryTransition`
+- `RouteSecurityBoundaryTrace`
+- explicit states: `STABLE`, `ROUTING_DIVERGENCE`, `AUTHORIZATION_BOUNDARY_CHANGE`,
+  `COMBINED_DIVERGENCE`, `INCONCLUSIVE`
+- route-only changes separated from authorization-decision changes
+- method, host and API-version changes represented independently of path normalization
+- combined route + authorization changes preserved without automatic vulnerability promotion
+- missing intermediary stages remain `INCONCLUSIVE`
+- unknown authorization context remains `INCONCLUSIVE`
+- host observations reject schemes, paths and user-info
+- route observations remain path-only and provenance-backed
+
+This phase classifies evidence-backed boundary differences. It does not infer proxy/gateway behavior, generate
+bypass payloads, scan external targets, or promote a routing differential into a confirmed vulnerability.
+
+### Phase 2 verification
+
+GitHub Actions run `35965612498`: **SUCCESS**.
+
+- Sprint 8 normalization foundation: PASS
+- `Sprint8AuthorizationPathDifferentialTestSuite`: PASS
+- retained Sprint 3 route/core behavior: PASS
+- retained Sprint 7 foundation: PASS
+- exact Temurin Java 21 verification: PASS
+
+Phase 2 is complete. Sprint 8 remains IN PROGRESS.
