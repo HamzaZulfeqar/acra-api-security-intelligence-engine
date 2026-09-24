@@ -1,6 +1,6 @@
 # Sprint 10 — Batch & Indirect Authorization Intelligence
 
-Status: IN PROGRESS — Phases 1–6 VERIFIED  
+Status: IN PROGRESS — Phases 1–7 VERIFIED  
 Branch: `s10-batch-indirect-authorization`  
 Immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 
@@ -297,3 +297,48 @@ Verified UI evidence:
 Phase 6 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 7 owns deterministic report/export generation and read-only UI projection.
+
+## Phase 7 — deterministic report/export
+
+Implemented:
+
+- `S10BatchIndirectReport`, status and summary contracts;
+- report-specific minimized projections for policy, observation, assessment, finding and coverage rows;
+- `S10BatchIndirectReportGenerator` with deterministic ordering and state-derived report identity;
+- canonical secret-safe JSON export with stable SHA-256;
+- deterministic Markdown review report;
+- `S10BatchIndirectJsonReporter` on the existing Reporter plugin boundary;
+- report/export methods on the single `S10BatchIndirectWorkspace` source of truth;
+- Batch & Indirect UI `Report` and `JSON Export` views;
+- report schema excludes `policySource`, raw aliases and candidate rationale;
+- indirect references export only SHA-256 fingerprints and resolved resource identifiers;
+- explicit `confirmedFindingCount = 0`;
+- unobserved batch/indirect policy coverage retained in report/export;
+- CI artifact upload for canonical JSON, SHA-256 and Markdown.
+
+### Phase 7 verification
+
+GitHub Actions run `36054653296`: **SUCCESS** at source commit
+`09d4edb23014c738d6856d46db6e0a72ed5a9e97`.
+
+Verified evidence:
+
+- `Sprint10BatchIndirectReportingExportTestSuite`: PASS, 43 assertions;
+- deterministic canonical JSON: PASS;
+- deterministic Markdown: PASS;
+- stable SHA-256 digest for identical export content: PASS;
+- state-derived report identity independent of render timestamp: PASS;
+- Reporter plugin adapter: PASS;
+- raw `share-a` / `share-b` exclusion: PASS;
+- `policySource` structural exclusion: PASS;
+- candidate `rationale` structural exclusion: PASS;
+- `confirmedFindingCount = 0`: PASS;
+- explicit one-context coverage gap preserved: PASS;
+- extension Maven compilation: PASS;
+- retained Sprint 6/7/8/9 UI regressions: PASS;
+- `Sprint10BatchIndirectUiTestSuite`: PASS, 230 assertions.
+
+Phase 7 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 8 owns security hardening and bounded performance observations before final
+traceability, reproducible packaging and software closure.

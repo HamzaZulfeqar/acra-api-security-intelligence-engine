@@ -191,10 +191,52 @@ Phase 6 invariants:
 Phase 6 verification: GitHub Actions run `36051856008` — SUCCESS at
 `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.
 
+## Phase 7 deterministic report/export boundary
+
+The Sprint 10 reporting layer consumes only the immutable product snapshot and emits a deliberately minimized
+report schema. Export does not serialize the full authorization domain objects.
+
+```text
+S10BatchIndirectProductSnapshot
+        |
+        v
+S10BatchIndirectReportGenerator
+        |
+        +--> S10ReportPolicyContext
+        +--> S10ReportObservation
+        +--> S10ReportAssessment
+        +--> S10ReportFindingCandidate
+        +--> S10ReportCoverageContext
+        |
+        v
+S10BatchIndirectReport
+        |
+        +--> canonical JSON + SHA-256
+        +--> deterministic Markdown
+        +--> Reporter plugin
+        +--> read-only Burp Report / JSON Export
+```
+
+Phase 7 invariants:
+
+1. Report identity is deterministic for identical report state and does not depend on render timestamp.
+2. `policySource` is structurally excluded from report projections.
+3. Raw indirect aliases are structurally absent from report projections.
+4. Indirect references are represented only by SHA-256 fingerprints and resolved resources.
+5. Candidate rationale is structurally excluded from the canonical export surface.
+6. Export sanitization still applies as a secondary defense.
+7. Unobserved coverage remains explicit.
+8. `confirmedFindingCount` is fixed at zero; report generation cannot promote a review candidate.
+9. UI report views consume the same canonical workspace exporter used for saved artifacts.
+10. Headless UI/report verification does not establish real Burp desktop runtime validation.
+
+Phase 7 verification: GitHub Actions run `36054653296` — SUCCESS at
+`09d4edb23014c738d6856d46db6e0a72ed5a9e97`.
+
 ## Future Sprint 10 slices
 
 Later phases may add controlled ACRA-Lab ground truth, safe S4 planner/executor integration, provenance-gated
-FindingCandidate projection, coverage accounting, product UI, deterministic report/export, security hardening,
-bounded performance observations and reproducible final closure.
+FindingCandidate projection, coverage accounting, product UI and deterministic report/export are now implemented.
+Remaining slices are security hardening, bounded performance observations and reproducible final closure.
 
 Those capabilities are not claimed until separately implemented and verified.

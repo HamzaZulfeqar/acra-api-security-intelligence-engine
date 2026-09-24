@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASES 1–6 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Decision:** S10 PHASES 1–7 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -13,7 +13,8 @@
 **Sprint 10 Phase 3 verification:** GitHub Actions run `36048381112` — SUCCESS at source commit `608490cfc1211057e879f6c6457ea62fd648b405`.  
 **Sprint 10 Phase 4 verification:** GitHub Actions run `36048837246` — SUCCESS at source commit `abb57d0320fcdc161992297415978bde6c769bee`.  
 **Sprint 10 Phase 5 verification:** GitHub Actions run `36049247018` — SUCCESS at source commit `16169367c3e7c3b179a6d8541dfc88698fde6b81`.  
-**Sprint 10 Phase 6 verification:** GitHub Actions run `36051856008` — SUCCESS at source commit `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.
+**Sprint 10 Phase 6 verification:** GitHub Actions run `36051856008` — SUCCESS at source commit `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.  
+**Sprint 10 Phase 7 verification:** GitHub Actions run `36054653296` — SUCCESS at source commit `09d4edb23014c738d6856d46db6e0a72ed5a9e97`.
 
 ### Sprint 10 verified progress
 
@@ -91,7 +92,21 @@ Sprint 10 Phase 6 read-only product workspace and headless Burp UI projection is
 - retained S4/S6/S7/S8/S9 headless UI regressions remain green;
 - real Burp desktop runtime/load/handler/UI validation remains UNVERIFIED / DEFERRED.
 
-The next dependency is Phase 7 deterministic report/export for batch and indirect authorization intelligence.
+Sprint 10 Phase 7 deterministic report/export and read-only UI projection is **VERIFIED COMPLETE**:
+
+- versioned `s10-batch-indirect-report-v1` canonical report model;
+- report-specific minimized policy, observation, assessment, candidate and coverage projections;
+- `policySource`, raw aliases and candidate rationale structurally excluded from exported schema;
+- indirect references represented only by SHA-256 fingerprint plus resolved resource;
+- deterministic report identity derived from report state rather than render timestamp;
+- canonical JSON and deterministic Markdown exports with stable SHA-256 digests;
+- stable `s10-batch-indirect-json-v1` Reporter plugin adapter;
+- `confirmedFindingCount = 0` and explicit unobserved coverage retained;
+- read-only Report and JSON Export views use the canonical workspace exporter;
+- canonical JSON / SHA-256 / Markdown evidence archived by Sprint 10 CI;
+- real Burp desktop runtime remains UNVERIFIED / DEFERRED.
+
+The next dependency is Phase 8 security hardening and bounded performance observations.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 

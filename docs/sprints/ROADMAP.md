@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phases 1–6 VERIFIED COMPLETE.**
+**Sprint 10 IN PROGRESS — Phases 1–7 VERIFIED COMPLETE.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
@@ -13,6 +13,7 @@ Canonical Sprint 10 Phase 1 evidence:
 - Phase 4 verification run: `36048837246` — SUCCESS at `abb57d0320fcdc161992297415978bde6c769bee`
 - Phase 5 verification run: `36049247018` — SUCCESS at `16169367c3e7c3b179a6d8541dfc88698fde6b81`
 - Phase 6 verification run: `36051856008` — SUCCESS at `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`
+- Phase 7 verification run: `36054653296` — SUCCESS at `09d4edb23014c738d6856d46db6e0a72ed5a9e97`
 - per-item batch authorization reasoning: VERIFIED
 - mixed batch outcomes preserved: VERIFIED
 - indirect reference fingerprint/resolution reasoning: VERIFIED
@@ -73,13 +74,25 @@ Verified Phase 6:
 - Sprint 10 headless UI: PASS, 218 assertions;
 - real Burp desktop runtime remains UNVERIFIED / DEFERRED.
 
+Verified Phase 7:
+- versioned canonical Sprint 10 report model: PASS;
+- report-specific minimization projections: PASS;
+- raw indirect aliases / policySource / candidate rationale excluded: PASS;
+- canonical JSON + stable SHA-256: PASS;
+- deterministic Markdown: PASS;
+- Reporter plugin adapter: PASS;
+- Report / JSON Export UI projection: PASS;
+- `confirmedFindingCount = 0`: PASS;
+- unobserved coverage retained: PASS;
+- Sprint 10 reporting suite: PASS, 43 assertions;
+- Sprint 10 UI: PASS, 230 assertions.
+
 Next dependency-ordered milestone:
-1. define deterministic Sprint 10 report model/version;
-2. project policy, observation, assessment, candidate and coverage state without raw aliases;
-3. emit canonical JSON with stable SHA-256 identity;
-4. emit deterministic Markdown for human review;
-5. add read-only Report / JSON Export UI surfaces;
-6. preserve confirmed-finding count at zero and coverage gaps exactly.
+1. add adversarial security-hardening tests across batch and indirect input/provenance/report boundaries;
+2. verify workspace dimension rejection, coverage drift rejection and report non-confirmation invariants;
+3. record bounded engineering observations for 100 / 1,000 / 10,000 explicit policy contexts;
+4. measure workspace/coverage population and deterministic report generation without asserting benchmark/SLO claims;
+5. archive performance observation evidence for final Sprint 10 closure.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 
