@@ -49,7 +49,7 @@ commit `538b146b1e9e57334e6d16fe85da6d81ab9ca765`.
 The read-only authentication/session product workspace and Burp UI projection is **VERIFIED COMPLETE** by
 GitHub Actions run `36034257857` at commit `93718c2b0ac7510c2a265608901d92db4406fe3b`.
 
-The next dependency is deterministic secret-safe JSON/SHA-256 and Markdown report/export from the same workspace.
+Deterministic secret-safe JSON/SHA-256 and Markdown report/export is **VERIFIED COMPLETE** by GitHub Actions run `36040768002` at commit `2ce4895c017a022fff81d16346f10c7155c92ef5`.\n\nSprint 10 Phase 10 security hardening and bounded 100 / 1,000 / 10,000 engineering observations are **IMPLEMENTED / VERIFICATION PENDING**. The next dependency after that gate is final traceability, retained regression, official Maven packaging and reproducible Sprint 10 checkpoint closure.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
