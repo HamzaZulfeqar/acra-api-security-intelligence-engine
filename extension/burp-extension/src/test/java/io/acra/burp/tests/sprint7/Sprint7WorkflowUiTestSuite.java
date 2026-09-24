@@ -58,7 +58,7 @@ public final class Sprint7WorkflowUiTestSuite {
         assertions++;
 
         JTabbedPane workflowTabs = find(tab.component(), JTabbedPane.class, "s7-workflow-tabs");
-        for (String title : Set.of("Overview", "Workflow Map", "Transition Matrix", "Policy Conflicts", "Coverage")) {
+        for (String title : Set.of("Overview", "Workflow Map", "Transition Matrix", "Policy Conflicts", "Coverage", "Report", "JSON Export")) {
             check(indexOf(workflowTabs, title) >= 0, "workflow sub-tab installed: " + title);
             assertions++;
         }
@@ -83,6 +83,22 @@ public final class Sprint7WorkflowUiTestSuite {
         assertions++;
         check(tab.workflowWorkspace().snapshot().coverageSummary().observedContexts() == 1,
                 "workflow workspace exposes one observed coverage context");
+        assertions++;
+
+        JTextArea report = find(tab.component(), JTextArea.class, "s7-workflow-report-view");
+        check(report.getText().contains("ACRA Sprint 7 Workflow Authorization Report"),
+                "workflow report view renders canonical Markdown");
+        assertions++;
+        check(report.getText().contains("Confirmed findings: 0"),
+                "workflow report view preserves review-only candidate boundary");
+        assertions++;
+
+        JTextArea json = find(tab.component(), JTextArea.class, "s7-workflow-json-export-view");
+        check(json.getText().contains("s7-workflow-report-v1"),
+                "workflow JSON export view renders canonical report version");
+        assertions++;
+        check(json.getText().contains("\"confirmedFindingCount\":0"),
+                "workflow JSON export does not auto-promote findings");
         assertions++;
     }
 
