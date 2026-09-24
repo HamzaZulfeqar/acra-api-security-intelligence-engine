@@ -502,3 +502,20 @@ Phase 3 focused active suite: **10 assertions PASS**. Authoritative gate: GitHub
 | TEST-S8-REG-006 | retained Sprint 7 foundation through performance suites | run `35969974964` | PASS |
 
 Phase 4 controlled suite: **22 assertions PASS**. Authoritative gate: GitHub Actions run `35969974964`.
+
+### Sprint 8 Phase 5 — product workspace and Burp UI
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S8-UI-001 | Routing top-level product area installed | `Sprint8RoutingUiTestSuite` | PASS |
+| TEST-S8-UI-002 | Stage Traces / Boundary Matrix / Assessments / Candidates views | same suite | PASS |
+| TEST-S8-UI-003 | routing workspace exposes deterministic read-only snapshot | same suite | PASS |
+| TEST-S8-UI-004 | candidate != confirmed vulnerability language retained | same suite | PASS |
+| TEST-S8-UI-005 | routing divergence != vulnerability severity language retained | same suite | PASS |
+| TEST-S8-UI-006 | unknown processing stages remain unknown | same suite | PASS |
+| TEST-S8-MAVEN-001 | extension Maven test compilation | run `35970306700` | PASS |
+| TEST-S8-UI-REG-001 | retained Sprint 4 UI | run `35970306700` | PASS — 26 |
+| TEST-S8-UI-REG-002 | retained Sprint 6 Authorization UI | run `35970306700` | PASS — 27 |
+| TEST-S8-UI-REG-003 | retained Sprint 7 Workflow UI | run `35970306700` | PASS — 20 |
+
+Sprint 8 Routing UI: **17 assertions PASS**. Authoritative gate: GitHub Actions run `35970306700`.
