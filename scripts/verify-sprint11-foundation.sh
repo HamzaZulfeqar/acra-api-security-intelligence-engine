@@ -115,7 +115,62 @@ for index,item in enumerate(readiness["cases"], start=1):
 print("SPRINT11_EVIDENCE_READINESS_CONTRACT PASS ready=3 partial=4 missing=8 executed=0")
 PY
 
+python3 -m py_compile lab/common/basic_api.py lab/secure-api/basic-api/server.py lab/vulnerable-api/basic-api/server.py
+python3 - <<'PY'
+import json
+from pathlib import Path
+
+gt=json.loads(Path("lab/ground-truth/GT-S11-RESEARCH-LAB-FIXTURES.json").read_text(encoding="utf-8"))
+assert gt["id"] == "GT-S11-RESEARCH-LAB-FIXTURES"
+assert gt["version"] == "1"
+assert gt["independent_of_treatment_output"] is True
+assert gt["execution_state"] == "NOT_RUN"
+assert gt["summary"] == {
+    "new_isolated_negative_controls": 4,
+    "new_positive_controls": 8,
+    "total_new_fixtures": 12,
+}
+assert len(gt["cases"]) == 12
+assert [item["case_id"] for item in gt["cases"]] == [
+    "S11-EVAL-003","S11-EVAL-004","S11-EVAL-005","S11-EVAL-006",
+    "S11-EVAL-008","S11-EVAL-009","S11-EVAL-010","S11-EVAL-011",
+    "S11-EVAL-012","S11-EVAL-013","S11-EVAL-014","S11-EVAL-015",
+]
+assert sum(1 for item in gt["cases"] if item["expected_candidate"]) == 8
+assert sum(1 for item in gt["cases"] if not item["expected_candidate"]) == 4
+assert all("/api/v1/s11/research/case-" in item["route"] for item in gt["cases"])
+print("SPRINT11_RESEARCH_LAB_GROUND_TRUTH PASS cases=12 negative=4 positive=8")
+PY
+
+ACRA_LAB_MODE=secure PORT=18082 python3 "$ROOT/lab/common/basic_api.py" >"$BUILD/secure-lab.log" 2>&1 &
+SECURE_PID=$!
+ACRA_LAB_MODE=vulnerable PORT=18081 python3 "$ROOT/lab/common/basic_api.py" >"$BUILD/vulnerable-lab.log" 2>&1 &
+VULNERABLE_PID=$!
+cleanup_lab() {
+  kill "$SECURE_PID" "$VULNERABLE_PID" 2>/dev/null || true
+  wait "$SECURE_PID" "$VULNERABLE_PID" 2>/dev/null || true
+}
+trap cleanup_lab EXIT
+
+python3 - <<'PY'
+import time, urllib.request
+for url in ("http://127.0.0.1:18082/health","http://127.0.0.1:18081/health"):
+    last=None
+    for _ in range(50):
+        try:
+            with urllib.request.urlopen(url, timeout=0.5) as response:
+                if response.status == 200:
+                    break
+        except Exception as exc:
+            last=exc
+            time.sleep(0.1)
+    else:
+        raise SystemExit(f"Sprint 11 lab not ready: {url}: {last}")
+print("SPRINT11_RESEARCH_LAB_READY PASS")
+PY
+
 CP="$BUILD/main:$BUILD/test"
+java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11ControlledResearchLabFixtureTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11ResearchAblationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11EvaluationDatasetManifestTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11AblationPredictionAdapterTestSuite
@@ -128,4 +183,6 @@ java -ea -cp "$CP" io.acra.core.tests.sprint7.Sprint7WorkflowAuthorizationFounda
 java -ea -cp "$CP" io.acra.core.tests.sprint6.Sprint6PolicyFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint5.Sprint5FinalClosureTestSuite
 
+cleanup_lab
+trap - EXIT
 echo "SPRINT11_RESEARCH_ABLATION_FOUNDATION_VERIFICATION PASS"
