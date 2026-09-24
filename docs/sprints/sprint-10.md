@@ -1,6 +1,6 @@
 # Sprint 10 — Batch & Indirect Authorization Intelligence
 
-Status: IN PROGRESS — Phases 1–3 VERIFIED  
+Status: IN PROGRESS — Phases 1–4 VERIFIED  
 Branch: `s10-batch-indirect-authorization`  
 Immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 
@@ -186,3 +186,38 @@ Phase 3 is **VERIFIED COMPLETE**.
 No identifier generation, guessing, alias enumeration, external target, destructive mutation or automatic confirmed-vulnerability behavior is introduced.
 
 Sprint 10 remains IN PROGRESS. Phase 4 owns provenance-gated batch/indirect `FindingCandidate` projection.
+
+
+## Phase 4 — provenance-gated FindingCandidate projection
+
+Implemented:
+
+- `S10BatchFindingRequest`;
+- `S10IndirectFindingRequest`;
+- `S10BatchFindingCandidateEvaluator`;
+- `S10IndirectFindingCandidateEvaluator`;
+- evidence-reference and observation-lineage revalidation before projection;
+- request-to-assessment consistency checks;
+- deterministic candidate IDs and finding fingerprints;
+- explicit `BATCH_AUTHORIZATION/BATCH_ITEM` and
+  `INDIRECT_REFERENCE_AUTHORIZATION/RESOLVED_TARGET` dimensions;
+- secure verified controls → `REJECTED`;
+- verified DENY→ALLOW mismatch → review-only `CANDIDATE`;
+- missing/invalid provenance or projection mismatch → `INCONCLUSIVE`;
+- no raw indirect alias storage in projected candidates;
+- no confirmed-vulnerability state.
+
+### Phase 4 verification
+
+GitHub Actions run `36048837246`: **SUCCESS** at source commit
+`abb57d0320fcdc161992297415978bde6c769bee`.
+
+- `Sprint10FindingCandidateProjectionTestSuite`: PASS, 22 assertions;
+- retained controlled batch execution: PASS, 25 assertions;
+- retained controlled indirect execution: PASS, 23 assertions;
+- retained Sprint 10 foundation/lab and earlier authorization regressions: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 4 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 5 owns deterministic batch/indirect coverage accounting.
