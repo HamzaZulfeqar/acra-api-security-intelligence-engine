@@ -63,7 +63,8 @@ public final class Sprint9PropertyUiTestSuite {
 
         JTabbedPane propertyTabs = find(tab.component(), JTabbedPane.class, "s9-property-tabs");
         for (String title : Set.of(
-                "Overview", "Policies", "Observations", "Assessments", "Candidates", "Coverage")) {
+                "Overview", "Policies", "Observations", "Assessments", "Candidates", "Coverage",
+                "Report", "JSON Export")) {
             check(indexOf(propertyTabs, title) >= 0, "property sub-tab installed: " + title);
             assertions++;
         }
@@ -120,6 +121,28 @@ public final class Sprint9PropertyUiTestSuite {
         assertions++;
         check(rows(tab, "s9-property-coverage-table") == 3,
                 "property coverage table includes unobserved policy context");
+        assertions++;
+
+        JTextArea report = find(tab.component(), JTextArea.class, "s9-property-report-view");
+        check(report.getText().contains("Confirmed findings: 0"),
+                "property report view preserves zero confirmed findings");
+        assertions++;
+        check(report.getText().contains("Unobserved contexts: 1"),
+                "property report view preserves coverage gaps");
+        assertions++;
+        check(!report.getText().contains("L2") && !report.getText().contains("User A Updated"),
+                "property report view must not render property values");
+        assertions++;
+
+        JTextArea jsonExport = find(tab.component(), JTextArea.class, "s9-property-json-export-view");
+        check(jsonExport.getText().contains("\"confirmedFindingCount\":0"),
+                "property JSON export view preserves zero confirmed findings");
+        assertions++;
+        check(jsonExport.getText().contains("\"unobservedContextCount\":1"),
+                "property JSON export view preserves unobserved coverage");
+        assertions++;
+        check(!jsonExport.getText().contains("L2") && !jsonExport.getText().contains("User A Updated"),
+                "property JSON export view must not render property values");
         assertions++;
 
         var snapshot = tab.propertyWorkspace().snapshot();
