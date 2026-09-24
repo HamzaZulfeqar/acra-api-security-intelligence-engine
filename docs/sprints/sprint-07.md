@@ -223,3 +223,48 @@ or internal risk prioritization into an automatically confirmed vulnerability.
 
 Phase 5 is complete. Sprint 7 remains IN PROGRESS; security-hardening/performance closure, final
 traceability/regression and package freeze remain outstanding.
+
+## Phase 6 — security hardening and bounded performance observations
+
+Implemented/verified security boundaries:
+- raw token values rejected from `WorkflowTokenBinding`
+- raw token values rejected from `WorkflowAuthorizationRequest.tokenContextFingerprint`
+- SHA-256 context fingerprints normalized without storing the raw token
+- conflicting workflow policy cannot produce an executable seed
+- principal/context drift cannot be disguised as a target-state-only mutation
+- ambiguous bodies containing the source target-state more than once are not auto-mutated
+- DELETE workflow transitions are not auto-generated
+- an existing coverage identity cannot silently change expected policy resolution
+- execution cannot be credited to workflow coverage before a matching planned test exists
+- generated workflow tests exclude raw bearer material and token-context fingerprints
+
+Bounded performance observations cover 100 / 1,000 / 10,000 unique workflow contexts across:
+- deterministic workflow authorization resolution
+- coverage-matrix hydration
+- workflow report generation
+
+### Phase 6 verification
+
+GitHub Actions run `35960583660`: **SUCCESS**.
+
+- `Sprint7WorkflowSecurityHardeningTestSuite`: PASS, 15 assertions
+- `Sprint7WorkflowPerformanceObservationTestSuite`: PASS, 12 assertions
+- retained Phase 1–5 S7 suites: PASS
+- controlled workflow lab/execution: PASS
+- retained Sprint 6 foundation: PASS
+- Maven extension compile and S4/S6/S7 UI regressions: PASS
+- performance CSV artifact: uploaded
+
+Observed CI values:
+
+| Contexts | Resolve | Coverage | Report | Approx JVM memory delta |
+|---:|---:|---:|---:|---:|
+| 100 | 51 ms | 11 ms | 14 ms | 1,745,512 bytes |
+| 1,000 | 84 ms | 14 ms | 6 ms | 18,400,640 bytes |
+| 10,000 | 193 ms | 56 ms | 25 ms | 21,548,640 bytes |
+
+These are engineering observations from one CI environment, not benchmarks, SLOs, release thresholds, or
+real-world capacity claims.
+
+Phase 6 is complete. Remaining Sprint 7 work is the final requirements traceability, retained S1–S7
+regression, reproducible package verification and final software audit.
