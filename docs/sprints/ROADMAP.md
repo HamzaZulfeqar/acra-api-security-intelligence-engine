@@ -59,11 +59,19 @@ Phase 8 verified by GitHub Actions run `36034257857`:
 - retained S4/S6/S7/S8/S9 UI regressions: PASS;
 - raw token / token fingerprint non-rendering: PASS.
 
-Next dependency-ordered milestone:
-1. generate deterministic Sprint 10 report model from the session workspace;
-2. add canonical secret-safe JSON + SHA-256 and Markdown exports;
-3. keep confirmedFindingCount fixed at 0;
-4. project report/export into the existing Authentication UI without adding execution controls.
+Phase 9 verified by GitHub Actions run `36040768002`:
+- deterministic session report model: PASS;
+- canonical secret-safe JSON + SHA-256 and Markdown exports: PASS;
+- Reporter adapter: PASS;
+- confirmedFindingCount fixed at 0: PASS;
+- Authentication Report / JSON Export views and retained UI regressions: PASS.
+
+Current dependency-ordered milestone:
+1. verify Sprint 10 authentication/session security hardening;
+2. complete bounded 100 / 1,000 / 10,000 workspace/report engineering observations;
+3. persist the performance observation artifact;
+4. freeze Sprint 10 traceability and run final retained regressions/package verification;
+5. promote S10 SOFTWARE COMPLETE only after reproducible checkpoint closure passes.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
