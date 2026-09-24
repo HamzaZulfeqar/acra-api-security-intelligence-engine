@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–2 VERIFIED COMPLETE; protocol + controlled evaluation dataset registered, experiments remain NOT_RUN.  
+**Decision:** S11 PHASES 1–3 VERIFIED COMPLETE; protocol + dataset + prediction adapters verified, experiments remain NOT_RUN.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -11,6 +11,7 @@
 **Sprint 10 final-status checkpoint SHA-256:** `f8d15ed72dec06e8e66b14afe749f392a51a3fb628a9e70ebd290ef032df28d4`.  
 **Sprint 11 Phase 1 verification:** GitHub Actions run `36056957706` — SUCCESS at source commit `c4cff92b7668a75db2eb70ea550e7dd807d5a755`.  
 **Sprint 11 Phase 2 verification:** GitHub Actions run `36057476360` — SUCCESS at source commit `dff822e02299b887869bc43923d93a62d9e7d35f`.  
+**Sprint 11 Phase 3 verification:** GitHub Actions run `36057869888` — SUCCESS at source commit `dc3c081bf033b14afcea3185c3d54fb241be1772`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -50,10 +51,21 @@ Sprint 11 Phase 2 controlled evaluation dataset registration is **VERIFIED COMPL
 - S6/S7/S8/S9/S10 policy fixtures are excluded because policy ALLOW/DENY is not automatically a vulnerability label;
 - dataset and A0–A7 execution state remain NOT_RUN.
 
-No A0–A7 metric is currently claimed. Phase 3 owns deterministic treatment adapters/prediction contracts; it must
-not execute or publish the full A0–A7 campaign yet.
+Sprint 11 Phase 3 deterministic treatment/prediction adapters are **VERIFIED COMPLETE**:
 
-Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 protocol or dataset verification.
+- prediction inputs contain baseline/dimension evidence only and expose no ground-truth field/type;
+- each A0–A7 variant consumes exactly its enabled cumulative dimensions;
+- disabled later dimensions are excluded from prediction evidence;
+- missing enabled dimension evidence fails closed as INCONCLUSIVE with no binary prediction;
+- duplicate dimension evidence is rejected;
+- result identity/fingerprint is deterministic;
+- prediction result evidence remains explicit and ordered.
+
+No A0–A7 metric is currently claimed. Existing ACRA-Lab source does not yet implement all 15 registered research
+fixtures as executable evidence-producing cases, so measured campaign execution remains blocked by that evidence
+collection dependency.
+
+Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 software verification.
 
 ### Sprint 10 verified progress
 

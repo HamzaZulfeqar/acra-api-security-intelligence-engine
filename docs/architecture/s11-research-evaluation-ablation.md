@@ -78,7 +78,43 @@ Phase 2 invariants:
 Phase 2 verification: GitHub Actions run `36057476360` — SUCCESS at
 `dff822e02299b887869bc43923d93a62d9e7d35f`.
 
-## Phase 3 dependency
+## Phase 3 prediction boundary
 
-Treatment adapters must consume case evidence and enabled ablation dimensions without receiving the independent
-ground-truth label as prediction input. Prediction generation and metric aggregation remain separate boundaries.
+`S11AblationPredictionAdapter` consumes `AblationCaseEvidence`, which contains no ground-truth component.
+
+```text
+baseline prediction + evidence
+        |
+        +--> identity evidence
+        +--> ownership evidence
+        +--> tenant evidence
+        +--> role evidence
+        +--> workflow evidence
+        +--> semantic evidence
+        +--> correlation evidence
+        |
+        v
+variant-specific evidence filter
+        |
+        +--> complete enabled evidence -> RESOLVED prediction
+        |
+        +--> missing enabled evidence -> INCONCLUSIVE / no binary prediction
+```
+
+Phase 3 invariants:
+
+1. Ground truth is not an input to prediction.
+2. A variant cannot consume dimensions beyond its enabled cumulative set.
+3. Every consumed dimension contributes explicit evidence IDs.
+4. Missing enabled evidence fails closed as INCONCLUSIVE.
+5. INCONCLUSIVE results carry no binary prediction.
+6. Prediction identity/fingerprint is deterministic.
+7. Prediction generation remains separate from metric aggregation.
+
+Phase 3 verification: GitHub Actions run `36057869888` — SUCCESS at
+`dc3c081bf033b14afcea3185c3d54fb241be1772`.
+
+## Phase 4 dependency
+
+A deterministic campaign matrix must enumerate every dataset-case × variant pair before execution. This creates a
+fixed denominator and makes missing evidence/execution visible without treating planned cells as measured results.

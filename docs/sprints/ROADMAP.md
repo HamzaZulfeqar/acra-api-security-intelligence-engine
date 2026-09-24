@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
+**Sprint 11 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
@@ -11,6 +11,7 @@ Canonical Sprint 11 evidence:
 - S10 final-status checkpoint SHA-256: `f8d15ed72dec06e8e66b14afe749f392a51a3fb628a9e70ebd290ef032df28d4`;
 - Phase 1 verification run: `36056957706` — SUCCESS at `c4cff92b7668a75db2eb70ea550e7dd807d5a755`;
 - Phase 2 verification run: `36057476360` — SUCCESS at `dff822e02299b887869bc43923d93a62d9e7d35f`;
+- Phase 3 verification run: `36057869888` — SUCCESS at `dc3c081bf033b14afcea3185c3d54fb241be1772`;
 - S11 ablation foundation: PASS, 43 assertions;
 - A0–A7 exact cumulative protocol: VERIFIED;
 - required research metric contract: VERIFIED;
@@ -27,12 +28,25 @@ Verified Phase 2:
 - treatment-output label mutation: FORBIDDEN;
 - A0–A7 execution state: NOT_RUN.
 
+Verified Phase 3:
+- ground-truth-free prediction input schema: PASS;
+- cumulative A0–A7 evidence isolation: PASS;
+- disabled dimension leakage prevention: PASS;
+- missing enabled evidence → INCONCLUSIVE: PASS;
+- deterministic prediction identity/fingerprint: PASS;
+- prediction adapter suite: PASS, 59 assertions;
+- A0–A7 research results: NOT_RUN / NOT CLAIMED.
+
+Execution readiness finding:
+- current S4 ACRA-Lab does not expose all 15 research fixture behaviors as executable cases;
+- full A0–A7 metric execution therefore remains blocked by controlled evidence collection, not by prediction software.
+
 Next dependency-ordered milestone:
-1. define one deterministic prediction adapter contract shared by A0–A7;
-2. guarantee each variant can access only its enabled dimensions;
-3. keep ground truth unavailable to prediction logic;
-4. preserve per-case prediction provenance/evidence references;
-5. verify deterministic predictions without yet aggregating or publishing A0–A7 metrics.
+1. generate the exact 15×8 = 120-cell campaign plan;
+2. assign deterministic cell identities and required dimensions;
+3. expose planned/executable/executed/inconclusive coverage states;
+4. keep every initial cell PLANNED;
+5. calculate no research metric from planned cells.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
 

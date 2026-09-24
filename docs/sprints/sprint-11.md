@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–3 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -119,8 +119,49 @@ Verified:
 
 Phase 2 is **VERIFIED COMPLETE**.
 
+## Phase 3 — deterministic treatment/prediction adapters
+
+Implemented:
+
+- `AblationPredictionState`;
+- `AblationDimensionEvidence`;
+- `AblationCaseEvidence`;
+- `AblationPredictionResult`;
+- `S11AblationPredictionAdapter`;
+- deterministic evidence filtering by enabled variant dimensions;
+- ground-truth-free prediction input schema;
+- baseline-only A0 behavior;
+- cumulative A1→A7 treatment refinement;
+- explicit INCONCLUSIVE state for missing enabled dimension evidence;
+- deterministic result IDs/fingerprints;
+- duplicate dimension evidence rejection.
+
+The adapter never receives `ResearchGroundTruth`. This is enforced in the Phase 3 test by reflecting the
+prediction-input record schema and rejecting any ground-truth component/type.
+
+### Phase 3 verification
+
+GitHub Actions run `36057869888`: **SUCCESS** at source commit
+`dc3c081bf033b14afcea3185c3d54fb241be1772`.
+
+Verified:
+
+- `Sprint11AblationPredictionAdapterTestSuite`: PASS, 59 assertions;
+- Phase 1 protocol suite: PASS, 43 assertions;
+- Phase 2 dataset suite: PASS, 41 assertions;
+- exact Java 21 compilation with warnings as errors: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 3 is **VERIFIED COMPLETE**.
+
+## Execution readiness finding
+
+Repository inspection after Phase 3 confirmed that the current S4 ACRA-Lab exposes only a subset of the behaviors
+described by the 15-case research fixture. Therefore Sprint 11 does **not** promote the campaign to executed and
+does not manufacture per-dimension evidence.
+
 ## Next dependency
 
-Phase 3 must implement deterministic treatment/prediction adapters for A0–A7. Those adapters may transform
-registered case evidence into `ResearchPrediction` values, but Phase 3 must still keep the overall campaign
-state NOT_RUN and must not publish measured A0–A7 metrics until a later controlled execution phase.
+Phase 4 will create a deterministic campaign plan/coverage matrix for all 15 dataset cases × 8 ablation variants
+(120 planned cells). The plan will keep every cell PLANNED, expose evidence-readiness gaps explicitly, and provide
+the execution denominator without producing research metrics.
