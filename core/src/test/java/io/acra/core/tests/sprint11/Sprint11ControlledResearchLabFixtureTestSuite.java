@@ -208,8 +208,14 @@ public final class Sprint11ControlledResearchLabFixtureTestSuite {
         TestSupport.assertContains(collectionVulnerable.body(), "foreign-014",
                 "vulnerable collection contains foreign member");
         assertions++;
-        TestSupport.assertTrue(!semanticEquivalent(collectionSecure, collectionVulnerable),
-                "collection membership authorization change is semantically visible");
+        var secureCollectionFingerprint = SEMANTIC.fingerprint(toDomain(collectionSecure));
+        var vulnerableCollectionFingerprint = SEMANTIC.fingerprint(toDomain(collectionVulnerable));
+        TestSupport.assertTrue(!secureCollectionFingerprint.resourceIds()
+                        .equals(vulnerableCollectionFingerprint.resourceIds()),
+                "collection membership change is visible in extracted resource evidence");
+        assertions++;
+        TestSupport.assertTrue(vulnerableCollectionFingerprint.resourceIds().contains("foreign-014"),
+                "collection semantic evidence captures the foreign member");
         assertions++;
 
         LabResponse nonstandardSecure = get(SECURE, "/api/v1/s11/research/case-015?variant=a", false, true);
