@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
-**Decision:** S8 IN PROGRESS — Phase 6 VERIFIED.  
+**Decision:** S8 IN PROGRESS — Phase 7 VERIFIED.  
 **Working branch:** `s8-routing-normalization`.  
 **Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
 **Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
@@ -85,6 +85,17 @@ Phase 6 adds:
 - retained core/live and S4/S6/S7/S8 UI regressions PASS.
 
 Reports preserve routing observations and review-only candidates without automatic finding confirmation.
+
+Phase 7 verification: GitHub Actions run `35971212640` — SUCCESS.
+
+Phase 7 adds:
+- fail-closed routing/host/stage/mutation hardening;
+- regression coverage for non-truncating embedded-secret redaction;
+- 100 / 1,000 / 10,000 routing-context analysis/report observations;
+- performance CSV artifact;
+- retained core/live/report/UI regressions.
+
+Observed timing/memory values are engineering observations only and are not release thresholds.
 
 ### Sprint 7 frozen closure
 
