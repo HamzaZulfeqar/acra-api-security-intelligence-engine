@@ -132,3 +132,19 @@ RB-0 remains authoritative. Sprint 1 adds stable implementation requirements wit
 - **RES-009** Sprint 3 controlled experiments shall measure endpoint discovery, semantic identifier classification, tenant/owner extraction, route equivalence, context coverage and evidence completeness against explicit fixture ground truth.
 - **RES-010** Sprint 3 fixture metrics may only be claimed for the measured controlled dataset and shall not be generalized to real API accuracy.
 - **RES-011** Real Burp exercise remains required before Sprint 3 Burp reconnaissance is described as demonstrated at evidence Level 3 or higher.
+
+## Sprint 11 research evaluation requirements
+
+- **FR-059** The research layer shall represent the A0–A7 ablation sequence as deterministic, cumulative treatment definitions.
+- **FR-060** A0 shall remain a naive differential baseline and A7 shall represent the full registered ACRA correlation stack.
+- **FR-061** The protocol shall expose an explicit execution state so protocol definition cannot be confused with experiment completion.
+- **FR-062** Controlled evaluation datasets shall be registered independently of treatment output before any A0–A7 metric is promoted.
+- **FR-063** Dataset cases shall preserve deterministic ordering, stable IDs, provenance and independent binary ground truth.
+- **NFR-012** The Sprint 11 protocol shall have deterministic versioning, identity and SHA-256 fingerprinting.
+- **SAFE-010** Sprint 11 research execution shall remain limited to controlled registered ground truth until a later explicit safety gate authorizes anything broader.
+- **SEC-013** Research protocol, dataset manifests and exported metrics shall not require raw credential material.
+- **RES-012** A0–A7 shall use the registered cumulative methodology: identity, ownership, tenant, role, workflow, semantic evidence and evidence correlation.
+- **RES-013** Required metrics are TP, TN, FP, FN, precision, recall, F1 and evidence completeness.
+- **RES-014** No A0–A7 metric may be recorded as an actual result before corresponding controlled execution evidence exists.
+- **RES-015** Controlled-dataset results shall not be generalized to real-world scanner accuracy or novelty without separate evidence.
+

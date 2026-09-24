@@ -2,6 +2,32 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 11 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+
+Canonical Sprint 11 evidence:
+- branch: `s11-research-evaluation-ablation`;
+- immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`;
+- S10 post-documentation closure run: `36056032234` — SUCCESS;
+- S10 final-status checkpoint SHA-256: `f8d15ed72dec06e8e66b14afe749f392a51a3fb628a9e70ebd290ef032df28d4`;
+- Phase 1 verification run: `36056957706` — SUCCESS at `c4cff92b7668a75db2eb70ea550e7dd807d5a755`;
+- S11 ablation foundation: PASS, 43 assertions;
+- A0–A7 exact cumulative protocol: VERIFIED;
+- required research metric contract: VERIFIED;
+- deterministic protocol identity/fingerprint: VERIFIED;
+- experiment execution state: NOT_RUN;
+- measured A0–A7 metrics: NOT CLAIMED.
+
+Next dependency-ordered milestone:
+1. define a controlled evaluation dataset manifest;
+2. reuse compatible registered ground truth without changing labels from treatment output;
+3. define deterministic case inclusion/exclusion and ordering;
+4. bind every case to provenance and expected binary research ground truth;
+5. keep A0–A7 execution disabled until dataset validation passes.
+
+Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
+
+## Previous release boundary — Sprint 10
+
 **Sprint 10 SOFTWARE COMPLETE — final closure verified.**
 
 Canonical Sprint 10 Phase 1 evidence:
@@ -112,8 +138,7 @@ Final Sprint 10 closure:
 - per-file SHA-256 equality: PASS;
 - real Burp desktop runtime remains UNVERIFIED / DEFERRED.
 
-No Sprint 11 scope is started or claimed by this closure. Any next roadmap scope requires a separate explicit
-definition and evidence gate.
+Sprint 11 was subsequently started on a separate branch after an explicit dependency review. The historical S10 closure itself did not pre-claim that scope.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 

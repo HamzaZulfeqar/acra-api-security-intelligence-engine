@@ -16,14 +16,21 @@
 | EXP-REQ-EFF-001 | Sprint 4 candidate/dedup/scope/budget/execution efficiency | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S4-PERF-001 | Sprint 4 planning/queue/execution/differential/memory workload | DEFERRED | 100/1,000/10,000 synthetic plans pending | NOT_RUN |
 | EXP-S6-TENANT-RBAC-001 | Controlled tenant/RBAC policy-aware baseline comparison | COMPLETED_CONTROLLED_LOCAL | GT-S6-TENANT-RBAC | baseline TP=2/TN=1/FP=7/FN=0, P=.222222/R=1/F1=.363636; ACRA TP=2/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
-| EXP-A0 | Naive differential baseline | PLANNED | OPEN | NOT_RUN |
-| EXP-A1 | + Identity | PLANNED | OPEN | NOT_RUN |
-| EXP-A2 | + Ownership | PLANNED | OPEN | NOT_RUN |
-| EXP-A3 | + Tenant | PLANNED | OPEN | NOT_RUN |
-| EXP-A4 | + Role | PLANNED | OPEN | NOT_RUN |
-| EXP-A5 | + Workflow | PLANNED | OPEN | NOT_RUN |
-| EXP-A6 | + Semantic evidence | PLANNED | OPEN | NOT_RUN |
-| EXP-A7 | Full ACRA correlation | PLANNED | OPEN | NOT_RUN |
+| EXP-A0 | Naive differential baseline | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A1 | + Identity | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A2 | + Ownership | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A3 | + Tenant | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A4 | + Role | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A5 | + Workflow | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A6 | + Semantic evidence | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+| EXP-A7 | Full ACRA correlation | PROTOCOL_DEFINED | OPEN | NOT_RUN |
+
+## Sprint 11 protocol status — 2026-09-25
+
+GitHub Actions run `36056957706` verified the machine-enforced A0–A7 protocol contract. Registry state
+`PROTOCOL_DEFINED` means the treatment definition is executable and deterministic; it does **not** mean the
+experiment ran. Dataset remains OPEN and all A0–A7 results remain NOT_RUN until a controlled dataset manifest and
+execution evidence are separately verified.
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 

@@ -2,9 +2,14 @@
 
 ## Current state — 2026-09-25
 
-**Current release boundary:** Sprint 10 — Batch & Indirect Authorization Intelligence — SOFTWARE COMPLETE.  
-**Decision:** S10 SOFTWARE COMPLETE — Phases 1–8 plus dedicated final closure VERIFIED.  
-**Working branch:** `s10-batch-indirect-authorization`.  
+**Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
+**Decision:** S11 PHASE 1 VERIFIED COMPLETE; A0–A7 protocol defined, experiments remain NOT_RUN.  
+**Working branch:** `s11-research-evaluation-ablation`.  
+**Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
+**Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 10 post-documentation final revalidation:** GitHub Actions run `36056032234` — SUCCESS.  
+**Sprint 10 final-status checkpoint SHA-256:** `f8d15ed72dec06e8e66b14afe749f392a51a3fb628a9e70ebd290ef032df28d4`.  
+**Sprint 11 Phase 1 verification:** GitHub Actions run `36056957706` — SUCCESS at source commit `c4cff92b7668a75db2eb70ea550e7dd807d5a755`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -18,6 +23,24 @@
 **Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
 **Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
 **Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
+
+### Sprint 11 verified progress
+
+Phase 1 deterministic research-ablation protocol is **VERIFIED COMPLETE**:
+
+- exact A0→A7 cumulative methodology encoded in core;
+- explicit dimensions: identity, ownership, tenant, role, workflow, semantic evidence, evidence correlation;
+- exact required metric contract: TP, TN, FP, FN, precision, recall, F1, evidence completeness;
+- deterministic protocol ID/fingerprint;
+- protocol scope restricted to controlled registered ground truth;
+- execution state remains NOT_RUN;
+- invalid order, missing metrics and fingerprint tampering fail closed;
+- retained S10/S9/S8/S7/S6/S5 foundations remain green.
+
+No A0–A7 metric is currently claimed. Phase 2 must register the controlled evaluation dataset before any research
+execution or result promotion.
+
+Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 protocol verification.
 
 ### Sprint 10 verified progress
 
@@ -156,7 +179,7 @@ The source hash identifies the successful pre-promotion closure-candidate snapsh
 alter the source archive by definition; the canonical post-documentation digest is emitted through the external
 `.sha256` sidecar rather than embedded recursively.
 
-No Sprint 11 scope is started or claimed by this Sprint 10 closure.
+At the Sprint 10 closure boundary, no Sprint 11 scope was yet started or claimed. Sprint 11 was subsequently created from the verified S10 release head.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 

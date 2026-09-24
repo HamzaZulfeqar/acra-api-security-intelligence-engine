@@ -1,19 +1,28 @@
 # Roadmap
 
-## Current gate — 2026-09-23
+## Current gate — 2026-09-25
 
-Sprint 5 software is complete on `s5-s6-completion` and must be checkpointed before Sprint 6 work begins.
+Sprint 11 — **Research Evaluation & Ablation** is IN PROGRESS on
+`s11-research-evaluation-ablation`.
 
-Next dependency-ordered milestone:
-1. Preserve the reproducible S5 ZIP + SHA-256.
-2. Keep historical Burp/runtime debt separate from S5.
-3. Start Sprint 6 on a new branch/checkpoint.
-4. Sprint 6 scope: tenant isolation, advanced RBAC, role inheritance/multi-role policy, delegated administration, global-vs-tenant scope, explicit deny and policy-conflict reasoning.
+Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36056957706`.
 
-Current gate: S5 SOFTWARE PARTIAL; S6 NOT STARTED. Source-backed remaining S5 work is in `docs/sprints/sprint-05-final-software-closure.md`. Previous short completion notes below are historical and do not supersede that audit.
+Current evidence boundary:
+
+- A0–A7 cumulative protocol is machine-defined and deterministic;
+- required metrics are TP/TN/FP/FN, precision, recall, F1 and evidence completeness;
+- experiment execution state remains NOT_RUN;
+- no A0–A7 scientific result or real-world accuracy claim exists yet;
+- Phase 2 must register the controlled evaluation dataset before execution.
+
+Sprint 10 remains the frozen SOFTWARE COMPLETE release base at
+`59022c4a25718f38ea7ec2f010911344d1aa0698`.
 
 Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
 
+---
+
+## Historical top-level roadmap notes
 
 S5-03 function-level authorization reasoning foundation added.
 
