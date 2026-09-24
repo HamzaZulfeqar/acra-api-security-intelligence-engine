@@ -96,7 +96,7 @@ public final class Sprint12ReproductionPackageFoundationTestSuite {
             assertions++;
             ReproductionExportCapabilityState expectedState =
                     target == ReproductionExportTarget.BURP_ISSUE
-                            ? ReproductionExportCapabilityState.CONTRACT_DEFINED
+                            ? ReproductionExportCapabilityState.IMPLEMENTED_RUNTIME_UNVERIFIED
                             : ReproductionExportCapabilityState.IMPLEMENTED;
             TestSupport.assertEquals(expectedState, capability.state(),
                     "registry capability state matches verified renderer progress");

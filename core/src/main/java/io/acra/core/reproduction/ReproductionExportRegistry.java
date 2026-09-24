@@ -16,7 +16,7 @@ public final class ReproductionExportRegistry {
                         "sarif-2.1.0"),
                 new ReproductionExportCapability(
                         ReproductionExportTarget.BURP_ISSUE,
-                        ReproductionExportCapabilityState.CONTRACT_DEFINED,
+                        ReproductionExportCapabilityState.IMPLEMENTED_RUNTIME_UNVERIFIED,
                         "acra-burp-issue-v1"));
     }
 

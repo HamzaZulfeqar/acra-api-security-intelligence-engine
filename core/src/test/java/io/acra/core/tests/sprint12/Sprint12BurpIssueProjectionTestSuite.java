@@ -117,6 +117,13 @@ public final class Sprint12BurpIssueProjectionTestSuite {
                         "https://api.example.test"),
                 "INCONCLUSIVE package cannot become Burp audit issue");
         assertions++;
+        TestSupport.assertEquals(
+                io.acra.core.reproduction.ReproductionExportCapabilityState.IMPLEMENTED_RUNTIME_UNVERIFIED,
+                new io.acra.core.reproduction.ReproductionExportRegistry()
+                        .capability(io.acra.core.reproduction.ReproductionExportTarget.BURP_ISSUE).state(),
+                "Burp Issue software support is implemented while desktop runtime stays unverified");
+        assertions++;
+
         TestSupport.assertThrows(IllegalArgumentException.class,
                 () -> projector.project(pkg, "file:///tmp/acra"),
                 "non-http origin fails closed");
