@@ -456,3 +456,55 @@ lane. Controlled localhost and headless UI evidence do not establish production 
 real-world scanner accuracy/capacity, or external-target safety.
 
 Sprint 10 is **NOT STARTED** by this closure.
+
+
+## Phase 2 — controlled property-level ACRA-Lab ground truth
+
+Implemented and verified:
+
+- `GT-S9-PROPERTY-AUTHORIZATION.json` with five independently declared cases;
+- explicit allowed `display_name` READ control;
+- explicit denied `salary_band` READ case;
+- explicit allowed `display_name` UPDATE control;
+- explicit denied `is_admin` UPDATE case;
+- cross-object control remains denied so the property fixture does not introduce a separate BOLA defect;
+- secure localhost fixture omits denied properties and rejects privileged property updates;
+- deliberately vulnerable localhost fixture exposes denied properties and accepts the explicit privileged update;
+- no hidden-property discovery, schema fuzzing or external-target execution.
+
+Verification run `35986020761`: **SUCCESS** at commit
+`824aa74ea451f52321c4c7663c961ea7cafbd9c9`.
+
+The full Sprint 9 verification script and Maven core `test-compile` passed after repair of an intermediate
+lab-file patching defect. The two failed intermediate workflow runs are retained as development history and do
+not represent the verified Phase 2 state.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
+## Phase 3 — property test planning and controlled execution
+
+Candidate implementation now uses the existing S4 active engine:
+
+```text
+Explicit PROPERTY TestSeed
+        ↓
+Existing TestPlanner
+        ↓
+ExecutionQueue
+        ↓
+MutationValidator
+  + Scope / Environment / Consent
+  + Request Equivalence
+  + Budget / Concurrency / Rate Gates
+        ↓
+Existing TestExecutor
+        ↓
+Secure / Vulnerable ACRA-Lab
+        ↓
+Observation + Evidence + Differential
+```
+
+The candidate test changes only one explicit request-body property, uses `SafetyClass.STATE_CHANGING`,
+requires explicit confirmation, permits only localhost `PATCH`, and does not add automatic production execution.
+
+Phase 3 verification is pending the GitHub Actions gate.
