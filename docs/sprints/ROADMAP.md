@@ -2,26 +2,22 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 7 SOFTWARE COMPLETE** and frozen at commit `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.
+**Sprint 8 SOFTWARE COMPLETE.**
 
-Canonical Sprint 7 closure:
-- GitHub Actions run `35961314354`
-- checkpoint SHA-256 `5e77654d6467cc45c60825cb44bd7c3aa1d4f33c8705d41216d7f258a8187189`
-- 791 entries, 0 unsafe paths, clean/per-file equality PASS
+Canonical closure evidence:
+- branch: `s8-routing-normalization`
+- final closure run: `35971753523` — SUCCESS
+- closure source commit: `f6a0c19358b00672711532ec7effe1eed3800e3e`
+- closure-candidate checkpoint SHA-256: `e063217d3c8795a59ce1cd7e052a2c9b0475a86836239973ef1d470a6c627af7`
+- 836 entries, 0 unsafe paths, 0 duplicate entries
+- clean extraction and per-file SHA-256 equality: PASS
+- official Maven package and retained S2/S3/S4/S6/S7/S8 verification: PASS
 
-**Sprint 8 IN PROGRESS** on `s8-routing-normalization`.
+Sprint 7 remains frozen at `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.
 
-Sprint 8 scope: **Routing Normalization & Authorization-Path Intelligence**.
+**Sprint 9 is NOT STARTED.** No Sprint 9 implementation is included in the Sprint 8 closure checkpoint.
 
-Dependency order:
-1. Phase 1 — evidence-backed staged normalization trace foundation;
-2. controlled multi-stage route fixtures and provenance import;
-3. authorization-path divergence reasoning without vulnerability promotion;
-4. guarded route-variant planning only after explicit safety/equivalence contracts;
-5. product UI/reporting/coverage;
-6. security/performance validation and final closure.
-
-Current Phase 1 remains a candidate until its dedicated Java 21 CI and retained Sprint 7 foundation gates pass.
+Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
 
 The historical roadmap entries below are retained for provenance.
 
