@@ -1,6 +1,6 @@
 # Sprint 9 — Property-Level Authorization & Field Policy Intelligence
 
-Status: IN PROGRESS — Phase 1 VERIFIED  
+Status: SOFTWARE COMPLETE  
 Branch: `s9-property-authorization`  
 Immutable Sprint 8 base: `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`
 
@@ -416,3 +416,43 @@ Phase 8 is **VERIFIED COMPLETE**.
 
 Remaining Sprint 9 work is final requirements traceability, retained regression, reproducible source packaging
 and final software audit. Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane.
+
+
+## Final closure — S9 SOFTWARE COMPLETE
+
+GitHub Actions run `36002545177` passed the dedicated Sprint 9 final closure workflow at source commit
+`9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`.
+
+Final verification included:
+
+- exact Temurin Java 21 compilation and all Sprint 9 verification suites;
+- controlled secure/vulnerable localhost property authorization validation;
+- property FindingCandidate, coverage, reporting, security and performance suites;
+- retained Sprint 8 / Sprint 7 / Sprint 6 foundations;
+- official Maven package;
+- retained Sprint 2 local-contract regression: 52 tests;
+- retained Sprint 3 core regression: 47 tests;
+- retained Sprint 3 adapter regression: 11 tests;
+- Sprint 4 UI: 26 tests;
+- Sprint 6 Authorization UI: 27 assertions;
+- Sprint 7 Workflow UI: 20 assertions;
+- Sprint 8 Routing UI: 23 assertions;
+- Sprint 9 Property UI: 59 assertions;
+- deterministic source checkpoint generation;
+- archive safe-path and duplicate-entry validation;
+- clean-extraction equality;
+- per-file SHA-256 equality.
+
+Closure-candidate checkpoint: `acra-sprint-09-final.zip`  
+Closure-candidate SHA-256: `04eaadbfb2e132eb386ab52ff775fb5e1c56f0313b610721a28f2fb63bf8e531`  
+Entries: **873**  
+Unsafe paths: **0**  
+Duplicate entries: **0**  
+Clean extraction: **PASS**  
+Per-file SHA-256 equality: **PASS**
+
+Real Burp desktop runtime/load/handler/UI validation remains a separate **UNVERIFIED / DEFERRED** validation
+lane. Controlled localhost and headless UI evidence do not establish production authentication behavior,
+real-world scanner accuracy/capacity, or external-target safety.
+
+Sprint 10 is **NOT STARTED** by this closure.
