@@ -36,3 +36,5 @@ jobs:
         run: mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
       - name: Verify retained Sprint 10 UI
         run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint10.Sprint10BatchIndirectUiTestSuite
+      - name: Verify Sprint 11 read-only findings UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint11.Sprint11FindingReviewUiTestSuite
