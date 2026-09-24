@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
+**Sprint 9 IN PROGRESS — Phases 1–6 VERIFIED COMPLETE.**
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
@@ -12,6 +12,7 @@ Canonical Sprint 9 Phase 1 evidence:
 - Phase 3 verification run: `35986668193` — SUCCESS
 - Phase 4 verification run: `35986888660` — SUCCESS
 - Phase 5 verification run: `35987236797` — SUCCESS
+- Phase 6 verification run: `36001111468` — SUCCESS
 - evidence-backed property observations: VERIFIED
 - deterministic property-policy correlation: VERIFIED
 - cross-project provenance rejection: VERIFIED
@@ -50,12 +51,20 @@ Verified Phase 5:
 - candidate/rejected/inconclusive assessed states: PASS;
 - deterministic coverage snapshot: PASS.
 
+Verified Phase 6:
+- S9 property product workspace and immutable snapshot: PASS;
+- Burp Properties area with Overview / Policies / Observations / Assessments / Candidates / Coverage: PASS;
+- retained S4/S6/S7/S8 headless UI regressions: PASS;
+- property values excluded from UI projection: PASS;
+- real Burp desktop runtime remains separately UNVERIFIED / DEFERRED.
+
 Next dependency-ordered milestone:
-1. inspect existing Sprint 7/8 product workspace and Burp UI patterns;
-2. add property-policy, observations, findings and coverage as a read-only product projection;
-3. preserve existing mode/profile/safety controls instead of adding parallel controls;
-4. represent unobserved/inconclusive coverage explicitly;
-5. keep real Burp desktop runtime validation separate from software/UI tests.
+1. generate a deterministic S9 property report from the workspace snapshot;
+2. add canonical secret-safe JSON + SHA-256 and deterministic Markdown export;
+3. add the Reporter plugin adapter;
+4. preserve policy coverage gaps and review-only candidates in exports;
+5. keep confirmedFindingCount fixed at 0 unless a separate confirmed-finding architecture is explicitly introduced and verified;
+6. project report/export read-only views into the Properties UI after core reporting passes.
 
 Do not claim Burp desktop validation from headless UI tests.
 
