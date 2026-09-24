@@ -16,6 +16,7 @@ javac --release 21 -Xlint:all -Werror -cp "$BUILD/main" -d "$BUILD/test" @"$BUIL
 
 CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionPackageFoundationTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionJsonExportTestSuite
 
 bash ./scripts/verify-sprint11-foundation.sh
 
