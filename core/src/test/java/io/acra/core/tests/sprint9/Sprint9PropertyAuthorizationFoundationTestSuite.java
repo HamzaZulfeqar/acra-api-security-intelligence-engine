@@ -254,7 +254,7 @@ public final class Sprint9PropertyAuthorizationFoundationTestSuite {
                 response,
                 new ExpectedDecisionResolution(
                         AuthorizationDecision.UNKNOWN,
-                        ExpectedDecisionSource.UNRESOLVED,
+                        ExpectedDecisionSource.UNKNOWN,
                         "",
                         List.of(),
                         0.0,
