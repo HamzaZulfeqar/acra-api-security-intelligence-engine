@@ -1,6 +1,6 @@
 # Sprint 10 — Batch & Indirect Authorization Intelligence
 
-Status: IN PROGRESS — Phases 1–4 VERIFIED  
+Status: IN PROGRESS — Phases 1–5 VERIFIED  
 Branch: `s10-batch-indirect-authorization`  
 Immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 
@@ -221,3 +221,39 @@ GitHub Actions run `36048837246`: **SUCCESS** at source commit
 Phase 4 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 5 owns deterministic batch/indirect coverage accounting.
+
+
+## Phase 5 — deterministic batch/indirect coverage accounting
+
+Implemented:
+
+- `S10CoverageFamily`;
+- `S10CoverageDisposition`;
+- `S10AuthorizationCoverageEntry`;
+- `S10AuthorizationCoverageSummary`;
+- `S10AuthorizationCoverageTracker`;
+- explicit combined coverage universe for batch-item and indirect resolved-target policies;
+- duplicate-safe deterministic policy registration;
+- explicit observation-before-assessment lifecycle;
+- finding/assessment/observation consistency validation;
+- `UNOBSERVED`, `OBSERVED_UNASSESSED`, `REJECTED`, `INCONCLUSIVE` and `CANDIDATE` dispositions;
+- deterministic aggregate counts and observation/assessment ratios.
+
+### Phase 5 verification
+
+GitHub Actions run `36049247018`: **SUCCESS** at source commit
+`16169367c3e7c3b179a6d8541dfc88698fde6b81`.
+
+- `Sprint10CoverageAccountingTestSuite`: PASS, 22 assertions;
+- explicit four-context fixture: 2 batch + 2 indirect policies;
+- observed/assessed gaps preserved instead of inferred;
+- candidate, rejected and inconclusive contexts accounted separately;
+- mismatched batch resource and indirect resolved-target observations rejected;
+- deterministic coverage ordering: PASS;
+- retained Phase 3 active execution and Phase 4 finding projection: PASS;
+- retained Sprint 10 foundation/lab and earlier authorization regressions: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 5 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 6 owns the read-only batch/indirect product workspace and headless Burp UI projection.
