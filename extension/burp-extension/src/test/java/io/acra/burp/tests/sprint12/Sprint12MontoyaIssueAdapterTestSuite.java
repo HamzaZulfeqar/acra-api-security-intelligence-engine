@@ -11,7 +11,6 @@ import io.acra.core.domain.finding.FindingCandidateState;
 import io.acra.core.domain.finding.FindingFingerprint;
 import io.acra.core.reporting.s12.S12BurpIssueProjector;
 import io.acra.core.reporting.s12.S12ReproductionPackageFactory;
-import io.acra.core.tests.TestSupport;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
@@ -108,6 +107,41 @@ public final class Sprint12MontoyaIssueAdapterTestSuite {
         assertions++;
 
         return assertions;
+    }
+
+    private static void assertTrue(boolean condition, String message) {
+        if (!condition) throw new AssertionError(message);
+    }
+
+    private static void assertEquals(Object expected, Object actual, String message) {
+        if (!java.util.Objects.equals(expected, actual)) {
+            throw new AssertionError(message + " expected=" + expected + " actual=" + actual);
+        }
+    }
+
+    private static void assertContains(String text, String expected, String message) {
+        if (text == null || !text.contains(expected)) {
+            throw new AssertionError(message + " missing=" + expected);
+        }
+    }
+
+    private static void assertNotContains(String text, String forbidden, String message) {
+        if (text != null && text.contains(forbidden)) {
+            throw new AssertionError(message + " forbidden=" + forbidden);
+        }
+    }
+
+    private static void assertThrows(
+            Class<? extends Throwable> expectedType,
+            Runnable action,
+            String message) {
+        try {
+            action.run();
+        } catch (Throwable failure) {
+            if (expectedType.isInstance(failure)) return;
+            throw new AssertionError(message + " wrong exception=" + failure, failure);
+        }
+        throw new AssertionError(message + " expected exception=" + expectedType.getSimpleName());
     }
 
     private static FindingCandidate fixture() {
