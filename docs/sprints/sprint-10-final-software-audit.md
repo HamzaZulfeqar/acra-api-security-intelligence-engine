@@ -1,12 +1,15 @@
 # Sprint 10 Final Software Audit
 
-Audit state: **FINAL CLOSURE CANDIDATE — verification pending**  
+Audit state: **S10 SOFTWARE COMPLETE — closure verified**  
 Branch: `s10-auth-session-intelligence`
 
 ## Current decision
 
-Sprint 10 Phases 1–10 are individually verified. Final software completion remains pending the dedicated
-full-regression and reproducible-package closure workflow.
+**S10 SOFTWARE COMPLETE.**
+
+Sprint 10 Phases 1–10 are individually verified. The dedicated final closure workflow also passed retained
+regressions, official Maven packaging, extension/UI compilation, deterministic source packaging, safe archive
+paths, clean-extraction equality and per-file SHA-256 equality.
 
 ## Implemented software boundary
 
@@ -59,21 +62,30 @@ Observed values:
 
 These are environment-specific engineering observations, not benchmarks or release thresholds.
 
-## Final closure candidate
+## Final closure evidence
 
-The closure will run `scripts/verify-sprint10-final.sh`, which requires:
+GitHub Actions run `36041511898`: **SUCCESS** at source commit
+`2a7e753a3866ffb869df17abb53a9d2cc93dd876`.
 
-- Sprint 10 full verification;
-- retained Sprint 9/8/7/6 foundations;
-- official Maven package;
-- retained Sprint 2/Sprint 3 local-contract build and tests;
-- all retained product UI regressions through Sprint 10;
-- deterministic source checkpoint packaging;
-- safe-path and duplicate-entry validation;
-- clean extraction equality;
-- per-file SHA-256 equality.
+All final closure gates passed:
 
-The package target is `acra-sprint-10-final.zip`.
+- Sprint 10 full verification: PASS;
+- retained Sprint 9/8/7/6 foundations: PASS;
+- official Maven package: PASS;
+- retained Sprint 2/Sprint 3 local-contract build and tests: PASS;
+- all retained product UI regressions through Sprint 10: PASS;
+- deterministic source checkpoint packaging: PASS;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS.
+
+Closure-candidate checkpoint:
+
+- archive: `acra-sprint-10-final.zip`;
+- source ZIP SHA-256: `3e1352ca886096ff2df01d6e8fdbc3f281eb29794651ff6bba23205b7a70d26b`;
+- entries: 924;
+- final CI artifact: `acra-sprint-10-final-checkpoint`.
 
 ## Explicit non-blocking validation debt
 
@@ -82,6 +94,8 @@ Real Burp desktop load/handler/UI runtime remains **UNVERIFIED / DEFERRED**.
 Controlled localhost and headless UI evidence do not establish production authentication behavior, OAuth-provider
 security, external-target safety, real-world scanner accuracy/capacity, or automatic confirmed vulnerabilities.
 
-## Promotion rule
+## Promotion decision
 
-Promote to **S10 SOFTWARE COMPLETE** only after the dedicated final closure workflow succeeds.
+All final closure gates passed. The repository state is promoted to **S10 SOFTWARE COMPLETE**.
+
+Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** validation lane.
