@@ -61,4 +61,5 @@ jobs:
             build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.json
             build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.json.sha256
             build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.md
+            build/s10-foundation/performance/performance-s10.csv
           if-no-files-found: warn
