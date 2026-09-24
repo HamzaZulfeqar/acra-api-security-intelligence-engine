@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 12 — Reproduction Export & Interoperability (in progress).  
-**Decision:** S12 PHASES 1–4 VERIFIED COMPLETE; JSON/SARIF implemented and Burp Issue software support implemented with desktop runtime still unverified.  
+**Decision:** S12 PHASES 1–5 VERIFIED COMPLETE; FR-013 interoperability feature set is software-complete, final closure pending.  
 **Working branch:** `s12-reproduction-export-interoperability`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -98,7 +98,22 @@ Sprint 12 Phase 4 Burp Issue projection is **VERIFIED COMPLETE AT SOFTWARE LEVEL
 
 Real Burp desktop insertion/load/handler/UI behavior remains **UNVERIFIED / DEFERRED**.
 
-Next dependency: Phase 5 cross-format interoperability/security hardening before Sprint 12 final closure.
+Sprint 12 Phase 5 interoperability/security hardening is **VERIFIED COMPLETE**:
+
+- one deterministic interoperability bundle spans JSON, SARIF and Burp Issue projections;
+- JSON/SARIF/Burp retain the same package ID, candidate ID and evidence lineage;
+- review-only semantics remain explicit in all three representations;
+- bundle ID/fingerprint and all artifact/projection digests are deterministic;
+- JSON/SARIF/Burp surfaces remain secret-safe under adversarial bearer/token material;
+- exact capability matrix is enforced: JSON=IMPLEMENTED, SARIF=IMPLEMENTED, BURP_ISSUE=IMPLEMENTED_RUNTIME_UNVERIFIED;
+- REJECTED / INCONCLUSIVE unified Burp projections fail closed;
+- unsafe/userinfo-bearing origins fail closed;
+- swapped/mismatched artifacts fail closed;
+- hardening suite: PASS, 39 assertions;
+- Phase 5 verification run: `36073674429` — SUCCESS at source commit `7f29fbba178f1e3a4461e40503f79d53719a5a5f`.
+
+The next dependency is the dedicated Sprint 12 final closure: full verification stack, retained regressions,
+official Maven packaging, deterministic source checkpointing and archive integrity checks.
 
 ### Sprint 11 final closure
 
