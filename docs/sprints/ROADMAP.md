@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 11 IN PROGRESS — Phases 1–9 VERIFIED COMPLETE.**
+**Sprint 11 IN PROGRESS — Phases 1–10 VERIFIED COMPLETE.**
 
 Canonical Sprint 11 evidence:
 - branch: `s11-research-evaluation-ablation`;
@@ -18,6 +18,7 @@ Canonical Sprint 11 evidence:
 - Phase 7 verification run: `36064434979` — SUCCESS at `9f9af8ce15e5035def2605c98d8f8153728c3eed`;
 - Phase 8 verification run: `36064798175` — SUCCESS at `c742014ab97d024be42425fb4e49866f565389ec`;
 - Phase 9 verification run: `36065439110` — SUCCESS at `2f17a994e4c481b48ae8ff11734a2ee17e32b84d`;
+- Phase 10 verification run: `36065934911` — SUCCESS at `bcc41630fa4d7c9a4f11023e9aeb8b6561f67310`;
 - S11 ablation foundation: PASS, 43 assertions;
 - A0–A7 exact cumulative protocol: VERIFIED;
 - required research metric contract: VERIFIED;
@@ -105,13 +106,23 @@ Verified Phase 9:
 - evaluation suite: PASS, 99 assertions;
 - scope: controlled synthetic 15-case localhost dataset only.
 
+Verified Phase 10:
+- minimized deterministic research report: PASS;
+- canonical JSON export: PASS;
+- deterministic Markdown export: PASS;
+- JSON SHA-256: 595dba16b9d724d67dbdd1dc4faeacd76432661b52ead780b14054acee67c04d;
+- Markdown SHA-256: 1d4c6b2f9f7f88f443f9d2cdef9b266cff4e9307d9967f789c44a570d5766d8b;
+- raw body/credential/token exclusion: PASS;
+- report/export suite: PASS, 31 assertions;
+- CI evidence artifact upload: PASS.
+
 Next dependency-ordered milestone:
-1. create deterministic canonical JSON research report;
-2. create deterministic Markdown research summary;
-3. include protocol/dataset/prediction/evaluation fingerprints;
-4. include per-variant metrics and evidence completeness;
-5. include explicit limitations and no real-world accuracy claim;
-6. exclude raw HTTP bodies, credentials and token material.
+1. run dedicated Sprint 11 final closure;
+2. run full S11 verification and retained regression stacks;
+3. run official Maven package;
+4. produce deterministic source checkpoint ZIP;
+5. verify safe paths, no duplicates, clean extraction and per-file SHA-256 equality;
+6. freeze final status without converting controlled synthetic results into real-world accuracy claims.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED lane.
 
