@@ -26,16 +26,19 @@ public final class S11TreatmentPredictionSignalBuilder {
         var leftSemantic = semantic.fingerprint(left);
         var rightSemantic = semantic.fingerprint(right);
         ResearchPrediction current = baseline;
+        boolean contextualConflict = false;
         List<AblationDimensionEvidence> dimensions = new ArrayList<>();
 
         current = carry(bundle, AblationDimension.IDENTITY, current, dimensions);
 
         if (changed(leftSemantic.ownerIds(), rightSemantic.ownerIds())) {
+            contextualConflict = true;
             current = ResearchPrediction.POSITIVE;
         }
         current = carry(bundle, AblationDimension.OWNERSHIP, current, dimensions);
 
         if (changed(leftSemantic.tenantIds(), rightSemantic.tenantIds())) {
+            contextualConflict = true;
             current = ResearchPrediction.POSITIVE;
         }
         current = carry(bundle, AblationDimension.TENANT, current, dimensions);
@@ -43,7 +46,9 @@ public final class S11TreatmentPredictionSignalBuilder {
         current = carry(bundle, AblationDimension.ROLE, current, dimensions);
         current = carry(bundle, AblationDimension.WORKFLOW, current, dimensions);
 
-        current = differential.compare(left, right, ResponseComparisonMode.SEMANTIC).equivalent()
+        boolean semanticallyEquivalent =
+                differential.compare(left, right, ResponseComparisonMode.SEMANTIC).equivalent();
+        current = semanticallyEquivalent && !contextualConflict
                 ? ResearchPrediction.NEGATIVE : ResearchPrediction.POSITIVE;
         current = carry(bundle, AblationDimension.SEMANTIC_EVIDENCE, current, dimensions);
 
