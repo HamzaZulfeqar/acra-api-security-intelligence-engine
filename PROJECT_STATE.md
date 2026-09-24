@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 9 — Property-Level Authorization & Field Policy Intelligence (in progress).  
-**Decision:** S9 PHASES 1–7 VERIFIED COMPLETE; Sprint 9 remains IN PROGRESS.  
+**Decision:** S9 PHASES 1–8 VERIFIED COMPLETE; final closure pending.  
 **Working branch:** `s9-property-authorization`.  
 **Immutable Sprint 8 base:** `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`.  
 **Sprint 8:** SOFTWARE COMPLETE and preserved as the previous verified release boundary.  
@@ -13,7 +13,8 @@
 **Sprint 9 Phase 4 verification:** GitHub Actions run `35986888660` — SUCCESS.  
 **Sprint 9 Phase 5 verification:** GitHub Actions run `35987236797` — SUCCESS.  
 **Sprint 9 Phase 6 verification:** GitHub Actions run `36001111468` — SUCCESS.  
-**Sprint 9 Phase 7 verification:** GitHub Actions run `36001743072` — SUCCESS.
+**Sprint 9 Phase 7 verification:** GitHub Actions run `36001743072` — SUCCESS.  
+**Sprint 9 Phase 8 verification:** GitHub Actions run `36002106088` — SUCCESS.
 
 ### Sprint 9 verified progress
 
@@ -39,7 +40,7 @@ Verification run `35985518829` passed exact Java 21 compilation with warnings as
 foundation suite, retained Sprint 5 final closure, Sprint 6 policy foundation, Sprint 7 workflow foundation,
 Sprint 8 routing-normalization foundation, and Maven core test compilation.
 
-Sprint 9 Phase 7 deterministic property reporting/export is **VERIFIED COMPLETE**. The next dependency is Phase 8 security hardening and bounded performance observations; real Burp desktop runtime remains separately UNVERIFIED / DEFERRED.
+Sprint 9 Phase 8 security hardening and bounded performance observations are **VERIFIED COMPLETE**. The next dependency is the dedicated final traceability/regression/reproducible-package closure; real Burp desktop runtime remains separately UNVERIFIED / DEFERRED.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
