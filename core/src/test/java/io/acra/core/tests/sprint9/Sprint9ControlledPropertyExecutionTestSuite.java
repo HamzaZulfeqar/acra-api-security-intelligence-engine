@@ -236,7 +236,7 @@ public final class Sprint9ControlledPropertyExecutionTestSuite {
     private static AuthorizationDecision toDecision(AuthorizationOutcome outcome) {
         return switch (outcome) {
             case ALLOW -> AuthorizationDecision.ALLOW;
-            case DENY, SOFT_DENY -> AuthorizationDecision.DENY;
+            case DENY, AUTHENTICATION_REQUIRED, NOT_FOUND -> AuthorizationDecision.DENY;
             case ERROR -> AuthorizationDecision.ERROR;
             case PARTIAL -> AuthorizationDecision.CONDITIONAL;
             case UNKNOWN -> AuthorizationDecision.UNKNOWN;
