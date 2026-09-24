@@ -51,3 +51,43 @@ data are rejected at this boundary to avoid conflating routing with secret-beari
 The analyzer does not infer proxy, gateway, framework or application behavior from product names, headers,
 common defaults or heuristics. Later phases may import evidence from controlled fixtures or supported connectors,
 but unknown stages remain unknown.
+
+
+## Phase 2 authorization-path differential layer
+
+The second layer extends the Phase 1 routing trace with explicit HTTP and authorization context:
+
+```
+RouteBoundaryObservation
+  stage
+  path
+  method
+  host
+  apiVersion
+  expectedDecision
+  observedDecision
+  policyReference
+  evidence
+        ↓
+RouteSecurityBoundaryAnalyzer
+        ↓
+Phase 1 RouteNormalizationAnalyzer
+        +
+method / host / version comparison
+        +
+authorization-decision comparison
+        ↓
+RouteBoundaryTransition
+        ↓
+RouteSecurityBoundaryTrace
+```
+
+Boundary states:
+- `STABLE`: adjacent observations agree and authorization evidence is complete.
+- `ROUTING_DIVERGENCE`: path representation/structure, method, host or API version changes while authorization remains stable.
+- `AUTHORIZATION_BOUNDARY_CHANGE`: authorization decision changes without a routing change.
+- `COMBINED_DIVERGENCE`: routing and authorization both change across the same directly observed transition.
+- `INCONCLUSIVE`: stage attribution is incomplete, path equivalence is unknown, or authorization evidence is incomplete.
+
+A combined divergence is not a vulnerability verdict. It is an evidence-backed security-boundary observation that
+can be consumed by later controlled differential experiments.
