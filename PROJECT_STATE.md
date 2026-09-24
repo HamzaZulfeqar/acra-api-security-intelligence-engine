@@ -124,7 +124,7 @@ Current CI:
 
 Phase 1, Phase 2 and Phase 3 are complete on `s7-workflow-token-binding`.
 
-Latest verified gate: GitHub Actions run `35958482546`.
+Latest verified gate: GitHub Actions run `35959256852`.
 
 Phase 3 now adds:
 - controlled secure/vulnerable workflow transition fixtures
@@ -138,12 +138,19 @@ Phase 3 now adds:
 - fail-closed conflict handling
 - retained Sprint 6 regression PASS
 
+Phase 4 now adds:
+- deterministic workflow transition coverage identities and lifecycle
+- policy/resolution → plan → execution → observation evidence tracking
+- explicit unresolved/planning/observation coverage gaps and ratios
+- fail-closed policy-resolution drift handling
+- S7 workflow product workspace
+- Burp Workflow Overview / Workflow Map / Transition Matrix / Policy Conflicts / Coverage views
+- Maven extension compilation plus retained S4/S6 UI regressions
+
 These are controlled localhost validation results only and do not establish real-world scanner accuracy.
 
 ### Remaining Sprint 7 work
 
-- workflow coverage matrix and coverage product model
-- Burp product UI for workflow map, transition matrix, conflicts and coverage
 - deterministic workflow report/export integration
 - expanded workflow/token-binding security-hardening tests
 - performance observations and bounded workload evidence

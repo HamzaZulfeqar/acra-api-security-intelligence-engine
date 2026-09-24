@@ -148,3 +148,40 @@ GitHub Actions run `35958482546` completed successfully on the current Sprint 7 
 
 Phase 3 is complete. Sprint 7 remains IN PROGRESS; workflow coverage/product UI, deterministic report/export,
 security/performance closure, traceability and final package freeze remain outstanding.
+
+## Phase 4 — workflow coverage intelligence and product UI
+
+Implemented:
+- deterministic `WorkflowTransitionCoverageEntry` identities derived from policy + workflow context
+- explicit coverage lifecycle: `POLICY_ONLY → PLANNED → ATTEMPTED → OBSERVED`
+- `WorkflowTransitionCoverageMatrix` with deterministic ordering
+- `WorkflowCoverageSummary` with resolution/planning/attempt/observation ratios
+- unresolved, missing-planning and missing-observation gap views
+- `S7WorkflowCoverageTracker` binding policy resolution → generated test → execution → observation evidence
+- fail-closed rejection of policy-resolution drift for an existing coverage identity
+- execution cannot be credited unless the matching workflow test was previously registered as planned
+- live secure/vulnerable Phase 3 executions now hydrate the same workflow coverage context
+- `S7WorkflowWorkspace` and immutable product snapshot
+- Burp `Workflow` product area with Overview / Workflow Map / Transition Matrix / Policy Conflicts / Coverage
+- coverage remains explicitly separate from vulnerability severity and finding confirmation
+- backward-compatible `AcraSuiteTab` constructors preserve prior extension integrations
+
+### Phase 4 verification
+
+GitHub Actions run `35959028026`:
+- focused workflow coverage model: PASS
+- live controlled planning/execution + coverage hydration: PASS
+- retained Sprint 6 regression: PASS
+
+GitHub Actions run `35959256852`:
+- Sprint 7 foundation: PASS
+- controlled lab contract/execution: PASS
+- retained Sprint 6 foundation: PASS
+- Maven extension `test-compile`: PASS
+- retained Sprint 4 UI: PASS
+- retained Sprint 6 Authorization UI: PASS
+- Sprint 7 Workflow UI: PASS
+- controlled workflow logs: uploaded
+
+Phase 4 is complete. Sprint 7 remains IN PROGRESS. Deterministic workflow report/export, expanded
+security/performance closure, final traceability/regression and package freeze remain outstanding.

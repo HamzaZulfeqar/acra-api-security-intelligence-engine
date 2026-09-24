@@ -373,3 +373,23 @@ NEWLY EXECUTED Phase 3 total: **558 represented assertions** across graph 87, S4
 
 Phase 3 focused suite: **17 assertions PASS**. GitHub Actions run `35958482546` also passed the Sprint 7
 foundation, lab contract and retained Sprint 6 regression. These are controlled localhost fixture results only.
+
+### Sprint 7 Phase 4 — workflow coverage and product UI
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S7-COVERAGE-001 | deterministic context identity and matrix ordering | `Sprint7WorkflowCoverageTestSuite` | PASS |
+| TEST-S7-COVERAGE-002 | resolved vs unresolved context accounting | same suite | PASS |
+| TEST-S7-COVERAGE-003 | planning/observation ratios do not infer unobserved coverage | same suite | PASS |
+| TEST-S7-COVERAGE-004 | generated transition advances POLICY_ONLY → PLANNED | live planner/execution suite | PASS |
+| TEST-S7-COVERAGE-005 | completed secure execution advances to OBSERVED with evidence | live planner/execution suite | PASS |
+| TEST-S7-COVERAGE-006 | secure/vulnerable runs retain distinct execution/observation references | live planner/execution suite | PASS |
+| TEST-S7-COVERAGE-007 | policy-resolution drift for same coverage identity rejected | coverage entry/tracker contract | PASS |
+| TEST-S7-UI-001 | Workflow top-level product area installed | `Sprint7WorkflowUiTestSuite` | PASS |
+| TEST-S7-UI-002 | Workflow Map / Transition Matrix / Policy Conflicts / Coverage views | same suite | PASS |
+| TEST-S7-UI-003 | UI preserves candidate and coverage-vs-severity boundaries | same suite | PASS |
+| TEST-S7-UI-REG-001 | retained Sprint 4 UI after S7 product integration | run `35959256852` | PASS |
+| TEST-S7-UI-REG-002 | retained Sprint 6 Authorization UI after S7 product integration | run `35959256852` | PASS |
+| TEST-S7-MAVEN-001 | real extension module test compilation on Java 21 | run `35959256852` | PASS |
+
+Authoritative Phase 4 UI gate: GitHub Actions run `35959256852`.

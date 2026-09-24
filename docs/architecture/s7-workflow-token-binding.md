@@ -105,3 +105,28 @@ policy still requires an explicitly authorized loopback LAB target.
 The controlled secure fixture denies `DRAFT → APPROVED` when the declared action is `SUBMIT`; the deliberately
 vulnerable fixture models a target-state validation defect and permits the same request. This yields a reproducible
 expected-vs-unexpected differential without claiming real-world scanner accuracy.
+
+## Phase 4 coverage/product projection
+
+Coverage is modeled as a provenance lifecycle, not a security verdict:
+
+```
+WorkflowAuthorizationResolution
+        ↓
+POLICY_ONLY
+        ↓ generated matching WORKFLOW_TRANSITION seed
+PLANNED
+        ↓ execution attempt
+ATTEMPTED
+        ↓ completed Observation with evidence
+OBSERVED
+```
+
+The coverage identity binds policy fingerprint, workflow, principal, tenant, resource, action, source state and
+target state. The tracker rejects resolution drift for an existing identity and rejects execution credit when the
+test was not first registered as planned. Resolved, planned and observed ratios therefore describe evidence
+coverage only; they do not imply vulnerability likelihood, finding severity or real-world scanner accuracy.
+
+The Burp product projection uses `S7WorkflowWorkspace` as its source of truth. UI tables render policy rules,
+resolved transitions, explicit conflicts and coverage entries without reconstructing or guessing authorization
+state in Swing code.
