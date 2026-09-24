@@ -1,5 +1,26 @@
 # Test Matrix
 
+## Sprint 10 batch & indirect authorization — 2026-09-25
+
+Authoritative pre-final verification through Phase 8 is GitHub Actions run `36055037223`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Sprint10BatchIndirectFoundationTestSuite | per-item batch reasoning, indirect fingerprint/resolution, provenance, determinism | PASS |
+| Sprint10ControlledBatchIndirectLabTestSuite | fixed secure/vulnerable localhost ground truth | PASS |
+| Sprint10ControlledBatchExecutionTestSuite | safe S4 batch active execution | PASS, 25 assertions |
+| Sprint10ControlledIndirectExecutionTestSuite | safe S4 indirect active execution | PASS, 23 assertions |
+| Sprint10FindingCandidateProjectionTestSuite | provenance-gated review-only finding projection | PASS, 22 assertions |
+| Sprint10CoverageAccountingTestSuite | combined batch/indirect policy coverage | PASS, 22 assertions |
+| Sprint10BatchIndirectReportingExportTestSuite | minimized deterministic report / JSON / SHA-256 / Markdown / Reporter | PASS, 43 assertions |
+| Sprint10BatchIndirectSecurityHardeningTestSuite | malformed input, evidence, fingerprint, coverage drift, workspace/report boundaries | PASS, 20 assertions |
+| Sprint10BatchIndirectPerformanceObservationTestSuite | 100 / 1,000 / 10,000 bounded engineering observations | PASS, 22 assertions |
+| Sprint10BatchIndirectUiTestSuite | Overview / Policies / Observations / Assessments / Candidates / Coverage / Report / JSON Export | PASS, 230 assertions |
+| Real Burp desktop load/handler/UI | separate runtime lane | UNVERIFIED / DEFERRED |
+
+The performance values are engineering observations from one CI environment, not benchmarks, SLOs, capacity or
+scanner-accuracy claims. Sprint 10 does not permit identifier guessing, alias enumeration or external-target probing.
+
 ## Sprint 6 controlled tenant/RBAC validation — 2026-09-23
 
 GitHub Actions run `35878508170`: **PASS** on exact Temurin JDK 21.0.12.1.
