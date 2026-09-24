@@ -181,7 +181,43 @@ Verified mapping:
 Phase 5 verification: GitHub Actions run `36058945211` — SUCCESS at
 `022bf71f31f69633b5eac541b230283e8536decd`.
 
-## Phase 6 dependency
+## Phase 6 controlled-lab boundary
 
-The localhost lab must add isolated controls for the four PARTIAL cases and dedicated behaviors for the eight
-MISSING_FIXTURE positive cases. Those fixtures must be independently live-tested before readiness is upgraded.
+Sprint 11 now exposes dedicated loopback-only fixtures for every registered dataset case.
+
+```text
+independent research ground truth
+        |
+        v
+neutral /case-NNN route
+        |
+        +--> secure localhost mode
+        +--> vulnerable localhost mode
+        |
+        v
+live fixture verification
+        |
+        v
+fixture readiness = READY
+```
+
+Phase 6 invariants:
+
+1. Route names do not encode POSITIVE/NEGATIVE, FP/FN or expected-candidate labels.
+2. Independent research labels remain in ground-truth manifests, not live responses.
+3. All new fixtures are synthetic and loopback-only.
+4. Negative controls isolate timestamp, request ID, ordering and formatting individually.
+5. Positive controls cover same-status, soft-denial, dynamic-length, reordered JSON, opaque ID, nested resource,
+   collection membership and nonstandard authentication.
+6. Live fixture verification checks secure/vulnerable behavior directly.
+7. Fixture readiness becomes 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE.
+8. Fixture readiness still does not promote campaign cells or calculate research metrics.
+
+Phase 6 verification: GitHub Actions run `36060118721` — SUCCESS at
+`ef25d5aeca247c32f2b94bc8faac56405cc8bb58`.
+
+## Phase 7 dependency
+
+A treatment-specific evidence layer must now convert live fixture observations into ground-truth-free
+`AblationCaseEvidence`. Baseline and dimension evidence must be explicit, deterministic and sufficient for each
+variant before campaign cells can transition to EVIDENCE_READY.

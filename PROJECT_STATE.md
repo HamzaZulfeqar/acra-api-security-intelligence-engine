@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 11 — Research Evaluation & Ablation (in progress).  
-**Decision:** S11 PHASES 1–5 VERIFIED COMPLETE; evidence readiness mapped conservatively, experiments remain NOT_RUN.  
+**Decision:** S11 PHASES 1–6 VERIFIED COMPLETE; all 15 controlled research fixtures are live-verified and READY, experiments remain NOT_RUN.  
 **Working branch:** `s11-research-evaluation-ablation`.  
 **Immutable Sprint 10 base:** `59022c4a25718f38ea7ec2f010911344d1aa0698`.  
 **Sprint 10:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -14,6 +14,7 @@
 **Sprint 11 Phase 3 verification:** GitHub Actions run `36057869888` — SUCCESS at source commit `dc3c081bf033b14afcea3185c3d54fb241be1772`.  
 **Sprint 11 Phase 4 verification:** GitHub Actions run `36058274408` — SUCCESS at source commit `88f7cd78161267a1900ef4b663258938ee208d9b`.  
 **Sprint 11 Phase 5 verification:** GitHub Actions run `36058945211` — SUCCESS at source commit `022bf71f31f69633b5eac541b230283e8536decd`.  
+**Sprint 11 Phase 6 verification:** GitHub Actions run `36060118721` — SUCCESS at source commit `ef25d5aeca247c32f2b94bc8faac56405cc8bb58`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 9 post-documentation final revalidation:** GitHub Actions run `36003064254` — SUCCESS.  
@@ -85,9 +86,22 @@ Sprint 11 Phase 5 evidence-readiness mapping is **VERIFIED COMPLETE**:
 - readiness mapping does not promote any of the 120 campaign cells from PLANNED;
 - experiment execution remains NOT_RUN.
 
-No A0–A7 metric is currently claimed. The next dependency is controlled lab expansion: isolate the four partial
-negative controls and add dedicated executable fixtures for the eight missing positive controls before treatment
-evidence completeness can be assessed.
+Sprint 11 Phase 6 controlled research-lab expansion is **VERIFIED COMPLETE**:
+
+- 4 previously PARTIAL negative controls now have isolated localhost fixtures;
+- 8 previously MISSING positive controls now have dedicated localhost fixtures;
+- new research routes use neutral case identifiers and do not expose positive/negative labels;
+- independent ground truth remains in `GT-S11-RESEARCH-LAB-FIXTURES`;
+- secure/vulnerable lab modes are live-started in CI on loopback only;
+- controlled research lab suite: PASS, 65 assertions;
+- readiness map is now 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE / 0 EXECUTED;
+- readiness suite: PASS, 72 assertions;
+- campaign denominator remains 120 PLANNED / 0 EXECUTED;
+- A0–A7 experiment state remains NOT_RUN.
+
+No A0–A7 metric is currently claimed. The next dependency is treatment-specific evidence collection: each case must
+produce baseline evidence and the cumulative identity/ownership/tenant/role/workflow/semantic/correlation evidence
+needed by A0–A7 before campaign cells may become EVIDENCE_READY.
 
 Real Burp desktop runtime remains **UNVERIFIED / DEFERRED** and is not inferred from S11 software verification.
 

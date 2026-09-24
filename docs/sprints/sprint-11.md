@@ -1,6 +1,6 @@
 # Sprint 11 — Research Evaluation & Ablation
 
-Status: **IN PROGRESS — Phases 1–5 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–6 VERIFIED**  
 Branch: `s11-research-evaluation-ablation`  
 Immutable Sprint 10 base: `59022c4a25718f38ea7ec2f010911344d1aa0698`  
 Sprint 10 post-documentation final closure: run `36056032234` — SUCCESS.
@@ -256,12 +256,56 @@ Verified:
 
 Phase 5 is **VERIFIED COMPLETE**.
 
+## Phase 6 — controlled research-lab expansion
+
+Implemented:
+
+- `GT-S11-RESEARCH-LAB-FIXTURES` with 12 new independently declared localhost fixtures;
+- 4 isolated negative controls for timestamp, request ID, JSON ordering and formatting;
+- 8 dedicated positive controls for same-status, soft-denial, dynamic-length, reordered-JSON, opaque-ID,
+  nested-resource, collection-membership and nonstandard-authentication cases;
+- neutral live routes `/api/v1/s11/research/case-NNN` that do not encode research labels;
+- secure/vulnerable behavior implemented only in controlled loopback ACRA-Lab;
+- `Sprint11ControlledResearchLabFixtureTestSuite`;
+- live CI startup for secure port 18082 and vulnerable port 18081;
+- independent live assertions for authorization semantics, structural/semantic equivalence, collection membership,
+  nested resource evidence, opaque IDs and nonstandard synthetic authentication;
+- explicit checks that live positive-fixture responses contain neither `POSITIVE` nor `expected_candidate`;
+- promoted readiness map: 15 READY / 0 PARTIAL / 0 MISSING_FIXTURE.
+
+### Phase 6 verification
+
+GitHub Actions run `36060118721`: **SUCCESS** at source commit
+`ef25d5aeca247c32f2b94bc8faac56405cc8bb58`.
+
+Verified evidence:
+
+- readiness contract: PASS, ready=15 / partial=0 / missing=0 / executed=0;
+- research-lab ground truth: PASS, 12 fixtures = 4 isolated negative + 8 positive;
+- secure/vulnerable localhost startup: PASS;
+- `Sprint11ControlledResearchLabFixtureTestSuite`: PASS, 65 assertions;
+- Phase 1 protocol: PASS, 43 assertions;
+- Phase 2 dataset: PASS, 41 assertions;
+- Phase 3 prediction adapter: PASS, 59 assertions;
+- Phase 4 campaign plan: PASS, 416 assertions;
+- Phase 5 readiness manifest: PASS, 72 assertions;
+- Maven core `test-compile`: PASS;
+- Core CI / Sprint 2 CI / Sprint 3 CI: PASS at the exact Phase 6 head.
+
+Phase 6 is **VERIFIED COMPLETE**.
+
+The canonical campaign still remains:
+
+- 120 PLANNED;
+- 0 EVIDENCE_READY;
+- 0 EXECUTED;
+- A0–A7 metrics NOT_RUN.
+
+Fixture readiness is necessary but is still not equivalent to treatment-dimension evidence readiness.
+
 ## Next dependency
 
-Phase 6 must expand controlled localhost research fixtures before any campaign execution:
-
-1. isolate timestamp-only and request-ID-only negative controls;
-2. isolate ordering-only and formatting-only negative controls;
-3. add dedicated executable fixtures for the eight missing positive research controls;
-4. add live tests proving each fixture independently;
-5. keep all A0–A7 experiment results NOT_RUN until treatment-specific evidence collectors are complete.
+Phase 7 must build deterministic, ground-truth-free evidence collectors for the registered research cases. Each
+case needs baseline evidence plus the dimension evidence required by A1–A7. Only complete evidence bundles may
+promote corresponding campaign cells from PLANNED to EVIDENCE_READY; Phase 7 must still not calculate or publish
+A0–A7 metrics.
