@@ -391,3 +391,63 @@ Phase 8 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 9 owns deterministic secret-safe JSON/SHA-256 and Markdown report/export
 generated from the same `S10SessionWorkspace` source of truth.
+
+
+## Phase 9 — deterministic authentication/session report and export
+
+Implemented:
+
+- versioned `S10SessionReport` and `S10SessionReportSummary`;
+- deterministic report identity independent of presentation timestamp;
+- secret-minimized observation/correlation/assessment/candidate/coverage projections;
+- raw session identifiers replaced by deterministic `authctx-<hash>` references;
+- raw bearer material and token fingerprints excluded from the report schema;
+- canonical JSON export + SHA-256;
+- deterministic Markdown review export;
+- `S10SessionJsonReporter` adapter;
+- Report / JSON Export projections in the existing Authentication product area;
+- `confirmedFindingCount = 0` enforced by the report contract.
+
+An intermediate test failure exposed a fixture substring collision: the synthetic raw session ID `session-r`
+was a substring of the original report-version literal. The report version was renamed to
+`s10-auth-context-report-v1` rather than weakening the session secrecy assertions or universal redaction.
+
+### Phase 9 verification
+
+GitHub Actions run `36040768002`: **SUCCESS** at commit
+`2ce4895c017a022fff81d16346f10c7155c92ef5`.
+
+Verified:
+
+- complete Sprint 10 core/reporting verification: PASS;
+- deterministic JSON/SHA-256 export: PASS;
+- deterministic Markdown export: PASS;
+- raw bearer exclusion: PASS;
+- token-fingerprint exclusion: PASS;
+- raw session-identifier exclusion: PASS;
+- Maven core test compilation: PASS;
+- extension test compilation: PASS;
+- retained Sprint 4 / 6 / 7 / 8 / 9 UI regressions: PASS;
+- Sprint 10 Authentication UI including Report / JSON Export: PASS.
+
+Phase 9 is **VERIFIED COMPLETE**.
+
+## Phase 10 — security hardening and bounded performance observations
+
+Implemented candidate verification:
+
+- reject non-SHA-256 authentication-token fingerprints;
+- reject secret-bearing session metadata;
+- preserve INFERRED identity as unverified;
+- preserve USER_CONFIRMED identity as verified;
+- reject cross-session coverage observation binding;
+- reject non-session FindingCandidate projections from the session workspace;
+- verify JSON/report exclusion of raw session IDs and token fingerprints;
+- enforce report `confirmedFindingCount = 0`;
+- bounded 100 / 1,000 / 10,000 explicit session-coverage workspace/report observations;
+- persist a CI performance-observation CSV artifact.
+
+These timing/memory values are engineering observations only and are not benchmarks, SLOs, release thresholds,
+scanner-accuracy evidence or real-world capacity claims.
+
+Phase 10 verification is pending the current GitHub Actions gate.
