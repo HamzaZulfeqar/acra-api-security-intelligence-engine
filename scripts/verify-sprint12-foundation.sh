@@ -18,6 +18,7 @@ CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionPackageFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionJsonExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionSarifExportTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12BurpIssueProjectionTestSuite
 python3 - <<'PY'
 import json
 from pathlib import Path
@@ -40,6 +41,19 @@ assert result["properties"]["acraCandidateState"] == "CANDIDATE"
 assert result["properties"]["acraExpectedDecision"] == "DENY"
 assert result["properties"]["acraObservedDecision"] == "ALLOW"
 print("SPRINT12_SARIF_JSON_SHAPE PASS version=2.1.0 runs=1 results=1 kind=review")
+PY
+
+python3 - <<'PY'
+from pathlib import Path
+
+adapter=Path("extension/burp-extension/src/main/java/io/acra/burp/reporting/BurpAuditIssueAdapter.java").read_text(encoding="utf-8")
+bootstrap=Path("extension/burp-extension/src/main/java/io/acra/burp/ACRAExtension.java").read_text(encoding="utf-8")
+assert "AuditIssue.auditIssue(" in adapter
+assert "api.siteMap().add(" in adapter
+assert "AuditIssueConfidence.CERTAIN" not in adapter
+assert "BurpAuditIssueAdapter" not in bootstrap
+assert "addReviewIssueToSiteMap" not in bootstrap
+print("SPRINT12_BURP_ADAPTER_SOURCE_CONTRACT PASS officialFactory=true siteMapAdd=true autoWire=false certain=false")
 PY
 
 bash ./scripts/verify-sprint11-foundation.sh
