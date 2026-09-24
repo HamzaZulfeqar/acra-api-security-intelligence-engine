@@ -115,6 +115,38 @@ Phase 1 does not:
 - replace existing S4 scope, consent, budget, rate or safety gates;
 - claim real Burp desktop runtime validation.
 
+## Phase 3 active-execution boundary
+
+Phase 3 reuses the existing S4 active engine rather than creating a parallel executor.
+
+### Batch
+
+A fixed, non-persistent localhost batch-read seed mutates only the declared request body from the owned
+`resource-a` set to the fixed `resource-a + resource-b` set. Aggregate HTTP ALLOW is retained as transport
+behavior while per-item decisions are projected and assessed independently.
+
+### Indirect reference
+
+A fixed localhost read seed mutates only the declared path alias from `share-a` to `share-b`.
+The raw alias is transient: the persisted resolution model retains only its SHA-256 fingerprint and the
+evidence-backed resolved target resource. Authorization is assessed against `resource-b`, not against the
+opacity or format of the alias.
+
+### Safety invariants
+
+1. `BATCH` and `INDIRECT_REFERENCE` reuse existing S4 contracts and mutation families.
+2. Request equivalence is validated before dispatch.
+3. Only authorized `LAB` loopback targets are executable.
+4. Existing consent, scope, environment, budget, concurrency, rate-limit and kill-switch controls remain mandatory.
+5. Sprint 10 seeds are fixed and policy-backed; no identifier generation, guessing or enumeration is allowed.
+6. Active tests are read-only/non-persistent.
+7. Cross-project evidence fails closed.
+8. A DENY→ALLOW differential remains a review signal, not an automatically confirmed vulnerability.
+9. Real Burp desktop runtime remains separately unverified.
+
+Phase 3 verification: GitHub Actions run `36048381112` — SUCCESS at
+`608490cfc1211057e879f6c6457ea62fd648b405`.
+
 ## Future Sprint 10 slices
 
 Later phases may add controlled ACRA-Lab ground truth, safe S4 planner/executor integration, provenance-gated
