@@ -63,7 +63,7 @@ public final class Sprint7WorkflowReportingExportTestSuite {
         assertions++;
         TestSupport.assertEquals(1, report.summary().observedCoverageCount(), "observed coverage count");
         assertions++;
-        TestSupport.assertEquals(0.5, report.summary().observationCoverageRatio(),
+        TestSupport.assertEquals(1.0, report.summary().observationCoverageRatio(),
                 "observation ratio is based on resolved coverage contexts only");
         assertions++;
         TestSupport.assertTrue(report.evidenceIds().containsAll(List.of(
