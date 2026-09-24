@@ -44,3 +44,9 @@ jobs:
         run: bash ./scripts/verify-sprint11-foundation.sh
       - name: Verify Maven core test compilation
         run: mvn --batch-mode --no-transfer-progress -pl core test-compile
+      - name: Upload Sprint 11 research report evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint11-research-evaluation-report
+          path: build/s11-evaluation-report/
+          if-no-files-found: error
