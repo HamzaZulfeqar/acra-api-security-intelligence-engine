@@ -2,13 +2,41 @@
 
 ## Current state — 2026-09-24
 
-**Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence (closed).  
-**Decision:** S8 SOFTWARE COMPLETE.  
-**Working branch:** `s8-routing-normalization`.  
-**Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
-**Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
-**Sprint 7 canonical final verification:** GitHub Actions run `35961314354`.  
-**Sprint 7 canonical checkpoint SHA-256:** `5e77654d6467cc45c60825cb44bd7c3aa1d4f33c8705d41216d7f258a8187189`.
+**Current sprint:** Sprint 9 — Property-Level Authorization & Field Policy Intelligence (in progress).  
+**Decision:** S9 PHASE 1 VERIFIED COMPLETE; Sprint 9 remains IN PROGRESS.  
+**Working branch:** `s9-property-authorization`.  
+**Immutable Sprint 8 base:** `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`.  
+**Sprint 8:** SOFTWARE COMPLETE and preserved as the previous verified release boundary.  
+**Sprint 9 Phase 1 verification:** GitHub Actions run `35985518829` — SUCCESS.
+
+### Sprint 9 verified progress
+
+Phase 1 adds an evidence-backed property-authorization layer on top of the existing Sprint 5 contracts:
+
+- `PropertyAccessObservation` with no property-value storage;
+- deterministic `S9PropertyAuthorizationAnalyzer`;
+- `S9PropertyAuthorizationAnalysis` aggregate;
+- reuse of `PropertyAuthorizationAssessment`, `PropertyPolicy`, `AuthorizationDimensionEvaluator` and
+  `EvidenceReferenceValidator`;
+- exact endpoint/property/operation matching;
+- role/tenant applicability without inferred policy precedence;
+- missing policy → INCONCLUSIVE;
+- multiple applicable policies → explicit ambiguity;
+- cross-project provenance → INCONCLUSIVE;
+- explicit property DENY + observed ALLOW → review-only property candidate;
+- property-specific expected decision separated from object-level request authorization;
+- deterministic analysis identity;
+- secret-bearing observation metadata rejected;
+- no automatic confirmed-vulnerability state.
+
+Verification run `35985518829` passed exact Java 21 compilation with warnings as errors, the new Sprint 9
+foundation suite, retained Sprint 5 final closure, Sprint 6 policy foundation, Sprint 7 workflow foundation,
+Sprint 8 routing-normalization foundation, and Maven core test compilation.
+
+Sprint 9 Phase 2 has **NOT STARTED**. The next dependency is controlled ACRA-Lab property READ/UPDATE ground
+truth before any active property mutation planning.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
 ### Sprint 8 verified progress
 
