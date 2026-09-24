@@ -189,3 +189,41 @@ Phase 3 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 4 owns passive traffic/session hydration using the existing collection and
 reconnaissance model; it must not create a parallel traffic collector.
+
+## Phase 4 — passive traffic/session hydration
+
+Implemented:
+
+- `PassiveSessionHydrationResult`;
+- `S10PassiveSessionHydrator`;
+- reuse of existing `SecurityContextEngine`, `IdentityExtraction` and `IdentityConfirmationRegistry`;
+- no second traffic collector or token parser;
+- session ID sourced from collector metadata when available;
+- collector-provided scope metadata normalized deterministically;
+- JWT principal/role/tenant claims remain INFERRED until separately confirmed;
+- matching USER_CONFIRMED / LAB_CONFIRMED mappings upgrade the hydrated identity state;
+- confirmation/claim mismatch is downgraded to SUSPECTED;
+- missing session ID remains request-scoped unresolved context;
+- no credential evidence produces no session observation;
+- raw bearer values excluded from the hydrated observation.
+
+### Phase 4 verification
+
+GitHub Actions run `36032676285`: **SUCCESS** at commit
+`f2026b4866f5117d758631b620c829c20dc230ff`.
+
+Verified:
+
+- passive JWT claims without confirmation → INFERRED: PASS;
+- matching confirmation → USER_CONFIRMED: PASS;
+- confirmation/claim mismatch → SUSPECTED: PASS;
+- missing session ID fail-closed behavior: PASS;
+- no credential → no session observation: PASS;
+- raw bearer exclusion / SHA-256 correlation handle retention: PASS;
+- full Sprint 10 Phases 1–3 verification: PASS;
+- retained Sprint 6/7/8/9 foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 4 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 5 owns explicit refresh/rotation and verified context-drift assessment.
