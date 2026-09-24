@@ -242,7 +242,7 @@ public final class Sprint8ControlledRoutingDifferentialTestSuite {
     private static TargetDescriptor target(int port) {
         return new TargetDescriptor(
                 PROJECT, "acra-lab-s8-" + port, "http", "localhost", port,
-                ExecutionEnvironment.LAB, true, List.of("/api/v1/s8"), Set.of(HttpMethod.GET));
+                ExecutionEnvironment.LAB, true, List.of("/api/v1/s8", "/api//v1/s8"), Set.of(HttpMethod.GET));
     }
 
     private static RequestDefinition baseline(int port) {
