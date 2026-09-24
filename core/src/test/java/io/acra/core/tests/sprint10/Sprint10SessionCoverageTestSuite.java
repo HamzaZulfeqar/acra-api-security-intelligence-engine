@@ -281,7 +281,7 @@ public final class Sprint10SessionCoverageTestSuite {
                 List.of(assessment.assessmentId()),
                 List.of("AUTHENTICATION_SESSION"),
                 "/api/v1/s10/session-context",
-                "session:" + target.sessionId(),
+                "auth-context:" + target.sessionId(),
                 principal,
                 tenant,
                 AuthorizationDecision.UNKNOWN,
@@ -293,7 +293,7 @@ public final class Sprint10SessionCoverageTestSuite {
                 "coverage test projection; candidate is not an automatically confirmed vulnerability",
                 FindingFingerprint.of(
                         "/api/v1/s10/session-context",
-                        "session:" + target.sessionId(),
+                        "auth-context:" + target.sessionId(),
                         principal,
                         tenant,
                         "AUTHENTICATION_SESSION",
