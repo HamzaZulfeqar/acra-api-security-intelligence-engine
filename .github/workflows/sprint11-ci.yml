@@ -6,6 +6,8 @@ on:
       - s11-research-evaluation-ablation
     paths:
       - 'core/**'
+      - 'lab/ground-truth/GT-S4-RESEARCH-FIXTURES.json'
+      - 'lab/ground-truth/GT-S11-ABLATION-DATASET.json'
       - 'scripts/verify-sprint11-foundation.sh'
       - '.github/workflows/sprint11-ci.yml'
       - 'docs/sprints/sprint-11.md'
