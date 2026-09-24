@@ -321,3 +321,46 @@ does not replace real Burp desktop validation.
 
 Sprint 9 remains IN PROGRESS. Phase 7 owns deterministic property report/export from the same S9 workspace source
 of truth.
+
+
+## Phase 7 — deterministic property report/export
+
+Implemented:
+
+- versioned `S9PropertyReport`;
+- `S9PropertyReportSummary`;
+- deterministic `S9PropertyReportGenerator`;
+- canonical secret-safe JSON export + SHA-256;
+- deterministic Markdown review report;
+- `S9PropertyJsonReporter` on the existing Reporter plugin boundary;
+- report/export methods on the single `S9PropertyWorkspace` source of truth;
+- Properties UI `Report` / `JSON Export` views;
+- explicit `confirmedFindingCount = 0`;
+- unobserved property-policy coverage retained in report/export;
+- review-only FindingCandidate reporting;
+- property values absent from report model and UI projection.
+
+Core reporting verification: GitHub Actions run `36001581140` — **SUCCESS** at commit
+`d9ab3e14a7012da8eded4b00fe1ba8fe2b639c98`.
+
+Final Phase 7 UI/report verification: GitHub Actions run `36001743072` — **SUCCESS** at commit
+`bf7b222245f6699d5f3dc778ac249475914e2b92`.
+
+Verified:
+
+- deterministic canonical JSON: PASS;
+- stable SHA-256 digest for identical report content: PASS;
+- Markdown review export: PASS;
+- Reporter plugin adapter: PASS;
+- secret exclusion: PASS;
+- property-value minimization: PASS;
+- unobserved coverage preservation: PASS;
+- `confirmedFindingCount = 0`: PASS;
+- Maven core and extension compilation: PASS;
+- retained S4/S6/S7/S8 UI regressions: PASS;
+- S9 Property UI Report / JSON Export views: PASS.
+
+Phase 7 is **VERIFIED COMPLETE**.
+
+Sprint 9 remains IN PROGRESS. Phase 8 owns security hardening and bounded performance observations before final
+traceability, reproducible packaging and software closure.
