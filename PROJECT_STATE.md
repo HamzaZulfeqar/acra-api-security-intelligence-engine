@@ -46,7 +46,10 @@ GitHub Actions run `36033267339` at commit `2521cb7fa21193fc177f2cfc08f6a44352fe
 Explicit session-context coverage accounting is **VERIFIED COMPLETE** by GitHub Actions run `36033819097` at
 commit `538b146b1e9e57334e6d16fe85da6d81ab9ca765`.
 
-The next dependency is the read-only authentication/session product workspace and Burp UI projection.
+The read-only authentication/session product workspace and Burp UI projection is **VERIFIED COMPLETE** by
+GitHub Actions run `36034257857` at commit `93718c2b0ac7510c2a265608901d92db4406fe3b`.
+
+The next dependency is deterministic secret-safe JSON/SHA-256 and Markdown report/export from the same workspace.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
