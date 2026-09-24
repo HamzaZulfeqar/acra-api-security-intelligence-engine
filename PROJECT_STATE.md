@@ -2,19 +2,35 @@
 
 ## Current state — 2026-09-24
 
-**Current sprint:** Sprint 9 — Property-Level Authorization & Field Policy Intelligence (in progress).  
-**Decision:** S9 PHASES 1–8 VERIFIED COMPLETE; final closure pending.  
-**Working branch:** `s9-property-authorization`.  
-**Immutable Sprint 8 base:** `21635d900ad80cd27e4f9212b8448bbf5b4cd7f2`.  
-**Sprint 8:** SOFTWARE COMPLETE and preserved as the previous verified release boundary.  
-**Sprint 9 Phase 1 verification:** GitHub Actions run `35985518829` — SUCCESS.  
-**Sprint 9 Phase 2 verification:** GitHub Actions run `35986020761` — SUCCESS.  
-**Sprint 9 Phase 3 verification:** GitHub Actions run `35986668193` — SUCCESS.  
-**Sprint 9 Phase 4 verification:** GitHub Actions run `35986888660` — SUCCESS.  
-**Sprint 9 Phase 5 verification:** GitHub Actions run `35987236797` — SUCCESS.  
-**Sprint 9 Phase 6 verification:** GitHub Actions run `36001111468` — SUCCESS.  
-**Sprint 9 Phase 7 verification:** GitHub Actions run `36001743072` — SUCCESS.  
-**Sprint 9 Phase 8 verification:** GitHub Actions run `36002106088` — SUCCESS.
+**Current sprint:** Sprint 10 — Authentication, Session & Token-Context Intelligence (in progress).  
+**Decision:** S10 PHASE 1 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Working branch:** `s10-auth-session-intelligence`.  
+**Immutable Sprint 9 base:** `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`.  
+**Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 10 Phase 1 verification:** GitHub Actions run `36031651777` — SUCCESS.
+
+### Sprint 10 verified progress
+
+Phase 1 implements passive deterministic authentication/session correlation:
+
+- SHA-256-only token fingerprints;
+- explicit identity-confidence provenance;
+- token fingerprint != verified principal;
+- same-session correlation boundary;
+- stable verified context;
+- token rotation with unchanged context;
+- principal/role/tenant/scope drift detection;
+- unverified identity fail-closed behavior;
+- deterministic correlation identifiers;
+- no active OAuth/login manipulation and no automatic confirmed-vulnerability state.
+
+Verification run `36031651777` passed exact Java 21 compilation, the Sprint 10 foundation suite,
+retained Sprint 6/7/8/9 foundations and Maven core test compilation.
+
+Sprint 10 Phase 2 is **NOT STARTED**. The next dependency is evidence-store binding for passive
+authentication/session observations.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
 ### Sprint 9 verified progress
 
