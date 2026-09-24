@@ -6,6 +6,7 @@ on:
       - s10-batch-indirect-authorization
     paths:
       - 'core/**'
+      - 'extension/burp-extension/**'
       - 'lab/**'
       - 'scripts/verify-sprint10-foundation.sh'
       - '.github/workflows/sprint10-ci.yml'
@@ -35,6 +36,20 @@ jobs:
         run: bash ./scripts/verify-sprint10-foundation.sh
       - name: Verify Maven core test compilation
         run: mvn --batch-mode --no-transfer-progress -pl core test-compile
+      - name: Compile Sprint 10 product UI
+        run: mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
+      - name: Verify retained Sprint 4 UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint4.Sprint4UiTestSuite
+      - name: Verify retained Sprint 6 authorization UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint6.Sprint6AuthorizationUiTestSuite
+      - name: Verify retained Sprint 7 workflow UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint7.Sprint7WorkflowUiTestSuite
+      - name: Verify retained Sprint 8 routing UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint8.Sprint8RoutingUiTestSuite
+      - name: Verify retained Sprint 9 property UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint9.Sprint9PropertyUiTestSuite
+      - name: Verify Sprint 10 batch indirect UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint10.Sprint10BatchIndirectUiTestSuite
       - name: Upload Sprint 10 lab evidence
         if: always()
         uses: actions/upload-artifact@v4
