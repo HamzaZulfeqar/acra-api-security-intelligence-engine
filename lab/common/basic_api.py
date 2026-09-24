@@ -105,9 +105,110 @@ class Handler(BaseHTTPRequestHandler):
         if MODE=='secure' and owner_required and ident.get('sub')!=doc['owner_id'] and ident.get('role')!='admin':
             self._json(403,{'error':'access_denied','owner_id':doc['owner_id']}); return None
         return doc
+    def _s11_research_fixture(self,case_id,query):
+        variant=query.get('variant',['a'])[0]
+        if variant not in ('a','b'):
+            return self._json(400,{'error':'invalid_variant'})
+
+        if case_id=='case-003':
+            timestamp='2026-09-25T00:00:00Z' if variant=='a' else '2026-09-25T00:00:01Z'
+            return self._json(200,{'id':'stable-003','name':'Stable fixture',
+                                   'timestamp':timestamp,'request_id':'fixed-003'})
+
+        if case_id=='case-004':
+            request_id='request-004-a' if variant=='a' else 'request-004-b'
+            return self._json(200,{'id':'stable-004','name':'Stable fixture',
+                                   'timestamp':'2026-09-25T00:00:00Z','request_id':request_id})
+
+        if case_id=='case-005':
+            if variant=='b':
+                return self._json(200,{'tenant_id':'tenant-a','name':'Stable fixture','id':'stable-005'})
+            return self._json(200,{'id':'stable-005','name':'Stable fixture','tenant_id':'tenant-a'})
+
+        if case_id=='case-006':
+            body={'id':'stable-006','name':'Stable fixture','tenant_id':'tenant-a'}
+            return self._json(200,body,pretty=(variant=='b'))
+
+        if case_id in ('case-008','case-009','case-010','case-011','case-012','case-013','case-014'):
+            ident=self._require_identity()
+            if not ident:return
+            if ident.get('sub')!='user-a':
+                return self._json(403,{'error':'access_denied'})
+
+        if case_id=='case-008':
+            if MODE=='secure':
+                return self._json(200,{'success':False,'message':'Access denied',
+                                       'reference':'same-status-008'})
+            return self._json(200,{'id':'foreign-008','owner_id':'user-b','tenant_id':'tenant-b',
+                                   'name':'Foreign fixture'})
+
+        if case_id=='case-009':
+            if MODE=='secure':
+                return self._json(200,{'error':'Access denied','reference':'soft-denial-009'})
+            return self._json(200,{'success':True,'id':'foreign-009',
+                                   'owner_id':'user-b','tenant_id':'tenant-b'})
+
+        if case_id=='case-010':
+            try:
+                pad=max(1,min(int(query.get('pad',['4'])[0]),64))
+            except Exception:
+                return self._json(400,{'error':'invalid_pad'})
+            padding='x'*pad
+            if MODE=='secure':
+                return self._json(200,{'success':False,'message':'Access denied','padding':padding})
+            return self._json(200,{'id':'foreign-010','owner_id':'user-b','tenant_id':'tenant-b',
+                                   'padding':padding})
+
+        if case_id=='case-011':
+            if MODE=='secure':
+                return self._json(200,{'success':False,'message':'Access denied',
+                                       'id':'reference-011','tenant_id':'tenant-b'})
+            if variant=='b':
+                return self._json(200,{'tenant_id':'tenant-b','owner_id':'user-b',
+                                       'name':'Foreign fixture','id':'foreign-011'})
+            return self._json(200,{'id':'foreign-011','name':'Foreign fixture',
+                                   'owner_id':'user-b','tenant_id':'tenant-b'})
+
+        if case_id=='case-012':
+            opaque='Q7M2-X9P4-ZETA'
+            if MODE=='secure':
+                return self._json(200,{'success':False,'message':'Access denied','reference':opaque})
+            return self._json(200,{'id':opaque,'owner_id':'user-b','tenant_id':'tenant-b',
+                                   'name':'Opaque foreign fixture'})
+
+        if case_id=='case-013':
+            if MODE=='secure':
+                return self._json(200,{'success':False,'message':'Access denied',
+                                       'container':{'reference':'nested-013'}})
+            return self._json(200,{'data':{'resource':{'id':'nested-foreign-013',
+                                                       'owner_id':'user-b',
+                                                       'tenant_id':'tenant-b',
+                                                       'name':'Nested foreign fixture'}}})
+
+        if case_id=='case-014':
+            owned={'id':'owned-014','owner_id':'user-a','tenant_id':'tenant-a'}
+            if MODE=='secure':
+                return self._json(200,{'items':[owned],'count':1})
+            foreign={'id':'foreign-014','owner_id':'user-b','tenant_id':'tenant-b'}
+            return self._json(200,{'items':[owned,foreign],'count':2})
+
+        if case_id=='case-015':
+            principal=self.headers.get('X-S11-Principal','').strip()
+            if principal!='user-a':
+                return self._json(401,{'error':'unauthorized'})
+            if MODE=='secure':
+                return self._json(200,{'success':False,'message':'Access denied',
+                                       'reference':'nonstandard-015'})
+            return self._json(200,{'id':'foreign-015','owner_id':'user-b','tenant_id':'tenant-b',
+                                   'auth_context':'synthetic-custom-header'})
+
+        return self._json(404,{'error':'research_fixture_not_found'})
+
     def do_GET(self):
         parsed=urlparse(self.path); path=parsed.path; query=parse_qs(parsed.query)
         if path=='/health': return self._json(200,{'status':'ok','mode':MODE})
+        if path.startswith('/api/v1/s11/research/case-'):
+            return self._s11_research_fixture(path.rsplit('/',1)[-1],query)
         if path=='/api/v1/s4/application-denial':
             ident=self._require_identity()
             if not ident:return
