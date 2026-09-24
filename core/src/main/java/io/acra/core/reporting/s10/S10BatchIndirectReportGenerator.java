@@ -22,43 +22,43 @@ public final class S10BatchIndirectReportGenerator {
             throw new IllegalArgumentException("snapshot/generatedAt required");
         }
 
-        List<S10ReportPolicyContext> policies = new ArrayList<>();
-        snapshot.batchPolicies().forEach(value -> policies.add(new S10ReportPolicyContext(
+        List<S10ReportPolicyContext> policyRows = new ArrayList<>();
+        snapshot.batchPolicies().forEach(value -> policyRows.add(new S10ReportPolicyContext(
                 S10CoverageFamily.BATCH_ITEM, value.policyReference(), value.endpoint(), value.resourceId(),
                 value.action(), value.roleId(), value.tenantId(), value.expectedDecision(), value.evidenceIds())));
-        snapshot.indirectPolicies().forEach(value -> policies.add(new S10ReportPolicyContext(
+        snapshot.indirectPolicies().forEach(value -> policyRows.add(new S10ReportPolicyContext(
                 S10CoverageFamily.INDIRECT_REFERENCE, value.policyReference(), value.endpoint(),
                 value.resolvedResourceId(), value.action(), value.roleId(), value.tenantId(),
                 value.expectedDecision(), value.evidenceIds())));
-        policies = policies.stream().sorted(Comparator
+        List<S10ReportPolicyContext> policies = policyRows.stream().sorted(Comparator
                 .comparing((S10ReportPolicyContext value) -> value.family().name())
                 .thenComparing(S10ReportPolicyContext::policyReference)
                 .thenComparing(S10ReportPolicyContext::endpoint)
                 .thenComparing(S10ReportPolicyContext::resourceId)).toList();
 
-        List<S10ReportObservation> observations = new ArrayList<>();
-        snapshot.batchObservations().forEach(value -> observations.add(new S10ReportObservation(
+        List<S10ReportObservation> observationRows = new ArrayList<>();
+        snapshot.batchObservations().forEach(value -> observationRows.add(new S10ReportObservation(
                 S10CoverageFamily.BATCH_ITEM, value.itemObservationId(), value.executionId(), value.testId(),
                 value.endpoint(), value.resourceId(), value.action(), value.observedDecision(), "",
                 value.evidenceIds())));
-        snapshot.indirectResolutions().forEach(value -> observations.add(new S10ReportObservation(
+        snapshot.indirectResolutions().forEach(value -> observationRows.add(new S10ReportObservation(
                 S10CoverageFamily.INDIRECT_REFERENCE, value.resolutionId(), value.executionId(), value.testId(),
                 value.endpoint(), value.resolvedResourceId(), value.action(), value.observedDecision(),
                 value.referenceFingerprint(), value.evidenceIds())));
-        observations = observations.stream()
+        List<S10ReportObservation> observations = observationRows.stream()
                 .sorted(Comparator.comparing(S10ReportObservation::observationId))
                 .toList();
 
-        List<S10ReportAssessment> assessments = new ArrayList<>();
-        snapshot.batchAssessments().forEach(value -> assessments.add(new S10ReportAssessment(
+        List<S10ReportAssessment> assessmentRows = new ArrayList<>();
+        snapshot.batchAssessments().forEach(value -> assessmentRows.add(new S10ReportAssessment(
                 S10CoverageFamily.BATCH_ITEM, value.assessmentId(), value.endpoint(), value.resourceId(),
                 value.action(), value.policyReference(), value.expectedDecision(), value.observedDecision(),
                 value.state(), value.confidence(), value.evidenceIds(), value.reasons())));
-        snapshot.indirectAssessments().forEach(value -> assessments.add(new S10ReportAssessment(
+        snapshot.indirectAssessments().forEach(value -> assessmentRows.add(new S10ReportAssessment(
                 S10CoverageFamily.INDIRECT_REFERENCE, value.assessmentId(), value.endpoint(),
                 value.resolvedResourceId(), value.action(), value.policyReference(), value.expectedDecision(),
                 value.observedDecision(), value.state(), value.confidence(), value.evidenceIds(), value.reasons())));
-        assessments = assessments.stream()
+        List<S10ReportAssessment> assessments = assessmentRows.stream()
                 .sorted(Comparator.comparing(S10ReportAssessment::assessmentId))
                 .toList();
 
