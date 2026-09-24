@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phases 1–7 VERIFIED COMPLETE.**
+**Sprint 10 IN PROGRESS — Phases 1–8 VERIFIED COMPLETE.**
 
 Canonical Sprint 10 Phase 1 evidence:
 - branch: `s10-batch-indirect-authorization`
@@ -14,6 +14,7 @@ Canonical Sprint 10 Phase 1 evidence:
 - Phase 5 verification run: `36049247018` — SUCCESS at `16169367c3e7c3b179a6d8541dfc88698fde6b81`
 - Phase 6 verification run: `36051856008` — SUCCESS at `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`
 - Phase 7 verification run: `36054653296` — SUCCESS at `09d4edb23014c738d6856d46db6e0a72ed5a9e97`
+- Phase 8 verification run: `36055037223` — SUCCESS at `751c45eca818031e4e73fb23b8c30a2712469fcb`
 - per-item batch authorization reasoning: VERIFIED
 - mixed batch outcomes preserved: VERIFIED
 - indirect reference fingerprint/resolution reasoning: VERIFIED
@@ -87,12 +88,24 @@ Verified Phase 7:
 - Sprint 10 reporting suite: PASS, 43 assertions;
 - Sprint 10 UI: PASS, 230 assertions.
 
+Verified Phase 8:
+- batch/indirect input and evidence hardening: PASS;
+- raw-alias fingerprint boundary: PASS;
+- coverage mismatch and policy-drift rejection: PASS;
+- workspace family-confusion rejection: PASS;
+- report non-confirmation/minimization/redaction invariants: PASS;
+- security hardening suite: PASS, 20 assertions;
+- bounded 100 / 1,000 / 10,000 engineering observations: PASS;
+- performance observation suite: PASS, 22 assertions;
+- performance CSV artifact: PASS.
+
 Next dependency-ordered milestone:
-1. add adversarial security-hardening tests across batch and indirect input/provenance/report boundaries;
-2. verify workspace dimension rejection, coverage drift rejection and report non-confirmation invariants;
-3. record bounded engineering observations for 100 / 1,000 / 10,000 explicit policy contexts;
-4. measure workspace/coverage population and deterministic report generation without asserting benchmark/SLO claims;
-5. archive performance observation evidence for final Sprint 10 closure.
+1. freeze Sprint 10 requirements traceability;
+2. run full Sprint 10 plus retained Sprint 9/8/7/6 and S2/S3/S4 regression lanes;
+3. produce official Maven package;
+4. generate deterministic Sprint 10 source checkpoint;
+5. validate safe archive paths, duplicate-entry absence, clean extraction and per-file SHA-256 equality;
+6. publish final Sprint 10 software audit while keeping real Burp desktop runtime separately unverified.
 
 No identifier guessing, alias enumeration or external-target probing is permitted.
 

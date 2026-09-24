@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 10 — Batch & Indirect Authorization Intelligence (in progress).  
-**Decision:** S10 PHASES 1–7 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
+**Decision:** S10 PHASES 1–8 VERIFIED COMPLETE; Sprint 10 remains IN PROGRESS.  
 **Working branch:** `s10-batch-indirect-authorization`.  
 **Immutable Sprint 9 base:** `ce81220eb9ea41009973b4072c08d59927ee8c6b`.  
 **Sprint 9:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -14,7 +14,8 @@
 **Sprint 10 Phase 4 verification:** GitHub Actions run `36048837246` — SUCCESS at source commit `abb57d0320fcdc161992297415978bde6c769bee`.  
 **Sprint 10 Phase 5 verification:** GitHub Actions run `36049247018` — SUCCESS at source commit `16169367c3e7c3b179a6d8541dfc88698fde6b81`.  
 **Sprint 10 Phase 6 verification:** GitHub Actions run `36051856008` — SUCCESS at source commit `a33aaffccce80ba8251284a0b4de70f2f76e7a8a`.  
-**Sprint 10 Phase 7 verification:** GitHub Actions run `36054653296` — SUCCESS at source commit `09d4edb23014c738d6856d46db6e0a72ed5a9e97`.
+**Sprint 10 Phase 7 verification:** GitHub Actions run `36054653296` — SUCCESS at source commit `09d4edb23014c738d6856d46db6e0a72ed5a9e97`.  
+**Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.
 
 ### Sprint 10 verified progress
 
@@ -106,7 +107,29 @@ Sprint 10 Phase 7 deterministic report/export and read-only UI projection is **V
 - canonical JSON / SHA-256 / Markdown evidence archived by Sprint 10 CI;
 - real Burp desktop runtime remains UNVERIFIED / DEFERRED.
 
-The next dependency is Phase 8 security hardening and bounded performance observations.
+Sprint 10 Phase 8 security hardening and bounded performance observations is **VERIFIED COMPLETE**:
+
+- malformed batch query/fragment endpoints rejected;
+- batch observations without evidence or with duplicate evidence rejected;
+- secret-bearing batch metadata rejected;
+- malformed indirect query/fragment endpoints rejected;
+- raw aliases rejected where SHA-256 fingerprints are required;
+- duplicate indirect evidence rejected;
+- batch resource mismatch and indirect resolved-target mismatch rejected by coverage accounting;
+- policy decision drift for stable coverage identity rejected for both families;
+- Sprint 10 workspace rejects non-S10 and dual-family FindingCandidate projections;
+- report non-confirmation invariant retained;
+- report schema minimization and redaction boundaries retained;
+- bounded 100 / 1,000 / 10,000 mixed policy-context engineering observations recorded.
+
+Observed CI values from run `36055037223`:
+- 100 contexts: population 90 ms, report 28 ms, approx memory delta 3,691,056 bytes;
+- 1,000 contexts: population 95 ms, report 14 ms, approx memory delta 5,843,720 bytes;
+- 10,000 contexts: population 387 ms, report 77 ms, approx memory delta 144,125,280 bytes.
+
+These are one-run engineering observations only, not benchmarks, SLOs, release thresholds, scanner-accuracy evidence or real-world capacity claims.
+
+The next dependency is final Sprint 10 requirements traceability, retained regression, reproducible packaging and software audit.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 

@@ -1,6 +1,6 @@
 # Sprint 10 — Batch & Indirect Authorization Intelligence
 
-Status: IN PROGRESS — Phases 1–7 VERIFIED  
+Status: IN PROGRESS — Phases 1–8 VERIFIED  
 Branch: `s10-batch-indirect-authorization`  
 Immutable Sprint 9 base: `ce81220eb9ea41009973b4072c08d59927ee8c6b`
 
@@ -342,3 +342,57 @@ Phase 7 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 8 owns security hardening and bounded performance observations before final
 traceability, reproducible packaging and software closure.
+
+## Phase 8 — security hardening and bounded performance observations
+
+Security-hardening coverage:
+
+- batch observation query material rejected;
+- batch observation fragment material rejected;
+- provenance-free batch observations rejected;
+- duplicate batch evidence references rejected;
+- secret-bearing batch metadata rejected;
+- indirect resolution query and fragment material rejected;
+- raw indirect alias rejected where SHA-256 fingerprint is required;
+- duplicate indirect evidence references rejected;
+- batch resource mismatch rejected by coverage accounting;
+- indirect resolved-target mismatch rejected by coverage accounting;
+- batch and indirect policy decision drift rejected for stable coverage identity;
+- Sprint 10 workspace rejects non-S10 FindingCandidate projections;
+- Sprint 10 workspace rejects dual batch+indirect FindingCandidate projections;
+- report cannot auto-confirm findings;
+- canonical report continues to structurally exclude `policySource` and candidate rationale;
+- embedded bearer-secret redaction preserves later report fields.
+
+Bounded engineering observations cover 100 / 1,000 / 10,000 explicit mixed batch+indirect policy contexts across:
+
+- product workspace / coverage population;
+- deterministic report generation.
+
+### Phase 8 verification
+
+GitHub Actions run `36055037223`: **SUCCESS** at source commit
+`751c45eca818031e4e73fb23b8c30a2712469fcb`.
+
+- `Sprint10BatchIndirectSecurityHardeningTestSuite`: PASS, 20 assertions;
+- `Sprint10BatchIndirectPerformanceObservationTestSuite`: PASS, 22 assertions;
+- canonical reporting/export regression: PASS, 43 assertions;
+- Sprint 10 headless UI regression: PASS, 230 assertions;
+- Maven core and extension compilation: PASS;
+- performance CSV artifact upload: PASS.
+
+Observed CI values:
+
+| Policy contexts | Workspace / coverage population | Report generation | Approx JVM memory delta |
+|---:|---:|---:|---:|
+| 100 | 90 ms | 28 ms | 3,691,056 bytes |
+| 1,000 | 95 ms | 14 ms | 5,843,720 bytes |
+| 10,000 | 387 ms | 77 ms | 144,125,280 bytes |
+
+These values are engineering observations from one CI environment. They are not benchmarks, SLOs, release
+thresholds, scanner-accuracy evidence or real-world capacity claims.
+
+Phase 8 is **VERIFIED COMPLETE**.
+
+Remaining Sprint 10 work is final requirements traceability, retained regression, reproducible source packaging
+and final software audit. Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane.

@@ -233,10 +233,32 @@ Phase 7 invariants:
 Phase 7 verification: GitHub Actions run `36054653296` — SUCCESS at
 `09d4edb23014c738d6856d46db6e0a72ed5a9e97`.
 
+## Phase 8 hardening / bounded-observation boundary
+
+Phase 8 adds verification pressure without broadening target scope or active mutation behavior.
+
+Hardening invariants include:
+
+1. malformed query/fragment material is rejected from batch and indirect persisted observations;
+2. evidence is mandatory and duplicate evidence references fail closed;
+3. raw aliases cannot substitute for required SHA-256 indirect-reference fingerprints;
+4. coverage updates require exact batch resource or indirect resolved-target identity;
+5. stable coverage identity cannot silently drift expected authorization decisions;
+6. the Sprint 10 workspace accepts exactly one S10 finding dimension per candidate;
+7. report generation remains review-only with zero confirmed findings;
+8. report minimization and redaction remain independent defenses.
+
+Bounded engineering observations exercise mixed batch/indirect policy universes at 100, 1,000 and 10,000 contexts.
+The collected timings and approximate memory deltas are diagnostic observations only; they are not benchmarks,
+SLOs, release thresholds, scanner accuracy or real-world capacity evidence.
+
+Phase 8 verification: GitHub Actions run `36055037223` — SUCCESS at
+`751c45eca818031e4e73fb23b8c30a2712469fcb`.
+
 ## Future Sprint 10 slices
 
 Later phases may add controlled ACRA-Lab ground truth, safe S4 planner/executor integration, provenance-gated
 FindingCandidate projection, coverage accounting, product UI and deterministic report/export are now implemented.
-Remaining slices are security hardening, bounded performance observations and reproducible final closure.
+Security hardening and bounded performance observations are now implemented. The remaining slice is reproducible final closure.
 
 Those capabilities are not claimed until separately implemented and verified.
