@@ -3,7 +3,7 @@
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 8 — Routing Normalization & Authorization-Path Intelligence.  
-**Decision:** S8 IN PROGRESS — Phase 2 VERIFIED.  
+**Decision:** S8 IN PROGRESS — Phase 3 VERIFIED.  
 **Working branch:** `s8-routing-normalization`.  
 **Immutable Sprint 7 base:** `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`.  
 **Sprint 7:** SOFTWARE COMPLETE and frozen separately.  
@@ -36,6 +36,18 @@ Phase 2 adds:
 - retained Sprint 3 route/core and Sprint 7 foundation regressions.
 
 No bypass generation, external-target probing or vulnerability promotion is claimed by Phase 2.
+
+Phase 3 verification: GitHub Actions run `35966112820` — SUCCESS.
+
+Phase 3 adds:
+- controlled routing ground truth for canonical and duplicate-separator route representations;
+- safe read-only `EQUIVALENT_ROUTE_REPRESENTATION` execution through the existing active engine;
+- explicit scope authorization for both route forms;
+- secure DENY / `NO_CHANGE` control;
+- deliberately vulnerable ALLOW / `UNEXPECTED_CHANGE` differential;
+- retained Sprint 3 core and Sprint 7 regression PASS.
+
+Phase 3 remains localhost-only and does not establish real-world routing/proxy behavior.
 
 ### Sprint 7 frozen closure
 
