@@ -357,3 +357,19 @@ NEWLY EXECUTED Phase 3 total: **558 represented assertions** across graph 87, S4
 | TEST-S7-PROVENANCE-001 | cross-project ownership mismatch stays INCONCLUSIVE | Sprint7WorkflowAssessmentIntegrationTestSuite | PASS |
 | TEST-S7-DATA-MIN-001 | raw token and token fingerprint minimized from downstream result | Sprint7WorkflowAssessmentIntegrationTestSuite | PASS |
 | TEST-S7-GT-001 | ten-case controlled localhost workflow ground-truth fixture | GT-S7-WORKFLOW-AUTHORIZATION.json + integration suite | PASS |
+
+### Sprint 7 Phase 3 — controlled active workflow execution
+
+| Test ID | Coverage | Evidence | Result |
+|---|---|---|---|
+| TEST-S7-PLAN-001 | explicit workflow policy generates one automatic `TRANSITION` seed | `Sprint7WorkflowPlannerExecutionIntegrationTestSuite` | PASS |
+| TEST-S7-MUTATION-001 | single-variable target-state body mutation uses `WORKFLOW_TRANSITION` | same suite | PASS |
+| TEST-S7-SAFETY-001 | mutation remains `STATE_CHANGING`; DELETE is not auto-generated; execution remains authorized localhost LAB only | planner factory + existing S4 safety path | PASS |
+| TEST-S7-LAB-SECURE-001 | secure fixture denies direct `DRAFT → APPROVED` SUBMIT bypass | live controlled execution | PASS — DENY / `EXPECTED_CHANGE` |
+| TEST-S7-LAB-VULN-001 | deliberately vulnerable fixture permits same bypass | live controlled execution | PASS — ALLOW / `UNEXPECTED_CHANGE` |
+| TEST-S7-CONFLICT-002 | conflicting workflow resolution creates no executable seed | integration suite | PASS |
+| TEST-S7-SECRET-002 | raw synthetic bearer token absent from serialized generated test and mutation context | integration suite | PASS |
+| TEST-S7-REGRESSION-001 | retained Sprint 6 foundation after S7 active-validation changes | GitHub Actions run `35958482546` | PASS |
+
+Phase 3 focused suite: **17 assertions PASS**. GitHub Actions run `35958482546` also passed the Sprint 7
+foundation, lab contract and retained Sprint 6 regression. These are controlled localhost fixture results only.
