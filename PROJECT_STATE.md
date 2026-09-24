@@ -31,8 +31,10 @@ Sprint 10 Phase 2 is **VERIFIED COMPLETE** by GitHub Actions run `36031909153` a
 `4646bbf434422a6b90e3a8b2947cd519c869812a`.
 
 Phase 2 adds session-specific immutable project/test/execution/evidence lineage validation without weakening the
-existing HTTP Observation validator. The next dependency is controlled synthetic ACRA-Lab token/session rotation
-ground truth.
+existing HTTP Observation validator. Controlled synthetic ACRA-Lab token/session rotation ground truth is **VERIFIED COMPLETE** by GitHub Actions
+run `36032231484` at commit `1fd2d12604bbfdc475b01460683a95150571f290`.
+
+The next dependency is passive traffic/session hydration through the existing collection/reconnaissance model.
 
 Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
 
