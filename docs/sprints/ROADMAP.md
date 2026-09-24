@@ -2,7 +2,24 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 9 IN PROGRESS — Phases 1–8 VERIFIED COMPLETE; final closure pending.**
+**Sprint 9 SOFTWARE COMPLETE.**
+
+Canonical Sprint 9 closure evidence:
+- branch: `s9-property-authorization`
+- final closure run: `36002545177` — SUCCESS
+- closure source commit: `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`
+- closure-candidate checkpoint SHA-256: `04eaadbfb2e132eb386ab52ff775fb5e1c56f0313b610721a28f2fb63bf8e531`
+- 873 entries, 0 unsafe paths, 0 duplicate entries
+- clean extraction and per-file SHA-256 equality: PASS
+- official Maven package and retained S2/S3/S4/S6/S7/S8/S9 verification: PASS
+
+Sprint 8 remains SOFTWARE COMPLETE.
+
+**Sprint 10 is NOT STARTED.** No Sprint 10 implementation is included in the Sprint 9 closure checkpoint.
+
+Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
+
+Historical phase evidence retained below.
 
 Canonical Sprint 9 Phase 1 evidence:
 - branch: `s9-property-authorization`
@@ -75,14 +92,12 @@ Verified Phase 8:
 - 100 / 1,000 / 10,000 property-policy engineering observations: PASS;
 - performance evidence artifact upload: PASS.
 
-Final closure milestone:
-1. freeze the Sprint 9 requirements traceability matrix;
-2. execute full S9 + retained S8/S7/S6 foundations;
-3. run official Maven package and retained Sprint 2/Sprint 3 regressions;
-4. run S4/S6/S7/S8/S9 headless UI regressions;
-5. generate deterministic Sprint 9 source checkpoint, manifest and SHA-256;
-6. verify safe archive paths, no duplicate entries, clean extraction and per-file SHA-256 equality;
-7. publish final software audit only after the dedicated closure gate passes.
+Final closure status:
+- dedicated Sprint 9 final verification: PASS;
+- deterministic source checkpoint: PASS;
+- archive safe paths / duplicates / clean extraction / per-file equality: PASS;
+- closure-candidate source ZIP SHA-256: `04eaadbfb2e132eb386ab52ff775fb5e1c56f0313b610721a28f2fb63bf8e531`;
+- Sprint 10 remains NOT STARTED by this closure.
 
 Do not claim Burp desktop validation from headless UI tests.
 
