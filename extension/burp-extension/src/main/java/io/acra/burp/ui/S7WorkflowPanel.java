@@ -25,6 +25,8 @@ import javax.swing.table.AbstractTableModel;
 public final class S7WorkflowPanel extends JPanel {
     private final S7WorkflowWorkspace workspace;
     private final JTextArea overview = view("s7-workflow-overview");
+    private final JTextArea reportView = view("s7-workflow-report-view");
+    private final JTextArea jsonExportView = view("s7-workflow-json-export-view");
     private final WorkflowMapModel workflowMapModel = new WorkflowMapModel();
     private final TransitionMatrixModel transitionMatrixModel = new TransitionMatrixModel();
     private final ConflictModel conflictModel = new ConflictModel();
@@ -55,6 +57,10 @@ public final class S7WorkflowPanel extends JPanel {
         transitionMatrixModel.update(snapshot.resolutions());
         conflictModel.update(snapshot.resolutions());
         coverageModel.update(snapshot.coverageEntries());
+        java.time.Instant previewAt = snapshot.policy() == null
+                ? java.time.Instant.EPOCH : snapshot.policy().capturedAt();
+        reportView.setText(workspace.exportMarkdown(previewAt).content());
+        jsonExportView.setText(workspace.exportJson(previewAt).content());
     }
 
     private JTabbedPane buildTabs() {
@@ -65,6 +71,8 @@ public final class S7WorkflowPanel extends JPanel {
         tabs.addTab("Transition Matrix", table(transitionMatrixModel, "s7-transition-matrix-table"));
         tabs.addTab("Policy Conflicts", table(conflictModel, "s7-workflow-conflicts-table"));
         tabs.addTab("Coverage", table(coverageModel, "s7-workflow-coverage-table"));
+        tabs.addTab("Report", new JScrollPane(reportView));
+        tabs.addTab("JSON Export", new JScrollPane(jsonExportView));
         return tabs;
     }
 
