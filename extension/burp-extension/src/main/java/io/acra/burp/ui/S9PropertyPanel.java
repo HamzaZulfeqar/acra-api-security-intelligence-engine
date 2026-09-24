@@ -24,6 +24,8 @@ import javax.swing.table.AbstractTableModel;
 public final class S9PropertyPanel extends JPanel {
     private final S9PropertyWorkspace workspace;
     private final JTextArea overview = view("s9-property-overview");
+    private final JTextArea reportView = view("s9-property-report-view");
+    private final JTextArea jsonExportView = view("s9-property-json-export-view");
     private final PolicyModel policyModel = new PolicyModel();
     private final ObservationModel observationModel = new ObservationModel();
     private final AssessmentModel assessmentModel = new AssessmentModel();
@@ -56,6 +58,9 @@ public final class S9PropertyPanel extends JPanel {
         assessmentModel.update(snapshot.assessments());
         candidateModel.update(snapshot.candidates());
         coverageModel.update(snapshot.coverageEntries());
+        java.time.Instant previewAt = java.time.Instant.EPOCH;
+        reportView.setText(workspace.exportMarkdown(previewAt).content());
+        jsonExportView.setText(workspace.exportJson(previewAt).content());
     }
 
     private JTabbedPane buildTabs() {
@@ -67,6 +72,8 @@ public final class S9PropertyPanel extends JPanel {
         tabs.addTab("Assessments", table(assessmentModel, "s9-property-assessment-table"));
         tabs.addTab("Candidates", table(candidateModel, "s9-property-candidate-table"));
         tabs.addTab("Coverage", table(coverageModel, "s9-property-coverage-table"));
+        tabs.addTab("Report", new JScrollPane(reportView));
+        tabs.addTab("JSON Export", new JScrollPane(jsonExportView));
         return tabs;
     }
 
