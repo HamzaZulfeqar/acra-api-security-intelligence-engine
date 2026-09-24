@@ -108,3 +108,44 @@ Verified gates:
 Phase 1 is therefore **VERIFIED COMPLETE**.
 
 Sprint 9 remains IN PROGRESS. No Phase 2 controlled ACRA-Lab property execution is claimed yet.
+
+
+## Phase 2 — controlled ACRA-Lab property ground truth
+
+Implemented:
+
+- `GT-S9-PROPERTY-AUTHORIZATION.json` with five explicit policy cases;
+- secure and deliberately vulnerable localhost-only profile fixtures;
+- secure property READ behavior that omits denied `salary_band` and `is_admin`;
+- vulnerable property READ behavior that exposes those explicitly declared fixture properties;
+- secure UPDATE behavior that denies `is_admin`;
+- vulnerable UPDATE behavior that applies `is_admin`;
+- positive control allowing `display_name` update;
+- cross-object control preserved as DENY in both lab modes so Sprint 9 does not introduce a separate BOLA fixture;
+- `Sprint9ControlledPropertyLabTestSuite`;
+- Sprint 9 verification script starts both isolated lab modes and validates the ground-truth contract.
+
+The fixture uses only explicit synthetic properties. It does not enumerate hidden fields or infer sensitivity from names.
+
+### Phase 2 verification
+
+GitHub Actions run `35986020761`: **SUCCESS** at commit
+`824aa74ea451f52321c4c7663c961ea7cafbd9c9`.
+
+Verified:
+
+- Python lab syntax: PASS;
+- five-case Sprint 9 ground-truth contract: PASS;
+- secure/vulnerable localhost lab readiness: PASS;
+- `Sprint9PropertyAuthorizationFoundationTestSuite`: PASS;
+- `Sprint9ControlledPropertyLabTestSuite`: PASS;
+- retained Sprint 5 final closure: PASS;
+- retained Sprint 6 policy foundation: PASS;
+- retained Sprint 7 workflow foundation: PASS;
+- retained Sprint 8 routing-normalization foundation: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
+Sprint 9 remains IN PROGRESS. Phase 3 must reuse the existing S4 planner/safety/executor path for controlled
+property mutation; it must not introduce an ad-hoc HTTP execution engine.
