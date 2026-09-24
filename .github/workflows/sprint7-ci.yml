@@ -56,4 +56,7 @@ jobs:
           name: sprint7-controlled-workflow
           path: |
             build/s7-foundation/lab/*.log
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json.sha256
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.md
           if-no-files-found: warn
