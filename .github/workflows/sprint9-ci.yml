@@ -6,6 +6,7 @@ on:
       - s9-property-authorization
     paths:
       - 'core/**'
+      - 'lab/**'
       - 'scripts/verify-sprint9-foundation.sh'
       - '.github/workflows/sprint9-ci.yml'
       - 'docs/sprints/sprint-09.md'
