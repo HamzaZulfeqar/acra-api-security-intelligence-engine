@@ -11,8 +11,8 @@ The Sprint 7 workflow-authorization, delegation and token-binding software scope
 software boundary. GitHub Actions run `35960826621` passed the dedicated full regression, official Maven package,
 retained legacy lanes, headless UI regressions, deterministic packaging and clean-extraction verification.
 
-Final checkpoint: `acra-sprint-07-final.zip`  
-SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`  
+Closure candidate checkpoint: `acra-sprint-07-final.zip`  
+Closure candidate SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`  
 Package entries: **791**  
 Unsafe paths: **0**  
 Clean extraction equality: **PASS**  
@@ -45,3 +45,5 @@ All ten required final gates passed in GitHub Actions run `35960826621`.
 
 The separate real-Burp desktop runtime and external-target lanes remain explicitly UNVERIFIED / DEFERRED and
 do not alter the Sprint 7 software-completion decision.
+
+The canonical final-status package digest is recorded in the external `acra-sprint-07-final.zip.sha256` sidecar produced after this final-status documentation commit. It is not embedded here because doing so would change the package digest recursively.

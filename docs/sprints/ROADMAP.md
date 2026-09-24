@@ -5,7 +5,7 @@
 **Sprint 7 SOFTWARE COMPLETE.** Dedicated final closure run `35960826621` passed full regression, Maven packaging,
 retained legacy/UI lanes and reproducible checkpoint verification.
 
-Final Sprint 7 checkpoint SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`.
+Sprint 7 closure candidate checkpoint SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`. The canonical final-status package digest is emitted by the external sidecar after final-status verification.
 
 Sprint 8 is **NOT STARTED**. No Sprint 8 implementation is included in the Sprint 7 checkpoint.
 

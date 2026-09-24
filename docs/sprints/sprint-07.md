@@ -285,8 +285,8 @@ Final verification included:
 - deterministic source checkpoint generation
 - archive safe-path, clean-extraction and per-file SHA-256 equality verification
 
-Checkpoint: `acra-sprint-07-final.zip`  
-SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`  
+Closure candidate checkpoint: `acra-sprint-07-final.zip`  
+Closure candidate SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`  
 Entries: **791**  
 Unsafe paths: **0**  
 Clean extraction: **PASS**  
@@ -294,3 +294,5 @@ Per-file SHA-256 equality: **PASS**
 
 Real Burp desktop runtime/load/handler/UI validation remains a separate UNVERIFIED / DEFERRED validation lane.
 Sprint 8 is **NOT STARTED** by this closure.
+
+The canonical final-status checkpoint digest is emitted in the external `.sha256` sidecar on the final-status verification run.

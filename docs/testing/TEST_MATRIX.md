@@ -444,4 +444,4 @@ Authoritative Phase 6 gate: GitHub Actions run `35960583660`. Timing and memory 
 | TEST-S7-PACKAGE-002 | safe paths / clean extraction / per-file equality | run `35960826621` | PASS — 791 entries, 0 unsafe paths |
 | TEST-S7-BURP-001 | real Burp desktop runtime | separate runtime lane | UNVERIFIED / DEFERRED |
 
-Candidate checkpoint SHA-256 from run `35960826621`: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`.
+Closure candidate checkpoint SHA-256 from run `35960826621`: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`. The canonical final-status digest is emitted by the external sidecar after the final-status documentation commit is verified.

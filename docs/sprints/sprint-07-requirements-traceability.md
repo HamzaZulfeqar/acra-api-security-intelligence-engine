@@ -41,7 +41,7 @@ or headless UI evidence.
 | S7-28 | Security hardening | fail-closed workflow security contracts | run 35960583660, 15 assertions | PASS |
 | S7-29 | 100/1k/10k performance observations | Sprint7WorkflowPerformanceObservationTestSuite | run 35960583660, 12 assertions | PASS |
 | S7-30 | Retained S1–S7 final regression + Maven package | scripts/verify-sprint7-final.sh | run 35960826621 | PASS |
-| S7-31 | Reproducible S7 ZIP + manifest + SHA-256 + clean extraction | scripts/package-sprint7.sh | run 35960826621; SHA-256 `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d` | PASS |
+| S7-31 | Reproducible S7 ZIP + manifest + SHA-256 + clean extraction | scripts/package-sprint7.sh | candidate closure run 35960826621; package verification PASS | PASS |
 | S7-32 | Real Burp desktop load/handler/UI runtime | separate runtime gate | no current desktop Burp execution | UNVERIFIED / DEFERRED |
 
 ## Non-blocking exclusions
@@ -64,10 +64,12 @@ Those remain later roadmap or separate validation lanes.
 ## Final closure evidence
 
 - GitHub Actions run: `35960826621` — SUCCESS
-- final checkpoint: `acra-sprint-07-final.zip`
-- checkpoint SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`
+- candidate closure checkpoint: `acra-sprint-07-final.zip`
+- candidate closure checkpoint SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`
 - packaged entries: 791
 - unsafe archive paths: 0
 - clean extraction equality: PASS
 - per-file SHA-256 equality: PASS
 - build/Git artifacts excluded from source checkpoint: PASS
+
+- canonical final-status package SHA-256 is emitted by the external `.sha256` sidecar after the final-status commit is verified; it is intentionally not embedded in the packaged source tree to avoid self-referential hash mutation.
