@@ -14,5 +14,6 @@ javac --release 21 -Xlint:all -Werror -cp "$BUILD/main" -d "$BUILD/test" @"$BUIL
 
 java -ea -cp "$BUILD/main:$BUILD/test" io.acra.core.tests.sprint7.Sprint7WorkflowAuthorizationFoundationTestSuite
 java -ea -cp "$BUILD/main:$BUILD/test" io.acra.core.tests.sprint7.Sprint7WorkflowAssessmentIntegrationTestSuite
+java -ea -cp "$BUILD/main:$BUILD/test" io.acra.core.tests.sprint7.Sprint7WorkflowCoverageTestSuite
 
 echo "SPRINT7_FOUNDATION_VERIFICATION PASS"

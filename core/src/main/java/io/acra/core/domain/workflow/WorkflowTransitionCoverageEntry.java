@@ -97,6 +97,11 @@ public record WorkflowTransitionCoverageEntry(
         if (!coverageId.equals(existing.coverageId())) {
             throw new IllegalArgumentException("coverage identity mismatch");
         }
+        if (expectedDecision != existing.expectedDecision()
+                || resolutionState != existing.resolutionState()
+                || !matchedRuleIds.equals(existing.matchedRuleIds())) {
+            throw new IllegalArgumentException("workflow policy resolution drift for existing coverage identity");
+        }
         return new WorkflowTransitionCoverageEntry(
                 coverageId, resolutionId, policyFingerprint, workflowId, principalId, tenantId, resourceId,
                 action, fromState, toState, expectedDecision, resolutionState, matchedRuleIds,

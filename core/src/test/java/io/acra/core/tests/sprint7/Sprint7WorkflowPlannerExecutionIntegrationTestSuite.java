@@ -53,6 +53,8 @@ import io.acra.core.domain.http.HttpRequest;
 import io.acra.core.domain.identity.AuthenticationType;
 import io.acra.core.domain.resource.Resource;
 import io.acra.core.domain.workflow.WorkflowAuthorizationResolution;
+import io.acra.core.domain.workflow.WorkflowCoverageStage;
+import io.acra.core.engine.S7WorkflowCoverageTracker;
 import io.acra.core.graph.SecurityContextGraph;
 import io.acra.core.recon.SecurityContextFingerprint;
 import io.acra.core.serialization.DomainSerializer;
@@ -84,6 +86,8 @@ public final class Sprint7WorkflowPlannerExecutionIntegrationTestSuite {
                 PolicyResolutionState.RESOLVED_ALLOW);
         WorkflowAuthorizationResolution target = resolution("APPROVED", AuthorizationDecision.DENY,
                 PolicyResolutionState.RESOLVED_DENY);
+        S7WorkflowCoverageTracker coverage = new S7WorkflowCoverageTracker();
+        coverage.recordResolution(target);
 
         var secureAugmentation = new S7WorkflowPlanningBridge().augment(
                 planningInput(18082), List.of(candidate(18082, baseline, target)));
@@ -113,6 +117,14 @@ public final class Sprint7WorkflowPlannerExecutionIntegrationTestSuite {
         TestSupport.assertEquals("APPROVED", seed.mutation().mutatedValue(),
                 "mutated target-state is explicit and non-secret");
         assertions++;
+        coverage.recordPlanned(target, seed);
+        TestSupport.assertEquals(WorkflowCoverageStage.PLANNED,
+                coverage.matrix().entries().getFirst().stage(),
+                "generated workflow transition should advance coverage to PLANNED");
+        assertions++;
+        TestSupport.assertEquals(1, coverage.matrix().summary().plannedContexts(),
+                "one resolved workflow context should be planned");
+        assertions++;
 
         ExecutionResult secure = executeSingle(secureAugmentation.planningInput(), target, 18082, "secure");
         TestSupport.assertEquals(AuthorizationOutcome.DENY, secure.result().observation().observedDecision(),
@@ -122,9 +134,18 @@ public final class Sprint7WorkflowPlannerExecutionIntegrationTestSuite {
                 secure.result().observation().differences().classification(),
                 "secure workflow mutation should move in the expected deny direction");
         assertions++;
+        coverage.recordExecution(target, secure.result());
+        TestSupport.assertEquals(WorkflowCoverageStage.OBSERVED,
+                coverage.matrix().entries().getFirst().stage(),
+                "completed secure execution should advance workflow coverage to OBSERVED");
+        assertions++;
+        TestSupport.assertEquals(1, coverage.matrix().summary().observedContexts(),
+                "secure execution should create one observed workflow coverage context");
+        assertions++;
 
         var vulnerableAugmentation = new S7WorkflowPlanningBridge().augment(
                 planningInput(18081), List.of(candidate(18081, baseline, target)));
+        coverage.recordPlanned(target, vulnerableAugmentation.generatedSeeds().getFirst());
         ExecutionResult vulnerable = executeSingle(vulnerableAugmentation.planningInput(), target, 18081, "vulnerable");
         TestSupport.assertEquals(AuthorizationOutcome.ALLOW, vulnerable.result().observation().observedDecision(),
                 "deliberately vulnerable ACRA-Lab should allow the direct target-state bypass");
@@ -135,6 +156,16 @@ public final class Sprint7WorkflowPlannerExecutionIntegrationTestSuite {
         assertions++;
         TestSupport.assertTrue(vulnerable.result().observation().evidenceIds().size() > 0,
                 "live workflow execution should retain evidence references");
+        assertions++;
+        coverage.recordExecution(target, vulnerable.result());
+        TestSupport.assertEquals(2, coverage.matrix().entries().getFirst().executionIds().size(),
+                "secure and vulnerable runs should retain two distinct execution references");
+        assertions++;
+        TestSupport.assertEquals(2, coverage.matrix().entries().getFirst().observationIds().size(),
+                "secure and vulnerable runs should retain two distinct observations");
+        assertions++;
+        TestSupport.assertTrue(!coverage.matrix().entries().getFirst().observationEvidenceIds().isEmpty(),
+                "workflow coverage should retain observation evidence references");
         assertions++;
 
         String rawToken = token("author-a", "tenant-a", "author");
