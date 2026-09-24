@@ -1,6 +1,6 @@
 # Sprint 8 — Routing Normalization & Authorization-Path Intelligence
 
-Status: IN PROGRESS — PHASE 6 VERIFIED  
+Status: IN PROGRESS — PHASE 7 VERIFIED  
 Branch: `s8-routing-normalization`  
 Immutable Sprint 7 base: `0a42558e1aadfd31a0dd17ba2479ee99635fbafb`
 
@@ -249,3 +249,50 @@ GitHub Actions run `35970917885`: **SUCCESS**.
 - Sprint 8 Routing UI including Report / JSON Export: PASS, 23 assertions
 
 Phase 6 is complete. Sprint 8 remains IN PROGRESS.
+
+## Phase 7 — security hardening and bounded performance observations
+
+Security-hardening coverage:
+- route-stage query and fragment material rejected
+- provenance-free route-stage observations rejected
+- route-boundary hosts containing scheme/path/user-info rejected
+- duplicate processing stages rejected
+- unknown authorization context remains `INCONCLUSIVE`
+- missing intermediary processing stages remain `INCONCLUSIVE`
+- route-stable authorization change is not promoted as Sprint 8 routing candidate
+- non-equivalent route representation rejected by `UriMutationAdapter`
+- URI authority escape rejected
+- URI fragment injection rejected
+- embedded bearer secret redaction preserves later report fields
+- routing reports cannot auto-confirm findings
+
+Bounded performance observations cover 100 / 1,000 / 10,000 routing contexts across:
+- staged normalization analysis
+- authorization-boundary analysis
+- routing workspace hydration
+- deterministic report generation
+
+### Phase 7 verification
+
+GitHub Actions run `35971212640`: **SUCCESS**.
+
+- `Sprint8RoutingSecurityHardeningTestSuite`: PASS, 17 assertions
+- `Sprint8RoutingPerformanceObservationTestSuite`: PASS, 13 assertions
+- retained Sprint 8 core/live/reporting suites: PASS
+- retained Sprint 7 foundation: PASS
+- extension Maven compile and retained S4/S6/S7/S8 UI suites: PASS
+- performance CSV artifact: uploaded
+
+Observed CI values:
+
+| Contexts | Analysis | Report | Approx JVM memory delta |
+|---:|---:|---:|---:|
+| 100 | 83 ms | 26 ms | 875,560 bytes |
+| 1,000 | 123 ms | 6 ms | 5,068,312 bytes |
+| 10,000 | 560 ms | 31 ms | 83,640,608 bytes |
+
+These are engineering observations from one CI environment, not benchmarks, SLOs, release thresholds, or
+real-world capacity claims.
+
+Phase 7 is complete. Remaining Sprint 8 work is final traceability, retained regression, reproducible package
+verification and final software audit.
