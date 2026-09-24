@@ -5,7 +5,7 @@
 Sprint 12 — **Reproduction Export & Interoperability** is IN PROGRESS on
 `s12-reproduction-export-interoperability`.
 
-Phases 1–4 are VERIFIED COMPLETE. Latest capability-promotion gate: GitHub Actions run `36073182973`.
+Phases 1–5 are VERIFIED COMPLETE. Latest hardening gate: GitHub Actions run `36073674429`.
 
 Current evidence boundary:
 
@@ -17,7 +17,7 @@ Current evidence boundary:
 - real Burp desktop insertion remains UNVERIFIED / DEFERRED;
 - Sprint 11 remains the frozen SOFTWARE COMPLETE release base.
 
-Next dependency: cross-format interoperability/security hardening, then Sprint 12 final closure.
+Cross-format interoperability/security hardening is verified. Next dependency: Sprint 12 final closure.
 
 Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
 
