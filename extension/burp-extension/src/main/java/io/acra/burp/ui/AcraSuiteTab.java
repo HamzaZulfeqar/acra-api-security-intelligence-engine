@@ -9,6 +9,7 @@ import io.acra.core.inventory.EndpointAggregate;
 import io.acra.core.active.product.ActiveEngineWorkspace;
 import io.acra.core.product.authorization.S6AuthorizationWorkspace;
 import io.acra.core.product.workflow.S7WorkflowWorkspace;
+import io.acra.core.product.routing.S8RoutingWorkspace;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
@@ -30,25 +31,34 @@ public final class AcraSuiteTab {
     private final ActiveTestingPanel activeTestingPanel;
     private final S6AuthorizationPanel authorizationPanel;
     private final S7WorkflowPanel workflowPanel;
+    private final S8RoutingPanel routingPanel;
     private final Timer refresh;
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope){
         this(pipeline,scope,new ActiveEngineWorkspace(Clock.systemUTC(),null),
-                new S6AuthorizationWorkspace(),new S7WorkflowWorkspace());
+                new S6AuthorizationWorkspace(),new S7WorkflowWorkspace(),new S8RoutingWorkspace());
     }
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,ActiveEngineWorkspace activeWorkspace){
-        this(pipeline,scope,activeWorkspace,new S6AuthorizationWorkspace(),new S7WorkflowWorkspace());
+        this(pipeline,scope,activeWorkspace,new S6AuthorizationWorkspace(),new S7WorkflowWorkspace(),
+                new S8RoutingWorkspace());
     }
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
                         ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace){
-        this(pipeline,scope,activeWorkspace,authorizationWorkspace,new S7WorkflowWorkspace());
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,new S7WorkflowWorkspace(),
+                new S8RoutingWorkspace());
     }
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
                         ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
                         S7WorkflowWorkspace workflowWorkspace){
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,workflowWorkspace,new S8RoutingWorkspace());
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
+                        S7WorkflowWorkspace workflowWorkspace,S8RoutingWorkspace routingWorkspace){
         JTabbedPane tabs=new JTabbedPane();
         trafficModel=new TrafficModel(pipeline); contextModel=new ContextModel(pipeline); endpointModel=new EndpointModel(pipeline);
         JPanel overviewPanel=new JPanel(new BorderLayout()); overviewPanel.add(overview,BorderLayout.NORTH); tabs.addTab("Overview",overviewPanel);
@@ -68,8 +78,10 @@ public final class AcraSuiteTab {
         authorizationPanel.install(tabs);
         workflowPanel=new S7WorkflowPanel(workflowWorkspace);
         workflowPanel.install(tabs);
+        routingPanel=new S8RoutingPanel(routingWorkspace);
+        routingPanel.install(tabs);
         tabs.addTab("Configuration",configPanel(scope)); root.add(tabs,BorderLayout.CENTER);
-        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();authorizationPanel.refresh();workflowPanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
+        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();authorizationPanel.refresh();workflowPanel.refresh();routingPanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
         refresh.start();
     }
 
@@ -91,6 +103,7 @@ public final class AcraSuiteTab {
     public ActiveEngineWorkspace activeWorkspace(){return activeTestingPanel.workspace();}
     public S6AuthorizationWorkspace authorizationWorkspace(){return authorizationPanel.workspace();}
     public S7WorkflowWorkspace workflowWorkspace(){return workflowPanel.workspace();}
+    public S8RoutingWorkspace routingWorkspace(){return routingPanel.workspace();}
     public void stop(){refresh.stop();}
 
     private Component trafficPanel(TrafficIntelligencePipeline pipeline){
