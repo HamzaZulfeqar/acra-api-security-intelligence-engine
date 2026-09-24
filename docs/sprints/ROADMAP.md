@@ -29,11 +29,18 @@ Phase 3 verified by GitHub Actions run `36032231484`:
 - provenance-gated stable rotation/context drift: PASS;
 - different-session isolation: PASS.
 
+Phase 4 verified by GitHub Actions run `36032676285`:
+- existing passive traffic/security-context pipeline reused: PASS;
+- unconfirmed JWT claims remain inferred: PASS;
+- explicit identity confirmation upgrade: PASS;
+- confirmation conflict downgrade: PASS;
+- raw credential exclusion: PASS.
+
 Next dependency-ordered milestone:
-1. audit existing passive traffic/recon models for reusable authentication/session facts;
-2. hydrate Session observations from those facts without creating a second traffic collector;
-3. preserve UNKNOWN identity when evidence is insufficient;
-4. retain provenance and secret-redaction boundaries.
+1. classify safe rotation versus verified context drift;
+2. distinguish unverified differences from evidence-backed drift;
+3. preserve principal/role/tenant/scope dimensions separately;
+4. prepare a review-only assessment boundary before any finding projection.
 
 Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
 
