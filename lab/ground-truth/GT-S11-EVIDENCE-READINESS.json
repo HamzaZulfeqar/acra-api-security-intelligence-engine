@@ -9,131 +9,214 @@
       "case_id": "S11-EVAL-001",
       "source_case_id": "S4-FP-PUBLIC",
       "state": "READY",
-      "routes": ["/api/v1/s4/public"],
-      "evidence": ["GT-EXEC-S4#false_positive_preparation:public resource", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "routes": [
+        "/api/v1/s4/public"
+      ],
+      "evidence": [
+        "GT-EXEC-S4#false_positive_preparation:public resource",
+        "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"
+      ],
       "reason": "public-resource endpoint exists and is exercised as a live false-positive control"
     },
     {
       "case_id": "S11-EVAL-002",
       "source_case_id": "S4-FP-SOFT-DENY",
       "state": "READY",
-      "routes": ["/api/v1/s4/application-denial"],
-      "evidence": ["GT-EXEC-S4#false_positive_preparation:HTTP 200 application denial", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "routes": [
+        "/api/v1/s4/application-denial"
+      ],
+      "evidence": [
+        "GT-EXEC-S4#false_positive_preparation:HTTP 200 application denial",
+        "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"
+      ],
       "reason": "live HTTP 200 application denial is explicitly normalized to DENY"
     },
     {
       "case_id": "S11-EVAL-003",
       "source_case_id": "S4-FP-TIMESTAMP",
-      "state": "PARTIAL",
-      "routes": ["/api/v1/s4/documents/Document-A"],
-      "evidence": ["GT-EXEC-S4#false_positive_preparation:dynamic timestamp", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
-      "reason": "dynamic timestamp is present but current live test changes timestamp and request_id together"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-003?variant=a",
+        "/api/v1/s11/research/case-003?variant=b"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-003",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "dedicated localhost variants isolate timestamp while request_id remains fixed"
     },
     {
       "case_id": "S11-EVAL-004",
       "source_case_id": "S4-FP-REQUEST-ID",
-      "state": "PARTIAL",
-      "routes": ["/api/v1/s4/documents/Document-A"],
-      "evidence": ["GT-EXEC-S4#false_positive_preparation:dynamic request identifier", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
-      "reason": "dynamic request_id is present but current live test changes request_id and timestamp together"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-004?variant=a",
+        "/api/v1/s11/research/case-004?variant=b"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-004",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "dedicated localhost variants isolate request_id while timestamp remains fixed"
     },
     {
       "case_id": "S11-EVAL-005",
       "source_case_id": "S4-FP-ORDERING",
-      "state": "PARTIAL",
-      "routes": ["/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"],
-      "evidence": ["GT-EXEC-S4#false_positive_preparation:response ordering and formatting variation", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
-      "reason": "variant pair changes field order and formatting together rather than isolating ordering"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-005?variant=a",
+        "/api/v1/s11/research/case-005?variant=b"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-005",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "dedicated localhost variants isolate compact JSON field ordering"
     },
     {
       "case_id": "S11-EVAL-006",
       "source_case_id": "S4-FP-FORMATTING",
-      "state": "PARTIAL",
-      "routes": ["/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"],
-      "evidence": ["GT-EXEC-S4#false_positive_preparation:response ordering and formatting variation", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
-      "reason": "variant pair changes formatting and field order together rather than isolating formatting"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-006?variant=a",
+        "/api/v1/s11/research/case-006?variant=b"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-006",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "dedicated localhost variants isolate whitespace formatting with stable field order"
     },
     {
       "case_id": "S11-EVAL-007",
       "source_case_id": "S4-FP-REPRESENTATION",
       "state": "READY",
-      "routes": ["/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"],
-      "evidence": ["GT-EXEC-S4#false_positive_preparation:public resource", "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"],
+      "routes": [
+        "/api/v1/s4/public?variant=a",
+        "/api/v1/s4/public?variant=b"
+      ],
+      "evidence": [
+        "GT-EXEC-S4#false_positive_preparation:public resource",
+        "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"
+      ],
       "reason": "same public resource is exercised in two raw representations and verified semantically equivalent"
     },
     {
       "case_id": "S11-EVAL-008",
       "source_case_id": "S4-FN-SAME-STATUS",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-008?variant=a"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-008",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "secure/vulnerable localhost modes prove same-HTTP-status semantic DENY to ALLOW behavior"
     },
     {
       "case_id": "S11-EVAL-009",
       "source_case_id": "S4-FN-SOFT-DENIAL",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-009?variant=a"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-009",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "secure localhost HTTP-200 soft denial and vulnerable foreign-resource allowance are live verified"
     },
     {
       "case_id": "S11-EVAL-010",
       "source_case_id": "S4-FN-DYNAMIC-LENGTH",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-010?variant=a&pad=2",
+        "/api/v1/s11/research/case-010?variant=a&pad=17"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-010",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "controlled padding changes response length while each mode's authorization meaning remains stable"
     },
     {
       "case_id": "S11-EVAL-011",
       "source_case_id": "S4-FN-REORDERED-JSON",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-011?variant=a",
+        "/api/v1/s11/research/case-011?variant=b"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-011",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "vulnerable foreign-resource JSON reordering is live verified against secure denial"
     },
     {
       "case_id": "S11-EVAL-012",
       "source_case_id": "S4-FN-OPAQUE-ID",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-012?variant=a"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-012",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "opaque foreign resource identifier is live verified in vulnerable mode against secure denial"
     },
     {
       "case_id": "S11-EVAL-013",
       "source_case_id": "S4-FN-NESTED",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-013?variant=a"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-013",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "nested foreign resource/owner evidence is live verified in vulnerable mode against secure denial"
     },
     {
       "case_id": "S11-EVAL-014",
       "source_case_id": "S4-FN-COLLECTION",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-014?variant=a"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-014",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "secure collection excludes and vulnerable collection includes the foreign member"
     },
     {
       "case_id": "S11-EVAL-015",
       "source_case_id": "S4-FN-NONSTANDARD-AUTH",
-      "state": "MISSING_FIXTURE",
-      "routes": [],
-      "evidence": [],
-      "reason": "no dedicated executable fixture currently maps this positive research case"
+      "state": "READY",
+      "routes": [
+        "/api/v1/s11/research/case-015?variant=a"
+      ],
+      "evidence": [
+        "GT-S11-RESEARCH-LAB-FIXTURES#S11-EVAL-015",
+        "Sprint11ControlledResearchLabFixtureTestSuite"
+      ],
+      "reason": "synthetic nonstandard X-S11-Principal context is required and secure/vulnerable behavior is live verified"
     }
   ],
   "summary": {
     "cases": 15,
-    "ready": 3,
-    "partial": 4,
-    "missing_fixture": 8,
+    "ready": 15,
+    "partial": 0,
+    "missing_fixture": 0,
     "executed": 0
   },
   "notes": [
+    "All 15 registered research cases now have live localhost fixture evidence.",
     "Fixture readiness is not ablation-dimension evidence readiness.",
     "No campaign cell is promoted to EVIDENCE_READY by this manifest alone.",
     "No A0-A7 experiment has executed and no research metric is measured."

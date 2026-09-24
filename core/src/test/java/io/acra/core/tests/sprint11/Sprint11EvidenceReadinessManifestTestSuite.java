@@ -26,14 +26,14 @@ public final class Sprint11EvidenceReadinessManifestTestSuite {
         TestSupport.assertEquals(15, manifest.cases().size(),
                 "readiness manifest covers all dataset cases");
         assertions++;
-        TestSupport.assertEquals(3L, manifest.count(FixtureReadinessState.READY),
-                "three existing controls are independently ready");
+        TestSupport.assertEquals(15L, manifest.count(FixtureReadinessState.READY),
+                "all fifteen registered research cases now have live fixture evidence");
         assertions++;
-        TestSupport.assertEquals(4L, manifest.count(FixtureReadinessState.PARTIAL),
-                "four existing controls combine effects and remain partial");
+        TestSupport.assertEquals(0L, manifest.count(FixtureReadinessState.PARTIAL),
+                "isolated Sprint 11 fixtures remove partial readiness");
         assertions++;
-        TestSupport.assertEquals(8L, manifest.count(FixtureReadinessState.MISSING_FIXTURE),
-                "eight positive research controls still require dedicated fixtures");
+        TestSupport.assertEquals(0L, manifest.count(FixtureReadinessState.MISSING_FIXTURE),
+                "dedicated Sprint 11 fixtures remove missing-fixture readiness gaps");
         assertions++;
 
         for (int index = 0; index < manifest.cases().size(); index++) {
@@ -41,21 +41,15 @@ public final class Sprint11EvidenceReadinessManifestTestSuite {
             TestSupport.assertEquals(String.format("S11-EVAL-%03d", index + 1), item.caseId(),
                     "readiness ordering matches dataset ordering");
             assertions++;
-            if (item.state() == FixtureReadinessState.MISSING_FIXTURE) {
-                TestSupport.assertTrue(item.routes().isEmpty(),
-                        "missing fixture cannot claim executable route");
-                assertions++;
-                TestSupport.assertTrue(item.evidenceReferences().isEmpty(),
-                        "missing fixture cannot claim executable evidence");
-                assertions++;
-            } else {
-                TestSupport.assertTrue(!item.routes().isEmpty(),
-                        "ready/partial fixture requires explicit route");
-                assertions++;
-                TestSupport.assertTrue(!item.evidenceReferences().isEmpty(),
-                        "ready/partial fixture requires evidence reference");
-                assertions++;
-            }
+            TestSupport.assertEquals(FixtureReadinessState.READY, item.state(),
+                    "every registered case is fixture-ready");
+            assertions++;
+            TestSupport.assertTrue(!item.routes().isEmpty(),
+                    "fixture-ready case requires explicit route");
+            assertions++;
+            TestSupport.assertTrue(!item.evidenceReferences().isEmpty(),
+                    "fixture-ready case requires executable evidence reference");
+            assertions++;
         }
 
         var campaign = S11AblationCampaignPlan.canonical();

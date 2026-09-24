@@ -75,9 +75,9 @@ assert readiness["id"] == "GT-S11-EVIDENCE-READINESS"
 assert readiness["execution_state"] == "NOT_RUN"
 assert readiness["summary"] == {
     "cases": 15,
-    "ready": 3,
-    "partial": 4,
-    "missing_fixture": 8,
+    "ready": 15,
+    "partial": 0,
+    "missing_fixture": 0,
     "executed": 0,
 }
 assert len(readiness["cases"]) == 15
@@ -99,20 +99,20 @@ for required in {
     assert required in prep
 
 states=[item["state"] for item in readiness["cases"]]
-assert states.count("READY") == 3
-assert states.count("PARTIAL") == 4
-assert states.count("MISSING_FIXTURE") == 8
+assert states.count("READY") == 15
+assert states.count("PARTIAL") == 0
+assert states.count("MISSING_FIXTURE") == 0
 
 for index,item in enumerate(readiness["cases"], start=1):
     assert item["case_id"] == f"S11-EVAL-{index:03d}"
-    if item["state"] == "MISSING_FIXTURE":
-        assert item["routes"] == []
-        assert item["evidence"] == []
-    else:
-        assert item["routes"]
-        assert item["evidence"]
+    assert item["state"] == "READY"
+    assert item["routes"]
+    assert item["evidence"]
+    if index in (3,4,5,6,8,9,10,11,12,13,14,15):
+        assert any("GT-S11-RESEARCH-LAB-FIXTURES" in value for value in item["evidence"])
+        assert "Sprint11ControlledResearchLabFixtureTestSuite" in item["evidence"]
 
-print("SPRINT11_EVIDENCE_READINESS_CONTRACT PASS ready=3 partial=4 missing=8 executed=0")
+print("SPRINT11_EVIDENCE_READINESS_CONTRACT PASS ready=15 partial=0 missing=0 executed=0")
 PY
 
 python3 -m py_compile lab/common/basic_api.py lab/secure-api/basic-api/server.py lab/vulnerable-api/basic-api/server.py

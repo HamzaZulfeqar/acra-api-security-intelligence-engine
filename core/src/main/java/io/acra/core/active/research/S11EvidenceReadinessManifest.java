@@ -41,35 +41,57 @@ public record S11EvidenceReadinessManifest(
                 "GT-S11-ABLATION-DATASET",
                 AblationExecutionState.NOT_RUN,
                 List.of(
-                        ready("S11-EVAL-001", "S4-FP-PUBLIC",
+                        legacyReady("S11-EVAL-001", "S4-FP-PUBLIC",
                                 List.of("/api/v1/s4/public"),
                                 "public-resource endpoint exists and is exercised as a live false-positive control"),
-                        ready("S11-EVAL-002", "S4-FP-SOFT-DENY",
+                        legacyReady("S11-EVAL-002", "S4-FP-SOFT-DENY",
                                 List.of("/api/v1/s4/application-denial"),
                                 "live HTTP 200 application denial is explicitly normalized to DENY"),
-                        partial("S11-EVAL-003", "S4-FP-TIMESTAMP",
-                                List.of("/api/v1/s4/documents/Document-A"),
-                                "dynamic timestamp is present but timestamp and request_id currently vary together"),
-                        partial("S11-EVAL-004", "S4-FP-REQUEST-ID",
-                                List.of("/api/v1/s4/documents/Document-A"),
-                                "dynamic request_id is present but request_id and timestamp currently vary together"),
-                        partial("S11-EVAL-005", "S4-FP-ORDERING",
-                                List.of("/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"),
-                                "current pair changes ordering and formatting together"),
-                        partial("S11-EVAL-006", "S4-FP-FORMATTING",
-                                List.of("/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"),
-                                "current pair changes formatting and ordering together"),
-                        ready("S11-EVAL-007", "S4-FP-REPRESENTATION",
+                        researchReady("S11-EVAL-003", "S4-FP-TIMESTAMP",
+                                List.of("/api/v1/s11/research/case-003?variant=a",
+                                        "/api/v1/s11/research/case-003?variant=b"),
+                                "dedicated localhost variants isolate timestamp while request_id remains fixed"),
+                        researchReady("S11-EVAL-004", "S4-FP-REQUEST-ID",
+                                List.of("/api/v1/s11/research/case-004?variant=a",
+                                        "/api/v1/s11/research/case-004?variant=b"),
+                                "dedicated localhost variants isolate request_id while timestamp remains fixed"),
+                        researchReady("S11-EVAL-005", "S4-FP-ORDERING",
+                                List.of("/api/v1/s11/research/case-005?variant=a",
+                                        "/api/v1/s11/research/case-005?variant=b"),
+                                "dedicated localhost variants isolate compact JSON field ordering"),
+                        researchReady("S11-EVAL-006", "S4-FP-FORMATTING",
+                                List.of("/api/v1/s11/research/case-006?variant=a",
+                                        "/api/v1/s11/research/case-006?variant=b"),
+                                "dedicated localhost variants isolate whitespace formatting with stable field order"),
+                        legacyReady("S11-EVAL-007", "S4-FP-REPRESENTATION",
                                 List.of("/api/v1/s4/public?variant=a", "/api/v1/s4/public?variant=b"),
                                 "same public resource is verified semantically equivalent across raw representations"),
-                        missing("S11-EVAL-008", "S4-FN-SAME-STATUS"),
-                        missing("S11-EVAL-009", "S4-FN-SOFT-DENIAL"),
-                        missing("S11-EVAL-010", "S4-FN-DYNAMIC-LENGTH"),
-                        missing("S11-EVAL-011", "S4-FN-REORDERED-JSON"),
-                        missing("S11-EVAL-012", "S4-FN-OPAQUE-ID"),
-                        missing("S11-EVAL-013", "S4-FN-NESTED"),
-                        missing("S11-EVAL-014", "S4-FN-COLLECTION"),
-                        missing("S11-EVAL-015", "S4-FN-NONSTANDARD-AUTH")),
+                        researchReady("S11-EVAL-008", "S4-FN-SAME-STATUS",
+                                List.of("/api/v1/s11/research/case-008?variant=a"),
+                                "same HTTP status carries secure DENY and vulnerable foreign-resource ALLOW"),
+                        researchReady("S11-EVAL-009", "S4-FN-SOFT-DENIAL",
+                                List.of("/api/v1/s11/research/case-009?variant=a"),
+                                "HTTP-200 soft denial and vulnerable foreign-resource allowance are live verified"),
+                        researchReady("S11-EVAL-010", "S4-FN-DYNAMIC-LENGTH",
+                                List.of("/api/v1/s11/research/case-010?variant=a&pad=2",
+                                        "/api/v1/s11/research/case-010?variant=a&pad=17"),
+                                "controlled padding varies length while authorization meaning remains stable per mode"),
+                        researchReady("S11-EVAL-011", "S4-FN-REORDERED-JSON",
+                                List.of("/api/v1/s11/research/case-011?variant=a",
+                                        "/api/v1/s11/research/case-011?variant=b"),
+                                "foreign-resource JSON reordering is verified against secure denial"),
+                        researchReady("S11-EVAL-012", "S4-FN-OPAQUE-ID",
+                                List.of("/api/v1/s11/research/case-012?variant=a"),
+                                "opaque foreign resource is verified against secure denial"),
+                        researchReady("S11-EVAL-013", "S4-FN-NESTED",
+                                List.of("/api/v1/s11/research/case-013?variant=a"),
+                                "nested foreign resource and owner evidence are live verified"),
+                        researchReady("S11-EVAL-014", "S4-FN-COLLECTION",
+                                List.of("/api/v1/s11/research/case-014?variant=a"),
+                                "secure collection excludes and vulnerable collection includes foreign member"),
+                        researchReady("S11-EVAL-015", "S4-FN-NONSTANDARD-AUTH",
+                                List.of("/api/v1/s11/research/case-015?variant=a"),
+                                "synthetic nonstandard principal context is required and live verified")),
                 "");
     }
 
@@ -77,23 +99,18 @@ public record S11EvidenceReadinessManifest(
         return cases.stream().filter(value -> value.state() == state).count();
     }
 
-    private static ResearchFixtureReadiness ready(
+    private static ResearchFixtureReadiness legacyReady(
             String caseId, String sourceCaseId, List<String> routes, String reason) {
         return new ResearchFixtureReadiness(caseId, sourceCaseId, FixtureReadinessState.READY, routes,
                 List.of("GT-EXEC-S4#false_positive_preparation",
                         "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"), reason);
     }
 
-    private static ResearchFixtureReadiness partial(
+    private static ResearchFixtureReadiness researchReady(
             String caseId, String sourceCaseId, List<String> routes, String reason) {
-        return new ResearchFixtureReadiness(caseId, sourceCaseId, FixtureReadinessState.PARTIAL, routes,
-                List.of("GT-EXEC-S4#false_positive_preparation",
-                        "Sprint4LocalhostIntegrationTestSuite#testLiveFalsePositivePreparationCases"), reason);
-    }
-
-    private static ResearchFixtureReadiness missing(String caseId, String sourceCaseId) {
-        return new ResearchFixtureReadiness(caseId, sourceCaseId, FixtureReadinessState.MISSING_FIXTURE,
-                List.of(), List.of(), "no dedicated executable fixture currently maps this positive research case");
+        return new ResearchFixtureReadiness(caseId, sourceCaseId, FixtureReadinessState.READY, routes,
+                List.of("GT-S11-RESEARCH-LAB-FIXTURES#" + caseId,
+                        "Sprint11ControlledResearchLabFixtureTestSuite"), reason);
     }
 
     private static void validate(List<ResearchFixtureReadiness> cases) {
