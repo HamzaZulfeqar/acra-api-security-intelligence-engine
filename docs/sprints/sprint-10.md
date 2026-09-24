@@ -112,3 +112,36 @@ Phase 1 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 2 owns controlled localhost batch/indirect ground truth; no active
 batch/indirect mutation is claimed yet.
+
+
+## Phase 2 — controlled ACRA-Lab batch and indirect-reference ground truth
+
+Implemented:
+
+- `GT-S10-BATCH-INDIRECT-AUTHORIZATION.json`;
+- fixed synthetic batch resources `resource-a` / `resource-b`;
+- fixed synthetic aliases `share-a` / `share-b`;
+- secure batch fixture evaluates authorization independently for every item;
+- deliberately vulnerable batch fixture incorrectly reuses the first item's authorization across the batch;
+- secure indirect fixture resolves the alias and then authorizes the resolved resource;
+- deliberately vulnerable indirect fixture resolves the alias but skips resolved-target authorization;
+- batch read fixture is explicitly non-persistent;
+- authentication remains required for both fixture families;
+- no key generation, guessing, alias enumeration or external targets.
+
+### Phase 2 verification
+
+GitHub Actions run `36004574331`: **SUCCESS** at commit
+`95bdc02e53ffb06e49eaf1bfd8bbadb137b5a0e9`.
+
+- Sprint 10 ground-truth contract: PASS, 4 cases;
+- secure/vulnerable ACRA-Lab readiness: PASS;
+- Sprint 10 foundation: PASS, 25 assertions;
+- controlled batch/indirect live-lab suite: PASS, 16 assertions;
+- retained authorization foundations: PASS;
+- Maven core `test-compile`: PASS;
+- controlled lab logs artifact upload: PASS.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 3 owns safe planner/executor integration through the existing S4 engine.
