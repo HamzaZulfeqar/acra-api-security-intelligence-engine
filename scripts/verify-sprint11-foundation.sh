@@ -174,6 +174,7 @@ java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11ControlledResearchLabFixt
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11TreatmentEvidenceCollectionTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11PredictionExecutionTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11AblationEvaluationTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11ResearchReportExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11ResearchAblationFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11EvaluationDatasetManifestTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11AblationPredictionAdapterTestSuite
