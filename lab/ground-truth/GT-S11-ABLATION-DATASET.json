@@ -1,0 +1,68 @@
+{
+  "id": "GT-S11-ABLATION-DATASET",
+  "version": "1",
+  "scope": "controlled registered ground truth only",
+  "execution_state": "NOT_RUN",
+  "independent_of_treatment_output": true,
+  "source_ground_truth": [
+    {
+      "id": "GT-S4-RESEARCH-FIXTURES",
+      "path": "lab/ground-truth/GT-S4-RESEARCH-FIXTURES.json",
+      "version": "1",
+      "inclusion_rule": "all cases with explicit expected_candidate boolean"
+    }
+  ],
+  "label_mapping": {
+    "expected_candidate_true": "POSITIVE",
+    "expected_candidate_false": "NEGATIVE"
+  },
+  "cases": [
+    {"id":"S11-EVAL-001","source_case_id":"S4-FP-PUBLIC","family":"FALSE_POSITIVE_CONTROL","ground_truth":"NEGATIVE"},
+    {"id":"S11-EVAL-002","source_case_id":"S4-FP-SOFT-DENY","family":"FALSE_POSITIVE_CONTROL","ground_truth":"NEGATIVE"},
+    {"id":"S11-EVAL-003","source_case_id":"S4-FP-TIMESTAMP","family":"FALSE_POSITIVE_CONTROL","ground_truth":"NEGATIVE"},
+    {"id":"S11-EVAL-004","source_case_id":"S4-FP-REQUEST-ID","family":"FALSE_POSITIVE_CONTROL","ground_truth":"NEGATIVE"},
+    {"id":"S11-EVAL-005","source_case_id":"S4-FP-ORDERING","family":"FALSE_POSITIVE_CONTROL","ground_truth":"NEGATIVE"},
+    {"id":"S11-EVAL-006","source_case_id":"S4-FP-FORMATTING","family":"FALSE_POSITIVE_CONTROL","ground_truth":"NEGATIVE"},
+    {"id":"S11-EVAL-007","source_case_id":"S4-FP-REPRESENTATION","family":"FALSE_POSITIVE_CONTROL","ground_truth":"NEGATIVE"},
+    {"id":"S11-EVAL-008","source_case_id":"S4-FN-SAME-STATUS","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"},
+    {"id":"S11-EVAL-009","source_case_id":"S4-FN-SOFT-DENIAL","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"},
+    {"id":"S11-EVAL-010","source_case_id":"S4-FN-DYNAMIC-LENGTH","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"},
+    {"id":"S11-EVAL-011","source_case_id":"S4-FN-REORDERED-JSON","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"},
+    {"id":"S11-EVAL-012","source_case_id":"S4-FN-OPAQUE-ID","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"},
+    {"id":"S11-EVAL-013","source_case_id":"S4-FN-NESTED","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"},
+    {"id":"S11-EVAL-014","source_case_id":"S4-FN-COLLECTION","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"},
+    {"id":"S11-EVAL-015","source_case_id":"S4-FN-NONSTANDARD-AUTH","family":"FALSE_NEGATIVE_CONTROL","ground_truth":"POSITIVE"}
+  ],
+  "summary": {
+    "cases": 15,
+    "positive": 8,
+    "negative": 7
+  },
+  "excluded_sources": [
+    {
+      "id": "GT-S6-TENANT-RBAC",
+      "reason": "policy ALLOW/DENY/INCONCLUSIVE labels are not themselves independent vulnerability labels"
+    },
+    {
+      "id": "GT-S7-WORKFLOW-AUTHORIZATION",
+      "reason": "policy transition decisions are not automatically binary vulnerability ground truth"
+    },
+    {
+      "id": "GT-S8-ROUTING-NORMALIZATION",
+      "reason": "route authorization expectations require a separately registered vulnerable-treatment label"
+    },
+    {
+      "id": "GT-S9-PROPERTY-AUTHORIZATION",
+      "reason": "property policy decisions are not automatically binary vulnerability ground truth"
+    },
+    {
+      "id": "GT-S10-BATCH-INDIRECT-AUTHORIZATION",
+      "reason": "batch and indirect policy decisions are not automatically binary vulnerability ground truth"
+    }
+  ],
+  "notes": [
+    "Labels are copied from independent expected_candidate booleans in GT-S4-RESEARCH-FIXTURES.",
+    "Treatment predictions must never modify this manifest.",
+    "Dataset registration does not execute A0-A7 and does not create measured metrics."
+  ]
+}
