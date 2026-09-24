@@ -1,6 +1,7 @@
 package io.acra.core.active.research;
 
 import io.acra.core.analysis.PassiveDifferentialComparator;
+import io.acra.core.analysis.ResponseNormalizer;
 import io.acra.core.analysis.ResponseComparisonMode;
 import io.acra.core.analysis.semantic.ResponseSemanticAnalyzer;
 import io.acra.core.domain.common.Validation;
@@ -13,6 +14,7 @@ import java.util.TreeSet;
 public final class S11TreatmentEvidenceCollector {
     private final ResponseSemanticAnalyzer semantic = new ResponseSemanticAnalyzer();
     private final PassiveDifferentialComparator differential = new PassiveDifferentialComparator();
+    private final ResponseNormalizer normalizer = new ResponseNormalizer();
 
     public AblationEvidenceBundle collect(
             String caseId,
@@ -29,13 +31,13 @@ public final class S11TreatmentEvidenceCollector {
 
         var leftSemantic = semantic.fingerprint(left);
         var rightSemantic = semantic.fingerprint(right);
+        var leftNormalized = normalizer.normalize(left);
+        var rightNormalized = normalizer.normalize(right);
         var semanticDiff = differential.compare(left, right, ResponseComparisonMode.SEMANTIC);
 
         List<String> baseline = List.of(
-                evidenceId("baseline-left", caseId, route,
-                        left.status() + "|" + TokenFingerprint.sha256(left.bodyUtf8())),
-                evidenceId("baseline-right", caseId, route,
-                        right.status() + "|" + TokenFingerprint.sha256(right.bodyUtf8())),
+                evidenceId("baseline-left", caseId, route, stableResponseMaterial(leftNormalized)),
+                evidenceId("baseline-right", caseId, route, stableResponseMaterial(rightNormalized)),
                 evidenceId("baseline-differential", caseId, route,
                         semanticDiff.equivalent() + "|" + semanticDiff.changedSignals()));
 
@@ -60,12 +62,10 @@ public final class S11TreatmentEvidenceCollector {
                 AblationDimension.SEMANTIC_EVIDENCE,
                 AblationEvidenceDisposition.OBSERVED,
                 List.of(evidenceId("semantic", caseId, route,
-                        leftSemantic.responseClass() + "|" + leftSemantic.fields() + "|"
-                                + leftSemantic.resourceIds() + "|" + leftSemantic.ownerIds() + "|"
-                                + leftSemantic.tenantIds() + "||"
-                                + rightSemantic.responseClass() + "|" + rightSemantic.fields() + "|"
-                                + rightSemantic.resourceIds() + "|" + rightSemantic.ownerIds() + "|"
-                                + rightSemantic.tenantIds()))));
+                        stableResponseMaterial(leftNormalized) + "||"
+                                + stableResponseMaterial(rightNormalized) + "|"
+                                + leftSemantic.ownerIds() + "|" + leftSemantic.tenantIds() + "||"
+                                + rightSemantic.ownerIds() + "|" + rightSemantic.tenantIds()))));
 
         TreeSet<String> prior = new TreeSet<>(baseline);
         for (AblationDimensionEvidenceReference item : dimensions) {
@@ -127,6 +127,12 @@ public final class S11TreatmentEvidenceCollector {
                 present ? AblationEvidenceDisposition.OBSERVED : AblationEvidenceDisposition.NOT_APPLICABLE,
                 List.of(evidenceId("tenant", caseId, route,
                         present ? TokenFingerprint.sha256(String.join("|", values)) : "not-applicable")));
+    }
+
+    private static String stableResponseMaterial(io.acra.core.analysis.NormalizedResponse response) {
+        return response.status() + "|" + response.contentType() + "|"
+                + response.structuralSignature() + "|" + response.semanticSignature() + "|"
+                + TokenFingerprint.sha256(response.body());
     }
 
     private static String evidenceId(String kind, String caseId, String route, String material) {
