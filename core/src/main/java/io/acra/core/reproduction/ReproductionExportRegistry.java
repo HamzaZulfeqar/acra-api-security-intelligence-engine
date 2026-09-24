@@ -8,7 +8,7 @@ public final class ReproductionExportRegistry {
         return List.of(
                 new ReproductionExportCapability(
                         ReproductionExportTarget.JSON,
-                        ReproductionExportCapabilityState.CONTRACT_DEFINED,
+                        ReproductionExportCapabilityState.IMPLEMENTED,
                         "acra-reproduction-json-v1"),
                 new ReproductionExportCapability(
                         ReproductionExportTarget.SARIF,

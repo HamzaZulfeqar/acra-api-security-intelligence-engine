@@ -94,8 +94,12 @@ public final class Sprint12ReproductionPackageFoundationTestSuite {
             TestSupport.assertEquals(target, capability.target(),
                     "registry resolves each export target");
             assertions++;
-            TestSupport.assertEquals(ReproductionExportCapabilityState.CONTRACT_DEFINED, capability.state(),
-                    "Phase 1 does not falsely claim renderer implementation");
+            ReproductionExportCapabilityState expectedState =
+                    target == ReproductionExportTarget.JSON
+                            ? ReproductionExportCapabilityState.IMPLEMENTED
+                            : ReproductionExportCapabilityState.CONTRACT_DEFINED;
+            TestSupport.assertEquals(expectedState, capability.state(),
+                    "registry capability state matches verified renderer progress");
             assertions++;
         }
 

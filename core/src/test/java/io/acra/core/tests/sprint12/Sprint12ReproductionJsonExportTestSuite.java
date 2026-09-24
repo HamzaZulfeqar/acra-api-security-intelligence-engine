@@ -6,6 +6,7 @@ import io.acra.core.domain.finding.FindingCandidateState;
 import io.acra.core.domain.finding.FindingFingerprint;
 import io.acra.core.domain.finding.FindingSeverity;
 import io.acra.core.reproduction.ReproductionExportTarget;
+import io.acra.core.reproduction.ReproductionExportCapabilityState;
 import io.acra.core.reproduction.ReproductionJsonExporter;
 import io.acra.core.reproduction.ReproductionJsonReporter;
 import io.acra.core.reproduction.ReproductionPackageProjector;
@@ -78,6 +79,13 @@ public final class Sprint12ReproductionJsonExportTestSuite {
         assertions++;
         TestSupport.assertContains(secretArtifact.content(), "<redacted>",
                 "JSON preserves explicit redaction marker");
+        assertions++;
+
+        TestSupport.assertEquals(
+                ReproductionExportCapabilityState.IMPLEMENTED,
+                new io.acra.core.reproduction.ReproductionExportRegistry()
+                        .capability(ReproductionExportTarget.JSON).state(),
+                "verified JSON renderer is promoted to IMPLEMENTED");
         assertions++;
 
         ReproductionJsonReporter reporter = new ReproductionJsonReporter();
