@@ -20,10 +20,9 @@ java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReviewWorkspaceTes
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionPackageTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionJsonExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingReproductionSarifExportTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11FindingBurpIssueDraftTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectReportingExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectSecurityHardeningTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint5.Sprint5FinalClosureTestSuite
 
-echo "SPRINT11_FINDING_LIFECYCLE_FOUNDATION_VERIFICATION PASS"
-
-python3 -m json.tool "$BUILD/reporting/S11-FINDING-REPRODUCTION.sarif" >/dev/null
+python3 -m json.tool "$BUILD/reporting/S11-FINDING-REPRODUCTION.sarif" >/dev/null\n\nif grep -Eq "siteMap\\(\\)\\.add|siteMap\\.add|\\.siteMap\\(\\).*add" extension/burp-extension/src/main/java/io/acra/burp/reporting/S11BurpIssueAdapter.java; then\n  echo "ERROR: Sprint 11 Burp adapter must not publish directly to SiteMap" >&2\n  exit 1\nfi\n\necho "SPRINT11_FINDING_LIFECYCLE_FOUNDATION_VERIFICATION PASS"
