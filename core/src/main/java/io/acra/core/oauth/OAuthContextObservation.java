@@ -37,7 +37,7 @@ public record OAuthContextObservation(
         observationId = requiredSafe(observationId, "observationId");
         requestId = requiredSafe(requestId, "requestId");
         protocol = protocol == null ? OAuthProtocol.UNKNOWN : protocol;
-        issuer = uriReference(issuer, "issuer");
+        issuer = issuer == null || issuer.isBlank() || "UNKNOWN".equalsIgnoreCase(issuer.strip())\n                ? "UNKNOWN"\n                : uriReference(issuer, "issuer");
         authorizationEndpoint = optionalUriReference(authorizationEndpoint, "authorizationEndpoint");
         tokenEndpoint = optionalUriReference(tokenEndpoint, "tokenEndpoint");
         clientId = normalized(clientId);
