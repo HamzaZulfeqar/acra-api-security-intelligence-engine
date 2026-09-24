@@ -2,80 +2,38 @@
 
 ## Current gate — 2026-09-24
 
-**Sprint 10 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 10 SOFTWARE COMPLETE.**
 
-Canonical Sprint 10 Phase 1 evidence:
+Canonical Sprint 10 closure evidence:
 - branch: `s10-auth-session-intelligence`
-- immutable Sprint 9 base: `9bffa59c1b360b3e74e0b5e97d2ce22a06dc73f5`
-- Phase 1 verification run: `36031651777` — SUCCESS
-- passive session/token-context model: VERIFIED
-- verified-vs-unverified identity boundary: VERIFIED
-- safe token rotation: VERIFIED
-- principal/role/tenant/scope drift detection: VERIFIED
-- retained S6/S7/S8/S9 foundations: PASS
-- Maven core test compilation: PASS
+- final closure run: `36041511898` — SUCCESS
+- closure source commit: `2a7e753a3866ffb869df17abb53a9d2cc93dd876`
+- closure-candidate checkpoint SHA-256: `3e1352ca886096ff2df01d6e8fdbc3f281eb29794651ff6bba23205b7a70d26b`
+- 924 entries, 0 unsafe paths, 0 duplicate entries
+- clean extraction and per-file SHA-256 equality: PASS
+- official Maven package and retained S2/S3/S4/S6/S7/S8/S9/S10 verification: PASS
 
 Sprint 9 remains SOFTWARE COMPLETE.
 
-Phase 2 verified by GitHub Actions run `36031909153`:
-- session observation evidence-store binding: PASS;
-- project/test/execution lineage validation: PASS;
-- unknown/duplicate/cross-project/contradictory evidence rejection: PASS.
-
-Phase 3 verified by GitHub Actions run `36032231484`:
-- controlled synthetic session ground truth: PASS;
-- live localhost capture: PASS;
-- raw token non-disclosure: PASS;
-- provenance-gated stable rotation/context drift: PASS;
-- different-session isolation: PASS.
-
-Phase 4 verified by GitHub Actions run `36032676285`:
-- existing passive traffic/security-context pipeline reused: PASS;
-- unconfirmed JWT claims remain inferred: PASS;
-- explicit identity confirmation upgrade: PASS;
-- confirmation conflict downgrade: PASS;
-- raw credential exclusion: PASS.
-
-Phase 5 verified by GitHub Actions run `36032923048`:
-- baseline/stable/safe-rotation states: PASS;
-- verified context-drift candidate assessment: PASS;
-- unverified or provenance-invalid drift remains inconclusive: PASS.
-
-Phase 6 verified by GitHub Actions run `36033267339`:
-- safe token rotation finding projection → REJECTED: PASS;
-- verified context-drift finding projection → CANDIDATE: PASS;
-- cross-project / attribution mismatch → INCONCLUSIVE: PASS;
-- no automatic confirmed-vulnerability state: PASS.
-
-Phase 7 verified by GitHub Actions run `36033819097`:
-- explicit coverage universe: PASS;
-- lifecycle gap states: PASS;
-- candidate/rejected/inconclusive accounting: PASS;
-- redaction-safe auth-context resource identity: PASS.
-
-Phase 8 verified by GitHub Actions run `36034257857`:
-- immutable session product workspace: PASS;
-- backward-compatible Burp Authentication area: PASS;
-- retained S4/S6/S7/S8/S9 UI regressions: PASS;
-- raw token / token fingerprint non-rendering: PASS.
-
-Phase 9 verified by GitHub Actions run `36040768002`:
-- deterministic session report model: PASS;
-- canonical secret-safe JSON + SHA-256 and Markdown exports: PASS;
-- Reporter adapter: PASS;
-- confirmedFindingCount fixed at 0: PASS;
-- Authentication Report / JSON Export views and retained UI regressions: PASS.
-
-Current dependency-ordered milestone:
-1. verify Sprint 10 authentication/session security hardening;
-2. complete bounded 100 / 1,000 / 10,000 workspace/report engineering observations;
-3. persist the performance observation artifact;
-4. freeze Sprint 10 traceability and run final retained regressions/package verification;
-5. promote S10 SOFTWARE COMPLETE only after reproducible checkpoint closure passes.
-
-Do not begin OAuth grant manipulation or external-target authentication testing in Phase 2.
+**Sprint 11 is NOT STARTED.** No Sprint 11 implementation is included in the Sprint 10 closure checkpoint.
 
 Real Burp desktop runtime remains a separate UNVERIFIED / DEFERRED validation lane.
+
+Verified Sprint 10 phase gates:
+- Phase 1: `36031651777`
+- Phase 2: `36031909153`
+- Phase 3: `36032231484`
+- Phase 4: `36032676285`
+- Phase 5: `36032923048`
+- Phase 6: `36033267339`
+- Phase 7: `36033819097`
+- Phase 8: `36034257857`
+- Phase 9: `36040768002`
+- Phase 10: `36041238241`
+- Final closure: `36041511898`
+
+Do not infer production OAuth/OIDC security, real-world scanner accuracy, or Burp desktop validation from the
+controlled localhost/headless evidence.
 
 # ROADMAP
 
