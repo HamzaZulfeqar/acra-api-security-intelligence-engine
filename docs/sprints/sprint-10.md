@@ -302,3 +302,49 @@ Phase 6 is **VERIFIED COMPLETE**.
 
 Sprint 10 remains IN PROGRESS. Phase 7 owns explicit session-context coverage accounting; absence of observation
 must remain visible rather than being treated as stable or secure.
+
+## Phase 7 — explicit session-context coverage accounting
+
+Implemented:
+
+- `SessionCoverageObjective`;
+- `SessionCoverageDisposition`;
+- `SessionCoverageTarget`;
+- `SessionCoverageEntry`;
+- `SessionCoverageSummary`;
+- `S10SessionCoverageTracker`;
+- explicit configured coverage universe instead of traffic-derived denominator;
+- baseline, continuity and rotation-context-stability objectives;
+- lifecycle states: UNOBSERVED, OBSERVED_UNCORRELATED, CORRELATED_UNASSESSED, REJECTED, INCONCLUSIVE, CANDIDATE;
+- duplicate target registration does not inflate denominator;
+- session mismatch and non-rotation correlation for rotation objectives fail closed;
+- deterministic coverage ordering and gap ID discovery.
+
+During Phase 7 verification, the existing universal redactor correctly sanitized `session:<value>` as
+secret-like key/value material. Sprint 10 therefore changed FindingCandidate resource identity to
+`auth-context:<sessionId>` rather than weakening global redaction.
+
+### Phase 7 verification
+
+GitHub Actions run `36033819097`: **SUCCESS** at commit
+`538b146b1e9e57334e6d16fe85da6d81ab9ca765`.
+
+Verified:
+
+- explicit target denominator: PASS;
+- duplicate registration does not inflate coverage: PASS;
+- unobserved context preservation: PASS;
+- observed-uncorrelated preservation: PASS;
+- correlated-unassessed preservation: PASS;
+- candidate/rejected/inconclusive assessed states: PASS;
+- session mismatch rejection: PASS;
+- rotation-objective/non-rotation rejection: PASS;
+- deterministic coverage ordering: PASS;
+- redaction-safe `auth-context:` finding resource identity: PASS;
+- full Sprint 10 Phases 1–6 verification: PASS;
+- retained Sprint 6/7/8/9 foundations: PASS;
+- Maven core `test-compile`: PASS.
+
+Phase 7 is **VERIFIED COMPLETE**.
+
+Sprint 10 remains IN PROGRESS. Phase 8 owns the read-only authentication/session product workspace and Burp UI.
