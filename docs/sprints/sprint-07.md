@@ -185,3 +185,41 @@ GitHub Actions run `35959256852`:
 
 Phase 4 is complete. Sprint 7 remains IN PROGRESS. Deterministic workflow report/export, expanded
 security/performance closure, final traceability/regression and package freeze remain outstanding.
+
+## Phase 5 — deterministic workflow report/export integration
+
+Implemented:
+- versioned `S7WorkflowReport` / summary / status model
+- deterministic report identity from workflow policy, resolutions, coverage contexts and candidate identities
+- policy, resolution, assessment, coverage, FindingCandidate and risk aggregation
+- explicit `confirmedFindingCount = 0` review boundary
+- coverage lifecycle exported separately from vulnerability/risk state
+- deterministic canonical JSON export + SHA-256 digest
+- deterministic Markdown review report
+- `S7WorkflowJsonReporter` adapter on the existing `Reporter` plugin boundary
+- normal export redaction for raw authentication/secret material
+- `S7WorkflowWorkspace` report/export methods as the single product source of truth
+- Workflow UI Report / JSON Export views backed by the same workspace
+- CI report artifact generation and upload
+
+### Phase 5 verification
+
+GitHub Actions run `35960316132`: **SUCCESS**.
+
+- Sprint 7 workflow foundation: PASS
+- workflow assessment integration: PASS
+- workflow coverage: PASS
+- `Sprint7WorkflowReportingExportTestSuite`: PASS
+- controlled lab contract and live execution: PASS
+- retained Sprint 6 foundation: PASS
+- Maven extension `test-compile`: PASS
+- retained Sprint 4 UI: PASS
+- retained Sprint 6 Authorization UI: PASS
+- Sprint 7 Workflow UI including Report / JSON Export: PASS
+- report artifact bundle upload: PASS
+
+The reporting layer preserves FindingCandidate as review-only and does not convert coverage, differential change,
+or internal risk prioritization into an automatically confirmed vulnerability.
+
+Phase 5 is complete. Sprint 7 remains IN PROGRESS; security-hardening/performance closure, final
+traceability/regression and package freeze remain outstanding.
