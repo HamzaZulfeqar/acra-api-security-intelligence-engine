@@ -48,4 +48,5 @@ jobs:
             build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.json
             build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.json.sha256
             build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.md
+            build/s13-foundation/performance/performance-s13.csv
           if-no-files-found: warn
