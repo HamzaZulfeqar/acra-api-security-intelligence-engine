@@ -1,5 +1,30 @@
 # ROADMAP
 
+## Current gate — Sprint 15 Release Promotion — 2026-09-26
+
+**PROMOTION PREPARED / PUBLICATION BLOCKED.**
+
+Completed:
+- guarded promotion branch created;
+- machine-readable promotion decision created;
+- full hardened RC revalidation: PASS;
+- dependency contract/inventory: PASS;
+- CodeQL: PASS;
+- Gitleaks: PASS;
+- draft PR #4 created;
+- Sprint 13 research boundary preserved.
+
+Platform limitation:
+- GitHub native Dependency Review is unavailable because repository Dependency Graph is disabled.
+
+Remaining explicit owner decisions:
+1. choose software license;
+2. choose `v0.3.0-rc1` prerelease vs `v0.3.0` stable promotion.
+
+No tag, GitHub Release or merge is permitted while state remains `PREPARED_BLOCKED`.
+
+## Previous gate — Sprint 14 productization
+
 ## Current productization gate — Sprint 14 — 2026-09-26
 
 **TECHNICAL RELEASE CANDIDATE HARDENING COMPLETE.**
