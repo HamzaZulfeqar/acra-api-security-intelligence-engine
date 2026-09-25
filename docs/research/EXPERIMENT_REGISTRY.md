@@ -24,6 +24,7 @@
 | EXP-A5 | + Workflow | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=7/FP=1/FN=0, P=.888889/R=1/F1=.941176 |
 | EXP-A6 | + Semantic evidence | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
 | EXP-A7 | Full ACRA correlation | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
+| EXP-S13-HOLDOUT-A0-A7 | Locked A0-A7 held-out generalization evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-HOLDOUT-FEATURES + GT-S13-HOLDOUT-LABELS | A7 TP=8/TN=3/FP=5/FN=0, P=.615385/R=1/F1=.761905; 5 hard-negative FP |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -70,3 +71,26 @@ real-world scanner accuracy, generalization, Burp runtime behavior or external-t
 Repeat execution produced byte-identical JSON, CSV and JSONL research artifacts. The measured progression
 was A0/A1 7 FP, A2 4 FP, A3 3 FP, A4 2 FP, A5 1 FP and A6/A7 0 FP, with 8 TP and 0 FN in every variant.
 A6 and A7 therefore tie on this fixed dataset; no broader superiority claim is made.
+
+
+## Sprint 13 Phase 1 held-out result — 2026-09-25
+
+GitHub Actions run `36143281129` completed successfully at
+`e515a31d91d775d5f0f35c32a48507455f84992d`.
+
+The 16-case held-out corpus was frozen before evaluation and split into a feature file and sealed label file.
+The label file was physically removed during both prediction passes. The Sprint 12 A0-A7 implementation was locked
+against base commit `bd944e83a6edefafba56caebaa35e89fc107c282`.
+
+Measured held-out progression:
+
+- A0/A1: TP=8, TN=0, FP=8, FN=0, P=.500000, R=1, F1=.666667;
+- A2-A7: TP=8, TN=3, FP=5, FN=0, P=.615385, R=1, F1=.761905.
+
+The five remaining false positives are hard negatives involving legitimate policy semantics absent from the Sprint 12
+calibration fixture: platform-wide tenant administration, a new security-admin role, a DRAFT→PENDING requester
+workflow transition, equivalent-route access by security-admin, and an allowed `nickname` property.
+
+This result is retained as evidence of limited policy generalization. It must not be overwritten by later tuning.
+The fixture remains synthetic localhost evidence authored within the same project; it is not independent third-party
+replication, does not measure automatic dimension discovery, and does not establish production accuracy.
