@@ -1,6 +1,6 @@
 # Sprint 12 — Reproduction & Interchange Exports
 
-Status: **IN PROGRESS — Phase 1 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
 Branch: `s12-reproduction-exports`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
@@ -58,7 +58,47 @@ Phase 1 does not claim:
 
 FR-013 is currently **PARTIAL**: JSON + SARIF verified; Burp Issue projection remains.
 
+## Phase 2 — Burp Issue draft and Montoya projection boundary
+
+Implemented:
+
+- `BurpIssueDraftSeverity`;
+- `BurpIssueDraftConfidence`;
+- `BurpIssueSubmissionState`;
+- `BurpIssueDraft`;
+- `BurpIssueDraftFactory`;
+- `BurpIssueDraftAdapter` in the Burp extension;
+- compile contract against Montoya API 2026.7 `AuditIssue.auditIssue(...)`;
+- informational/tentative review semantics;
+- explicit non-confirmation and non-submission state;
+- HTML encoding for dynamic issue detail fields;
+- minimal Montoya audit-issue stubs for retained offline Sprint 2/3 verification.
+
+### Phase 2 verification
+
+GitHub Actions run `36129019615`: **SUCCESS** at source commit
+`7437b7953ddf0f9140b776e8f92be3030702ad78`.
+
+Verified:
+
+- `Sprint12ReproductionExportFoundationTestSuite`: PASS, 31 assertions;
+- `Sprint12BurpIssueDraftTestSuite`: PASS, 20 assertions;
+- retained S11 report export: PASS, 31 assertions;
+- retained S10 report export: PASS, 43 assertions;
+- retained S9 report export: PASS, 28 assertions;
+- Maven core + extension `test-compile` against Montoya 2026.7: PASS;
+- retained Sprint 2 local gate: run `36129243039` — SUCCESS;
+- retained Sprint 3 local gate: run `36129243006` — SUCCESS.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
+### Runtime boundary
+
+The adapter creates an `AuditIssue` projection but does not receive `MontoyaApi` and cannot call
+`SiteMap.add(AuditIssue)`. Real Burp issue registration is therefore still unexecuted.
+
 ## Next dependency
 
-Phase 2 must implement a deterministic core `BurpIssueDraft` and a non-submitting extension projection boundary.
-Real issue submission remains disabled/unverified until an explicit Burp runtime exercise.
+Phase 3 will execute the projection factory against the real Montoya API dependency in CI and verify the resulting
+`AuditIssue` fields (URL, severity, confidence, detail and evidence count) without adding the issue to a live Burp
+site map. This completes the software export target while keeping desktop submission as a separate runtime gate.

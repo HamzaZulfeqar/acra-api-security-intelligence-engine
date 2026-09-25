@@ -5,7 +5,7 @@
 Sprint 12 — **Reproduction & Interchange Exports** is IN PROGRESS on
 `s12-reproduction-exports`.
 
-Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36128103735`.
+Phases 1–2 are VERIFIED COMPLETE. Latest dedicated gate: GitHub Actions run `36129019615`.
 
 Current boundary:
 
@@ -13,7 +13,8 @@ Current boundary:
 - JSON reproduction export: VERIFIED;
 - SARIF 2.1.0 reproduction export: VERIFIED;
 - review candidate remains non-confirmed in all exports;
-- Burp Issue projection/submission: NOT YET VERIFIED;
+- Burp Issue draft + Montoya projection compilation: VERIFIED;
+- live Burp SiteMap issue submission: UNVERIFIED / DEFERRED;
 - real Burp desktop runtime remains UNVERIFIED / DEFERRED.
 
 Sprint 11 remains the frozen SOFTWARE COMPLETE release base at

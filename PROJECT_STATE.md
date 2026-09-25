@@ -3,11 +3,12 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 12 — Reproduction & Interchange Exports (in progress).  
-**Decision:** S12 PHASE 1 VERIFIED COMPLETE; deterministic JSON + SARIF reproduction export foundation verified.  
+**Decision:** S12 PHASES 1–2 VERIFIED COMPLETE; JSON/SARIF plus Burp Issue draft/projection software verified, live submission remains deferred.  
 **Working branch:** `s12-reproduction-exports`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 12 Phase 1 verification:** GitHub Actions run `36128103735` — SUCCESS at source commit `b829c06cfe4c440984305192bd817eb44f5403d3`.  
+**Sprint 12 Phase 2 verification:** GitHub Actions run `36129019615` — SUCCESS at source commit `7437b7953ddf0f9140b776e8f92be3030702ad78`; retained Sprint 2 run `36129243039` SUCCESS and Sprint 3 run `36129243006` SUCCESS at compatibility head `28e9bb361c3e971523fef7eeffd86c3dc79dadb1`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -53,7 +54,19 @@ Phase 1 deterministic reproduction package + JSON/SARIF export is **VERIFIED COM
 - retained Sprint 11 / Sprint 10 / Sprint 9 reporting regressions remain green;
 - real Burp issue submission remains **UNVERIFIED / DEFERRED** until a separate adapter/runtime gate.
 
-FR-013 is **PARTIALLY IMPLEMENTED**: JSON + SARIF are verified; Burp Issue projection/submission remains the next dependency.
+Sprint 12 Phase 2 Burp Issue draft/projection is **VERIFIED COMPLETE**:
+
+- deterministic core `BurpIssueDraft` with fixed review-only INFORMATION / TENTATIVE semantics;
+- explicit `confirmed=false` and `NOT_SUBMITTED` state;
+- dynamic detail values are HTML-encoded before entering Burp-facing text;
+- extension `BurpIssueDraftAdapter` compiles against official Montoya API 2026.7;
+- adapter uses the current `AuditIssue.auditIssue(...)` construction contract;
+- adapter contains no `MontoyaApi`, `SiteMap`, or issue-submission call;
+- retained local Sprint 2/3 Montoya stubs were extended to the same minimal 2026.7 audit-issue surface;
+- retained Sprint 2 and Sprint 3 verification gates are green.
+
+FR-013 software projection is now implemented for JSON, SARIF and Burp Issue draft/projection. Real Burp
+`SiteMap.add(AuditIssue)` execution remains **UNVERIFIED / DEFERRED** and is not claimed by Phase 2.
 
 ### Sprint 11 final closure
 

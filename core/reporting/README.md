@@ -13,5 +13,5 @@ Current boundary:
 - candidates are not promoted to confirmed vulnerabilities;
 - principal/tenant identifiers, free-form rationale, raw request/response bodies and credentials are excluded;
 - SARIF uses review semantics and `confirmed=false`;
-- Burp Issue projection is the next Sprint 12 dependency;
+- Burp Issue draft + Montoya projection boundary is verified in Sprint 12 Phase 2;
 - real Burp issue submission remains UNVERIFIED / DEFERRED until a separate desktop-runtime gate.

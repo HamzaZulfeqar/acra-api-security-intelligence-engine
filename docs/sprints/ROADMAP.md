@@ -2,12 +2,14 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-exports`;
 - immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`;
 - Phase 1 verification run: `36128103735` — SUCCESS at `b829c06cfe4c440984305192bd817eb44f5403d3`;
+- Phase 2 verification run: `36129019615` — SUCCESS at `7437b7953ddf0f9140b776e8f92be3030702ad78`;
+- retained Sprint 2/3 compatibility gates: SUCCESS at `28e9bb361c3e971523fef7eeffd86c3dc79dadb1`;
 - reproduction package identity/minimization: PASS;
 - deterministic JSON export: PASS;
 - SARIF 2.1.0 review export: PASS;
@@ -15,12 +17,21 @@ Canonical Sprint 12 evidence:
 - retained S11/S10/S9 reporting regressions: PASS;
 - real Burp issue submission: UNVERIFIED / DEFERRED.
 
+Verified Phase 2:
+- deterministic Burp Issue draft: PASS;
+- INFORMATION / TENTATIVE review semantics: PASS;
+- explicit confirmed=false / NOT_SUBMITTED: PASS;
+- HTML-safe dynamic issue detail: PASS;
+- Montoya 2026.7 adapter compile: PASS;
+- retained Sprint 2/3 offline gates: PASS;
+- live `SiteMap.add(AuditIssue)`: UNVERIFIED / DEFERRED.
+
 Next dependency-ordered milestone:
-1. define a deterministic Burp Issue draft model in core without Montoya dependency;
-2. project review candidate state to Burp-compatible severity/confidence semantics without auto-confirmation;
-3. add an extension-side adapter boundary from the draft to the Burp/Montoya layer;
-4. keep real Burp issue submission disabled/unverified until desktop runtime validation;
-5. complete FR-013 only after JSON + SARIF + Burp Issue projection are all verified.
+1. run the Burp issue projection against the official Montoya API jar in CI;
+2. verify the resulting `AuditIssue` field values;
+3. verify no site-map registration call is needed for projection;
+4. preserve non-confirmation and non-submission semantics;
+5. keep real desktop Burp issue registration in the separate runtime lane.
 
 ## Previous release boundary — Sprint 11
 
