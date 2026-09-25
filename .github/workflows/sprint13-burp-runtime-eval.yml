@@ -1,0 +1,42 @@
+name: Sprint 13 Real Burp Montoya Runtime Evaluation
+
+on:
+  push:
+    branches:
+      - s13-burp-montoya-runtime
+    paths:
+      - 'lab/burp-runtime-eval/**'
+      - 'lab/ground-truth/GT-S13-BURP-EVAL-*.json'
+      - 'scripts/verify-sprint13-burp-runtime-eval.py'
+      - 'scripts/verify-sprint13-burp-runtime-eval.sh'
+      - '.github/workflows/sprint13-burp-runtime-eval.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  burp-runtime-evaluation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute post-freeze real Burp / Montoya evaluation
+        run: bash scripts/verify-sprint13-burp-runtime-eval.sh
+      - name: Upload Phase 7 evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint13-burp-runtime-eval
+          path: build/s13-burp-runtime-eval/**
+          if-no-files-found: warn
