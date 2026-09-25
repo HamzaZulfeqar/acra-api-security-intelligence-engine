@@ -3,7 +3,7 @@
 **Freeze ID:** `ACRA-S13-FINAL-FREEZE-2026-09-26`  
 **Branch:** `s13-final-research-freeze`  
 **Pre-freeze base:** `7786097a4ea94bba7f7285218ed1c91d5d4062cd`  
-**State at creation:** FINAL CANDIDATE.
+**Final state:** FROZEN COMPLETE.
 
 ## Decision
 
@@ -83,15 +83,31 @@ no external target with explicit scope/authorization was registered for this res
 This means the project may claim controlled local/runtime evidence, but may not claim production/external-target
 effectiveness, production accuracy, or independent real-world validation.
 
-## Final closure condition
+## Final closure evidence
 
-The final CI gate must pass before this document can be changed from FINAL CANDIDATE to FROZEN COMPLETE.
+The final research/reproducibility gate passed.
 
-Canonical closure evidence must include:
-- final-freeze workflow run ID;
-- measured final-freeze commit;
-- deterministic evidence-hash inventory;
-- Maven BUILD SUCCESS;
-- final branch integrity status.
+Canonical closure validation:
+- GitHub Actions run: `36183344395`;
+- validated candidate commit: `3bc7df2f19d8b208f4586dfd4469d9b045e275f8`;
+- canonical completed experiments: 8;
+- Sprint 13 research/policy JSON parsed: 33 files;
+- deterministic tracked evidence inventory: 158 files;
+- history/ancestry integrity: PASS;
+- Phase 7 frozen implementation lock: PASS;
+- Phase 8 boundary: NOT PERFORMED / PASS;
+- deterministic verifier repeatability: PASS;
+- Maven package: BUILD SUCCESS;
+- git diff check: PASS.
 
-Until then, this document is a freeze candidate rather than a completed release freeze.
+## Final decision
+
+**SPRINT 13 RESEARCH & REPRODUCIBILITY FREEZE: COMPLETE.**
+
+No Sprint 13 result may now be silently rewritten by later development.
+
+Any future external-target validation, algorithm change, policy-learning work, framework adapter, active execution work, or
+new Burp compatibility result must be recorded as a new post-freeze experiment/version.
+
+Phase 8 remains historically recorded as **NOT PERFORMED BEFORE FREEZE** and therefore contributes no external-validity
+claim to Sprint 13.
