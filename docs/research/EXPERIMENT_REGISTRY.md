@@ -26,6 +26,7 @@
 | EXP-A7 | Full ACRA correlation | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
 | EXP-S13-HOLDOUT-A0-A7 | Locked A0-A7 held-out generalization evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-HOLDOUT-FEATURES + GT-S13-HOLDOUT-LABELS | A7 TP=8/TN=3/FP=5/FN=0, P=.615385/R=1/F1=.761905; 5 hard-negative FP |
 | EXP-S13-DIMENSION-001 | Blind automatic authorization-dimension discovery + inferred-dimension A0-A7 | COMPLETED_CONTROLLED_LOCAL | GT-S13-DIMENSION-FEATURES + GT-S13-DIMENSION-LABELS | 31/32 dimensions correct; accuracy=.968750, macro-F1=.968254; S13 holdout 16/16; downstream A7 unchanged vs prior measured fixtures |
+| EXP-S13-POLICY-GEN-001 | Configurable policy semantics with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-POLICY-EVAL-FEATURES + GT-S13-POLICY-EVAL-LABELS | G1 TP=8/TN=16/FP=0/FN=0, P=1/R=1/F1=1 on 24-case internal configured-policy evaluation; locked A7 FP=12 |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -123,3 +124,28 @@ Downstream A7 using only the inferred dimension:
 This shows that the supplied-dimension dependency was removed for these fixtures without changing the measured A7
 binary classification outcome. It does not resolve the five policy-generalization false positives from Phase 1 and
 does not establish real-world dimension accuracy.
+
+
+## Sprint 13 Phase 3 configurable-policy generalization — 2026-09-25
+
+Development workflow `36148740338` succeeded before algorithm freeze. The policy semantics engine was then frozen at
+`c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`.
+
+The untouched evaluation corpus and policy registry were created only after that freeze. Evaluation workflow
+`36149071484` succeeded at `82ae165b702d18b0eae872d51f8f695f723fec13`.
+
+Untouched evaluation result:
+- 24 cases: 8 positive / 16 legitimate controls;
+- automatic dimension inference: 24/24;
+- explicit configured-policy decision: 24/24;
+- UNKNOWN policy decisions: 0;
+- locked A7: TP=8/TN=4/FP=12/FN=0, P=.4/R=1/F1=.571429;
+- policy-generalized G1: TP=8/TN=16/FP=0/FN=0, P=1/R=1/F1=1;
+- two-run prediction/evaluation repeatability: PASS;
+- sealed labels absent during both prediction passes: PASS;
+- frozen algorithm diff gate: PASS;
+- Maven package: BUILD SUCCESS.
+
+The result demonstrates that explicit configured policy semantics can remove these synthetic false positives without
+loss of recall on this internal corpus. It does **not** establish automatic policy discovery, production accuracy,
+third-party replication or external validity. No post-result algorithm tuning is permitted inside this experiment.
