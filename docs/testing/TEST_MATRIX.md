@@ -1,5 +1,37 @@
 # Test Matrix
 
+## Sprint 13 Phase 7 real Burp Desktop / Montoya runtime validation — 2026-09-25
+
+Canonical strengthened evaluation: GitHub Actions run `36180569483` — **PASS** at
+`e24a91297bf33bfe18a47453e8c191432b496b20`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Phase 6B evidence preservation | prior runtime evidence unchanged | PASS |
+| Phase 7 development freeze | extension/probe/dev harness unchanged from `4bb7b952...` | PASS |
+| ACRA shaded extension build | Java 21 / Maven | BUILD SUCCESS |
+| Burp Desktop binary | Community Edition 2026.7.3 JAR | SHA-256 PASS |
+| Real Montoya initialize() | loaded ACRA extension in real Burp | PASS |
+| Real Burp Proxy request callbacks | development | 2/2 |
+| Real Burp Proxy response callbacks | development | 2/2 |
+| ACRA passive pipeline | development | 2/2 processed |
+| GT-INTEGRATION-001 | development context reconstruction | PASS |
+| Post-freeze evaluation labels | physically absent during traffic passes | PASS |
+| Untouched real-Burp pass 1 | new users/tenants/resources | INIT=1, REQ=2, RESP=2, PROCESSED=2, CONTEXT=2/2 |
+| Untouched real-Burp pass 2 | independent fresh Burp execution | INIT=1, REQ=2, RESP=2, PROCESSED=2, CONTEXT=2/2 |
+| Tool source | captured responses | PROXY |
+| Loopback isolation | requests | PASS |
+| Secret-exclusion probe | no headers/tokens/cookies/bodies | PASS |
+| Semantic repeatability | normalized pass 1 vs pass 2 | PASS |
+| Findings & Reproduction surface packaged | shaded extension + suite-tab construction | PASS |
+| Publication eligibility guard | non-eligible Burp issue draft cannot materialize | PASS |
+| Automatic Burp issue publication wiring | ACRA extension initialization path | ABSENT / PASS |
+| Active execution default | normal + Phase 7 probe mode | DISABLED / PASS |
+| External authorized target | Phase 8 | NOT PERFORMED |
+
+Phase 7 proves controlled real-Burp/Montoya passive runtime integration only. It does not establish production accuracy,
+arbitrary Burp-version compatibility or external-target effectiveness.
+
 ## Sprint 13 Phase 6B actual local framework runtime validation — 2026-09-25
 
 Canonical untouched runtime evaluation: GitHub Actions run `36175649455` — **PASS** at
