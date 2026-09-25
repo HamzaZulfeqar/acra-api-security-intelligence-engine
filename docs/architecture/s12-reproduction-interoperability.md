@@ -65,8 +65,38 @@ Phase 2 invariants:
 Phase 2 verification: run `36122759287` — SUCCESS at
 `3e5c63962c007865a85dfdd23edac2165f3075d7`.
 
-## Phase 3 boundary
+## Phase 3 Burp AuditIssue boundary
 
-Burp Issue integration belongs exclusively to the Montoya extension module. Core supplies only the canonical
-reproduction package. The adapter must require actual request/response evidence and must never create an issue from
-REJECTED or INCONCLUSIVE state.
+```text
+ReproductionPackage (core)
+        +
+real HttpRequestResponse (Montoya)
+        |
+        v
+ReproductionAuditIssueAdapter
+        |
+        v
+review-only AuditIssue
+```
+
+Phase 3 invariants:
+
+1. Montoya types do not enter `acra-core`.
+2. Only issue-eligible CANDIDATE packages can be adapted.
+3. Request/response evidence and a usable request URL are mandatory.
+4. The issue keeps the original request/response object.
+5. Dynamic content is HTML-escaped.
+6. Severity mapping is conservative and deterministic.
+7. HIGH ACRA confidence maps to FIRM, never CERTAIN.
+8. Issue text states that human validation is required and exploitation is not confirmed.
+9. REJECTED/INCONCLUSIVE packages fail closed.
+10. Constructing an AuditIssue does not imply it was accepted/displayed by a real Burp desktop.
+
+Phase 3 verification: run `36123760660` — SUCCESS at
+`be10c1c406bb475e12446ad9cff23056c3cc352a`.
+
+## Phase 4 boundary
+
+A Site Map publisher may accept the verified AuditIssue and call Montoya `SiteMap.add` only through an explicit
+publication action. Duplicate reproduction fingerprints must be suppressed before registration. Real desktop
+runtime acceptance remains separately unverified.

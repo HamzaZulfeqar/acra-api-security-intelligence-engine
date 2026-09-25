@@ -1,6 +1,6 @@
 # Sprint 12 — Reproduction & Interoperability Exports
 
-Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–3 VERIFIED**  
 Branch: `s12-reproduction-interoperability-exports`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
@@ -97,9 +97,52 @@ Verified:
 
 Phase 2 is **VERIFIED COMPLETE**.
 
+## Phase 3 — Burp AuditIssue adapter
+
+Implemented:
+
+- `ReproductionAuditIssueAdapter` in the Montoya extension module only;
+- extension-owned `AuditIssue` implementation, avoiding a core Burp dependency;
+- required real `HttpRequestResponse` evidence;
+- URL derived from `request().url()`;
+- issue text HTML escaping;
+- explicit review-only / human-validation wording;
+- conservative severity mapping:
+  - ACRA CRITICAL/HIGH → Burp HIGH;
+  - MEDIUM → MEDIUM;
+  - LOW → LOW;
+  - INFO → INFORMATION;
+- conservative confidence mapping:
+  - ACRA HIGH → Burp FIRM;
+  - MEDIUM/LOW/INSUFFICIENT → TENTATIVE;
+  - never CERTAIN for review-only candidates;
+- original request/response evidence retained;
+- no fabricated Collaborator interactions;
+- fail-closed REJECTED/INCONCLUSIVE/null evidence/no response/blank URL behavior;
+- expanded local Montoya stubs so retained Sprint 2/3 offline compilation covers the new Scanner issue surface.
+
+### Phase 3 verification
+
+GitHub Actions run `36123760660`: **SUCCESS** at source commit
+`be10c1c406bb475e12446ad9cff23056c3cc352a`.
+
+Verified:
+
+- `Sprint12BurpIssueAdapterTestSuite`: PASS, 32 assertions;
+- Phase 1 reproduction package: PASS, 30 assertions;
+- Phase 2 SARIF: PASS, 30 assertions;
+- independent SARIF structure validation: PASS;
+- Maven core + extension test compilation: PASS;
+- Sprint 2 retained CI: PASS after stub compatibility update;
+- Sprint 3 retained CI: PASS after stub compatibility update.
+
+Phase 3 is **VERIFIED COMPLETE**.
+
+This verifies construction of a standards-aligned Burp `AuditIssue` object. It does not establish that a real Burp
+desktop instance has accepted/displayed the issue.
+
 ## Next dependency
 
-Phase 3 owns the Burp Issue adapter. Montoya-specific types must remain under
-`extension/burp-extension`; the adapter must require an issue-eligible CANDIDATE reproduction package plus a real
-`HttpRequestResponse` with a usable URL. REJECTED/INCONCLUSIVE packages must fail closed and no Burp issue may be
-registered from core alone.
+Phase 4 owns a controlled Site Map publisher contract using Montoya `SiteMap.add(AuditIssue)` with deterministic
+duplicate suppression based on the reproduction fingerprint. Publishing must remain explicit and must not occur
+implicitly during passive observation. Real desktop runtime validation remains a separate external gate.

@@ -2,20 +2,21 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-interoperability-exports`;
 - immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`;
 - Phase 1 run: `36122252879` — SUCCESS at `46a43350d5357f78f0756b6ce20329ef750e0cfb`;
 - Phase 2 run: `36122759287` — SUCCESS at `3e5c63962c007865a85dfdd23edac2165f3075d7`;
+- Phase 3 run: `36123760660` — SUCCESS at `be10c1c406bb475e12446ad9cff23056c3cc352a`;
 - reproduction package foundation: PASS, 30 assertions;
 - canonical JSON reproduction export: PASS;
 - review-only candidate boundary: PASS;
 - raw principal hashing / rationale omission / secret redaction: PASS;
 - retained Sprint 6–11 reporting/export regressions: PASS;
 - SARIF 2.1.0 export: VERIFIED;
-- Burp Issue adapter: NOT YET IMPLEMENTED;
+- Burp AuditIssue adapter: VERIFIED;
 - real Burp desktop runtime: UNVERIFIED / DEFERRED.
 
 Verified Phase 2:
@@ -28,13 +29,22 @@ Verified Phase 2:
 - independent structure validation: PASS;
 - CI artifact upload: PASS.
 
+Verified Phase 3:
+- Montoya-only AuditIssue adapter: PASS;
+- CANDIDATE/issueEligible gate: PASS;
+- real request/response + URL requirement: PASS;
+- conservative severity/confidence mapping: PASS;
+- review-only / human-validation issue wording: PASS;
+- dynamic HTML escaping / secret exclusion: PASS;
+- Burp adapter suite: PASS, 32 assertions;
+- retained Sprint 2/3 offline Montoya compatibility: PASS.
+
 Next dependency-ordered milestone:
-1. implement a Montoya 2026.7 Burp Issue adapter in the extension module only;
-2. require CANDIDATE + issueEligible=true;
-3. require real HttpRequestResponse evidence and derive the issue URL from that request;
-4. map ACRA severity/confidence conservatively into Burp enums;
-5. keep issue text explicitly review-only and require human validation;
-6. do not claim desktop registration until a real Burp runtime test occurs.
+1. add explicit Site Map publisher using `SiteMap.add(AuditIssue)`;
+2. deduplicate on stable reproduction fingerprint before publication;
+3. make publication opt-in/explicit rather than passive side effect;
+4. verify publisher behavior with a headless Montoya contract stub;
+5. keep real desktop acceptance/display separately UNVERIFIED.
 
 ## Previous release boundary — Sprint 11
 
