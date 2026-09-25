@@ -7,6 +7,7 @@ on:
     paths:
       - 'core/**'
       - 'extension/burp-extension/**'
+      - 'tests/montoya-stubs/**'
       - 'scripts/verify-sprint12-foundation.sh'
       - '.github/workflows/sprint12-ci.yml'
       - 'docs/sprints/sprint-12.md'
