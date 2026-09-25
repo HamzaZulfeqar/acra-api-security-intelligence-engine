@@ -1,0 +1,2463 @@
+{
+  "schemaVersion": "s13-baserate-features-v1",
+  "datasetId": "GT-S13-BASERATE-FEATURES",
+  "purpose": "Phase 4 adversarial negative-heavy base-rate stress; created after Phase 3 completion",
+  "algorithmFreeze": "c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd",
+  "phase3EvaluationHead": "82ae165b702d18b0eae872d51f8f695f723fec13",
+  "labelsSeparated": true,
+  "policyRegistryId": "POL-S13-BASERATE-001",
+  "caseCount": 96,
+  "positiveCount": 8,
+  "negativeCount": 88,
+  "prevalence": 0.08333333333333333,
+  "cases": [
+    {
+      "caseId": "BR-OBJ-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/assets/asset-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/assets/asset-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-red",
+          "owner_id": "robin",
+          "tenant_id": "red"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/assets/asset-blue",
+      "actor": {
+        "sub": "casey",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/assets/asset-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/assets/asset-blue",
+      "actor": {
+        "sub": "aud",
+        "tenant_id": "red",
+        "role": "asset-auditor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/assets/asset-green",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-green",
+          "owner_id": "robin",
+          "tenant_id": "red"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/unregistered-assets/asset-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "robin",
+          "tenant_id": "red"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/unregistered-assets/asset-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/ambiguous-assets/asset-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-red",
+          "owner_id": "robin",
+          "tenant_id": "red"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/ambiguous-assets/asset-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/stale-assets/asset-blue",
+      "actor": {
+        "sub": "gov2",
+        "tenant_id": "red",
+        "role": "asset-governor-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-OBJ-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/incomplete-assets/asset-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/red/reports/report-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-red",
+          "tenant_id": "red"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "casey",
+        "tenant_id": "blue",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "delegate",
+        "tenant_id": "red",
+        "role": "workspace-delegate",
+        "delegated_tenants": [
+          "blue"
+        ]
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/red/reports/report-red",
+      "actor": {
+        "sub": "audit",
+        "tenant_id": "green",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-red",
+          "tenant_id": "red"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/unregistered-reports/report-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "blue",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/unregistered-reports/report-blue",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/red/ambiguous-reports/report-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-red",
+          "tenant_id": "red"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/ambiguous-reports/report-blue",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/stale-reports/report-blue",
+      "actor": {
+        "sub": "admin2",
+        "tenant_id": "red",
+        "role": "cloud-admin-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-TEN-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/workspaces/blue/incomplete-reports/report-blue",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "user",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/audit",
+      "actor": {
+        "sub": "op",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/audit",
+      "actor": {
+        "sub": "lead",
+        "tenant_id": "red",
+        "role": "security-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-lead",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/audit",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "cloud-admin",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/audit",
+      "actor": {
+        "sub": "op2",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/audit",
+      "actor": {
+        "sub": "lead2",
+        "tenant_id": "red",
+        "role": "security-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-lead",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/unregistered-audit",
+      "actor": {
+        "sub": "op",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/unregistered-audit",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "cloud-admin",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/ambiguous-audit",
+      "actor": {
+        "sub": "op",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/ambiguous-audit",
+      "actor": {
+        "sub": "lead",
+        "tenant_id": "red",
+        "role": "security-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-lead",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/stale-audit",
+      "actor": {
+        "sub": "op2",
+        "tenant_id": "red",
+        "role": "security-operator-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator-v2",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-RBAC-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/management/incomplete-audit",
+      "actor": {
+        "sub": "mystery",
+        "tenant_id": "red",
+        "role": ""
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-WF-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "APPROVE",
+          "from_state": "PENDING",
+          "to_state": "APPROVED",
+          "state": "APPROVED",
+          "role": "author"
+        }
+      },
+      "requestBody": {
+        "action": "APPROVE",
+        "from_state": "PENDING",
+        "to_state": "APPROVED",
+        "approval": true
+      }
+    },
+    {
+      "caseId": "BR-WF-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/resources/release-2/transition",
+      "actor": {
+        "sub": "author01",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PROPOSE",
+          "from_state": "NEW",
+          "to_state": "PENDING",
+          "state": "PENDING",
+          "role": "author"
+        }
+      },
+      "requestBody": {
+        "action": "PROPOSE",
+        "from_state": "NEW",
+        "to_state": "PENDING",
+        "approval": false
+      }
+    },
+    {
+      "caseId": "BR-WF-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/resources/release-3/transition",
+      "actor": {
+        "sub": "reviewer02",
+        "tenant_id": "red",
+        "role": "reviewer"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "APPROVE",
+          "from_state": "PENDING",
+          "to_state": "APPROVED",
+          "state": "APPROVED",
+          "role": "reviewer"
+        }
+      },
+      "requestBody": {
+        "action": "APPROVE",
+        "from_state": "PENDING",
+        "to_state": "APPROVED",
+        "approval": true
+      }
+    },
+    {
+      "caseId": "BR-WF-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/resources/release-4/transition",
+      "actor": {
+        "sub": "publisher03",
+        "tenant_id": "red",
+        "role": "publisher"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PUBLISH",
+          "from_state": "APPROVED",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "publisher"
+        }
+      },
+      "requestBody": {
+        "action": "PUBLISH",
+        "from_state": "APPROVED",
+        "to_state": "LIVE",
+        "published": true
+      }
+    },
+    {
+      "caseId": "BR-WF-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/resources/release-5/transition",
+      "actor": {
+        "sub": "author04",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PROPOSE",
+          "from_state": "NEW",
+          "to_state": "PENDING",
+          "state": "PENDING",
+          "role": "author"
+        }
+      },
+      "requestBody": {
+        "action": "PROPOSE",
+        "from_state": "NEW",
+        "to_state": "PENDING"
+      }
+    },
+    {
+      "caseId": "BR-WF-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/resources/release-6/transition",
+      "actor": {
+        "sub": "reviewer05",
+        "tenant_id": "red",
+        "role": "reviewer"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "APPROVE",
+          "from_state": "PENDING",
+          "to_state": "APPROVED",
+          "state": "APPROVED",
+          "role": "reviewer"
+        }
+      },
+      "requestBody": {
+        "action": "APPROVE",
+        "from_state": "PENDING",
+        "to_state": "APPROVED",
+        "approval": true
+      }
+    },
+    {
+      "caseId": "BR-WF-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/unregistered/resources/release-20/transition",
+      "actor": {
+        "sub": "author",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PROPOSE",
+          "from_state": "NEW",
+          "to_state": "PENDING",
+          "state": "PENDING"
+        }
+      },
+      "requestBody": {
+        "action": "PROPOSE",
+        "from_state": "NEW",
+        "to_state": "PENDING"
+      }
+    },
+    {
+      "caseId": "BR-WF-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/unregistered/resources/release-21/transition",
+      "actor": {
+        "sub": "reviewer",
+        "tenant_id": "red",
+        "role": "reviewer"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "APPROVE",
+          "from_state": "PENDING",
+          "to_state": "APPROVED",
+          "state": "APPROVED"
+        }
+      },
+      "requestBody": {
+        "action": "APPROVE",
+        "from_state": "PENDING",
+        "to_state": "APPROVED",
+        "approval": true
+      }
+    },
+    {
+      "caseId": "BR-WF-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/ambiguous/resources/release-30/transition",
+      "actor": {
+        "sub": "author",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PROPOSE",
+          "from_state": "NEW",
+          "to_state": "PENDING",
+          "state": "PENDING"
+        }
+      },
+      "requestBody": {
+        "action": "PROPOSE",
+        "from_state": "NEW",
+        "to_state": "PENDING"
+      }
+    },
+    {
+      "caseId": "BR-WF-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/ambiguous/resources/release-31/transition",
+      "actor": {
+        "sub": "editor",
+        "tenant_id": "red",
+        "role": "editor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PROPOSE",
+          "from_state": "NEW",
+          "to_state": "PENDING",
+          "state": "PENDING"
+        }
+      },
+      "requestBody": {
+        "action": "PROPOSE",
+        "from_state": "NEW",
+        "to_state": "PENDING"
+      }
+    },
+    {
+      "caseId": "BR-WF-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/stale/resources/release-40/transition",
+      "actor": {
+        "sub": "pub2",
+        "tenant_id": "red",
+        "role": "publisher-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PUBLISH",
+          "from_state": "APPROVED",
+          "to_state": "LIVE",
+          "state": "LIVE"
+        }
+      },
+      "requestBody": {
+        "action": "PUBLISH",
+        "from_state": "APPROVED",
+        "to_state": "LIVE",
+        "published": true
+      }
+    },
+    {
+      "caseId": "BR-WF-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/workflows/release/incomplete/resources/release-50/transition",
+      "actor": {
+        "sub": "author",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "state": "PENDING",
+          "role": "author"
+        }
+      },
+      "requestBody": {
+        "action": "PROPOSE",
+        "to_state": "PENDING"
+      }
+    },
+    {
+      "caseId": "BR-PROP-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "BR-PROP-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "BR-PROP-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "display_theme"
+          ]
+        }
+      },
+      "requestBody": {
+        "display_theme": "dark"
+      }
+    },
+    {
+      "caseId": "BR-PROP-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/admin/preferences",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "account-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "admin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      },
+      "requestBody": {
+        "risk_level": "review"
+      }
+    },
+    {
+      "caseId": "BR-PROP-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/admin/preferences",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "account-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "admin",
+          "applied_properties": [
+            "locale",
+            "display_theme"
+          ]
+        }
+      },
+      "requestBody": {
+        "locale": "ur-PK",
+        "display_theme": "light"
+      }
+    },
+    {
+      "caseId": "BR-PROP-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/casey/preferences",
+      "actor": {
+        "sub": "casey",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "casey",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      },
+      "requestBody": {
+        "locale": "en-US"
+      }
+    },
+    {
+      "caseId": "BR-PROP-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/unregistered-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "BR-PROP-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/admin/unregistered-preferences",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "account-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "admin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      },
+      "requestBody": {
+        "risk_level": "review"
+      }
+    },
+    {
+      "caseId": "BR-PROP-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/ambiguous-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "BR-PROP-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/ambiguous-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "display_theme"
+          ]
+        }
+      },
+      "requestBody": {
+        "display_theme": "dark"
+      }
+    },
+    {
+      "caseId": "BR-PROP-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/stale-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "display_theme"
+          ]
+        }
+      },
+      "requestBody": {
+        "display_theme": "dark"
+      }
+    },
+    {
+      "caseId": "BR-PROP-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "PATCH",
+      "path": "/stress/v3/accounts/robin/incomplete-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": []
+        }
+      },
+      "requestBody": {}
+    },
+    {
+      "caseId": "BR-ROUTE-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "user",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/audit",
+      "actor": {
+        "sub": "op",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/audit",
+      "actor": {
+        "sub": "lead",
+        "tenant_id": "red",
+        "role": "security-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-lead",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/audit",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "cloud-admin",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/audit",
+      "actor": {
+        "sub": "op2",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/audit",
+      "actor": {
+        "sub": "lead2",
+        "tenant_id": "red",
+        "role": "security-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-lead",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/unregistered-route",
+      "actor": {
+        "sub": "op",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/unregistered-route",
+      "actor": {
+        "sub": "admin",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "cloud-admin",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/ambiguous-route",
+      "actor": {
+        "sub": "op",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/ambiguous-route",
+      "actor": {
+        "sub": "lead",
+        "tenant_id": "red",
+        "role": "security-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-lead",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/stale-route",
+      "actor": {
+        "sub": "op2",
+        "tenant_id": "red",
+        "role": "security-operator-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "security-operator-v2",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-ROUTE-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress//v3/management/incomplete-route",
+      "actor": {
+        "sub": "mystery",
+        "tenant_id": "red",
+        "role": ""
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-red",
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-red",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "red"
+            },
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "blue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-red"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-red",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-red",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/bulk-read",
+      "actor": {
+        "sub": "casey",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/bulk-read",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/bulk-read",
+      "actor": {
+        "sub": "aud",
+        "tenant_id": "red",
+        "role": "asset-auditor"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-green"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-green",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-green",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/unregistered-bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-red"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-red",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-red",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/unregistered-bulk-read",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "blue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/ambiguous-bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-red"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-red",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-red",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/ambiguous-bulk-read",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "blue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/stale-bulk-read",
+      "actor": {
+        "sub": "gov2",
+        "tenant_id": "red",
+        "role": "asset-governor-v2"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "blue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-BATCH-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "POST",
+      "path": "/stress/v3/assets/incomplete-bulk-read",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-blue",
+              "decision": "ALLOW",
+              "tenant_id": "blue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-POS-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ref-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue",
+            "owner_id": "casey"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-EXP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ref-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-red",
+          "resolved_resource_id": "asset-red",
+          "resource": {
+            "id": "asset-red",
+            "tenant_id": "red",
+            "owner_id": "robin"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-EXP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ref-blue",
+      "actor": {
+        "sub": "casey",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue",
+            "owner_id": "casey"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-EXP-03",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ref-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue",
+            "owner_id": "casey"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-EXP-04",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ref-blue",
+      "actor": {
+        "sub": "aud",
+        "tenant_id": "red",
+        "role": "asset-auditor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue",
+            "owner_id": "casey"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-EXP-05",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ref-green",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-green",
+          "resolved_resource_id": "asset-green",
+          "resource": {
+            "id": "asset-green",
+            "tenant_id": "red",
+            "owner_id": "robin"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-NOP-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/unregistered/ref-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-red",
+          "resolved_resource_id": "asset-red",
+          "resource": {
+            "id": "asset-red",
+            "tenant_id": "red",
+            "owner_id": "robin"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-NOP-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/unregistered/ref-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue",
+            "owner_id": "casey"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-AMB-01",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ambiguous/ref-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-red",
+          "resolved_resource_id": "asset-red",
+          "resource": {
+            "id": "asset-red",
+            "tenant_id": "red",
+            "owner_id": "robin"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-AMB-02",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/ambiguous/ref-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue",
+            "owner_id": "casey"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-STALE",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/stale/ref-blue",
+      "actor": {
+        "sub": "gov2",
+        "tenant_id": "red",
+        "role": "asset-governor-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue",
+            "owner_id": "casey"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "BR-IND-INCOMP",
+      "family": "PHASE4_BASE_RATE",
+      "method": "GET",
+      "path": "/stress/v3/references/incomplete/ref-blue",
+      "actor": {
+        "sub": "super",
+        "tenant_id": "red",
+        "role": "asset-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "asset-blue",
+          "resource": {
+            "id": "asset-blue",
+            "tenant_id": "blue"
+          }
+        }
+      }
+    }
+  ]
+}
