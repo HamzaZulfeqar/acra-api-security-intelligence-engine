@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-DEV-001",
+  "purpose": "Phase 3 development-only explicit authorization semantics",
+  "policies": [
+    {
+      "policyId": "DEV-OBJECT-ASSET",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/dev/v1/assets/asset-(?:east|west)$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV-TENANT-REPORT",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/dev/v1/organizations/(?<org>east|west)/reports/report-(?:east|west)$",
+      "priority": 100,
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "org",
+        "crossTenantRoles": [
+          "federation-admin"
+        ],
+        "delegatedRoles": [
+          "org-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV-RBAC-AUDIT",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/dev/v1/admin-console/audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "audit-lead",
+          "platform-root"
+        ],
+        "deniedRoles": [
+          "suspended-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV-WORKFLOW-CHANGE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/dev/v1/workflows/change-request/resources/change-[0-9]+/transition$",
+      "priority": 100,
+      "rules": {
+        "transitions": [
+          {
+            "action": "SUBMIT",
+            "from": "DRAFT",
+            "to": "REVIEW",
+            "roles": [
+              "requester"
+            ]
+          },
+          {
+            "action": "APPROVE",
+            "from": "REVIEW",
+            "to": "APPROVED",
+            "roles": [
+              "reviewer"
+            ],
+            "requiredTrueFields": [
+              "approval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "DEV-PROPERTY-SETTINGS",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/dev/v1/members/(?:alex|blair)/settings$",
+      "priority": 100,
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "display_alias",
+            "timezone"
+          ],
+          "profile-admin": [
+            "display_alias",
+            "timezone",
+            "security_clearance"
+          ]
+        }
+      }
+    },
+    {
+      "policyId": "DEV-ROUTING-AUDIT",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/dev/+v1/admin-console/audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "audit-lead",
+          "platform-root"
+        ],
+        "canonicalRoles": [
+          "audit-lead",
+          "platform-root"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV-BATCH-ASSET",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/dev/v1/assets/bulk-read$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV-INDIRECT-ASSET",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/dev/v1/links/link-(?:east|west)$",
+      "priority": 100,
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    }
+  ]
+}
