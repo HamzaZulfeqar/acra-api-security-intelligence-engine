@@ -20,4 +20,12 @@ java -ea -cp "$CP" io.acra.core.tests.sprint13.Sprint13FindingGovernanceWorkspac
 
 bash ./scripts/verify-sprint12-foundation.sh
 
+MONTOYA_JAR="$HOME/.m2/repository/net/portswigger/burp/extensions/montoya-api/2026.7/montoya-api-2026.7.jar"
+if [ ! -f "$MONTOYA_JAR" ]; then
+  echo "Montoya 2026.7 dependency missing: $MONTOYA_JAR" >&2
+  exit 1
+fi
+EXT_CP="extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/test-classes:core/target/classes:$MONTOYA_JAR"
+java -ea -Djava.awt.headless=true -cp "$EXT_CP" io.acra.burp.tests.sprint13.Sprint13FindingGovernanceUiTestSuite
+
 echo "SPRINT13_FINDING_LIFECYCLE_FOUNDATION_VERIFICATION PASS"
