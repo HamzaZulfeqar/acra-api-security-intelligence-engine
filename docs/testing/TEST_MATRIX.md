@@ -1,5 +1,44 @@
 # Test Matrix
 
+## Sprint 13 Phase 1 held-out external-validity evaluation — 2026-09-25
+
+Measured successful workflow: GitHub Actions run `36143281129` — **PASS** at
+`e515a31d91d775d5f0f35c32a48507455f84992d`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Locked Sprint 12 rule gate | S12 runner/verifier unchanged from `bd944e83...` | PASS |
+| Frozen held-out feature corpus | 16 cases / 8 dimensions | PASS |
+| Sealed label corpus | separate file, 8 positive / 8 negative | PASS |
+| Label absence during prediction | label file physically removed for both prediction passes | PASS |
+| Held-out oracle validation | secure/vulnerable expected decisions for all 16 cases | PASS |
+| A0-A7 held-out prediction | 16 × 8 variants | PASS, 128 rows |
+| Prediction repeatability | two blind passes byte-identical | PASS |
+| Evaluation repeatability | two post-label-join passes byte-identical | PASS |
+| Artifact SHA-256 | prediction + evaluation JSON/JSONL | PASS |
+| Research artifact secret scan | bearer/Authorization material excluded | PASS |
+| Maven package | product modules compile/package after harness | BUILD SUCCESS |
+| Dimension discovery | registered dimension supplied | NOT MEASURED |
+| Real Burp desktop runtime | separate validation lane | UNVERIFIED / DEFERRED |
+| External authorized target | outside Phase 1 | NOT PERFORMED |
+
+### Measured held-out results
+
+| Variant | TP | TN | FP | FN | Precision | Recall | F1 | Hard-negative FP |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| A0 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 | 8 |
+| A1 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 | 8 |
+| A2 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A3 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A4 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A5 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A6 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A7 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+
+The lower held-out precision/F1 relative to Sprint 12 is retained as evidence of limited policy generalization rather
+than treated as a failed test. Completion depends on experiment integrity and reproducibility, not on achieving a target
+accuracy score.
+
 ## Sprint 12 A0-A7 controlled research evaluation — 2026-09-25
 
 First measured successful workflow: GitHub Actions run `36065830981` — **PASS**.
