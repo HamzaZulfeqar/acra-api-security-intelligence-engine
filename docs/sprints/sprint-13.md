@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 COMPLETE; PHASE 6A CROSS-FRAMEWORK-SHAPED NORMALIZATION COMPLETE.
+**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 COMPLETE; PHASE 6A COMPLETE; PHASE 6B ACTUAL LOCAL FRAMEWORK RUNTIME VALIDATION COMPLETE.
 
 ## Objective
 
@@ -422,3 +422,78 @@ This is **not** actual FastAPI/Flask/Express/Spring runtime evidence.
 
 **Next dependency:** Phase 6B — launch real local framework fixtures in CI, capture live HTTP behavior and feed that
 evidence through the frozen Phase 6A normalizer + Phase 5 reasoning/governance stack.
+
+
+## Phase 6B — Actual local framework runtime validation
+
+**Development workflow:** `36175284755` — SUCCESS.  
+**Development freeze:** `683933836d2c2fa5ec155bc8e224be87e6958e95`.  
+**Untouched evaluation workflow:** `36175649455` — SUCCESS at `e4d50d69161b8c2af8df30c334a0f51e3599c925`.
+
+Phase 6B moves beyond framework-shaped JSON snapshots and launches real localhost applications in CI:
+
+- FastAPI / Uvicorn;
+- Flask;
+- Express / Node.js;
+- Spring Boot / Java 21.
+
+### Development runtime result
+
+The development campaign issued 64 real HTTP requests across the four running services.
+
+The first development pass measured 56/64 dimensions and 56/64 dispositions because the test-only route
+`/routing/audit` carried strong RBAC evidence. Before freeze, the fixture was corrected to a routing-specific
+`/routing/equivalent` surface without changing the frozen normalizer or upstream authorization reasoning.
+
+Final development result:
+- runtime health checks: 4/4 PASS;
+- live HTTP 200: 64/64;
+- dimension inference: 64/64;
+- governed disposition: 64/64;
+- FastAPI: 16/16 HTTP, 16/16 dimension, 16/16 disposition;
+- Flask: 16/16 HTTP, 16/16 dimension, 16/16 disposition;
+- Express: 16/16 HTTP, 16/16 dimension, 16/16 disposition;
+- Spring Boot: 16/16 HTTP, 16/16 dimension, 16/16 disposition;
+- two-run repeatability: PASS;
+- blind-label gate: PASS;
+- Maven product build: SUCCESS.
+
+### Untouched runtime evaluation
+
+After the development freeze, separate runtime applications were created with new:
+- ports;
+- resource names;
+- organization names;
+- identity names;
+- roles;
+- workflow action/state vocabulary;
+- property names;
+- policy identifiers and versions.
+
+The development runtimes and development research artifacts were locked during evaluation.
+
+Untouched measured result:
+- health checks: 4/4 PASS;
+- live HTTP 200: 64/64;
+- dimension inference: 64/64;
+- governed disposition: 64/64;
+- FastAPI: 16/16 HTTP, dimension and disposition;
+- Flask: 16/16 HTTP, dimension and disposition;
+- Express: 16/16 HTTP, dimension and disposition;
+- Spring Boot: 16/16 HTTP, dimension and disposition;
+- repeated live execution: PASS;
+- label absence during prediction: PASS;
+- development freeze gate: PASS;
+- Phase 6A normalizer/upstream freeze: PASS;
+- Maven product build: SUCCESS.
+
+### Phase 6B interpretation
+
+The frozen normalization + authorization-reasoning + uncertainty-governance stack preserved the expected dimension and
+disposition across the tested real localhost framework runtimes.
+
+This evidence is limited to the exact controlled framework/runtime versions and endpoints exercised by CI. It does not
+establish arbitrary framework/version compatibility, production deployment behavior, Burp desktop integration,
+external-target effectiveness or real-world vulnerability accuracy.
+
+**Next dependency:** Phase 7 — real Burp desktop / Montoya runtime validation against the controlled local lab.
