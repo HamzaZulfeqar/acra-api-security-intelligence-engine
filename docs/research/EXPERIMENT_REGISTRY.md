@@ -25,6 +25,7 @@
 | EXP-A6 | + Semantic evidence | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
 | EXP-A7 | Full ACRA correlation | COMPLETED_CONTROLLED_LOCAL | GT-S11-AUTHORIZATION-RESEARCH | TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 |
 | EXP-S13-HOLDOUT-A0-A7 | Locked A0-A7 held-out generalization evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-HOLDOUT-FEATURES + GT-S13-HOLDOUT-LABELS | A7 TP=8/TN=3/FP=5/FN=0, P=.615385/R=1/F1=.761905; 5 hard-negative FP |
+| EXP-S13-DIMENSION-001 | Blind automatic authorization-dimension discovery + inferred-dimension A0-A7 | COMPLETED_CONTROLLED_LOCAL | GT-S13-DIMENSION-FEATURES + GT-S13-DIMENSION-LABELS | 31/32 dimensions correct; accuracy=.968750, macro-F1=.968254; S13 holdout 16/16; downstream A7 unchanged vs prior measured fixtures |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -94,3 +95,31 @@ workflow transition, equivalent-route access by security-admin, and an allowed `
 This result is retained as evidence of limited policy generalization. It must not be overwritten by later tuning.
 The fixture remains synthetic localhost evidence authored within the same project; it is not independent third-party
 replication, does not measure automatic dimension discovery, and does not establish production accuracy.
+
+
+## Sprint 13 Phase 2 dimension-discovery result — 2026-09-25
+
+GitHub Actions run `36145805521` completed successfully at
+`3f4b4238efe514b7ef1fe65b2cd477233c54fa73`.
+
+The 32-case Phase 2 corpus contains no registered dimension or vulnerability label in the prediction feature file.
+`GT-S13-DIMENSION-LABELS` was physically absent during both inference runs and joined only afterward.
+
+Measured dimension-classification results:
+
+- Sprint 12 calibration: 15/16 correct, accuracy=.937500, macro-F1=.933333;
+- Sprint 13 holdout: 16/16 correct, accuracy=1.000000, macro-F1=1.000000;
+- combined: 31/32 correct, accuracy=.968750, macro-F1=.968254;
+- confidence: 30 HIGH, 2 MEDIUM.
+
+The retained mismatch is the canonical Sprint 12 routing control `/api/v1/s8/admin`, which the observable-evidence
+classifier maps to `RBAC_AUTHORIZATION` because the response exposes an explicit required-role signal and no route
+anomaly. That ambiguity is retained rather than tuned away in this experiment.
+
+Downstream A7 using only the inferred dimension:
+- Sprint 12 calibration: TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 within that frozen calibration fixture;
+- Sprint 13 holdout: TP=8/TN=3/FP=5/FN=0, P=.615385/R=1/F1=.761905.
+
+This shows that the supplied-dimension dependency was removed for these fixtures without changing the measured A7
+binary classification outcome. It does not resolve the five policy-generalization false positives from Phase 1 and
+does not establish real-world dimension accuracy.
