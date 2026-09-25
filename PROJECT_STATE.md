@@ -1,6 +1,31 @@
 # ACRA Project State
 
-## Current state — 2026-09-25
+## Current state — 2026-09-26
+
+**Research decision:** SPRINT 13 FINAL RESEARCH & REPRODUCIBILITY FREEZE COMPLETE.  
+**Working branch:** `s13-final-research-freeze`.  
+**Freeze validation workflow:** `36183344395` — SUCCESS.  
+**Validated candidate:** `3bc7df2f19d8b208f4586dfd4469d9b045e275f8`.  
+**Canonical Sprint 13 experiments frozen:** 8.  
+**Evidence-hash inventory:** 158 tracked research/testing/workflow files.  
+**Research/policy JSON integrity:** 33 files parsed.  
+**Maven package:** BUILD SUCCESS.  
+**Phase 8 external-target validation:** NOT PERFORMED.  
+**External-target/production claim:** NOT SUPPORTED.  
+**Remaining Sprint 13 mandatory gates:** NONE.
+
+### Freeze rule
+
+All Sprint 13 measured results and limitations are now immutable historical evidence. Future algorithm changes, active
+execution, Burp-version expansion or external-target validation must use a new post-freeze experiment/version.
+
+Canonical freeze files:
+- `docs/research/FINAL_EVIDENCE_MANIFEST.json`;
+- `docs/research/FINAL_RESEARCH_FREEZE.md`;
+- `docs/research/FINAL_CLAIM_BOUNDARY.md`;
+- `docs/research/FINAL_REPRODUCIBILITY.md`.
+
+## Previous Sprint 13 Phase 7 state
 
 **Current research boundary:** Sprint 13 Phase 7 — Real Burp Desktop / Montoya Runtime Validation.  
 **Decision:** PHASE 7 COMPLETE; EXPLICITLY AUTHORIZED EXTERNAL-TARGET VALIDATION NEXT.  
