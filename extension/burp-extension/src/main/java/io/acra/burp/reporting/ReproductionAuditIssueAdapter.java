@@ -95,7 +95,7 @@ public final class ReproductionAuditIssueAdapter {
         return out.replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
-                .replace(""", "&quot;")
+                .replace("\"", "&quot;")
                 .replace("'", "&#39;");
     }
 
