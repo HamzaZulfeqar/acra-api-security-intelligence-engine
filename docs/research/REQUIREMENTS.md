@@ -173,3 +173,12 @@ RB-0 remains authoritative. Sprint 1 adds stable implementation requirements wit
 - **SEC-015** Reviewer references, decision references and lifecycle evidence references shall reject recognized secret-bearing material.
 - **RES-017** Finding lifecycle state shall not be used as research ground truth unless separately registered by an independent research protocol.
 
+
+
+## Sprint 13 product/reporting requirements
+
+- **FR-073** Finding governance UI shall expose deterministic lifecycle queues and append-only history without providing automatic confirmation or publication controls.
+- **FR-074** Governance reporting shall derive from immutable governed-finding snapshots and preserve lifecycle state, prioritization context, confirmed history and event/evidence provenance.
+- **NFR-015** Governance reports, event projections and export digests shall be deterministic for identical lifecycle state.
+- **SAFE-013** Governance UI/reporting shall perform no active replay, lifecycle transition or Burp publication as a side effect of rendering/export.
+- **SEC-016** Governance reporting shall preserve secret-safe opaque reviewer/decision/evidence references and shall not require raw candidate rationale or credentials.

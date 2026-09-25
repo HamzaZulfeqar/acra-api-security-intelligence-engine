@@ -44,3 +44,11 @@ Phase 2 governance workspace: VERIFIED by run `36077517602`.
 
 Next dependency: read-only governance UI/history projection. No automatic lifecycle action or Burp publication is
 permitted by this phase.
+
+
+## Sprint 13 Phase 3
+
+Read-only Finding Governance UI: VERIFIED by run `36079250303` (55 assertions).
+
+Next dependency: deterministic governance audit/report export from immutable lifecycle snapshots. No UI lifecycle
+transition or automatic publication is introduced by this step.

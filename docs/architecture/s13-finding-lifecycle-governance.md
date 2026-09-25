@@ -98,7 +98,41 @@ Phase 2 invariants:
 Phase 2 verification: GitHub Actions run `36077517602` — SUCCESS at
 `0c9533c3a58aae4d5f3aa27cd2fb48e694616d6d`.
 
-## Phase 3 dependency
+## Phase 3 read-only UI boundary
 
-A read-only product/UI projection should expose governance queues and append-only lifecycle history without
-introducing any UI control that can confirm, remediate, retest, close or publish a finding.
+```text
+FindingGovernanceWorkspace
+          |
+          v
+FindingGovernanceSnapshot
+          |
+          v
+S13FindingGovernancePanel
+          |
+          +--> Overview
+          +--> Review Required
+          +--> Confirmed
+          +--> Remediation
+          +--> Retest
+          +--> Terminal
+          +--> History
+```
+
+Phase 3 invariants:
+
+1. UI state is derived from the same deterministic workspace snapshot.
+2. Severity/confidence are displayed only as prioritization context.
+3. CRITICAL severity can remain REVIEW_REQUIRED.
+4. Append-only history exposes event order and opaque reviewer/decision/evidence references.
+5. False-positive terminal history remains unconfirmed.
+6. UI contains no lifecycle transition action control.
+7. UI contains no reproduction/Burp publication action control.
+8. Headless Swing verification is not real Burp desktop validation.
+
+Phase 3 verification: GitHub Actions run `36079250303` — SUCCESS at
+`b109b58c0a6ac7de032035e55ae57daffe6a84f6`.
+
+## Phase 4 dependency
+
+A deterministic governance report/export layer must consume only the immutable snapshot, preserve lifecycle history,
+and remain side-effect-free.

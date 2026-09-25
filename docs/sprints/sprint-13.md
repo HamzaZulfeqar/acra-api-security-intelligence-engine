@@ -1,6 +1,6 @@
 # Sprint 13 — Finding Lifecycle Governance
 
-Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–3 VERIFIED**  
 Branch: `s13-finding-lifecycle-governance`  
 Immutable Sprint 12 base: `9ced79ba0986ce90884b745342769e88c38a68c2`
 
@@ -127,14 +127,49 @@ Verified:
 
 Phase 2 is **VERIFIED COMPLETE**.
 
+## Phase 3 — read-only governance product UI
+
+Implemented:
+
+- `S13FindingGovernancePanel`;
+- top-level `Finding Governance` area in `AcraSuiteTab`;
+- Overview;
+- Review Required;
+- Confirmed;
+- Remediation;
+- Retest;
+- Terminal;
+- History;
+- deterministic queue/table projection from `FindingGovernanceSnapshot`;
+- append-only lifecycle history projection;
+- suite-tab access to the same governance workspace;
+- no lifecycle action or publication controls.
+
+### Phase 3 verification
+
+GitHub Actions run `36079250303`: **SUCCESS** at source commit
+`b109b58c0a6ac7de032035e55ae57daffe6a84f6`.
+
+Verified:
+
+- `Sprint13FindingGovernanceUiTestSuite`: PASS, 55 assertions;
+- Phase 2 governance workspace: PASS, 25 assertions;
+- Phase 1 lifecycle foundation: PASS, 41 assertions;
+- retained Sprint 12 reproduction/standards foundation: PASS;
+- exact Java 21 compilation with warnings as errors: PASS;
+- Maven core `test-compile`: PASS;
+- Core / Sprint 2 workflows: PASS on exact Phase 3 head.
+
+Phase 3 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 3 must project the governance workspace into a read-only product/UI surface. It should expose Overview,
-Review Required, Confirmed, Remediation, Retest, Terminal and History views while preserving these boundaries:
+Phase 4 must add deterministic governance audit/report export. The report must derive only from the immutable
+governance snapshot and preserve:
 
-- no UI transition action;
-- no automatic confirmation;
-- no automatic reproduction/Burp publication;
-- severity/confidence shown only as prioritization context;
-- event/evidence history remains visible and deterministic;
-- real Burp desktop validation remains separate.
+- lifecycle queue/state counts;
+- severity/confidence as prioritization context, not lifecycle authority;
+- confirmed-history count separate from current state;
+- append-only event sequence and evidence references;
+- deterministic JSON + Markdown identities/digests;
+- no transition, network or Burp publication side effect.

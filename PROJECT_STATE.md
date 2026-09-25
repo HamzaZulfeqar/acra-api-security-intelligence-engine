@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 13 — Finding Lifecycle Governance (in progress).  
-**Decision:** S13 PHASES 1–2 VERIFIED COMPLETE; lifecycle foundation + deterministic governance workspace verified.  
+**Decision:** S13 PHASES 1–3 VERIFIED COMPLETE; lifecycle + governance workspace + read-only product UI verified.  
 **Working branch:** `s13-finding-lifecycle-governance`.  
 **Immutable Sprint 12 base:** `9ced79ba0986ce90884b745342769e88c38a68c2`.  
 **Sprint 12:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -11,6 +11,7 @@
 **Sprint 12 final-status ZIP SHA-256:** `5787e12f42f368f40017a15d5b22fd6653cf20ad7463d4f690c844d7c5538c21`.  
 **Sprint 13 Phase 1 verification:** GitHub Actions run `36077162629` — SUCCESS at source commit `e2f4019f85270bab3498521a080b8e9ea59cf347`.  
 **Sprint 13 Phase 2 verification:** GitHub Actions run `36077517602` — SUCCESS at source commit `0c9533c3a58aae4d5f3aa27cd2fb48e694616d6d`.  
+**Sprint 13 Phase 3 verification:** GitHub Actions run `36079250303` — SUCCESS at source commit `b109b58c0a6ac7de032035e55ae57daffe6a84f6`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-documentation final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
@@ -84,9 +85,22 @@ Sprint 13 Phase 2 governance workspace is **VERIFIED COMPLETE**:
 - workspace suite: PASS, 25 assertions;
 - exact-head Core / Sprint 2 / Sprint 3 workflows: PASS.
 
-The next dependency is a read-only governance product surface that exposes queues/history without adding any UI
-shortcut for lifecycle transition or Burp publication. Real Burp desktop publication remains
-UNVERIFIED / DEFERRED and is unrelated to lifecycle confirmation.
+Sprint 13 Phase 3 read-only governance product UI is **VERIFIED COMPLETE**:
+
+- top-level `Finding Governance` tab;
+- Overview / Review Required / Confirmed / Remediation / Retest / Terminal / History views;
+- deterministic queue row projection from the same governance workspace;
+- append-only lifecycle history projection with reviewer/decision/evidence references;
+- CRITICAL severity can remain REVIEW_REQUIRED and is visibly not auto-confirmed;
+- false-positive terminal history remains historically unconfirmed;
+- UI exposes no confirm/remediate/retest/resolve/false-positive/close/publish/import/add-issue controls;
+- governance UI suite: PASS, 55 assertions;
+- exact-head Core / Sprint 2 workflows: PASS;
+- focused Sprint 13 verifier + Maven core compilation: PASS.
+
+The next dependency is deterministic governance audit/report export from the immutable snapshot, with no state
+transition or publication side effect. Real Burp desktop publication remains UNVERIFIED / DEFERRED and is
+unrelated to lifecycle confirmation.
 
 ### Sprint 12 verified progress
 
