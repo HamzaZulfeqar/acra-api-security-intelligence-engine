@@ -39,7 +39,7 @@ jobs:
           cache: maven
 
       - name: Normalize research scripts
-        run: chmod +x ./scripts/*.sh ./scripts/*.py
+        run: chmod +x ./scripts/verify-sprint13-heldout.sh ./scripts/run-sprint13-heldout.py ./scripts/verify-sprint13-heldout.py
 
       - name: Execute Sprint 13 blind held-out campaign
         run: bash ./scripts/verify-sprint13-heldout.sh
