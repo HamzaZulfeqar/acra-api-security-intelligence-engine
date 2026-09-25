@@ -3,13 +3,14 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 13 — Finding Lifecycle Governance (in progress).  
-**Decision:** S13 PHASE 1 VERIFIED COMPLETE; explicit human-reviewed finding lifecycle defined.  
+**Decision:** S13 PHASES 1–2 VERIFIED COMPLETE; lifecycle foundation + deterministic governance workspace verified.  
 **Working branch:** `s13-finding-lifecycle-governance`.  
 **Immutable Sprint 12 base:** `9ced79ba0986ce90884b745342769e88c38a68c2`.  
 **Sprint 12:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 12 post-documentation final closure:** GitHub Actions run `36076372089` — SUCCESS.  
 **Sprint 12 final-status ZIP SHA-256:** `5787e12f42f368f40017a15d5b22fd6653cf20ad7463d4f690c844d7c5538c21`.  
 **Sprint 13 Phase 1 verification:** GitHub Actions run `36077162629` — SUCCESS at source commit `e2f4019f85270bab3498521a080b8e9ea59cf347`.  
+**Sprint 13 Phase 2 verification:** GitHub Actions run `36077517602` — SUCCESS at source commit `0c9533c3a58aae4d5f3aa27cd2fb48e694616d6d`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-documentation final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
@@ -68,7 +69,23 @@ Phase 1 finding-lifecycle foundation is **VERIFIED COMPLETE**:
 - no automatic-confirm API exists;
 - full retained Sprint 12 verifier remains green.
 
-The next dependency is a deterministic governance workspace/review queue. Real Burp desktop publication remains
+Sprint 13 Phase 2 governance workspace is **VERIFIED COMPLETE**:
+
+- one governed finding per source candidate;
+- idempotent open for identical candidate/risk input;
+- candidate-fingerprint and risk-assessment drift fail closed;
+- stale finding fingerprints cannot transition current state;
+- every transition delegates to `FindingLifecycleService`;
+- deterministic REVIEW_REQUIRED / CONFIRMED / REMEDIATION / RETEST / TERMINAL queue accounting;
+- confirmed-history accounting remains independent from terminal state;
+- false-positive closure never becomes historically confirmed;
+- snapshot ordering is deterministic;
+- no direct `setState`, `confirm` or `publish` shortcut exists;
+- workspace suite: PASS, 25 assertions;
+- exact-head Core / Sprint 2 / Sprint 3 workflows: PASS.
+
+The next dependency is a read-only governance product surface that exposes queues/history without adding any UI
+shortcut for lifecycle transition or Burp publication. Real Burp desktop publication remains
 UNVERIFIED / DEFERRED and is unrelated to lifecycle confirmation.
 
 ### Sprint 12 verified progress

@@ -1,6 +1,6 @@
 # Sprint 13 — Finding Lifecycle Governance
 
-Status: **IN PROGRESS — Phase 1 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
 Branch: `s13-finding-lifecycle-governance`  
 Immutable Sprint 12 base: `9ced79ba0986ce90884b745342769e88c38a68c2`
 
@@ -93,14 +93,48 @@ Verified:
 
 Phase 1 is **VERIFIED COMPLETE**.
 
+## Phase 2 — deterministic governance workspace
+
+Implemented:
+
+- `FindingGovernanceWorkspace`;
+- `FindingGovernanceSnapshot`;
+- `FindingGovernanceQueue`;
+- one governed finding per source candidate;
+- idempotent open for identical candidate/risk state;
+- candidate/risk drift rejection;
+- stale-snapshot protection using deterministic finding fingerprint;
+- transition delegation exclusively through `FindingLifecycleService`;
+- deterministic queue/state counts;
+- deterministic snapshot ordering;
+- confirmed-history accounting distinct from terminal queue membership;
+- workspace clear/re-open semantics without identity leakage;
+- no direct state/publish shortcut methods.
+
+### Phase 2 verification
+
+GitHub Actions run `36077517602`: **SUCCESS** at source commit
+`0c9533c3a58aae4d5f3aa27cd2fb48e694616d6d`.
+
+Verified:
+
+- `Sprint13FindingGovernanceWorkspaceTestSuite`: PASS, 25 assertions;
+- Phase 1 lifecycle suite: PASS, 41 assertions;
+- full retained Sprint 12 reproduction/standards verifier: PASS;
+- exact Java 21 compilation with warnings as errors: PASS;
+- Maven core `test-compile`: PASS;
+- exact-head Core / Sprint 2 / Sprint 3 workflows: PASS.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 2 must add a deterministic finding-governance workspace and review queue. It must:
+Phase 3 must project the governance workspace into a read-only product/UI surface. It should expose Overview,
+Review Required, Confirmed, Remediation, Retest, Terminal and History views while preserving these boundaries:
 
-- index one governed finding per source candidate;
-- separate review-required / confirmed / remediation / retest / terminal queues;
-- apply transitions only through `FindingLifecycleService`;
-- preserve complete event/evidence history;
-- expose state counts without interpreting severity as state;
-- reject stale finding snapshots and candidate identity drift;
-- remain core-only and perform no automatic publication or network action.
+- no UI transition action;
+- no automatic confirmation;
+- no automatic reproduction/Burp publication;
+- severity/confidence shown only as prioritization context;
+- event/evidence history remains visible and deterministic;
+- real Burp desktop validation remains separate.

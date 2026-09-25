@@ -65,7 +65,40 @@ Raw reviewer notes are deliberately absent from the Phase 1 record.
 
 Phase 1 verification: GitHub Actions run `36077162629` — SUCCESS.
 
-## Phase 2 dependency
+## Phase 2 governance-workspace boundary
 
-A synchronized governance workspace must provide deterministic indexing, stale-snapshot protection, state
-accounting and review queues while delegating every transition to the verified lifecycle service.
+```text
+FindingCandidate + AuthorizationRiskAssessment
+                  |
+                  v
+      FindingGovernanceWorkspace
+                  |
+                  +--> REVIEW_REQUIRED queue
+                  +--> CONFIRMED queue
+                  +--> REMEDIATION queue
+                  +--> RETEST queue
+                  +--> TERMINAL queue
+                  |
+                  v
+        immutable deterministic snapshot
+```
+
+Phase 2 invariants:
+
+1. One governed finding per source candidate.
+2. Identical open is idempotent.
+3. Candidate/risk drift fails closed.
+4. Transition requires current finding fingerprint.
+5. Every state mutation delegates to `FindingLifecycleService`.
+6. Queue/state accounting is derived from lifecycle state, never severity.
+7. Confirmed history is preserved after resolution/closure.
+8. False-positive history never becomes confirmed.
+9. Workspace exposes no direct state or publication shortcut.
+
+Phase 2 verification: GitHub Actions run `36077517602` — SUCCESS at
+`0c9533c3a58aae4d5f3aa27cd2fb48e694616d6d`.
+
+## Phase 3 dependency
+
+A read-only product/UI projection should expose governance queues and append-only lifecycle history without
+introducing any UI control that can confirm, remediate, retest, close or publish a finding.

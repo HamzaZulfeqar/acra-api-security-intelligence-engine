@@ -5,7 +5,7 @@
 Sprint 13 — **Finding Lifecycle Governance** is IN PROGRESS on
 `s13-finding-lifecycle-governance`.
 
-Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36077162629`.
+Phases 1–2 are VERIFIED COMPLETE by GitHub Actions run `36077162629`.
 
 Current evidence boundary:
 
@@ -35,3 +35,12 @@ S5 Batch 2 offline policy validation source work is present for explicit tenant,
 
 S5 Batch 3 final integration review is complete at source level. Policy observations are authenticated against the existing evidence store before a policy result can be supported. Security review found no new secret-bearing fields or duplicate evidence/replay architecture. Java 21 compilation, focused tests, Maven regression, and exact JDK 21 runtime verification remain blocked or unverified; S5 SOFTWARE PARTIAL and S6 NOT STARTED remain unchanged.
 
+
+
+## Sprint 13 current gate
+
+Phase 1 lifecycle foundation: VERIFIED.  
+Phase 2 governance workspace: VERIFIED by run `36077517602`.
+
+Next dependency: read-only governance UI/history projection. No automatic lifecycle action or Burp publication is
+permitted by this phase.

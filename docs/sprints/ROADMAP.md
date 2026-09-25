@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+**Sprint 13 IN PROGRESS — Phases 1–2 VERIFIED COMPLETE.**
 
 Canonical Sprint 13 evidence:
 - branch: `s13-finding-lifecycle-governance`;
@@ -16,12 +16,11 @@ Canonical Sprint 13 evidence:
 - human-reviewed confirmation/event evidence: REQUIRED.
 
 Next dependency-ordered milestone:
-1. implement synchronized finding-governance workspace;
-2. enforce one governed finding per source candidate;
-3. expose deterministic review/state queues and counts;
-4. apply transitions only through the lifecycle service;
-5. reject stale snapshots and identity drift;
-6. keep publication/network actions outside lifecycle core.
+1. project governed findings into a read-only product workspace/UI;
+2. expose deterministic lifecycle queues and event history;
+3. preserve severity/confidence as context, never lifecycle authority;
+4. expose no confirm/remediate/retest/close/publish UI actions in Phase 3;
+5. retain real Burp desktop validation as a separate runtime lane.
 
 ## Previous release boundary — Sprint 12
 
