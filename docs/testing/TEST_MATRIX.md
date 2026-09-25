@@ -1,5 +1,29 @@
 # Test Matrix
 
+## Sprint 13 final research & reproducibility freeze — 2026-09-26
+
+Canonical validation: GitHub Actions run `36183344395` — **PASS** at candidate
+`3bc7df2f19d8b208f4586dfd4469d9b045e275f8`.
+
+| Test / Gate | Result |
+|---|---|
+| Canonical Sprint 13 experiments in manifest | 8 / PASS |
+| Canonical measured commits exist | PASS |
+| Canonical measured commits remain ancestors | PASS |
+| Experiment registry coverage | PASS |
+| Required phase protocols present | PASS |
+| Sprint 13 research/policy JSON parsing | 33 files / PASS |
+| Phase 7 frozen implementation | PASS |
+| Phase 8 status | NOT PERFORMED / claim boundary PASS |
+| Tracked evidence SHA-256 inventory | 158 files / PASS |
+| Verifier repeatability | PASS |
+| Maven package | BUILD SUCCESS |
+| Git diff check | PASS |
+| Final freeze state | FROZEN COMPLETE |
+
+No external-target, production-accuracy, production-safety or independent real-world validation claim is supported by
+this freeze.
+
 ## Sprint 13 Phase 7 real Burp Desktop / Montoya runtime validation — 2026-09-25
 
 Canonical strengthened evaluation: GitHub Actions run `36180569483` — **PASS** at
