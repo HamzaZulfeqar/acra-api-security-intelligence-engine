@@ -17,6 +17,7 @@ javac --release 21 -Xlint:all -Werror -cp "$BUILD/main" -d "$BUILD/test" @"$BUIL
 CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionStandardsFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionSecurityHardeningTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionEvidenceArtifactTestSuite
 
 if grep -R "burp.api.montoya" core/src/main/java/io/acra/core/reporting/s12 >/dev/null 2>&1; then
   echo "Sprint 12 core must remain Montoya-independent" >&2
