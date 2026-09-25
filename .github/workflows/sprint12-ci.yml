@@ -35,5 +35,5 @@ jobs:
         run: chmod +x ./scripts/*.sh
       - name: Verify Sprint 12 reproduction export foundation
         run: bash ./scripts/verify-sprint12-foundation.sh
-      - name: Verify Maven core test compilation
-        run: mvn --batch-mode --no-transfer-progress -pl core test-compile
+      - name: Verify Maven core and Burp adapter compilation
+        run: mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
