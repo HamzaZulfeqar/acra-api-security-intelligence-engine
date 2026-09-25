@@ -1,5 +1,27 @@
 # ACRA Project State
 
+## Current state — 2026-09-26 — Sprint 15 Release Promotion
+
+**Decision:** RELEASE PROMOTION PREPARED; PUBLICATION BLOCKED PENDING OWNER DECISIONS.  
+**Working branch:** `s15-release-promotion`.  
+**Draft PR:** #4.  
+**Source candidate:** `0.3.0-rc1`.  
+**Sprint 14 hardened source:** `88f2a75f190f6e8853609db2dc9d73929434ad0d`.  
+**Promotion preflight:** `36195798931` — SUCCESS.  
+**CodeQL:** PASS.  
+**Gitleaks:** PASS.  
+**GitHub Dependency Review:** UNAVAILABLE — repository Dependency Graph disabled.  
+**Local dependency contract/inventory:** PASS.  
+**License:** UNRESOLVED.  
+**Version/publication decision:** UNRESOLVED.  
+**Public release authorized:** NO.  
+**Tag/GitHub Release:** NOT CREATED.
+
+The promotion branch is intentionally safe in `PREPARED_BLOCKED` state. No merge, tag, release or license selection
+is implied by CI success.
+
+## Previous state — Sprint 14 technical release hardening
+
 ## Current state — 2026-09-26 — Sprint 14
 
 **Decision:** TECHNICAL RELEASE CANDIDATE HARDENED; PUBLIC RELEASE BLOCKED BY LICENSE.  
