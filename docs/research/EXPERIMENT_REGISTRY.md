@@ -28,6 +28,7 @@
 | EXP-S13-DIMENSION-001 | Blind automatic authorization-dimension discovery + inferred-dimension A0-A7 | COMPLETED_CONTROLLED_LOCAL | GT-S13-DIMENSION-FEATURES + GT-S13-DIMENSION-LABELS | 31/32 dimensions correct; accuracy=.968750, macro-F1=.968254; S13 holdout 16/16; downstream A7 unchanged vs prior measured fixtures |
 | EXP-S13-POLICY-GEN-001 | Configurable policy semantics with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-POLICY-EVAL-FEATURES + GT-S13-POLICY-EVAL-LABELS | G1 TP=8/TN=16/FP=0/FN=0, P=1/R=1/F1=1 on 24-case internal configured-policy evaluation; locked A7 FP=12 |
 | EXP-S13-BASERATE-001 | Adversarial negative-heavy policy/base-rate stress | COMPLETED_CONTROLLED_STRESS | GT-S13-BASERATE-FEATURES + GT-S13-BASERATE-LABELS | 96 cases, 8.33% prevalence; G1 TP=8/TN=49/FP=39/FN=0, P=.170213/R=1/F1=.290909; explicit-policy controls 0 FP, policy-degraded controls dominate FP |
+| EXP-S13-GOVERNANCE-001 | Policy reliability and uncertainty governance with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-GOV-EVAL-FEATURES + GT-S13-GOV-EVAL-LABELS | 64/64 dispositions; actionable TP=8/TN=48/FP=0/FN=8, P=1/R=.5; escalation coverage=1.0; silent positives=0 |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -177,3 +178,32 @@ overall and 48/58 among decisive decisions.
 The experiment demonstrates that configured policy semantics can strongly reduce false positives when policy is healthy,
 but current UNKNOWN fallback and stale/incomplete policy handling produce an unacceptable alert rate under degraded
 policy quality. The result is frozen evidence; no post-result tuning is permitted inside this experiment.
+
+
+## Sprint 13 Phase 5 policy reliability & uncertainty governance — 2026-09-25
+
+Development workflow `36169960606` succeeded with 64/64 dimensions and 64/64 expected dispositions. The governance
+design was then frozen at `11afbb80be24116c9facd0d4b0791f4a12efed3a`.
+
+Untouched evaluation workflow `36170353179` succeeded at
+`46f77a8d76b160cec70f7aef3f612e0d63af56da`.
+
+Evaluation result:
+- dimension inference: 64/64;
+- expected disposition: 64/64;
+- frozen A7: TP=16/TN=21/FP=27/FN=0, P=.372093/R=1/F1=.542373;
+- legacy G1: TP=16/TN=25/FP=23/FN=0, P=.410256/R=1/F1=.581818;
+- governed actionable findings: TP=8/TN=48/FP=0/FN=8, P=1/R=.5/F1=.666667;
+- positive review count=8;
+- negative review count=32;
+- escalation coverage=1.0;
+- silent positive count=0;
+- review rate=.625;
+- actionable-candidate rate=.125.
+
+The eight positive cases not promoted to actionable candidates were explicitly routed to review-required `POLICY_GAP`
+states. Thus candidate recall and escalation coverage are intentionally different metrics.
+
+The result demonstrates only the controlled governance contract: degraded policy evidence can be separated from
+actionable vulnerability findings without silently dropping positives in this synthetic corpus. It does not establish
+real-world analyst workload, production accuracy, automatic policy-health detection or cross-framework generalization.
