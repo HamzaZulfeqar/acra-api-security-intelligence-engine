@@ -1,5 +1,16 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 2 dimension-discovery findings — 2026-09-25
+
+- Automatic dimension discovery measured 31/32 correct across the frozen S12+S13 synthetic corpus: accuracy=.968750, macro-F1=.968254.
+- The retained mismatch is the canonical Sprint 12 `/api/v1/s8/admin` routing control, inferred as RBAC because its observable response contains an explicit `required_role` signal and the canonical request has no routing anomaly.
+- The 16/16 result on the S13 holdout is still small synthetic evidence and must not be presented as real-world dimension-classification accuracy.
+- The inference engine is deterministic project-authored evidence scoring, not an independently trained or externally replicated model.
+- Path/name semantics contribute evidence and may fail on APIs using different naming conventions, gateways, frameworks or opaque resource paths.
+- Removing the supplied dimension did not remove the five Phase 1 policy-generalization false positives; policy semantics remain the next research problem.
+- Phase 1 and Phase 2 evaluation corpora are now frozen evidence and must not be reused as tuning targets.
+- Cross-framework, real Burp desktop and authorized external-target validation remain unverified.
+
 ## Sprint 13 Phase 1 held-out findings — 2026-09-25
 
 - Locked A7 generalization on the 16-case held-out corpus measured TP=8/TN=3/FP=5/FN=0, precision=.615385, recall=1.000000, F1=.761905.
