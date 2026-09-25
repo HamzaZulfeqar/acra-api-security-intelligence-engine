@@ -1,0 +1,62 @@
+name: Sprint 13 Held-Out External Validity
+
+on:
+  push:
+    branches:
+      - s13-heldout-external-validity
+    paths:
+      - 'scripts/run-sprint13-heldout.py'
+      - 'scripts/verify-sprint13-heldout.py'
+      - 'scripts/verify-sprint13-heldout.sh'
+      - 'scripts/run-sprint12-ablation.py'
+      - 'scripts/verify-sprint12-research.py'
+      - 'lab/heldout-api/**'
+      - 'lab/ground-truth/GT-S13-HOLDOUT-*.json'
+      - 'docs/research/sprint-13-heldout-protocol.md'
+      - 'docs/sprints/sprint-13.md'
+      - '.github/workflows/sprint13-heldout.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  heldout-research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Normalize research scripts
+        run: chmod +x ./scripts/*.sh ./scripts/*.py
+
+      - name: Execute Sprint 13 blind held-out campaign
+        run: bash ./scripts/verify-sprint13-heldout.sh
+
+      - name: Compile product modules after research harness
+        run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
+
+      - name: Upload Sprint 13 research artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-13-heldout-research
+          path: |
+            build/s13-heldout/predictions.json
+            build/s13-heldout/predictions.json.sha256
+            build/s13-heldout/predictions.jsonl
+            build/s13-heldout/predictions.jsonl.sha256
+            build/s13-heldout/evaluation.json
+            build/s13-heldout/evaluation.json.sha256
+            build/s13-heldout/evaluation-cases.jsonl
+            build/s13-heldout/evaluation-cases.jsonl.sha256
+          if-no-files-found: warn
