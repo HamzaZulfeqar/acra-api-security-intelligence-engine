@@ -110,7 +110,7 @@ class Handler(BaseHTTPRequestHandler):
             duplicate = path.startswith("/holdout//")
             privileged = ident["role"] in {"security-admin", "platform-admin"}
             if not privileged:
-                if MODE == "vulnerable" and duplicate:
+                if MODE == "vulnerable":
                     return self._json(200, {"area": "audit", "role": ident["role"], "route_form": "duplicate-separator"})
                 return self._json(403, {"error": "access_denied"})
             return self._json(200, {"area": "audit", "role": ident["role"], "route_form": "duplicate-separator" if duplicate else "canonical"})
