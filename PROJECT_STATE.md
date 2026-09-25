@@ -2,78 +2,53 @@
 
 ## Current state — 2026-09-25
 
-**Current research boundary:** Sprint 13 — Policy Reliability & Uncertainty Governance.  
-**Decision:** S13 PHASE 5 COMPLETE; CROSS-FRAMEWORK GENERALIZATION NEXT.  
-**Working branch:** `s13-policy-uncertainty-governance`.  
-**Phase 4 completion base:** `a07cf497e6689c9b1d161ae2e22c747fdbac33f7`.  
-**Governance development workflow:** GitHub Actions `36169960606` — SUCCESS.  
-**Governance freeze:** `11afbb80be24116c9facd0d4b0791f4a12efed3a`.  
-**Untouched evaluation workflow:** GitHub Actions `36170353179` — SUCCESS.  
-**Measured evaluation head:** `46f77a8d76b160cec70f7aef3f612e0d63af56da`.  
-**Evaluation corpus:** 64 cases.  
-**Dimension inference:** 64/64.  
-**Expected governed disposition:** 64/64.  
+**Current research boundary:** Sprint 13 — Cross-Framework Generalization.  
+**Decision:** S13 PHASE 6A COMPLETE; REAL LOCAL FRAMEWORK RUNTIME VALIDATION NEXT.  
+**Working branch:** `s13-cross-framework-generalization`.  
+**Phase 5 completion base:** `8f57460aabd62d7c009838d8207dd702aad651a1`.  
+**Development workflow:** GitHub Actions `36173526384` — SUCCESS.  
+**Normalization freeze:** `4011b9c05b99b14da66733aea47de43256060990`.  
+**Untouched evaluation workflow:** GitHub Actions `36173838561` — SUCCESS.  
+**Measured evaluation head:** `f3180a1877aaffd224a6d3a2734ddc25bf28c24b`.  
+**Evaluation corpus:** 64 framework-shaped snapshots.  
+**Raw dimension:** 60/64.  
+**Raw disposition:** 32/64.  
+**Normalized dimension:** 64/64.  
+**Normalized disposition:** 64/64.  
 **Repeatability:** PASS.  
-**Phase 4 evidence lock:** PASS.  
-**Governance/upstream algorithm freeze:** PASS.  
+**Phase 5 evidence lock:** PASS.  
+**Normalization/upstream freeze:** PASS.  
 **Product compilation:** Maven BUILD SUCCESS.  
+**Actual FastAPI/Flask/Express/Spring runtime:** NOT YET MEASURED.  
 **Real Burp desktop runtime:** UNVERIFIED / DEFERRED.  
 **External authorized-target validation:** NOT PERFORMED.
 
-### Sprint 13 Phase 5 measured result
+### Phase 6A interpretation
 
-| Decision layer | TP | TN | FP | FN | Precision | Recall | F1 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Frozen A7 | 16 | 21 | 27 | 0 | .372093 | 1.000000 | .542373 |
-| Legacy G1 | 16 | 25 | 23 | 0 | .410256 | 1.000000 | .581818 |
-| Governed actionable | 8 | 48 | 0 | 8 | 1.000000 | .500000 | .666667 |
+FastAPI- and Flask-shaped snake_case snapshots already matched the canonical reasoning schema. Express- and Spring-shaped
+camelCase snapshots caused policy/governance mismatches before normalization despite most dimensions still being inferred.
 
-Review routing:
-- positive review count=8;
-- negative review count=32;
-- escalation coverage=1.000000;
-- silent positive count=0;
-- review rate=.625000;
-- actionable-candidate rate=.125000.
+The frozen neutral normalizer restored all 64 dimensions and all 64 expected governed dispositions on the untouched
+snapshot evaluation.
 
-Disposition counts:
-- VULNERABILITY_CANDIDATE=8;
-- AUTHORIZED_CONTROL=8;
-- CONTROL_ENFORCED=8;
-- POLICY_GAP=16;
-- AMBIGUOUS_POLICY=8;
-- STALE_POLICY=8;
-- INCOMPLETE_CONTEXT=8.
+This is serialization-shape evidence only. It does not prove actual framework runtime compatibility.
 
-### Product conclusion
+**Next work: Sprint 13 Phase 6B — Actual Local Framework Runtime Validation**
+- launch local framework servers in CI;
+- send real HTTP requests;
+- capture live response bodies/statuses;
+- feed captured observations through the frozen normalization/reasoning stack;
+- report results separately per framework.
 
-The product-facing finding lifecycle now separates evidence-backed actionable candidates from policy uncertainty.
-`POLICY_GAP`, `AMBIGUOUS_POLICY`, `STALE_POLICY`, `INCOMPLETE_CONTEXT`, and `INCONCLUSIVE` are review states,
-not confirmed vulnerability candidates.
-
-The controlled evaluation contains no false actionable findings and no silent positive misses. It does, however, route
-62.5% of this deliberately uncertainty-heavy corpus to review. That is a constructed research workload, not a production
-analyst-load measurement.
-
-**Next work: Sprint 13 Phase 6 — Cross-Framework Generalization**
-- preserve Phase 5 governance semantics;
-- independently structured framework fixtures;
-- framework-specific routing/body/serialization differences;
-- separate dimension, policy and governance measurements;
-- new development and untouched evaluation sets.
-
-Real Burp desktop runtime and external-target validation remain later independent gates.
-
-Canonical Phase 5 details:
-- `docs/research/sprint-13-policy-uncertainty-governance-protocol.md`
-- `lab/ground-truth/POL-S13-GOV-DEV-001.json`
-- `lab/ground-truth/POL-S13-GOV-EVAL-001.json`
-- `lab/ground-truth/GT-S13-GOV-EVAL-FEATURES.json`
-- `lab/ground-truth/GT-S13-GOV-EVAL-LABELS.json`
-- `scripts/sprint13_uncertainty_governance.py`
-- `scripts/run-sprint13-governance-eval.py`
-- `scripts/verify-sprint13-governance-eval.py`
-- `scripts/verify-sprint13-governance-eval.sh`
+Canonical Phase 6A details:
+- `docs/research/sprint-13-cross-framework-normalization-protocol.md`
+- `scripts/sprint13_cross_framework_normalization.py`
+- `lab/ground-truth/GT-S13-XFRAME-EVAL-FEATURES.json`
+- `lab/ground-truth/GT-S13-XFRAME-EVAL-LABELS.json`
+- `lab/ground-truth/POL-S13-XFRAME-EVAL-001.json`
+- `scripts/run-sprint13-cross-framework-eval.py`
+- `scripts/verify-sprint13-cross-framework-eval.py`
+- `scripts/verify-sprint13-cross-framework-eval.sh`
 
 ## Previous Sprint 13 Phase 4 state
 
