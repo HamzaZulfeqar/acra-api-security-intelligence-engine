@@ -2,47 +2,52 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 13 Phase 3 CONFIGURABLE POLICY GENERALIZATION COMPLETE.**
+
+Canonical Phase 3 evidence:
+- branch: `s13-policy-generalization`;
+- Phase 2 immutable base: `2d030735401e336292ec5d18d7e01702c1e70039`;
+- successful development workflow: `36148740338`;
+- algorithm freeze: `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`;
+- untouched evaluation workflow: `36149071484`;
+- measured evaluation head: `82ae165b702d18b0eae872d51f8f695f723fec13`;
+- evaluation corpus: 24 cases / 8 positive / 16 legitimate controls;
+- automatic dimension inference: 24/24;
+- explicit policy decisions: 24/24;
+- UNKNOWN policy decisions: 0;
+- frozen algorithm diff gate: PASS;
+- sealed-label absence during both prediction passes: PASS;
+- repeatability: PASS;
+- Maven package: BUILD SUCCESS.
+
+Untouched evaluation:
+- locked A7: TP=8 / TN=4 / FP=12 / FN=0, P=.4 / R=1 / F1=.571429;
+- policy-generalized G1: TP=8 / TN=16 / FP=0 / FN=0, P=1 / R=1 / F1=1.
+
+Interpretation:
+- explicit configured policy semantics removed the measured false positives on this internal synthetic corpus;
+- automatic dimension discovery remained intact;
+- this does not prove automatic policy extraction or production accuracy;
+- the evaluation result is frozen and cannot be reused as a tuning target.
+
+**Next gate:** Sprint 13 Phase 4 — larger, less-balanced and adversarial negative populations with realistic base-rate
+stress and explicit prevalence-sensitive precision reporting.
+
+See:
+- `sprint-13.md`;
+- `../research/sprint-13-policy-generalization-protocol.md`;
+- `../research/EXPERIMENT_REGISTRY.md`.
+
+## Previous gate — Sprint 13 Phase 2
+
 **Sprint 13 Phase 2 AUTOMATIC AUTHORIZATION-DIMENSION DISCOVERY COMPLETE.**
 
 Canonical Phase 2 evidence:
 - branch: `s13-dimension-discovery`;
-- Phase 1 immutable base: `30acba767e4ce969909f1d018b23535e9c12b582`;
-- measured Phase 2 head: `3f4b4238efe514b7ef1fe65b2cd477233c54fa73`;
-- successful workflow: `36145805521`;
-- dimension-free feature corpus: 32 cases;
-- sealed dimension/vulnerability labels: 32 cases;
-- label file physically absent during both inference passes: PASS;
-- automatic dimension inferences: 32;
-- downstream A0-A7 predictions using inferred dimension only: 256;
-- repeatability: PASS;
-- Sprint 12 and Phase 1 immutable-history gates: PASS;
-- Maven package: BUILD SUCCESS.
-
-Measured dimension discovery:
-- S12 calibration: 15/16 correct, accuracy=.937500, macro-F1=.933333;
-- S13 holdout: 16/16 correct, accuracy=1.000000, macro-F1=1.000000;
-- combined: 31/32 correct, accuracy=.968750, macro-F1=.968254;
-- confidence distribution: 30 HIGH / 2 MEDIUM.
-
-Retained ambiguity:
-- canonical S12 `/api/v1/s8/admin` routing control is inferred as RBAC because the observed evidence contains
-  `required_role=admin` and no routing anomaly.
-
-Downstream A7 with inferred dimensions only:
-- S12: TP=8/TN=8/FP=0/FN=0;
-- S13 holdout: TP=8/TN=3/FP=5/FN=0.
-
-Therefore Phase 2 removes the supplied-dimension dependency for the measured fixtures without changing the prior
-binary A7 outcomes. The next dependency is **policy generalization**, especially the five legitimate controls that
-remain false positives.
-
-**Next gate:** Sprint 13 Phase 3 — policy-generalization redesign with explicit/configurable policy semantics and a new
-untouched evaluation set. The Phase 1 holdout must not be reused as a tuning target.
-
-See:
-- `sprint-13.md`;
-- `../research/sprint-13-dimension-discovery-protocol.md`;
-- `../research/EXPERIMENT_REGISTRY.md`.
+- measured workflow: `36145805521`;
+- dimension-free corpus: 32 cases;
+- combined dimension accuracy=.968750, macro-F1=.968254;
+- downstream inferred-dimension A7 preserved prior binary results.
 
 ## Previous gate — Sprint 13 Phase 1
 
