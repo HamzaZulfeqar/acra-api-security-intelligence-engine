@@ -4,12 +4,104 @@
 **License:** Apache-2.0  
 **Runtime:** Java 21  
 **Burp integration:** Montoya API 2026.7  
-**Research state:** Sprint 13 frozen; stable release promotion validated through Sprint 15.
+**Research state:** Sprint 13 frozen; stable release published through Sprint 15.
 
 ACRA is a security-research and engineering project for analyzing API authorization behavior from correlated HTTP,
 identity, tenant, ownership, role, workflow, routing, property, batch and indirect-reference evidence.
 
 The project is implemented as a Java core plus a Burp Suite extension adapter.
+
+## Quick Start
+
+### 1. Clone the official stable release
+
+Recommended for reproducible use:
+
+```bash
+git clone --branch v0.3.0 --depth 1 https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine.git
+cd acra-api-security-intelligence-engine
+```
+
+For contributors who intentionally want the latest development state:
+
+```bash
+git clone https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine.git
+cd acra-api-security-intelligence-engine
+```
+
+### 2. Verify prerequisites
+
+```bash
+java -version
+mvn -version
+git --version
+```
+
+Required:
+- Java 21;
+- Maven;
+- Git.
+
+### 3. Build ACRA
+
+```bash
+mvn --batch-mode --no-transfer-progress clean verify -pl extension/burp-extension -am
+```
+
+Expected extension JAR:
+
+```text
+extension/burp-extension/target/acra-burp-extension-0.3.0.jar
+```
+
+### 4. Load ACRA in Burp Suite
+
+In Burp:
+
+1. Open **Extensions > Installed**.
+2. Click **Add**.
+3. Select **Java** as the extension type.
+4. Select `acra-burp-extension-0.3.0.jar`.
+5. Click **Next**.
+6. Review the **Output** and **Errors** tabs.
+7. Close the dialog after the extension loads.
+
+The extension should appear as **ACRA**, and an **ACRA** suite tab should be visible.
+
+### 5. Configure authorized scope before expecting traffic
+
+ACRA defaults to Burp's suite scope. Add only systems you are explicitly authorized to test to **Target > Scope**
+(or right-click an authorized target in the Site map and choose **Add to scope**).
+
+ACRA's active request execution remains disabled by default.
+
+### 6. Verify the first run
+
+Expected extension output:
+
+```text
+ACRA v0.3.0 initialized in passive observation mode. Active vulnerability scanning is disabled.
+```
+
+In the ACRA tab, verify:
+- **Overview**, **Traffic**, **Contexts**, **Endpoints**, and **Configuration** are visible;
+- Configuration reports `Scope mode: IN_SCOPE_ONLY`;
+- Configuration reports `Active execution: DISABLED by default`;
+- authorized in-scope Proxy traffic begins appearing in the passive observation views.
+
+Full onboarding:
+- [Quick Start](docs/getting-started/QUICK_START.md)
+- [Burp Installation](docs/getting-started/BURP_INSTALLATION.md)
+- [First-Run Verification](docs/getting-started/FIRST_RUN_VERIFICATION.md)
+- [Troubleshooting](docs/getting-started/TROUBLESHOOTING.md)
+
+## Download instead of building
+
+The stable GitHub Release contains the prebuilt extension JAR, release ZIP, manifest, and SHA-256 checksums:
+
+https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine/releases/tag/v0.3.0
+
+Users should verify downloaded assets against the published `SHA256SUMS`.
 
 ## What ACRA does
 
@@ -37,36 +129,27 @@ core/                     Framework-neutral ACRA domain and reasoning code
 extension/burp-extension/ Burp Suite / Montoya adapter and UI
 lab/                      Controlled local research fixtures
 scripts/                  Verification, packaging and research automation
-docs/                      Architecture, testing, research and sprint records
+docs/                      Architecture, testing, research and onboarding
 .github/workflows/         CI, security and research gates
 ```
 
-## Build
+## Public repository verification
 
-Requirements:
+Sprint 16 adds a public-onboarding smoke gate that verifies:
 
-- JDK 21
-- Maven
-- Git
+- public cloneability;
+- Java 21 / Maven buildability;
+- stable version/license consistency;
+- extension JAR creation;
+- required Burp entry class packaging;
+- stable release asset availability/checksum;
+- onboarding documentation integrity.
 
-```bash
-mvn --batch-mode --no-transfer-progress clean verify
-```
-
-The shaded Burp extension is produced at:
-
-```text
-extension/burp-extension/target/acra-burp-extension-0.3.0.jar
-```
-
-## Stable release packaging
+Run locally:
 
 ```bash
-bash scripts/verify-sprint15-release-promotion.sh
+bash scripts/verify-public-onboarding.sh
 ```
-
-The stable packaging lane verifies the promotion decision, dependency contract, retained executable regression chain,
-Maven build, package contents, license/NOTICE presence, checksums and deterministic fixed-input ZIP packaging.
 
 ## Verified runtime boundary
 
@@ -116,6 +199,17 @@ Phase 8 external-target validation was **NOT PERFORMED** before the freeze. Ther
 - independent real-world validation.
 
 A public software release is a packaging/distribution event, not new validation evidence.
+
+## Repository hardening
+
+The file-based public onboarding controls are versioned in this repository.
+
+Two GitHub administration settings are tracked separately because they cannot be changed by the connected repository
+automation used for this sprint:
+- protect `main` with pull-request/status-check requirements;
+- enable GitHub Dependency Graph so native Dependency Review becomes meaningful.
+
+See `docs/operations/GITHUB_REPOSITORY_HARDENING.md`.
 
 ## License
 

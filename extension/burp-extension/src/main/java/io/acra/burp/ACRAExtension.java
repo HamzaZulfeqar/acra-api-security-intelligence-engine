@@ -18,7 +18,7 @@ public final class ACRAExtension implements BurpExtension {
             registrations.add(api.http().registerHttpHandler(new AcraHttpHandler(collector,runtimeProbe))); tab=new AcraSuiteTab(pipeline,scope); registrations.add(api.userInterface().registerSuiteTab("ACRA",tab.component()));
             registrations.add(api.extension().registerUnloadingHandler(this::shutdown));
             runtimeProbe.initialized();
-            api.logging().logToOutput("ACRA v0.2.0-rc1 initialized in passive observation mode. Active vulnerability scanning is disabled.");
+            api.logging().logToOutput("ACRA v0.3.0 initialized in passive observation mode. Active vulnerability scanning is disabled.");
         }catch(RuntimeException ex){ runtimeProbe.error("initialize",ex); api.logging().logToError("ACRA initialization failed: "+ex.getMessage()); throw ex; }
     }
     private void shutdown(){ if(runtimeProbe!=null) runtimeProbe.unloading(); if(tab!=null) tab.stop(); for(Registration registration:registrations){try{registration.deregister();}catch(RuntimeException ignored){}} registrations.clear(); }
