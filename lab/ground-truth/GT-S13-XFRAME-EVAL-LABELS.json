@@ -1,0 +1,458 @@
+{
+  "schemaVersion": "s13-xframe-labels-v1",
+  "labelSetId": "GT-S13-XFRAME-EVAL-LABELS",
+  "featureDatasetId": "GT-S13-XFRAME-EVAL-FEATURES",
+  "untouchedEvaluation": true,
+  "normalizationFreeze": "4011b9c05b99b14da66733aea47de43256060990",
+  "caseCount": 64,
+  "cases": [
+    {
+      "caseId": "XEVAL-001-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-002-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-003-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-004-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-005-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-006-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-007-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-008-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-009-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-010-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-011-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-012-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-013-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-014-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-015-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-016-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-017-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-018-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-019-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-020-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-021-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-022-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-023-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-024-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-025-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-026-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-027-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-028-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-029-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-030-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-031-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-032-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-033-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-034-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-035-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-036-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-037-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-038-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-039-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-040-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-041-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-042-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-043-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-044-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-045-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-046-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-047-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-048-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-049-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-050-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-051-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-052-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-053-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-054-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-055-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-056-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-057-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-058-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-059-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-060-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-061-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-062-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "XEVAL-063-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "XEVAL-064-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    }
+  ]
+}
