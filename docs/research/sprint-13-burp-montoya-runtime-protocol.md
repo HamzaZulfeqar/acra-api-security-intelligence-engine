@@ -102,3 +102,54 @@ traffic. It does not establish:
 - independent replication.
 
 Phase 8 remains the explicitly authorized external-target validation gate.
+
+
+## Authorized execution and final measured result
+
+The user explicitly authorized acceptance of the PortSwigger Burp Suite Community Edition EULA for the controlled
+localhost Phase 7 CI validation.
+
+The first authorized launcher attempt (`36179467800`) still failed because the shell emitted a literal escaped newline
+instead of the required Enter key sequence. This was an orchestration defect, not a Burp/ACRA result.
+
+After correcting only that launcher input, development workflow `36179678105` succeeded:
+- Phase 6B evidence lock: PASS;
+- ACRA extension Maven build: SUCCESS;
+- Burp 2026.7.3 official SHA-256: PASS;
+- secure localhost lab health: PASS;
+- real Montoya initialization: PASS;
+- REQUEST callbacks: 2;
+- RESPONSE callbacks: 2;
+- PROCESSED pipeline events: 2;
+- GT-INTEGRATION-001: PASS;
+- secret-exclusion: PASS.
+
+Development was frozen at `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`.
+
+A post-freeze evaluation fixture and label set were then created. Final strengthened workflow `36180569483` succeeded
+at `e24a91297bf33bfe18a47453e8c191432b496b20`.
+
+Each of two independent real-Burp evaluation passes measured:
+- INITIALIZED=1;
+- REQUEST=2;
+- RESPONSE=2;
+- PROCESSED=2;
+- expected context reconstruction=2/2;
+- response tool source=PROXY;
+- loopback-only traffic;
+- no secret-bearing probe content.
+
+The normalized semantic evaluation outputs were identical.
+
+The strengthened final gate additionally verified:
+- the Findings & Reproduction review surface is packaged and installed by `AcraSuiteTab`;
+- the UI explicitly preserves candidate-vs-confirmed distinction;
+- `S11BurpIssueAdapter` refuses drafts that are not publication-eligible;
+- the extension initialization path does not automatically invoke issue materialization/publication;
+- active execution remains disabled.
+
+### Final Phase 7 decision
+
+**COMPLETE — CONTROLLED REAL BURP/MONTOYA RUNTIME VALIDATION PASSED.**
+
+Phase 8 remains the explicitly authorized external-target validation gate.
