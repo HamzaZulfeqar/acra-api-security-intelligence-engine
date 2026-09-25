@@ -22,6 +22,33 @@ public interface AuditIssue {
             String background,
             String remediationBackground,
             AuditIssueSeverity typicalSeverity,
+            List<HttpRequestResponse> requestResponses) {
+        HttpRequestResponse[] evidence = requestResponses == null
+                ? new HttpRequestResponse[0]
+                : requestResponses.toArray(HttpRequestResponse[]::new);
+        return auditIssue(
+                name,
+                detail,
+                remediation,
+                baseUrl,
+                severity,
+                confidence,
+                background,
+                remediationBackground,
+                typicalSeverity,
+                evidence);
+    }
+
+    static AuditIssue auditIssue(
+            String name,
+            String detail,
+            String remediation,
+            String baseUrl,
+            AuditIssueSeverity severity,
+            AuditIssueConfidence confidence,
+            String background,
+            String remediationBackground,
+            AuditIssueSeverity typicalSeverity,
             HttpRequestResponse... requestResponses) {
         List<HttpRequestResponse> evidence = requestResponses == null
                 ? List.of()
