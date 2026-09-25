@@ -124,7 +124,54 @@ Phase 4 invariants:
 
 Phase 4 verification: run `36070071498` — SUCCESS.
 
-## Phase 5 dependency
+## Phase 5 security/reproducibility boundary
 
-Security hardening and reproducibility must pressure-test the export/publication boundary before Sprint 12 final
-closure.
+Phase 5 hardens both sides of the reproduction boundary rather than relying on exporter redaction alone.
+
+```text
+FindingCandidate
+      |
+      v
+secret-safe / query-free reproduction identity
+      |
+      +--> deterministic workspace identity
+      |
+      +--> JSON / SARIF / Burp-review projection
+      |
+      v
+explicit publication approval
+      |
+      +--> absolute HTTP(S), host required
+      +--> no userinfo
+      +--> no query
+      +--> no fragment
+      +--> secret-safe approval reference
+      |
+      v
+review-only publication receipt
+      |
+      +--> deterministic ID/fingerprint
+      +--> IMPORTED_REVIEW_CANDIDATE only
+```
+
+Phase 5 invariants:
+
+1. Secret-bearing material is rejected before package/approval/receipt identity is computed.
+2. Reproduction endpoint identity excludes query and fragment material.
+3. One source candidate cannot silently drift to multiple package identities inside one workspace.
+4. Exact duplicate package recording is idempotent.
+5. Publication URLs cannot carry credentials, query or fragment material.
+6. Only HTTP(S) publication URLs with a concrete host are accepted.
+7. Receipt validation does not merely trust earlier approval validation.
+8. Receipt state cannot claim CONFIRMED or another unsupported publication state.
+9. Real Montoya compilation and legacy stub-contract regressions both remain green.
+10. Real Burp desktop SiteMap publication remains a separate runtime validation lane.
+
+Phase 5 verification: run `36075554684` — SUCCESS at
+`01aa13abd0385d6976eae15f583fd956afe69f5e`.
+Retained Core/Sprint2/Sprint3: `36075554589` / `36075554624` / `36075554697` — SUCCESS.
+
+## Final closure dependency
+
+Sprint 12 now requires requirements traceability, complete retained regressions, deterministic source packaging,
+archive-integrity verification and final audit before SOFTWARE COMPLETE can be claimed.

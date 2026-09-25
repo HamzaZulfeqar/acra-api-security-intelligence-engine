@@ -1,6 +1,6 @@
 # Sprint 12 — Reproduction & Standards Export
 
-Status: **IN PROGRESS — Phases 1–4 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–5 VERIFIED**  
 Branch: `s12-reproduction-standards-export`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
@@ -160,8 +160,47 @@ Verified:
 
 Phase 4 is **VERIFIED COMPLETE**.
 
+## Phase 5 — security and reproducibility hardening
+
+Implemented/verified hardening:
+
+- `S12ReproductionPackage` now rejects query/fragment material in endpoint identity;
+- secret-bearing candidate/project/resource/list metadata fails closed before package identity is computed;
+- `S12ReproductionWorkspace` binds one deterministic package ID to each source candidate and rejects drift;
+- identical package insertion remains idempotent;
+- `S12BurpIssuePublicationApproval` requires absolute HTTP(S) URL with host and rejects userinfo, query and fragment;
+- approval candidate/reference/base URL are secret-checked;
+- `S12BurpIssuePublicationReceipt` repeats the same URL/secret checks rather than trusting approval transitively;
+- receipt state remains restricted to `IMPORTED_REVIEW_CANDIDATE`;
+- receipt ID and fingerprint tampering fails closed;
+- legacy Sprint 2/3 Montoya stubs were extended only for the newly used `AuditIssue`, severity/confidence and
+  `SiteMap.add(AuditIssue)` contract, while Maven continues compiling the extension against the real pinned
+  Montoya 2026.7 dependency.
+
+### Phase 5 verification
+
+GitHub Actions run `36075554684`: **SUCCESS** at source commit
+`01aa13abd0385d6976eae15f583fd956afe69f5e`.
+
+Verified:
+
+- Sprint 12 standards foundation: PASS, 34 assertions;
+- reproduction security hardening: PASS, 14 assertions;
+- Montoya issue adapter: PASS, 13 assertions;
+- explicit publication boundary: PASS, 19 assertions;
+- publication security hardening: PASS, 14 assertions;
+- reproduction UI: PASS, 34 assertions;
+- complete retained Sprint 11 verifier: PASS;
+- Maven core/extension compilation: PASS;
+- Core CI: run `36075554589` — SUCCESS;
+- Sprint 2 CI: run `36075554624` — SUCCESS;
+- Sprint 3 CI: run `36075554697` — SUCCESS.
+
+Phase 5 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 5 is the pre-closure hardening/reproducibility gate. It must adversarially test export minimization,
-endpoint/URL/approval validation, receipt integrity, workspace collisions and publication side-effect isolation;
-then produce deterministic JSON/SARIF evidence artifacts and bounded engineering observations before final closure.
+Sprint 12 final closure must now freeze requirements traceability, rerun the complete Sprint 12 + retained
+regression stack, produce official Maven artifacts, generate a deterministic source checkpoint with manifest and
+SHA-256, validate safe archive paths / duplicate absence / clean extraction / per-file equality, and publish the
+final software audit. Real Burp desktop SiteMap publication remains a separate UNVERIFIED / DEFERRED runtime lane.

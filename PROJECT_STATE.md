@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 12 — Reproduction & Standards Export (in progress).  
-**Decision:** S12 PHASES 1–4 VERIFIED COMPLETE; deterministic reproduction workspace and read-only Burp UI verified.  
+**Decision:** S12 PHASES 1–5 VERIFIED COMPLETE; reproduction/publication hardening and retained regressions verified.  
 **Working branch:** `s12-reproduction-standards-export`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -13,6 +13,8 @@
 **Sprint 12 Phase 2 verification:** GitHub Actions run `36068996138` — SUCCESS at source commit `e57c8dbb0e62b4f1acc59210ff04ee8e8333b85a`.  
 **Sprint 12 Phase 3 verification:** GitHub Actions run `36069442716` — SUCCESS at source commit `45554b8c912f9f5fb23b39267606c3fb5dd110a6`.  
 **Sprint 12 Phase 4 verification:** GitHub Actions run `36070071498` — SUCCESS at source commit `a3328f7df32391f6aaa4a2f867de8590ba6fab52`.  
+**Sprint 12 Phase 5 verification:** GitHub Actions run `36075554684` — SUCCESS at source commit `01aa13abd0385d6976eae15f583fd956afe69f5e`.  
+**Sprint 12 Phase 5 retained Core/S2/S3:** runs `36075554589` / `36075554624` / `36075554697` — SUCCESS.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -95,6 +97,27 @@ Sprint 12 Phase 4 reproduction product workspace/UI is **VERIFIED COMPLETE**:
 - UI contains no publish/import/add-issue action control;
 - headless UI suite: PASS, 34 assertions;
 - real Burp desktop/site-map runtime remains separately UNVERIFIED / DEFERRED.
+
+Sprint 12 Phase 5 security/reproducibility hardening is **VERIFIED COMPLETE**:
+
+- reproduction packages reject query/fragment endpoint material;
+- secret-bearing project/candidate/evidence metadata fails closed rather than relying only on downstream redaction;
+- workspace enforces one deterministic package identity per source candidate and rejects candidate-package drift;
+- duplicate identical package recording remains idempotent;
+- publication approvals reject URL credentials, query, fragment and non-HTTP(S) schemes;
+- approval references/candidate IDs with secret-bearing material fail closed;
+- publication receipts revalidate URL safety, supported state, deterministic identity and fingerprint;
+- core hardening suite: PASS, 14 assertions;
+- publication hardening suite: PASS, 14 assertions;
+- original Phase 1 foundation: PASS, 34 assertions;
+- Montoya adapter: PASS, 13 assertions;
+- publication boundary: PASS, 19 assertions;
+- reproduction UI: PASS, 34 assertions;
+- retained Sprint 2/3 stub contract was extended minimally for AuditIssue/SiteMap while Maven still compiles against real Montoya 2026.7;
+- dedicated Sprint 12 / Core / Sprint 2 / Sprint 3 workflows all pass at the exact Phase 5 head.
+
+The next dependency is Sprint 12 final traceability, deterministic source packaging, retained regression closure and
+final software audit. Real Burp desktop/site-map publication remains UNVERIFIED / DEFERRED.
 
 ### Sprint 11 final closure
 

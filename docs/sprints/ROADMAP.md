@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
+**Sprint 12 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-standards-export`;
@@ -13,6 +13,7 @@ Canonical Sprint 12 evidence:
 - Phase 2 verification: `36068996138` — SUCCESS at `e57c8dbb0e62b4f1acc59210ff04ee8e8333b85a`;
 - Phase 3 verification: `36069442716` — SUCCESS at `45554b8c912f9f5fb23b39267606c3fb5dd110a6`;
 - Phase 4 verification: `36070071498` — SUCCESS at `a3328f7df32391f6aaa4a2f867de8590ba6fab52`;
+- Phase 5 verification: `36075554684` — SUCCESS at `01aa13abd0385d6976eae15f583fd956afe69f5e`;
 - standards foundation: PASS, 34 assertions;
 - deterministic JSON reproduction export: PASS;
 - deterministic SARIF 2.1.0 review export: PASS;
@@ -44,12 +45,25 @@ Verified Phase 4:
 - publish/import/add-issue UI control absent: PASS;
 - real desktop publication: UNVERIFIED / DEFERRED.
 
+Verified Phase 5:
+- endpoint query/fragment rejection: PASS;
+- secret-bearing package metadata rejection: PASS;
+- candidate-package drift rejection + idempotency: PASS;
+- publication URL userinfo/query/fragment/scheme rejection: PASS;
+- approval/receipt secret checks: PASS;
+- receipt identity/fingerprint/state hardening: PASS;
+- core hardening suite: PASS, 14 assertions;
+- publication hardening suite: PASS, 14 assertions;
+- retained Core / Sprint 2 / Sprint 3 workflows: PASS;
+- real desktop SiteMap publication: UNVERIFIED / DEFERRED.
+
 Next dependency-ordered milestone:
-1. adversarially harden endpoint/URL/approval/export boundaries;
-2. verify secret/minimization defenses across JSON, SARIF, issue spec and receipts;
-3. verify workspace collision and side-effect isolation;
-4. archive deterministic JSON/SARIF evidence;
-5. record bounded engineering observations without claiming performance SLOs.
+1. freeze Sprint 12 requirements traceability;
+2. run complete Sprint 12 plus retained release/regression lanes;
+3. produce official Maven package;
+4. generate deterministic Sprint 12 source checkpoint + manifest + SHA-256;
+5. validate archive safe paths, duplicate absence, clean extraction and per-file hash equality;
+6. publish final software audit without promoting real Burp desktop runtime evidence.
 
 ## Previous release boundary — Sprint 11
 
