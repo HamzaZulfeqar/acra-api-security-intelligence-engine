@@ -9,7 +9,7 @@ app.get("/runtime/express/assets/:assetId",(req,res)=>{
 app.get("/runtime/express/workspaces/:tenant/reports/:reportId",(req,res)=>res.json({id:req.params.reportId,tenantId:req.params.tenant}));
 app.get("/runtime/express/management/audit",(req,res)=>res.json({area:"audit",role:req.get("X-Role")||"",requiredRole:"security-admin"}));
 app.post("/runtime/express/workflows/release/resources/:resourceId/transition",(req,res)=>res.json({...req.body,resourceId:req.params.resourceId,state:req.body.toState,role:req.get("X-Role")||""}));
-app.get("/runtime/express/routing/audit",(req,res)=>res.json({area:"audit",role:req.get("X-Role")||"",routeForm:"canonical"}));
+app.get("/runtime/express/routing/equivalent",(req,res)=>res.json({area:"route",role:req.get("X-Role")||"",routeForm:"canonical"}));
 app.patch("/runtime/express/accounts/:account/preferences",(req,res)=>res.json({id:req.params.account,appliedProperties:Object.keys(req.body).sort()}));
 app.post("/runtime/express/assets/bulk-read",(req,res)=>{
   const items=(req.body.resourceIds||[]).map(id=>({resourceId:id,decision:"ALLOW",ownerId:id==="asset-red"?"alice":"bob",tenantId:id==="asset-red"?"red":"blue"}));
