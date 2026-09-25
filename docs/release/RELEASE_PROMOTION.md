@@ -102,3 +102,23 @@ After explicit license + version decisions:
 `PREPARED_BLOCKED → READY_FOR_PROMOTION → PUBLISHED`
 
 The `PUBLISHED` state must record the exact tag, release URL/identifier and final artifact hashes.
+
+
+## Dependency-review status
+
+The pull-request security workflow attempted GitHub's native Dependency Review action. GitHub reported that Dependency
+Review is not supported because the repository Dependency Graph is not enabled.
+
+This is a repository-feature limitation, not a reported vulnerable-dependency finding.
+
+Sprint 15 therefore also performs a repository-local dependency contract/inventory gate:
+- `acra-core`: zero direct dependencies;
+- Burp extension: only `io.acra:acra-core` and the provided PortSwigger Montoya API are allowed as direct dependencies;
+- custom Maven repositories: prohibited by the promotion contract;
+- system-scoped dependencies: prohibited;
+- SNAPSHOT dependencies/versions: prohibited;
+- Maven dependency tree is emitted during promotion preflight.
+
+For GitHub-native Dependency Review to become a passing PR check, the repository owner must enable the Dependency Graph
+in GitHub repository security settings. Until then its failure should be interpreted as **UNAVAILABLE**, not as a clean
+dependency-vulnerability scan.
