@@ -9,8 +9,8 @@ Canonical evidence:
 - Phase 6B completion base: `d35e2a54891357e680253e2cfc766c3e4bb6f88d`;
 - successful real-Burp development workflow: `36179678105`;
 - Phase 7 development freeze: `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`;
-- successful post-freeze evaluation workflow: `36180110271`;
-- measured evaluation head: `b1cf0336c530a3678de64aee699067a4793e3857`;
+- successful post-freeze evaluation workflow: `36180569483`;
+- measured evaluation head: `e24a91297bf33bfe18a47453e8c191432b496b20`;
 - Burp Suite Community Edition 2026.7.3 JAR checksum: PASS;
 - real Montoya extension initialization: PASS;
 - real Burp Proxy request callbacks: PASS;
@@ -21,6 +21,9 @@ Canonical evidence:
 - label absence during evaluation traffic: PASS;
 - secret-exclusion gate: PASS;
 - semantic repeatability: PASS;
+- review/publication boundary: PASS;
+- publication-eligibility guard: PASS;
+- no automatic issue-publication wiring: PASS;
 - active ACRA execution remained disabled.
 
 The Phase 7 evidence probe is opt-in and disabled during normal extension operation.
