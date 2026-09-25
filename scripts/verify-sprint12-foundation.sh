@@ -16,6 +16,7 @@ javac --release 21 -Xlint:all -Werror -cp "$BUILD/main" -d "$BUILD/test" @"$BUIL
 
 CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12ReproductionExportFoundationTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint12.Sprint12BurpIssueDraftTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint11.Sprint11ResearchReportExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint10.Sprint10BatchIndirectReportingExportTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint9.Sprint9PropertyReportingExportTestSuite
