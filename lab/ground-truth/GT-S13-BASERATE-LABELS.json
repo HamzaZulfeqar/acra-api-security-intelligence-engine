@@ -1,0 +1,689 @@
+{
+  "schemaVersion": "s13-baserate-labels-v1",
+  "labelSetId": "GT-S13-BASERATE-LABELS",
+  "featureDatasetId": "GT-S13-BASERATE-FEATURES",
+  "sealedForPrediction": true,
+  "caseCount": 96,
+  "conditionCounts": {
+    "POSITIVE": 8,
+    "EXPLICIT_ALLOW": 40,
+    "NO_POLICY": 16,
+    "AMBIGUOUS_POLICY": 16,
+    "STALE_POLICY": 8,
+    "INCOMPLETE_CONTEXT": 8
+  },
+  "cases": [
+    {
+      "caseId": "BR-OBJ-POS-01",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-OBJ-EXP-01",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-EXP-02",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-EXP-03",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-EXP-04",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-EXP-05",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-NOP-01",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-NOP-02",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-AMB-01",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-AMB-02",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-STALE",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-OBJ-INCOMP",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-POS-01",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-TEN-EXP-01",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-EXP-02",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-EXP-03",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-EXP-04",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-EXP-05",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-NOP-01",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-NOP-02",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-AMB-01",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-AMB-02",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-STALE",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-TEN-INCOMP",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-POS-01",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-RBAC-EXP-01",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-EXP-02",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-EXP-03",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-EXP-04",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-EXP-05",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-NOP-01",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-NOP-02",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-AMB-01",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-AMB-02",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-STALE",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-RBAC-INCOMP",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-POS-01",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-WF-EXP-01",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-EXP-02",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-EXP-03",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-EXP-04",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-EXP-05",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-NOP-01",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-NOP-02",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-AMB-01",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-AMB-02",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-STALE",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-WF-INCOMP",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-POS-01",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-PROP-EXP-01",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-EXP-02",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-EXP-03",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-EXP-04",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-EXP-05",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-NOP-01",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-NOP-02",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-AMB-01",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-AMB-02",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-STALE",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-PROP-INCOMP",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-POS-01",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-01",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-02",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-03",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-04",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-EXP-05",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-NOP-01",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-NOP-02",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-AMB-01",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-AMB-02",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-STALE",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-ROUTE-INCOMP",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-POS-01",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-BATCH-EXP-01",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-EXP-02",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-EXP-03",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-EXP-04",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-EXP-05",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-NOP-01",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-NOP-02",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-AMB-01",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-AMB-02",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-STALE",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-BATCH-INCOMP",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-POS-01",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "policyCondition": "POSITIVE",
+      "expectedAuthorization": "DENY"
+    },
+    {
+      "caseId": "BR-IND-EXP-01",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-EXP-02",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-EXP-03",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-EXP-04",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-EXP-05",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "EXPLICIT_ALLOW",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-NOP-01",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-NOP-02",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "NO_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-AMB-01",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-AMB-02",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "AMBIGUOUS_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-STALE",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "STALE_POLICY",
+      "expectedAuthorization": "ALLOW"
+    },
+    {
+      "caseId": "BR-IND-INCOMP",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "policyCondition": "INCOMPLETE_CONTEXT",
+      "expectedAuthorization": "ALLOW"
+    }
+  ]
+}
