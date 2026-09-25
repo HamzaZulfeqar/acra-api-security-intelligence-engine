@@ -1,5 +1,47 @@
 # Test Matrix
 
+## Sprint 13 Phase 2 automatic authorization-dimension discovery — 2026-09-25
+
+Measured successful workflow: GitHub Actions run `36145805521` — **PASS** at
+`3f4b4238efe514b7ef1fe65b2cd477233c54fa73`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Dimension-free Phase 2 feature corpus | 32 cases, no registered dimension/vulnerability label | PASS |
+| Sealed dimension-label corpus | 32 cases | PASS |
+| Label absence during inference | label file physically removed for both prediction passes | PASS |
+| S12 immutable rule gate | S12 runner/verifier unchanged | PASS |
+| Phase 1 immutable-history gate | heldout fixture/data/runner/verifier unchanged | PASS |
+| Automatic dimension inference | 32 cases / 8 classes | PASS |
+| Downstream A0-A7 with inferred dimension | 32 × 8 | PASS, 256 rows |
+| Evaluation rows | 32 dimension + 256 downstream | PASS, 288 |
+| Prediction repeatability | two blind passes byte-identical | PASS |
+| Evaluation repeatability | two sealed-label joins byte-identical | PASS |
+| Secret-material scan | Authorization/bearer/cookie material excluded | PASS |
+| Maven package | product modules compile/package after Phase 2 harness | BUILD SUCCESS |
+| Real Burp desktop runtime | separate lane | UNVERIFIED / DEFERRED |
+| External authorized target | outside Phase 2 | NOT PERFORMED |
+
+### Dimension discovery metrics
+
+| Dataset | Correct | Accuracy | Macro-F1 |
+|---|---:|---:|---:|
+| S12 calibration | 15/16 | .937500 | .933333 |
+| S13 holdout | 16/16 | 1.000000 | 1.000000 |
+| Combined | 31/32 | .968750 | .968254 |
+
+Confidence distribution: 30 HIGH / 2 MEDIUM.
+
+### Downstream A7 using inferred dimension only
+
+| Dataset | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| S12 calibration | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+| S13 holdout | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+
+The single dimension mismatch and the five holdout binary false positives are retained as research evidence; no score
+threshold or perfect result is required for experiment completion.
+
 ## Sprint 13 Phase 1 held-out external-validity evaluation — 2026-09-25
 
 Measured successful workflow: GitHub Actions run `36143281129` — **PASS** at
