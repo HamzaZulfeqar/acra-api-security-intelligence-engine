@@ -132,7 +132,42 @@ Phase 3 invariants:
 Phase 3 verification: GitHub Actions run `36079250303` — SUCCESS at
 `b109b58c0a6ac7de032035e55ae57daffe6a84f6`.
 
-## Phase 4 dependency
+## Phase 4 reporting boundary
 
-A deterministic governance report/export layer must consume only the immutable snapshot, preserve lifecycle history,
-and remain side-effect-free.
+```text
+FindingGovernanceSnapshot
+          |
+          v
+S13GovernanceReportGenerator
+          |
+          +--> minimized finding projections
+          +--> append-only event projections
+          +--> queue/history summary
+          |
+          v
+S13GovernanceReport
+          |
+          +--> canonical JSON + SHA-256
+          +--> deterministic Markdown + SHA-256
+          +--> Reporter plugin
+          +--> read-only Report / JSON UI
+```
+
+Phase 4 invariants:
+
+1. Report identity is state-derived and independent of render timestamp.
+2. Reporting consumes only immutable governance snapshots.
+3. Current queue state and historical-confirmation state remain separate.
+4. Event order and evidence references remain explicit.
+5. Source candidate rationale/raw principal material is not part of the report schema.
+6. Rendering/export cannot mutate governed-finding fingerprints or lifecycle history.
+7. Reporting performs no network action, lifecycle transition or Burp publication.
+8. UI previews use the same canonical exporter as archived artifacts.
+
+Phase 4 verification: source run `36079738535` — SUCCESS at
+`55d76ad0ff3f3536e5e76c9eefa8f3f6c1b00f04`.
+Artifact retention: run `36079852878` — SUCCESS.
+
+## Phase 5 dependency
+
+Adversarial security/reproducibility tests and bounded engineering observations must precede Sprint 13 final closure.

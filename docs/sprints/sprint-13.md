@@ -1,6 +1,6 @@
 # Sprint 13 — Finding Lifecycle Governance
 
-Status: **IN PROGRESS — Phases 1–3 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–4 VERIFIED**  
 Branch: `s13-finding-lifecycle-governance`  
 Immutable Sprint 12 base: `9ced79ba0986ce90884b745342769e88c38a68c2`
 
@@ -162,14 +162,52 @@ Verified:
 
 Phase 3 is **VERIFIED COMPLETE**.
 
+## Phase 4 — deterministic governance report/export
+
+Implemented:
+
+- `S13GovernanceReportStatus`;
+- `S13GovernanceReportSummary`;
+- `S13GovernanceFindingProjection`;
+- `S13GovernanceEventProjection`;
+- `S13GovernanceReport`;
+- `S13GovernanceReportGenerator`;
+- `S13GovernanceReportExporter`;
+- `S13GovernanceJsonReporter`;
+- workspace-level `report`, `exportJson` and `exportMarkdown`;
+- read-only Report and JSON Export UI views;
+- canonical report evidence artifact retention.
+
+### Phase 4 verification
+
+Source gate: GitHub Actions run `36079738535`: **SUCCESS** at source commit
+`55d76ad0ff3f3536e5e76c9eefa8f3f6c1b00f04`.
+
+Artifact-retention gate: run `36079852878`: **SUCCESS** at
+`920d4dffde757e11009957990fa08930af0531e7`.
+
+Verified:
+
+- `Sprint13GovernanceReportingExportTestSuite`: PASS, 37 assertions;
+- governance UI: PASS, 66 assertions;
+- Phase 2 workspace: PASS, 25 assertions;
+- Phase 1 lifecycle: PASS, 41 assertions;
+- deterministic report ID independent of render timestamp: PASS;
+- JSON/Markdown deterministic digests: PASS;
+- Reporter adapter: PASS;
+- report/export state mutation: NONE;
+- source-candidate rationale/raw principal exclusion: PASS;
+- canonical JSON/SHA-256/Markdown upload: PASS;
+- Core / Sprint 2 / Sprint 3 workflows: PASS at source verification head.
+
+Phase 4 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 4 must add deterministic governance audit/report export. The report must derive only from the immutable
-governance snapshot and preserve:
+Phase 5 must add security/reproducibility hardening and bounded engineering observations:
 
-- lifecycle queue/state counts;
-- severity/confidence as prioritization context, not lifecycle authority;
-- confirmed-history count separate from current state;
-- append-only event sequence and evidence references;
-- deterministic JSON + Markdown identities/digests;
-- no transition, network or Burp publication side effect.
+1. lifecycle/report secret-bearing metadata rejection;
+2. workspace stale/drift/identity collision hardening regressions;
+3. report non-mutation and confirmation-history invariants under adversarial cases;
+4. bounded 100 / 1,000 / 10,000 governed-finding workspace/report observations;
+5. no benchmark/SLO or real-world capacity claims.

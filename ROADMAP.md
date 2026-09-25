@@ -52,3 +52,15 @@ Read-only Finding Governance UI: VERIFIED by run `36079250303` (55 assertions).
 
 Next dependency: deterministic governance audit/report export from immutable lifecycle snapshots. No UI lifecycle
 transition or automatic publication is introduced by this step.
+
+
+## Sprint 13 Phase 4
+
+Deterministic governance JSON/Markdown reporting and read-only UI projection: VERIFIED.
+
+- source gate: `36079738535`;
+- evidence-retention gate: `36079852878`;
+- reporting suite: 37 assertions;
+- governance UI: 66 assertions.
+
+Next dependency: security hardening and bounded performance observations before final closure.

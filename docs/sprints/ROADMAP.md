@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 IN PROGRESS — Phases 1–3 VERIFIED COMPLETE.**
+**Sprint 13 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
 
 Canonical Sprint 13 evidence:
 - branch: `s13-finding-lifecycle-governance`;

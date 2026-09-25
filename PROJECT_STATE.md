@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 13 — Finding Lifecycle Governance (in progress).  
-**Decision:** S13 PHASES 1–3 VERIFIED COMPLETE; lifecycle + governance workspace + read-only product UI verified.  
+**Decision:** S13 PHASES 1–4 VERIFIED COMPLETE; lifecycle governance + read-only UI + deterministic reporting verified.  
 **Working branch:** `s13-finding-lifecycle-governance`.  
 **Immutable Sprint 12 base:** `9ced79ba0986ce90884b745342769e88c38a68c2`.  
 **Sprint 12:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -12,6 +12,8 @@
 **Sprint 13 Phase 1 verification:** GitHub Actions run `36077162629` — SUCCESS at source commit `e2f4019f85270bab3498521a080b8e9ea59cf347`.  
 **Sprint 13 Phase 2 verification:** GitHub Actions run `36077517602` — SUCCESS at source commit `0c9533c3a58aae4d5f3aa27cd2fb48e694616d6d`.  
 **Sprint 13 Phase 3 verification:** GitHub Actions run `36079250303` — SUCCESS at source commit `b109b58c0a6ac7de032035e55ae57daffe6a84f6`.  
+**Sprint 13 Phase 4 verification:** GitHub Actions run `36079738535` — SUCCESS at source commit `55d76ad0ff3f3536e5e76c9eefa8f3f6c1b00f04`.  
+**Sprint 13 Phase 4 evidence retention:** GitHub Actions run `36079852878` — SUCCESS at commit `920d4dffde757e11009957990fa08930af0531e7`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-documentation final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
@@ -98,9 +100,25 @@ Sprint 13 Phase 3 read-only governance product UI is **VERIFIED COMPLETE**:
 - exact-head Core / Sprint 2 workflows: PASS;
 - focused Sprint 13 verifier + Maven core compilation: PASS.
 
-The next dependency is deterministic governance audit/report export from the immutable snapshot, with no state
-transition or publication side effect. Real Burp desktop publication remains UNVERIFIED / DEFERRED and is
-unrelated to lifecycle confirmation.
+Sprint 13 Phase 4 deterministic governance reporting is **VERIFIED COMPLETE**:
+
+- versioned `s13-governance-report-v1` model;
+- minimized governed-finding projection;
+- append-only lifecycle-event projection;
+- deterministic report identity independent of render timestamp;
+- deterministic JSON + SHA-256;
+- deterministic Markdown + SHA-256;
+- stable `s13-governance-json-v1` Reporter plugin;
+- current queue counts and historical-confirmation count preserved separately;
+- source candidate rationale/raw principal fields excluded;
+- report/export is side-effect-free and leaves governed-finding fingerprints unchanged;
+- governance reporting suite: PASS, 37 assertions;
+- governance UI with Report/JSON views: PASS, 66 assertions;
+- exact source head Core / Sprint 2 / Sprint 3 workflows: PASS;
+- canonical JSON / SHA-256 / Markdown evidence archived by run `36079852878`.
+
+The next dependency is lifecycle/report security hardening plus bounded workspace/report performance observations
+before final traceability and reproducible closure. Real Burp desktop publication remains UNVERIFIED / DEFERRED.
 
 ### Sprint 12 verified progress
 
