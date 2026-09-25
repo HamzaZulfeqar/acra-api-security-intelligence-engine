@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 IMPLEMENTED / MEASUREMENT PENDING CI.
+**Status:** PHASE 1 COMPLETE; PHASE 2 DIMENSION DISCOVERY COMPLETE.
 
 ## Objective
 
@@ -72,7 +72,7 @@ retaining this original hold-out result unchanged.
 
 ## Remaining Sprint 13 program
 
-Phase 2 — automatic authorization-dimension discovery — IMPLEMENTED, measurement pending CI.  
+Phase 2 — automatic authorization-dimension discovery — COMPLETE.  
 Phase 3 — policy-generalization redesign using explicit learned/configured policy semantics, followed by a new non-tuned evaluation set.  
 Phase 4 — larger, less-balanced and adversarial negative populations.  
 Phase 5 — cross-framework API fixtures.  
@@ -107,4 +107,37 @@ The inference engine uses observable endpoint/request/response/identity structur
 score, winning dimension, confidence and score margin. A0-A7 then receive only the inferred dimension. Registered
 dimensions are joined afterward for multiclass scoring.
 
-No Phase 2 accuracy result is claimed until the dedicated CI campaign succeeds.
+### Phase 2 measured result
+
+Canonical successful workflow: GitHub Actions `36145805521` at
+`3f4b4238efe514b7ef1fe65b2cd477233c54fa73`.
+
+Dimension discovery:
+- Sprint 12 calibration: 15/16 correct, accuracy=.937500, macro-F1=.933333;
+- Sprint 13 holdout: 16/16 correct, accuracy=1.000000, macro-F1=1.000000;
+- combined: 31/32 correct, accuracy=.968750, macro-F1=.968254;
+- confidence distribution: 30 HIGH, 2 MEDIUM.
+
+The one registered-dimension mismatch is the Sprint 12 canonical routing control
+`/api/v1/s8/admin`. With no duplicate-separator anomaly in that control and an explicit
+`required_role=admin` response signal, the observable-evidence classifier selects
+`RBAC_AUTHORIZATION` rather than the registered `ROUTING_AUTHORIZATION`. The mismatch is retained as
+an ambiguity/generalization finding rather than tuned away inside Phase 2.
+
+Downstream A7 using inferred dimensions only:
+- Sprint 12 calibration: TP=8/TN=8/FP=0/FN=0, P=1/R=1/F1=1 within that calibration fixture;
+- Sprint 13 holdout: TP=8/TN=3/FP=5/FN=0, P=.615385/R=1/F1=.761905.
+
+Therefore removing the supplied-dimension assumption did not degrade the measured A7 classification result on either
+frozen corpus. It also did not solve the five Phase 1 policy-generalization false positives, confirming that dimension
+discovery and policy generalization are distinct problems.
+
+Integrity gates:
+- dimension-label file physically absent during both inference passes: PASS;
+- 32 dimension-free cases: PASS;
+- 32 sealed dimension/vulnerability labels: PASS;
+- 256 A0-A7 downstream predictions: PASS;
+- evaluation rows: 288: PASS;
+- repeatability: PASS;
+- Sprint 12 / Phase 1 immutable-history gates: PASS;
+- Maven product package: BUILD SUCCESS.
