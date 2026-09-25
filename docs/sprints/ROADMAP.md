@@ -2,6 +2,50 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 13 Phase 2 AUTOMATIC AUTHORIZATION-DIMENSION DISCOVERY COMPLETE.**
+
+Canonical Phase 2 evidence:
+- branch: `s13-dimension-discovery`;
+- Phase 1 immutable base: `30acba767e4ce969909f1d018b23535e9c12b582`;
+- measured Phase 2 head: `3f4b4238efe514b7ef1fe65b2cd477233c54fa73`;
+- successful workflow: `36145805521`;
+- dimension-free feature corpus: 32 cases;
+- sealed dimension/vulnerability labels: 32 cases;
+- label file physically absent during both inference passes: PASS;
+- automatic dimension inferences: 32;
+- downstream A0-A7 predictions using inferred dimension only: 256;
+- repeatability: PASS;
+- Sprint 12 and Phase 1 immutable-history gates: PASS;
+- Maven package: BUILD SUCCESS.
+
+Measured dimension discovery:
+- S12 calibration: 15/16 correct, accuracy=.937500, macro-F1=.933333;
+- S13 holdout: 16/16 correct, accuracy=1.000000, macro-F1=1.000000;
+- combined: 31/32 correct, accuracy=.968750, macro-F1=.968254;
+- confidence distribution: 30 HIGH / 2 MEDIUM.
+
+Retained ambiguity:
+- canonical S12 `/api/v1/s8/admin` routing control is inferred as RBAC because the observed evidence contains
+  `required_role=admin` and no routing anomaly.
+
+Downstream A7 with inferred dimensions only:
+- S12: TP=8/TN=8/FP=0/FN=0;
+- S13 holdout: TP=8/TN=3/FP=5/FN=0.
+
+Therefore Phase 2 removes the supplied-dimension dependency for the measured fixtures without changing the prior
+binary A7 outcomes. The next dependency is **policy generalization**, especially the five legitimate controls that
+remain false positives.
+
+**Next gate:** Sprint 13 Phase 3 — policy-generalization redesign with explicit/configurable policy semantics and a new
+untouched evaluation set. The Phase 1 holdout must not be reused as a tuning target.
+
+See:
+- `sprint-13.md`;
+- `../research/sprint-13-dimension-discovery-protocol.md`;
+- `../research/EXPERIMENT_REGISTRY.md`.
+
+## Previous gate — Sprint 13 Phase 1
+
 **Sprint 13 Phase 1 HELD-OUT EXTERNAL-VALIDITY EVALUATION COMPLETE.**
 
 Canonical Phase 1 evidence:
@@ -22,14 +66,7 @@ Held-out A7 result:
 - five hard-negative false positives expose limited policy generalization.
 
 The original held-out result is frozen as research evidence and must not be tuned away. Registered authorization
-dimensions are still supplied, so automatic dimension discovery remains NOT MEASURED.
-
-**Next gate:** Sprint 13 Phase 2 — automatic authorization-dimension discovery.
-
-See:
-- `sprint-13.md`;
-- `../research/sprint-13-heldout-protocol.md`;
-- `../research/EXPERIMENT_REGISTRY.md`.
+dimensions were supplied in Phase 1; Phase 2 subsequently removed that dependency.
 
 ## Previous gate — Sprint 12
 
