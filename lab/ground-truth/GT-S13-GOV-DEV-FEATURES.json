@@ -67,7 +67,7 @@
         "status": 403,
         "body": {
           "id": "asset-blue",
-          "owner_id": "alice",
+          "owner_id": "bob",
           "tenant_id": "blue"
         }
       }
@@ -248,7 +248,7 @@
       "caseId": "DEV5-02-GAP-POS",
       "family": "PHASE5_DEV",
       "method": "GET",
-      "path": "/govdev/v1/unregistered-tenants/blue/reports/report-blue",
+      "path": "/govdev/v1/tenants/blue/unregistered-reports/report-blue",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -269,7 +269,7 @@
       "caseId": "DEV5-02-GAP-NEG",
       "family": "PHASE5_DEV",
       "method": "GET",
-      "path": "/govdev/v1/unregistered-tenants/blue/reports/report-blue",
+      "path": "/govdev/v1/tenants/blue/unregistered-reports/report-blue",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -290,7 +290,7 @@
       "caseId": "DEV5-02-AMB-NEG",
       "family": "PHASE5_DEV",
       "method": "GET",
-      "path": "/govdev/v1/ambiguous-tenants/blue/reports/report-blue",
+      "path": "/govdev/v1/tenants/blue/ambiguous-reports/report-blue",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -311,7 +311,7 @@
       "caseId": "DEV5-02-STALE-NEG",
       "family": "PHASE5_DEV",
       "method": "GET",
-      "path": "/govdev/v1/stale-tenants/blue/reports/report-blue",
+      "path": "/govdev/v1/tenants/blue/stale-reports/report-blue",
       "actor": {
         "sub": "admin2",
         "tenant_id": "red",
@@ -332,7 +332,7 @@
       "caseId": "DEV5-02-INC-NEG",
       "family": "PHASE5_DEV",
       "method": "GET",
-      "path": "/govdev/v1/incomplete-tenants/blue/reports/report-blue",
+      "path": "/govdev/v1/tenants/blue/incomplete-reports/report-blue",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -1243,7 +1243,7 @@
             {
               "resource_id": "asset-blue",
               "decision": "DENY",
-              "owner_id": "alice",
+              "owner_id": "bob",
               "tenant_id": "blue"
             }
           ]
@@ -1501,7 +1501,7 @@
           "resolved_resource_id": "asset-blue",
           "resource": {
             "id": "asset-blue",
-            "owner_id": "alice",
+            "owner_id": "bob",
             "tenant_id": "blue"
           }
         }
