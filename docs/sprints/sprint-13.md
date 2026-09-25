@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 COMPLETE; PHASE 6A COMPLETE; PHASE 6B COMPLETE; PHASE 7 REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION COMPLETE.
+**Status:** PHASES 1–7 COMPLETE; PHASE 8 NOT PERFORMED; FINAL RESEARCH & REPRODUCIBILITY FREEZE COMPLETE.
 
 ## Objective
 
@@ -70,13 +70,18 @@ Sprint 13 Phase 1 does not tune A0-A7 to improve these held-out metrics.
 Any revised detector must be versioned as a later experiment and evaluated against a new development/tuning set while
 retaining this original hold-out result unchanged.
 
-## Remaining Sprint 13 program
+## Final Sprint 13 disposition
 
-Phases 1–7 are complete under their recorded controlled evidence boundaries.
+Phases 1–7 are complete under their recorded evidence boundaries.
 
-Remaining:
-- Phase 8 — explicitly authorized external-target validation;
-- Final gate — research freeze, limitations, reproducibility package and release-candidate evidence consolidation.
+Phase 8 external-target validation was **NOT PERFORMED** before the final freeze and contributes no external-validity claim.
+
+Final research/reproducibility freeze:
+- workflow `36183344395` — SUCCESS;
+- validated candidate `3bc7df2f19d8b208f4586dfd4469d9b045e275f8`;
+- history, evidence hashes, JSON integrity, repeatability and Maven package gates: PASS.
+
+Sprint 13 has no remaining mandatory gates.
 
 ## Claim boundary
 
