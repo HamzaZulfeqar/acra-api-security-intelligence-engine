@@ -23,55 +23,61 @@ public final class Sprint12BurpIssueAdapterRuntimeTestSuite {
         var reproduction = new ReproductionPackageFactory().from(candidate());
         var draft = new BurpIssueDraftFactory().from(reproduction);
         BurpIssueDraftAdapter adapter = new BurpIssueDraftAdapter();
-        var issue = adapter.toAuditIssue(draft, "https://example.test");
+        var projection = adapter.project(draft, "https://example.test");
         int assertions = 0;
 
-        check(issue != null, "Montoya AuditIssue projection is created");
+        check(projection.name().equals(draft.name()), "projection name matches draft");
         assertions++;
-        check(issue.name().equals(draft.name()), "AuditIssue name matches draft");
+        check(projection.detail().equals(draft.detail()), "projection detail matches draft");
         assertions++;
-        check(issue.detail().equals(draft.detail()), "AuditIssue detail matches draft");
+        check(projection.remediation().equals(draft.remediation()), "projection remediation matches draft");
         assertions++;
-        check(issue.remediation().equals(draft.remediation()), "AuditIssue remediation matches draft");
-        assertions++;
-        check(issue.baseUrl().equals("https://example.test/api/v1/documents/resource-b"),
+        check(projection.baseUrl().equals("https://example.test/api/v1/documents/resource-b"),
                 "relative draft path resolves against absolute base URL");
         assertions++;
-        check(issue.severity() == AuditIssueSeverity.INFORMATION,
-                "AuditIssue remains informational");
+        check(projection.severity() == AuditIssueSeverity.INFORMATION,
+                "projection remains informational");
         assertions++;
-        check(issue.confidence() == AuditIssueConfidence.TENTATIVE,
-                "AuditIssue remains tentative");
+        check(projection.typicalSeverity() == AuditIssueSeverity.INFORMATION,
+                "typical severity remains informational");
         assertions++;
-        check(issue.requestResponses().isEmpty(),
+        check(projection.confidence() == AuditIssueConfidence.TENTATIVE,
+                "projection remains tentative");
+        assertions++;
+        check(projection.requestResponses().isEmpty(),
                 "projection without evidence messages attaches no request/response objects");
         assertions++;
         check(adapter.status().equals("PROJECTION_ONLY_NOT_SUBMITTED"),
                 "adapter status explicitly records non-submission");
         assertions++;
-        check(!issue.detail().contains("DummyPassword"),
-                "AuditIssue detail excludes rationale secret");
+        check(!projection.detail().contains("DummyPassword"),
+                "projection detail excludes rationale secret");
         assertions++;
-        check(!issue.detail().contains("user-a"),
-                "AuditIssue detail excludes raw principal");
+        check(!projection.detail().contains("user-a"),
+                "projection detail excludes raw principal");
         assertions++;
-        check(!issue.detail().contains("tenant-a"),
-                "AuditIssue detail excludes raw tenant");
+        check(!projection.detail().contains("tenant-a"),
+                "projection detail excludes raw tenant");
         assertions++;
-        check(issue.detail().contains("Expected decision: DENY"),
-                "AuditIssue preserves expected decision");
+        check(projection.detail().contains("Expected decision: DENY"),
+                "projection preserves expected decision");
         assertions++;
-        check(issue.detail().contains("Observed decision: ALLOW"),
-                "AuditIssue preserves observed decision");
+        check(projection.detail().contains("Observed decision: ALLOW"),
+                "projection preserves observed decision");
         assertions++;
 
         expectIllegalArgument(
-                () -> adapter.toAuditIssue(draft, "/relative-base"),
+                () -> adapter.project(draft, "/relative-base"),
                 "relative base URL fails closed");
         assertions++;
         expectIllegalArgument(
-                () -> adapter.toAuditIssue(draft, "file:///tmp/example"),
+                () -> adapter.project(draft, "file:///tmp/example"),
                 "non-HTTP base URL fails closed");
+        assertions++;
+
+        expectBurpRuntimeRequired(
+                () -> adapter.toAuditIssue(draft, "https://example.test"),
+                "standalone Montoya API must not be mistaken for real Burp runtime");
         assertions++;
 
         return assertions;
@@ -117,6 +123,16 @@ public final class Sprint12BurpIssueAdapterRuntimeTestSuite {
             throw new AssertionError(message);
         } catch (IllegalArgumentException expected) {
             // expected
+        }
+    }
+
+    private static void expectBurpRuntimeRequired(Runnable action, String message) {
+        try {
+            action.run();
+            throw new AssertionError(message);
+        } catch (IllegalStateException expected) {
+            check(expected.getMessage().contains("real Burp runtime required"),
+                    "runtime guard explains the missing Burp object factory");
         }
     }
 }

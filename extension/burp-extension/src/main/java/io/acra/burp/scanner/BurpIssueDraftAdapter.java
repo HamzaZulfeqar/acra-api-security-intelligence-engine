@@ -8,21 +8,17 @@ import io.acra.core.reporting.reproduction.BurpIssueDraft;
 import io.acra.core.reporting.reproduction.BurpIssueSubmissionState;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 public final class BurpIssueDraftAdapter {
 
-    public AuditIssue toAuditIssue(
+    public BurpIssueProjection project(
             BurpIssueDraft draft,
             String absoluteBaseUrl,
             HttpRequestResponse... requestResponses) {
-        if (draft == null) throw new IllegalArgumentException("draft required");
-        if (draft.confirmed()) throw new IllegalArgumentException("confirmed draft unsupported");
-        if (draft.submissionState() != BurpIssueSubmissionState.NOT_SUBMITTED) {
-            throw new IllegalArgumentException("only non-submitted drafts can be projected");
-        }
-
+        validate(draft);
         String url = absoluteUrl(absoluteBaseUrl, draft.path());
-        return AuditIssue.auditIssue(
+        return new BurpIssueProjection(
                 draft.name(),
                 draft.detail(),
                 draft.remediation(),
@@ -32,11 +28,43 @@ public final class BurpIssueDraftAdapter {
                 draft.background(),
                 draft.remediationBackground(),
                 AuditIssueSeverity.INFORMATION,
-                requestResponses == null ? new HttpRequestResponse[0] : requestResponses);
+                requestResponses == null ? List.of() : List.of(requestResponses));
+    }
+
+    public AuditIssue toAuditIssue(
+            BurpIssueDraft draft,
+            String absoluteBaseUrl,
+            HttpRequestResponse... requestResponses) {
+        BurpIssueProjection projection = project(draft, absoluteBaseUrl, requestResponses);
+        try {
+            return AuditIssue.auditIssue(
+                    projection.name(),
+                    projection.detail(),
+                    projection.remediation(),
+                    projection.baseUrl(),
+                    projection.severity(),
+                    projection.confidence(),
+                    projection.background(),
+                    projection.remediationBackground(),
+                    projection.typicalSeverity(),
+                    projection.requestResponses());
+        } catch (RuntimeException failure) {
+            throw new IllegalStateException(
+                    "Montoya AuditIssue factory unavailable; real Burp runtime required",
+                    failure);
+        }
     }
 
     public String status() {
         return "PROJECTION_ONLY_NOT_SUBMITTED";
+    }
+
+    private static void validate(BurpIssueDraft draft) {
+        if (draft == null) throw new IllegalArgumentException("draft required");
+        if (draft.confirmed()) throw new IllegalArgumentException("confirmed draft unsupported");
+        if (draft.submissionState() != BurpIssueSubmissionState.NOT_SUBMITTED) {
+            throw new IllegalArgumentException("only non-submitted drafts can be projected");
+        }
     }
 
     private static String absoluteUrl(String baseUrl, String path) {
