@@ -1,5 +1,34 @@
 # Test Matrix
 
+## Sprint 13 Phase 6B actual local framework runtime validation — 2026-09-25
+
+Canonical untouched runtime evaluation: GitHub Actions run `36175649455` — **PASS** at
+`e4d50d69161b8c2af8df30c334a0f51e3599c925`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Phase 6B development freeze | development servers/corpus/policies/runners unchanged from `68393383...` | PASS |
+| Phase 6A normalizer/upstream freeze | normalizer + dimension/policy/governance stack unchanged | PASS |
+| FastAPI/Uvicorn health | real localhost process | PASS |
+| Flask health | real localhost process | PASS |
+| Express/Node.js health | real localhost process | PASS |
+| Spring Boot/Java 21 health | real localhost process | PASS |
+| Live HTTP evaluation | 64 requests | 64/64 HTTP 200 |
+| Automatic dimension inference | 64 live observations | 64/64 |
+| Governed disposition | 64 live observations | 64/64 |
+| FastAPI result | 16 cases | HTTP 16/16, DIM 16/16, DISP 16/16 |
+| Flask result | 16 cases | HTTP 16/16, DIM 16/16, DISP 16/16 |
+| Express result | 16 cases | HTTP 16/16, DIM 16/16, DISP 16/16 |
+| Spring Boot result | 16 cases | HTTP 16/16, DIM 16/16, DISP 16/16 |
+| Evaluation label absence | labels removed during both prediction passes | PASS |
+| Prediction repeatability | repeated live HTTP run | PASS |
+| Evaluation repeatability | repeated label join | PASS |
+| Maven ACRA package | product modules compile/package | BUILD SUCCESS |
+| Real Burp desktop/Montoya runtime | next independent lane | UNVERIFIED / NEXT |
+| External authorized target | later gate | NOT PERFORMED |
+
+This result is controlled localhost runtime evidence, not production or external-target accuracy evidence.
+
 ## Sprint 13 Phase 6A cross-framework-shaped normalization — 2026-09-25
 
 Canonical untouched evaluation: GitHub Actions run `36173838561` — **PASS** at
