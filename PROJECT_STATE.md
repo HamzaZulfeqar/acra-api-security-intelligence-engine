@@ -2,59 +2,60 @@
 
 ## Current state — 2026-09-25
 
-**Current research boundary:** Sprint 13 — Automatic Authorization-Dimension Discovery.  
-**Decision:** S13 PHASE 2 COMPLETE; POLICY GENERALIZATION NEXT.  
-**Working branch:** `s13-dimension-discovery`.  
-**Phase 1 immutable base:** `30acba767e4ce969909f1d018b23535e9c12b582`.  
-**Measured Phase 2 head:** `3f4b4238efe514b7ef1fe65b2cd477233c54fa73`.  
-**Successful workflow:** GitHub Actions `36145805521` — SUCCESS.  
-**Dimension-free corpus:** 32 cases.  
-**Sealed labels:** 32 cases.  
-**Blind-label gate:** PASS — dimension/vulnerability label file absent during both prediction passes.  
-**Dimension inferences:** 32.  
-**Downstream predictions:** 256 = 32 cases × 8 A0-A7 variants.  
+**Current research boundary:** Sprint 13 — Configurable Policy Generalization.  
+**Decision:** S13 PHASE 3 COMPLETE; ADVERSARIAL / BASE-RATE EVALUATION NEXT.  
+**Working branch:** `s13-policy-generalization`.  
+**Phase 2 immutable base:** `2d030735401e336292ec5d18d7e01702c1e70039`.  
+**Development workflow:** GitHub Actions `36148740338` — SUCCESS.  
+**Algorithm freeze:** `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`.  
+**Untouched evaluation workflow:** GitHub Actions `36149071484` — SUCCESS.  
+**Measured evaluation head:** `82ae165b702d18b0eae872d51f8f695f723fec13`.  
+**Evaluation corpus:** 24 cases = 8 positive + 16 legitimate controls.  
+**Automatic dimension inference:** 24/24.  
+**Configured policy decisions:** 24/24.  
+**UNKNOWN policy decisions:** 0.  
 **Repeatability:** PASS.  
+**Frozen algorithm gate:** PASS.  
+**Label-absence gate:** PASS.  
 **Product compilation:** Maven BUILD SUCCESS.  
-**Real Burp desktop runtime/publication:** UNVERIFIED / DEFERRED.  
+**Real Burp desktop runtime:** UNVERIFIED / DEFERRED.  
 **External authorized-target validation:** NOT PERFORMED.
 
-### Sprint 13 Phase 2 measured dimension-discovery results
+### Sprint 13 Phase 3 untouched evaluation
 
-| Dataset | Correct | Accuracy | Macro-F1 |
-|---|---:|---:|---:|
-| Sprint 12 calibration | 15/16 | .937500 | .933333 |
-| Sprint 13 holdout | 16/16 | 1.000000 | 1.000000 |
-| Combined | 31/32 | .968750 | .968254 |
-
-Confidence distribution: 30 HIGH, 2 MEDIUM.
-
-The retained mismatch is the canonical Sprint 12 routing control `/api/v1/s8/admin`, inferred as
-`RBAC_AUTHORIZATION` because the observable response exposes an explicit required-role signal while the canonical
-path itself contains no routing anomaly.
-
-### Downstream A7 with inferred dimensions only
-
-| Dataset | TP | TN | FP | FN | Precision | Recall | F1 |
+| Variant | TP | TN | FP | FN | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Sprint 12 calibration | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
-| Sprint 13 holdout | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+| Locked A7 | 8 | 4 | 12 | 0 | .400000 | 1.000000 | .571429 |
+| Policy-generalized G1 | 8 | 16 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
 
-Phase 2 removes the supplied `dimension` dependency for the measured fixtures without changing their prior A7 binary
-results. The five Phase 1 false positives therefore remain a separate policy-generalization problem.
+G1 uses explicit configured authorization policies after automatic dimension inference:
+- policy ALLOW suppresses a candidate;
+- policy DENY with observed ALLOW creates a positive authorization mismatch;
+- policy UNKNOWN falls back to locked A7.
 
-**Next work:** Sprint 13 Phase 3 — policy-generalization redesign using explicit/configurable policy semantics and a new
-untouched evaluation corpus. The Phase 1 holdout and Phase 2 dimension corpus remain frozen evidence and must not be
-used as tuning targets.
+The 1.0 G1 values apply only to this synthetic internal configured-policy evaluation. They do not establish automatic
+policy extraction, production accuracy, third-party replication or external validity.
 
-Canonical Phase 2 details:
-- `docs/research/sprint-13-dimension-discovery-protocol.md`
-- `lab/ground-truth/GT-S13-DIMENSION-FEATURES.json`
-- `lab/ground-truth/GT-S13-DIMENSION-LABELS.json`
-- `scripts/sprint13_dimension_inference.py`
-- `scripts/run-sprint13-dimension-discovery.py`
-- `scripts/verify-sprint13-dimension-discovery.py`
-- `scripts/verify-sprint13-dimension-discovery.sh`
-- `.github/workflows/sprint13-dimension-discovery.yml`
+**Next work:** Sprint 13 Phase 4 — larger, less-balanced and adversarial negative populations, including realistic
+base-rate stress and prevalence-sensitive precision. Phase 3 evaluation data remains frozen and must not be used as a
+tuning target.
+
+Canonical Phase 3 details:
+- `docs/research/sprint-13-policy-generalization-protocol.md`
+- `lab/ground-truth/POL-S13-DEV-001.json`
+- `lab/ground-truth/POL-S13-EVAL-001.json`
+- `lab/ground-truth/GT-S13-POLICY-EVAL-FEATURES.json`
+- `lab/ground-truth/GT-S13-POLICY-EVAL-LABELS.json`
+- `scripts/sprint13_policy_semantics.py`
+- `scripts/run-sprint13-policy-eval.py`
+- `scripts/verify-sprint13-policy-eval.py`
+- `scripts/verify-sprint13-policy-eval.sh`
+
+## Previous Sprint 13 Phase 2 state
+
+Phase 2 dimension discovery remains frozen at GitHub Actions run `36145805521`: 31/32 combined dimension
+classifications correct, accuracy=.968750, macro-F1=.968254; inferred-dimension A7 preserved the prior measured binary
+results.
 
 ## Previous Sprint 13 Phase 1 state
 
