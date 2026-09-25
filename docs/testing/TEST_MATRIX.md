@@ -1,5 +1,57 @@
 # Test Matrix
 
+## Sprint 13 Phase 5 policy reliability & uncertainty governance — 2026-09-25
+
+Canonical untouched evaluation: GitHub Actions run `36170353179` — **PASS** at
+`46f77a8d76b160cec70f7aef3f612e0d63af56da`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Phase 4 evidence lock | Phase 4 corpus/runner/verifier unchanged | PASS |
+| Governance freeze | governance engine + frozen upstream algorithms unchanged from `11afbb80...` | PASS |
+| Development corpus | 64 cases | PASS |
+| Development dimension inference | 64/64 | PASS |
+| Development expected disposition | 64/64 | PASS |
+| Development actionable precision | FP=0, P=1.0 | PASS |
+| Development escalation coverage | candidate or review positive coverage | 1.0 |
+| Untouched evaluation corpus | created after governance freeze | PASS |
+| Evaluation label absence | labels removed during both prediction passes | PASS |
+| Evaluation dimension inference | 64/64 | PASS |
+| Evaluation expected disposition | 64/64 | PASS |
+| Frozen A7 | TP=16/TN=21/FP=27/FN=0 | P=.372093 / R=1 / F1=.542373 |
+| Legacy G1 | TP=16/TN=25/FP=23/FN=0 | P=.410256 / R=1 / F1=.581818 |
+| Governed actionable | TP=8/TN=48/FP=0/FN=8 | P=1 / R=.5 / F1=.666667 |
+| Positive review routing | 8 positive cases | PASS |
+| Silent positive check | 0 | PASS |
+| Escalation coverage | actionable candidate or review | 1.0 |
+| Review rate | 40/64 | .625 |
+| Actionable candidate rate | 8/64 | .125 |
+| Prediction repeatability | two blind runs byte-identical | PASS |
+| Evaluation repeatability | two sealed-label joins byte-identical | PASS |
+| SHA-256 sidecars | prediction/evaluation JSON + JSONL | PASS |
+| Secret-material scan | bearer/Authorization/cookie material excluded | PASS |
+| Maven package | product modules compile/package | BUILD SUCCESS |
+| Automatic policy-health determination | explicit metadata only | NOT MEASURED |
+| Cross-framework generalization | next independent lane | NOT MEASURED |
+| Real Burp desktop runtime | separate lane | UNVERIFIED / DEFERRED |
+| External authorized target | outside Phase 5 | NOT PERFORMED |
+
+### Untouched disposition distribution
+
+| Disposition | Count | Actionable | Review required |
+|---|---:|---|---|
+| VULNERABILITY_CANDIDATE | 8 | yes | no |
+| AUTHORIZED_CONTROL | 8 | no | no |
+| CONTROL_ENFORCED | 8 | no | no |
+| POLICY_GAP | 16 | no | yes |
+| AMBIGUOUS_POLICY | 8 | no | yes |
+| STALE_POLICY | 8 | no | yes |
+| INCOMPLETE_CONTEXT | 8 | no | yes |
+
+The governed actionable recall of .5 must be interpreted together with escalation coverage=1.0. Eight positive cases
+were intentionally withheld from actionable status because no authoritative matching policy existed; all eight remained
+visible through review-required POLICY_GAP disposition.
+
 ## Sprint 13 Phase 4 adversarial / base-rate stress — 2026-09-25
 
 Canonical workflow: GitHub Actions run `36168752869` — **PASS** at
