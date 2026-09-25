@@ -67,5 +67,6 @@ MONTOYA_JAR="$HOME/.m2/repository/net/portswigger/burp/extensions/montoya-api/20
 test -f "$MONTOYA_JAR"
 BURP_CP="extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes:$MONTOYA_JAR"
 java -ea -cp "$BURP_CP" io.acra.burp.tests.sprint12.Sprint12BurpIssueAdapterTestSuite
+java -ea -cp "$BURP_CP" io.acra.burp.tests.sprint12.Sprint12BurpIssuePublisherTestSuite
 
 echo "SPRINT12_REPRODUCTION_EXPORT_FOUNDATION_VERIFICATION PASS"
