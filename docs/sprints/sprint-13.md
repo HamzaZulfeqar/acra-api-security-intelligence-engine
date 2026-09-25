@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 ADVERSARIAL / BASE-RATE STRESS COMPLETE.
+**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 POLICY RELIABILITY & UNCERTAINTY GOVERNANCE COMPLETE.
 
 ## Objective
 
@@ -267,3 +267,86 @@ finding lifecycle.
 
 **Next dependency:** introduce explicit uncertainty / policy-health governance and separate CANDIDATE / INCONCLUSIVE /
 POLICY_GAP states before cross-framework or external validation.
+
+
+## Phase 5 — Policy reliability & uncertainty governance
+
+**Development workflow:** `36169960606` — SUCCESS.  
+**Governance freeze:** `11afbb80be24116c9facd0d4b0791f4a12efed3a`.  
+**Untouched evaluation workflow:** `36170353179` — SUCCESS at `46f77a8d76b160cec70f7aef3f612e0d63af56da`.
+
+Phase 5 stops treating degraded policy quality as equivalent to a confirmed authorization candidate.
+
+Governed dispositions:
+- `VULNERABILITY_CANDIDATE`;
+- `AUTHORIZED_CONTROL`;
+- `CONTROL_ENFORCED`;
+- `POLICY_GAP`;
+- `AMBIGUOUS_POLICY`;
+- `STALE_POLICY`;
+- `INCOMPLETE_CONTEXT`;
+- `INCONCLUSIVE`.
+
+Only `VULNERABILITY_CANDIDATE` is actionable. Policy gaps, ambiguity, stale policy, incomplete context and other
+uncertainty are retained as review-required evidence instead of being promoted through legacy A7 fallback.
+
+### Development result
+
+The 64-case development corpus measured:
+- dimension inference: 64/64;
+- expected disposition: 64/64;
+- actionable candidate: TP=8/TN=48/FP=0/FN=8, P=1/R=.5/F1=.666667;
+- positive review count: 8;
+- escalation coverage (candidate or review): 1.0;
+- silent positive count: 0;
+- repeatability: PASS;
+- label-absence gate: PASS;
+- Maven package: BUILD SUCCESS.
+
+The lower actionable recall is intentional: eight positive cases without authoritative policy are routed to
+`POLICY_GAP` for review rather than mislabeled as confirmed findings.
+
+### Untouched evaluation result
+
+The 64-case evaluation was created after the governance freeze and uses new business vocabulary and policy metadata.
+
+Measured:
+- dimension inference: 64/64;
+- expected disposition: 64/64;
+- frozen A7: TP=16/TN=21/FP=27/FN=0, P=.372093/R=1/F1=.542373;
+- legacy G1: TP=16/TN=25/FP=23/FN=0, P=.410256/R=1/F1=.581818;
+- governed actionable candidates: TP=8/TN=48/FP=0/FN=8, P=1/R=.5/F1=.666667;
+- positive review count: 8;
+- negative review count: 32;
+- escalation coverage: 1.0;
+- silent positive count: 0;
+- review rate: .625;
+- actionable-candidate rate: .125.
+
+Disposition distribution:
+- `VULNERABILITY_CANDIDATE`: 8;
+- `AUTHORIZED_CONTROL`: 8;
+- `CONTROL_ENFORCED`: 8;
+- `POLICY_GAP`: 16;
+- `AMBIGUOUS_POLICY`: 8;
+- `STALE_POLICY`: 8;
+- `INCOMPLETE_CONTEXT`: 8.
+
+Integrity:
+- Phase 4 evidence lock: PASS;
+- governance/upstream algorithm freeze: PASS;
+- label absence during both prediction passes: PASS;
+- two-run byte-identical prediction/evaluation: PASS;
+- secret-material scan: PASS;
+- Maven package: BUILD SUCCESS.
+
+### Phase 5 interpretation
+
+Phase 5 resolves the central Phase 4 failure mode: uncertainty no longer creates false actionable vulnerability findings
+inside this controlled corpus.
+
+The cost is explicit analyst/review load. A 62.5% review rate in this constructed uncertainty-heavy evaluation is not a
+production workload estimate and must not be represented as one.
+
+The next research dependency is cross-framework generalization while preserving the same governance semantics and
+finding-state boundaries.
