@@ -7,6 +7,11 @@ git config core.fileMode false
 
 python3 scripts/verify-sprint15-release-promotion.py
 
+python3 scripts/verify-sprint15-dependency-contract.py
+mvn --batch-mode --no-transfer-progress dependency:tree
+
+echo "SPRINT15_DEPENDENCY_INVENTORY PASS"
+
 # Preserve the exact technical release-candidate gate as a promotion prerequisite.
 chmod +x ./scripts/*.sh
 bash scripts/verify-sprint14-release.sh
