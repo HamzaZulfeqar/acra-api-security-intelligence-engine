@@ -1,5 +1,45 @@
 # Test Matrix
 
+## Sprint 13 Phase 6A cross-framework-shaped normalization — 2026-09-25
+
+Canonical untouched evaluation: GitHub Actions run `36173838561` — **PASS** at
+`f3180a1877aaffd224a6d3a2734ddc25bf28c24b`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Phase 5 evidence lock | Phase 5 corpus/registry/governance evidence unchanged | PASS |
+| Normalization freeze | normalizer + frozen reasoning stack unchanged from `4011b9c0...` | PASS |
+| Development corpus | 64 framework-shaped cases | PASS |
+| Development raw dimension | 60/64 | MEASURED |
+| Development raw disposition | 32/64 | MEASURED |
+| Development normalized dimension | 64/64 | PASS |
+| Development normalized disposition | 64/64 | PASS |
+| Untouched evaluation corpus | created after normalization freeze | PASS |
+| Evaluation raw dimension | 60/64 | MEASURED |
+| Evaluation raw disposition | 32/64 | MEASURED |
+| Evaluation normalized dimension | 64/64 | PASS |
+| Evaluation normalized disposition | 64/64 | PASS |
+| Evaluation label absence | labels removed during both prediction passes | PASS |
+| Prediction/evaluation repeatability | byte-identical | PASS |
+| Maven package | product modules compile/package | BUILD SUCCESS |
+| Real FastAPI runtime | not executed in Phase 6A | NOT MEASURED |
+| Real Flask runtime | not executed in Phase 6A | NOT MEASURED |
+| Real Express runtime | not executed in Phase 6A | NOT MEASURED |
+| Real Spring runtime | not executed in Phase 6A | NOT MEASURED |
+| Real Burp desktop runtime | later independent lane | UNVERIFIED / DEFERRED |
+| External authorized target | outside Phase 6A | NOT PERFORMED |
+
+### Untouched per-framework result
+
+| Framework-shaped representation | Raw dimension | Normalized dimension | Raw disposition | Normalized disposition |
+|---|---:|---:|---:|---:|
+| FastAPI | 16/16 | 16/16 | 16/16 | 16/16 |
+| Flask | 16/16 | 16/16 | 16/16 | 16/16 |
+| Express | 14/16 | 16/16 | 0/16 | 16/16 |
+| Spring | 14/16 | 16/16 | 0/16 | 16/16 |
+
+This matrix measures serialization-shape robustness only. Actual framework runtime execution is Phase 6B.
+
 ## Sprint 13 Phase 5 policy reliability & uncertainty governance — 2026-09-25
 
 Canonical untouched evaluation: GitHub Actions run `36170353179` — **PASS** at
