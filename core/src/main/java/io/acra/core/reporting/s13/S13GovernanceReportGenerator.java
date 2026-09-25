@@ -31,9 +31,9 @@ public final class S13GovernanceReportGenerator {
                 .sorted(Comparator.comparing(S13GovernanceFindingProjection::findingId))
                 .toList();
 
-        List<S13GovernanceEventProjection> events = new ArrayList<>();
+        List<S13GovernanceEventProjection> eventRows = new ArrayList<>();
         snapshot.findings().forEach(finding -> finding.events().forEach(event ->
-                events.add(new S13GovernanceEventProjection(
+                eventRows.add(new S13GovernanceEventProjection(
                         finding.findingId(),
                         event.eventId(),
                         event.sequence(),
@@ -44,7 +44,7 @@ public final class S13GovernanceReportGenerator {
                         event.decisionReference(),
                         event.evidenceIds(),
                         event.fingerprint()))));
-        events = events.stream()
+        List<S13GovernanceEventProjection> events = eventRows.stream()
                 .sorted(Comparator.comparing(S13GovernanceEventProjection::findingId)
                         .thenComparingInt(S13GovernanceEventProjection::sequence))
                 .toList();
