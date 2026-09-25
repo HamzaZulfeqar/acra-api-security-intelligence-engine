@@ -1,6 +1,31 @@
 # ROADMAP
 
-## Current gate — 2026-09-25
+## Final Sprint 13 research state — 2026-09-26
+
+**FINAL RESEARCH & REPRODUCIBILITY FREEZE COMPLETE.**
+
+Canonical closure:
+- branch: `s13-final-research-freeze`;
+- pre-freeze base: `7786097a4ea94bba7f7285218ed1c91d5d4062cd`;
+- freeze validation run: `36183344395`;
+- validated candidate commit: `3bc7df2f19d8b208f4586dfd4469d9b045e275f8`;
+- canonical completed Sprint 13 experiments: 8;
+- tracked evidence files hashed: 158;
+- Sprint 13 research/policy JSON parsed: 33;
+- deterministic verifier repeatability: PASS;
+- Maven package: BUILD SUCCESS;
+- Phase 7 implementation lock: PASS;
+- Phase 8 external-target validation: **NOT PERFORMED**.
+
+Sprint 13 is frozen at the evidence actually collected. No external-target, production-accuracy, production-safety or
+independent real-world validation claim is permitted.
+
+There are no remaining mandatory Sprint 13 gates.
+
+Any later authorized external-target validation must start as a new post-freeze experiment/version and must not rewrite
+Sprint 13 evidence.
+
+## Previous gate — Sprint 13 Phase 7
 
 **Sprint 13 Phase 7 REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION COMPLETE.**
 
