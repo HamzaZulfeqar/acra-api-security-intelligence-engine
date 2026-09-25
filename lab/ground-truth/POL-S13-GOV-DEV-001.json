@@ -139,7 +139,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/govdev/v1/ambiguous-tenants/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "pathRegex": "^/govdev/v1/tenants/(?P<tenant>red|blue)/ambiguous-reports/report-(?:red|blue)$",
       "priority": 100,
       "health": {
         "status": "CURRENT",
@@ -164,7 +164,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/govdev/v1/ambiguous-tenants/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "pathRegex": "^/govdev/v1/tenants/(?P<tenant>red|blue)/ambiguous-reports/report-(?:red|blue)$",
       "priority": 100,
       "health": {
         "status": "CURRENT",
@@ -189,7 +189,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/govdev/v1/stale-tenants/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "pathRegex": "^/govdev/v1/tenants/(?P<tenant>red|blue)/stale-reports/report-(?:red|blue)$",
       "priority": 100,
       "health": {
         "status": "STALE",
@@ -214,7 +214,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/govdev/v1/incomplete-tenants/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "pathRegex": "^/govdev/v1/tenants/(?:red|blue)/incomplete-reports/report-(?:red|blue)$",
       "priority": 100,
       "health": {
         "status": "CURRENT",
