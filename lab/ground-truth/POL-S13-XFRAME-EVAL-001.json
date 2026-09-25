@@ -1,0 +1,784 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-XFRAME-EVAL-001",
+  "purpose": "Untouched Phase 6A framework-shaped evaluation registry",
+  "createdAfterNormalizationFreeze": "4011b9c05b99b14da66733aea47de43256060990",
+  "policies": [
+    {
+      "policyId": "XEVAL-FASTAPI-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/fastapi/documents/doc-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FASTAPI-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/fastapi/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FASTAPI-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/fastapi/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FASTAPI-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/fastapi/workflows/deploy/resources/deploy-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FASTAPI-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/+fastapi/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FASTAPI-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xeval/fastapi/profiles/robin/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XEVAL-FASTAPI-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/fastapi/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FASTAPI-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/fastapi/links/link-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "fastapi-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/flask/documents/doc-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/flask/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/flask/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/flask/workflows/deploy/resources/deploy-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/+flask/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xeval/flask/profiles/robin/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/flask/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-FLASK-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/flask/links/link-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "flask-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/express/documents/doc-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/express/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/express/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/express/workflows/deploy/resources/deploy-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/+express/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xeval/express/profiles/robin/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/express/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-EXPRESS-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/express/links/link-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "express-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/spring/documents/doc-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/spring/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/spring/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/spring/workflows/deploy/resources/deploy-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/+spring/admin/audit-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xeval/spring/profiles/robin/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xeval/spring/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XEVAL-SPRING-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xeval/spring/links/link-beta$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-eval-1",
+        "sourceRevision": "spring-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    }
+  ]
+}
