@@ -1,5 +1,19 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 6A cross-framework-shaped limitations — 2026-09-25
+
+- Phase 6A measured framework-shaped snapshots, not actual FastAPI, Flask, Express or Spring runtime traffic.
+- Raw evaluation measured 60/64 correct dimensions and only 32/64 correct governed dispositions.
+- FastAPI-shaped and Flask-shaped snake_case inputs matched the canonical schema without normalization: 16/16 dimension and 16/16 disposition each.
+- Express-shaped and Spring-shaped camelCase inputs measured 14/16 raw dimensions and 0/16 raw dispositions each.
+- The frozen framework-neutral normalizer restored 64/64 dimensions and 64/64 dispositions on the untouched snapshot evaluation.
+- The perfect normalized snapshot result does not establish runtime router, middleware, serializer, dependency-version or HTTP-server behavior.
+- Framework labels are not consumed by the normalizer or reasoning stack; the current alias map is explicit and finite.
+- Unseen serialization aliases outside the frozen alias map remain an unmeasured compatibility risk.
+- Phase 6A development/evaluation data is frozen evidence and must not become a Phase 6B tuning target.
+- Phase 6B must launch actual local framework runtimes and capture real HTTP responses before a runtime cross-framework claim.
+- Real Burp desktop runtime and authorized external-target validation remain separate later gates.
+
 ## Sprint 13 Phase 5 governance limitations — 2026-09-25
 
 - Governed actionable findings measured TP=8/TN=48/FP=0/FN=8 on the 64-case untouched internal evaluation: precision=1.000000, recall=.500000, F1=.666667.
