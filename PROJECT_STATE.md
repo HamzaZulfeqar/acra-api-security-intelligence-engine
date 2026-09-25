@@ -2,54 +2,75 @@
 
 ## Current state — 2026-09-25
 
-**Current research boundary:** Sprint 13 — Configurable Policy Generalization.  
-**Decision:** S13 PHASE 3 COMPLETE; ADVERSARIAL / BASE-RATE EVALUATION NEXT.  
-**Working branch:** `s13-policy-generalization`.  
-**Phase 2 immutable base:** `2d030735401e336292ec5d18d7e01702c1e70039`.  
-**Development workflow:** GitHub Actions `36148740338` — SUCCESS.  
-**Algorithm freeze:** `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`.  
-**Untouched evaluation workflow:** GitHub Actions `36149071484` — SUCCESS.  
-**Measured evaluation head:** `82ae165b702d18b0eae872d51f8f695f723fec13`.  
-**Evaluation corpus:** 24 cases = 8 positive + 16 legitimate controls.  
-**Automatic dimension inference:** 24/24.  
-**Configured policy decisions:** 24/24.  
-**UNKNOWN policy decisions:** 0.  
+**Current research boundary:** Sprint 13 — Adversarial / Base-Rate Stress.  
+**Decision:** S13 PHASE 4 COMPLETE; POLICY RELIABILITY / UNCERTAINTY GOVERNANCE NEXT.  
+**Working branch:** `s13-adversarial-base-rate`.  
+**Phase 3 completion base:** `53e1995b22c29f1a4672cf16ffa420f5cf74fde0`.  
+**Frozen algorithm base:** `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`.  
+**Successful workflow:** GitHub Actions `36168752869` — SUCCESS.  
+**Measured head:** `ed1601542739cce20be48c001ae4e663bfdcf890`.  
+**Stress corpus:** 96 cases = 8 positive + 88 legitimate controls.  
+**Measured prevalence:** 8.333333%.  
+**Automatic dimension inference:** 96/96.  
+**Policy decisions:** 58 decisive / 38 UNKNOWN.  
 **Repeatability:** PASS.  
-**Frozen algorithm gate:** PASS.  
-**Label-absence gate:** PASS.  
+**Phase 3 evidence lock:** PASS.  
+**Algorithm-freeze gate:** PASS.  
+**Policy-registry robustness:** PASS.  
 **Product compilation:** Maven BUILD SUCCESS.  
 **Real Burp desktop runtime:** UNVERIFIED / DEFERRED.  
 **External authorized-target validation:** NOT PERFORMED.
 
-### Sprint 13 Phase 3 untouched evaluation
+### Sprint 13 Phase 4 measured result
 
-| Variant | TP | TN | FP | FN | Precision | Recall | F1 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Locked A7 | 8 | 4 | 12 | 0 | .400000 | 1.000000 | .571429 |
-| Policy-generalized G1 | 8 | 16 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+| Variant | TP | TN | FP | FN | Precision | Recall | Specificity | FPR | F1 | MCC |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Locked A7 | 8 | 20 | 68 | 0 | .105263 | 1.000000 | .227273 | .772727 | .190476 | .154672 |
+| G1 | 8 | 49 | 39 | 0 | .170213 | 1.000000 | .556818 | .443182 | .290909 | .307860 |
 
-G1 uses explicit configured authorization policies after automatic dimension inference:
-- policy ALLOW suppresses a candidate;
-- policy DENY with observed ALLOW creates a positive authorization mismatch;
-- policy UNKNOWN falls back to locked A7.
+G1 keeps all 8 positives but still raises 39 false positives under policy degradation.
 
-The 1.0 G1 values apply only to this synthetic internal configured-policy evaluation. They do not establish automatic
-policy extraction, production accuracy, third-party replication or external validity.
+Condition breakdown:
+- explicit configured ALLOW: 0/40 FP;
+- no policy: 12/16 FP;
+- ambiguous policy: 12/16 FP;
+- stale policy: 8/8 FP;
+- incomplete context: 7/8 FP.
 
-**Next work:** Sprint 13 Phase 4 — larger, less-balanced and adversarial negative populations, including realistic
-base-rate stress and prevalence-sensitive precision. Phase 3 evaluation data remains frozen and must not be used as a
-tuning target.
+At 1% projected prevalence, measured G1 sensitivity/specificity imply PPV=.022284 and ~438.75 false alerts per 1,000
+observations. This is a mathematical projection, not an additional observed dataset.
 
-Canonical Phase 3 details:
-- `docs/research/sprint-13-policy-generalization-protocol.md`
-- `lab/ground-truth/POL-S13-DEV-001.json`
-- `lab/ground-truth/POL-S13-EVAL-001.json`
-- `lab/ground-truth/GT-S13-POLICY-EVAL-FEATURES.json`
-- `lab/ground-truth/GT-S13-POLICY-EVAL-LABELS.json`
-- `scripts/sprint13_policy_semantics.py`
-- `scripts/run-sprint13-policy-eval.py`
-- `scripts/verify-sprint13-policy-eval.py`
-- `scripts/verify-sprint13-policy-eval.sh`
+### Product conclusion
+
+The current system must not equate `UNKNOWN` policy or degraded policy quality with a confirmed authorization
+vulnerability candidate.
+
+**Next work: Sprint 13 Phase 5 — Policy Reliability & Uncertainty Governance**
+- POLICY_GAP;
+- AMBIGUOUS_POLICY;
+- STALE_POLICY;
+- INCOMPLETE_CONTEXT;
+- INCONCLUSIVE disposition;
+- policy-health/version evidence;
+- review-only escalation for uncertainty;
+- new development and untouched evaluation corpora.
+
+Cross-framework testing follows after this dependency.
+
+Canonical Phase 4 details:
+- `docs/research/sprint-13-adversarial-base-rate-protocol.md`
+- `lab/ground-truth/POL-S13-BASERATE-001.json`
+- `lab/ground-truth/GT-S13-BASERATE-FEATURES.json`
+- `lab/ground-truth/GT-S13-BASERATE-LABELS.json`
+- `scripts/run-sprint13-baserate.py`
+- `scripts/verify-sprint13-baserate.py`
+- `scripts/verify-sprint13-baserate.sh`
+- `scripts/verify-sprint13-policy-registry-robustness.py`
+
+## Previous Sprint 13 Phase 3 state
+
+Phase 3 remains frozen at evaluation workflow `36149071484`: G1 measured TP=8/TN=16/FP=0/FN=0 on the 24-case
+internal configured-policy evaluation.
 
 ## Previous Sprint 13 Phase 2 state
 
