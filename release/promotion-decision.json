@@ -36,5 +36,29 @@
     "sprint13FrozenHead": "d6797222d31984a45fbc80674193d0388757b24c",
     "externalTargetValidation": "NOT_PERFORMED",
     "productionAccuracyClaim": "NOT_SUPPORTED"
+  },
+  "securityChecks": {
+    "codeql": {
+      "status": "PASS",
+      "workflowRunId": 36195804280
+    },
+    "gitleaks": {
+      "status": "PASS",
+      "workflowRunId": 36195804280
+    },
+    "githubDependencyReview": {
+      "status": "UNAVAILABLE",
+      "workflowRunId": 36195804280,
+      "reason": "GitHub Dependency Graph is not enabled for the repository; no vulnerability result was produced."
+    },
+    "localDependencyContract": {
+      "status": "PASS",
+      "workflowRunId": 36195798931,
+      "coreDirectDependencies": 0,
+      "extensionDirectDependencies": 2,
+      "customRepositories": 0,
+      "systemScopedDependencies": 0,
+      "snapshotDependencies": 0
+    }
   }
 }
