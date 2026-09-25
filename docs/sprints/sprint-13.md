@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 POLICY GENERALIZATION COMPLETE.
+**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 ADVERSARIAL / BASE-RATE STRESS COMPLETE.
 
 ## Objective
 
@@ -183,3 +183,87 @@ automatic policy extraction, production scanner accuracy, or external validity.
 
 **Next:** Phase 4 — larger, less-balanced and adversarial negative populations using frozen Phase 3 results as evidence,
 not as a tuning target.
+
+
+## Phase 4 — Adversarial / base-rate stress
+
+**Canonical workflow:** `36168752869` — SUCCESS at `ed1601542739cce20be48c001ae4e663bfdcf890`.
+
+Phase 4 froze the Phase 3 algorithms and evaluated a 96-case negative-heavy stress corpus:
+
+- 8 positive authorization mismatches;
+- 88 legitimate controls;
+- measured prevalence = 8.333333%;
+- 12 cases per authorization dimension;
+- 40 explicit configured ALLOW controls;
+- 16 missing-policy controls;
+- 16 ambiguous-policy controls;
+- 8 stale-policy controls;
+- 8 incomplete-context controls.
+
+Integrity and robustness:
+- Phase 3 evidence lock: PASS;
+- frozen algorithm lock: PASS;
+- malformed-registry fail-closed checks: PASS;
+- missing policy -> UNKNOWN: PASS;
+- equal-priority ambiguity -> UNKNOWN: PASS;
+- deterministic priority resolution: PASS;
+- label file absent during both prediction passes: PASS;
+- two-run byte-identical predictions/evaluation: PASS;
+- Maven package: BUILD SUCCESS.
+
+Automatic dimension inference remained 96/96 on this synthetic stress corpus.
+
+### Phase 4 measured result
+
+| Variant | TP | TN | FP | FN | Precision | Recall | Specificity | FPR | F1 | MCC |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Locked A7 | 8 | 20 | 68 | 0 | .105263 | 1.000000 | .227273 | .772727 | .190476 | .154672 |
+| Policy-generalized G1 | 8 | 49 | 39 | 0 | .170213 | 1.000000 | .556818 | .443182 | .290909 | .307860 |
+
+G1 improves substantially over locked A7 but remains unsuitable as a low-noise alerting decision under degraded policy
+quality.
+
+G1 condition-level false positives:
+- EXPLICIT_ALLOW: 0 / 40;
+- NO_POLICY: 12 / 16;
+- AMBIGUOUS_POLICY: 12 / 16;
+- STALE_POLICY: 8 / 8;
+- INCOMPLETE_CONTEXT: 7 / 8.
+
+All 8 positive cases remained detected; FN=0.
+
+Policy coverage:
+- decisive policy decisions: 58 / 96;
+- UNKNOWN decisions: 38 / 96;
+- expected-authorization correctness across all cases: 48 / 96;
+- decisive expected-authorization correctness: 48 / 58 = .827586.
+
+Wilson 95% intervals for G1:
+- sensitivity: [.675592, 1.000000];
+- specificity: [.452818, .656065];
+- precision: [.088864, .301398];
+- NPV: [.927302, 1.000000].
+
+Projected G1 PPV from measured sensitivity/specificity:
+- 1% prevalence: .022284;
+- 5% prevalence: .106152;
+- measured 8.333333% prevalence: .170213;
+- 10% prevalence: .200456.
+
+At 1% prevalence the projection implies ~448.75 alerts per 1,000 observations, ~438.75 of them false alerts.
+This projection is mathematical, not an additional observed dataset.
+
+### Phase 4 interpretation
+
+The Phase 3 configured-policy success does not survive policy-quality degradation.
+
+The dominant weakness is not automatic dimension discovery. It is **policy uncertainty governance**:
+`NO_POLICY`, `AMBIGUOUS_POLICY`, stale policy and incomplete context currently either fall back to noisy locked A7 or
+produce an incorrect decisive DENY.
+
+Therefore `UNKNOWN` must not be treated as equivalent to confirmed authorization mismatch in a production-facing
+finding lifecycle.
+
+**Next dependency:** introduce explicit uncertainty / policy-health governance and separate CANDIDATE / INCONCLUSIVE /
+POLICY_GAP states before cross-framework or external validation.
