@@ -27,6 +27,7 @@ mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
 EXT_JAR="$ROOT/extension/burp-extension/target/acra-burp-extension-0.3.0-rc1.jar"
 test -f "$EXT_JAR"
 echo "SPRINT13_BURP_EVAL_EXTENSION_BUILD PASS"
+python3 scripts/verify-sprint13-burp-review-boundary.py "$EXT_JAR"
 
 BURP_JAR="$WORK/burpsuite_desktop_v2026.7.3.jar"
 curl --fail --location --retry 3   "https://portswigger.net/burp/releases/startdownload?product=desktop&type=jar&version=2026.7.3"   --output "$BURP_JAR"
