@@ -2,62 +2,69 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 Phase 4 ADVERSARIAL / BASE-RATE STRESS COMPLETE.**
+**Sprint 13 Phase 5 POLICY RELIABILITY & UNCERTAINTY GOVERNANCE COMPLETE.**
 
 Canonical evidence:
-- branch: `s13-adversarial-base-rate`;
-- Phase 3 completion base: `53e1995b22c29f1a4672cf16ffa420f5cf74fde0`;
-- frozen decision algorithms: `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`;
-- successful workflow: `36168752869`;
-- measured head: `ed1601542739cce20be48c001ae4e663bfdcf890`;
-- corpus: 96 cases / 8 positive / 88 negative / 8.333333% prevalence;
-- dimension inference: 96/96;
-- Phase 3 evidence lock: PASS;
-- algorithm-freeze gate: PASS;
-- policy-registry robustness: PASS;
+- branch: `s13-policy-uncertainty-governance`;
+- Phase 4 completion base: `a07cf497e6689c9b1d161ae2e22c747fdbac33f7`;
+- successful development workflow: `36169960606`;
+- governance freeze: `11afbb80be24116c9facd0d4b0791f4a12efed3a`;
+- successful untouched evaluation workflow: `36170353179`;
+- measured evaluation head: `46f77a8d76b160cec70f7aef3f612e0d63af56da`;
+- evaluation corpus: 64 cases;
+- dimension inference: 64/64;
+- exact governed disposition: 64/64;
+- Phase 4 evidence lock: PASS;
+- governance/upstream algorithm freeze: PASS;
 - label-absence gate: PASS;
-- two-run repeatability: PASS;
+- repeatability: PASS;
 - Maven package: BUILD SUCCESS.
 
-Measured G1 stress result:
-- TP=8 / TN=49 / FP=39 / FN=0;
-- precision=.170213;
-- recall=1.000000;
-- specificity=.556818;
-- FPR=.443182;
-- F1=.290909;
-- MCC=.307860.
+Measured comparison:
+- frozen A7: TP=16/TN=21/FP=27/FN=0, P=.372093/R=1/F1=.542373;
+- legacy G1: TP=16/TN=25/FP=23/FN=0, P=.410256/R=1/F1=.581818;
+- governed actionable findings: TP=8/TN=48/FP=0/FN=8, P=1/R=.5/F1=.666667.
 
-False-positive concentration:
-- EXPLICIT_ALLOW: 0/40;
-- NO_POLICY: 12/16;
-- AMBIGUOUS_POLICY: 12/16;
-- STALE_POLICY: 8/8;
-- INCOMPLETE_CONTEXT: 7/8.
+Governance routing:
+- positive review count=8;
+- negative review count=32;
+- escalation coverage (actionable candidate or review)=1.0;
+- silent positive count=0;
+- review rate=.625;
+- actionable candidate rate=.125.
 
-The measured dependency is now explicit: configured-policy semantics work when policy is healthy, but current UNKNOWN
-fallback / stale-policy handling creates excessive alert noise when policy quality degrades.
+Phase 5 resolves the Phase 4 false-actionable problem inside this controlled corpus by separating uncertainty from
+confirmed candidate state. The reduced actionable recall is intentional because policy-gap positives remain review-only
+until authoritative policy exists.
 
-**Next gate — Sprint 13 Phase 5: Policy Reliability & Uncertainty Governance**
+**Next gate — Sprint 13 Phase 6: Cross-Framework Generalization**
 
 Required direction:
-- explicit `POLICY_GAP` state for no matching policy;
-- explicit `AMBIGUOUS_POLICY` state;
-- explicit stale/version-drift state;
-- explicit incomplete-context state;
-- separate `INCONCLUSIVE` from vulnerability `CANDIDATE`;
-- policy-health score/status in evidence;
-- do not promote UNKNOWN policy to a vulnerability candidate solely via locked-A7 fallback;
-- preserve raw evidence and allow human review;
-- new development corpus + new untouched evaluation corpus;
-- Phase 4 corpus remains frozen evidence and cannot become a tuning target.
-
-Cross-framework fixture validation moves after this uncertainty-governance dependency is addressed.
+- preserve Phase 5 dispositions and governance freeze;
+- test equivalent authorization semantics across independently structured API fixtures;
+- include at least Python/FastAPI, Flask, Node/Express and Java/Spring-style representations where practical;
+- avoid framework-specific endpoint-name shortcuts;
+- verify dimension inference, configured-policy semantics and uncertainty governance separately;
+- include framework-specific routing/body/serialization differences;
+- keep real Burp desktop and external authorized-target validation as later independent gates;
+- create a new development set and a new untouched cross-framework evaluation set.
 
 See:
 - `sprint-13.md`;
-- `../research/sprint-13-adversarial-base-rate-protocol.md`;
+- `../research/sprint-13-policy-uncertainty-governance-protocol.md`;
 - `../research/EXPERIMENT_REGISTRY.md`.
+
+## Previous gate — Sprint 13 Phase 4
+
+**Sprint 13 Phase 4 ADVERSARIAL / BASE-RATE STRESS COMPLETE.**
+
+Canonical Phase 4 evidence:
+- workflow: `36168752869`;
+- measured head: `ed1601542739cce20be48c001ae4e663bfdcf890`;
+- 96 cases / 8 positive / 88 negative;
+- G1 TP=8/TN=49/FP=39/FN=0;
+- policy-degraded controls dominated false positives;
+- Phase 4 remains frozen evidence.
 
 ## Previous gate — Sprint 13 Phase 3
 
