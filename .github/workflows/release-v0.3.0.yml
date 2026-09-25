@@ -1,0 +1,145 @@
+name: Publish ACRA v0.3.0
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'VERSION'
+      - 'LICENSE'
+      - 'NOTICE'
+      - 'release/promotion-decision.json'
+      - 'docs/release/RELEASE_0.3.0.md'
+      - '.github/workflows/release-v0.3.0.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-acra-v0.3.0
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Verify publication contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat VERSION)" = "0.3.0"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("release/promotion-decision.json").read_text())
+          assert d["state"] == "READY_FOR_PROMOTION"
+          assert d["publicReleaseAuthorized"] is True
+          assert d["licenseDecision"]["spdxIdentifier"] == "Apache-2.0"
+          assert d["versionDecision"]["targetVersion"] == "0.3.0"
+          assert d["publication"]["gitTag"] == "v0.3.0"
+          assert d["publication"]["releaseType"] == "stable"
+          print("RELEASE_V030_CONTRACT PASS")
+          PY
+
+      - name: Run complete stable promotion gate
+        run: bash scripts/verify-sprint15-release-promotion.sh
+
+      - name: Record final asset hashes
+        run: |
+          echo "=== SHA256SUMS ==="
+          cat build/release/SHA256SUMS
+
+      - name: Create annotated v0.3.0 tag if absent
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --tags origin refs/tags/v0.3.0 >/dev/null 2>&1; then
+            git fetch --force origin refs/tags/v0.3.0:refs/tags/v0.3.0
+            TAG_TARGET="$(git rev-list -n 1 v0.3.0)"
+            if [ "$TAG_TARGET" != "$GITHUB_SHA" ]; then
+              echo "Existing v0.3.0 tag points to $TAG_TARGET, expected $GITHUB_SHA" >&2
+              exit 1
+            fi
+            echo "RELEASE_V030_TAG already-present target=$TAG_TARGET"
+          else
+            git tag -a v0.3.0 "$GITHUB_SHA" -m "ACRA v0.3.0"
+            git push origin refs/tags/v0.3.0
+            echo "RELEASE_V030_TAG created target=$GITHUB_SHA"
+          fi
+
+      - name: Publish GitHub Release if absent
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if gh release view v0.3.0 >/dev/null 2>&1; then
+            echo "RELEASE_V030_GITHUB_RELEASE already-present"
+          else
+            gh release create v0.3.0 \
+              build/release/acra-0.3.0/acra-burp-extension-0.3.0.jar \
+              build/release/acra-0.3.0.zip \
+              build/release/SHA256SUMS \
+              build/release/release-manifest.json \
+              --verify-tag \
+              --title "ACRA v0.3.0" \
+              --notes-file docs/release/RELEASE_0.3.0.md
+            echo "RELEASE_V030_GITHUB_RELEASE created"
+          fi
+
+      - name: Verify published release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release view v0.3.0 --json tagName,isDraft,isPrerelease,url,assets > build/release/published-release.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("build/release/published-release.json").read_text())
+          assert d["tagName"] == "v0.3.0"
+          assert d["isDraft"] is False
+          assert d["isPrerelease"] is False
+          names={a["name"] for a in d["assets"]}
+          required={
+              "acra-burp-extension-0.3.0.jar",
+              "acra-0.3.0.zip",
+              "SHA256SUMS",
+              "release-manifest.json",
+          }
+          assert required <= names, (required, names)
+          print("RELEASE_V030_PUBLICATION_VERIFY PASS")
+          print("RELEASE_V030_URL", d["url"])
+          PY
+
+      - name: Upload publication evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-v0.3.0-publication-evidence
+          path: |
+            build/release/SHA256SUMS
+            build/release/release-manifest.json
+            build/release/published-release.json
+          if-no-files-found: error
