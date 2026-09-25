@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "acra-release-promotion-v1",
+  "promotionId": "ACRA-0.3.0-PROMOTION-2026-09-26",
+  "sourceCandidate": {
+    "version": "0.3.0-rc1",
+    "sprint14Head": "88f2a75f190f6e8853609db2dc9d73929434ad0d",
+    "releaseHardeningRunId": 36185936876,
+    "securityRunId": 36185936941
+  },
+  "state": "PREPARED_BLOCKED",
+  "publicReleaseAuthorized": false,
+  "licenseDecision": {
+    "status": "UNRESOLVED",
+    "spdxIdentifier": null,
+    "note": "No software license has been explicitly selected."
+  },
+  "versionDecision": {
+    "status": "UNRESOLVED",
+    "targetVersion": null,
+    "allowedTargets": [
+      "0.3.0-rc1",
+      "0.3.0"
+    ],
+    "note": "No explicit decision has been made to publish the RC as a prerelease or promote it to 0.3.0."
+  },
+  "publication": {
+    "gitTag": null,
+    "githubRelease": null,
+    "releaseType": null
+  },
+  "blockers": [
+    "Explicit software-license selection required.",
+    "Explicit version-promotion decision required."
+  ],
+  "immutableBoundaries": {
+    "sprint13FrozenHead": "d6797222d31984a45fbc80674193d0388757b24c",
+    "externalTargetValidation": "NOT_PERFORMED",
+    "productionAccuracyClaim": "NOT_SUPPORTED"
+  }
+}

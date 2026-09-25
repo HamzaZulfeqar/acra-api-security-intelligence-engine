@@ -1,0 +1,46 @@
+name: Sprint 15 Release Promotion Preflight
+
+on:
+  push:
+    branches:
+      - s15-release-promotion
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sprint15-release-promotion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  promotion-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Run promotion preflight
+        run: bash scripts/verify-sprint15-release-promotion.sh
+
+      - name: Upload revalidated release candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-release-promotion-preflight
+          path: build/release/**
+          if-no-files-found: error
