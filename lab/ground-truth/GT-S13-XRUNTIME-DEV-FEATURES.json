@@ -149,7 +149,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "FASTAPI",
       "method": "GET",
-      "path": "/runtime/fastapi/routing/audit",
+      "path": "/runtime/fastapi/routing/equivalent",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -164,7 +164,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "FASTAPI",
       "method": "GET",
-      "path": "/runtime/fastapi/routing/audit",
+      "path": "/runtime/fastapi/routing/equivalent",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -425,7 +425,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "FLASK",
       "method": "GET",
-      "path": "/runtime/flask/routing/audit",
+      "path": "/runtime/flask/routing/equivalent",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -440,7 +440,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "FLASK",
       "method": "GET",
-      "path": "/runtime/flask/routing/audit",
+      "path": "/runtime/flask/routing/equivalent",
       "actor": {
         "sub": "alice",
         "tenant_id": "red",
@@ -701,7 +701,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "EXPRESS",
       "method": "GET",
-      "path": "/runtime/express/routing/audit",
+      "path": "/runtime/express/routing/equivalent",
       "actor": {
         "userId": "alice",
         "tenantId": "red",
@@ -716,7 +716,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "EXPRESS",
       "method": "GET",
-      "path": "/runtime/express/routing/audit",
+      "path": "/runtime/express/routing/equivalent",
       "actor": {
         "userId": "alice",
         "tenantId": "red",
@@ -977,7 +977,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "SPRING",
       "method": "GET",
-      "path": "/runtime/spring/routing/audit",
+      "path": "/runtime/spring/routing/equivalent",
       "actor": {
         "principalId": "alice",
         "tenantId": "red",
@@ -992,7 +992,7 @@
       "family": "PHASE6B_RUNTIME_DEV",
       "frameworkStyle": "SPRING",
       "method": "GET",
-      "path": "/runtime/spring/routing/audit",
+      "path": "/runtime/spring/routing/equivalent",
       "actor": {
         "principalId": "alice",
         "tenantId": "red",
