@@ -1,5 +1,16 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 1 held-out findings — 2026-09-25
+
+- Locked A7 generalization on the 16-case held-out corpus measured TP=8/TN=3/FP=5/FN=0, precision=.615385, recall=1.000000, F1=.761905.
+- The five false positives are legitimate policy controls absent from Sprint 12 calibration: platform-wide tenant administration, a new security-admin role, a valid DRAFT→PENDING requester transition, security-admin use of an equivalent duplicate-separator route, and an allowed `nickname` profile property.
+- These failures demonstrate fixture-specific policy assumptions in the current locked A0-A7 rules. The original held-out result is frozen and must not be retroactively tuned.
+- Sprint 13 Phase 1 still supplies the registered authorization dimension; automatic dimension discovery remains NOT MEASURED.
+- The held-out fixture is separately authored within this repository, not independent third-party replication.
+- The dataset remains small and balanced; no prevalence-adjusted precision, confidence interval, or production base-rate claim is made.
+- Cross-framework validation, real Burp desktop execution and explicitly authorized external-target validation remain future gates.
+- Any policy-generalization redesign must use a separate development/tuning corpus and a new untouched evaluation corpus rather than reusing this held-out set as a tuning target.
+
 ## Sprint 12 controlled-research limitations — 2026-09-25
 
 - A0-A7 measurements come from a balanced 16-case synthetic localhost ACRA-Lab dataset only.
