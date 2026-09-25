@@ -1,0 +1,23 @@
+title = "ACRA Gitleaks configuration"
+
+[extend]
+useDefault = true
+
+# Sprint 11 intentionally injects synthetic credential-shaped strings into a
+# security-hardening test to verify that finding/reproduction outputs redact
+# secret-bearing material. This allowlist is deliberately narrow: it applies
+# only to the default generic-api-key rule, only to the exact test file, and
+# only when the exact synthetic X-API-Key line is present.
+[[rules]]
+id = "generic-api-key"
+
+  [[rules.allowlists]]
+  description = "Known synthetic API key used only by Sprint 11 secret-redaction regression test"
+  condition = "AND"
+  regexTarget = "line"
+  paths = [
+    '''^core/src/test/java/io/acra/core/tests/sprint11/Sprint11FindingSecurityHardeningTestSuite\.java$'''
+  ]
+  regexes = [
+    '''X-API-Key:\s*s11-hardening-api-key'''
+  ]
