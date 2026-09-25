@@ -1,5 +1,21 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 4 adversarial / base-rate findings — 2026-09-25
+
+- G1 measured TP=8/TN=49/FP=39/FN=0 on the 96-case negative-heavy stress corpus: precision=.170213, recall=1.000000, specificity=.556818, FPR=.443182, F1=.290909, MCC=.307860.
+- Locked A7 was materially worse: TP=8/TN=20/FP=68/FN=0, precision=.105263, specificity=.227273, FPR=.772727.
+- Explicit configured ALLOW controls remained clean: 0 false positives across 40 cases.
+- Missing policy produced 12/16 false positives because UNKNOWN falls back to locked A7.
+- Ambiguous policy produced 12/16 false positives for the same fallback reason.
+- Stale policy produced 8/8 false positives because outdated configured policy returned decisive DENY on legitimate operations.
+- Incomplete context produced 7/8 false positives; six cases became UNKNOWN and some dimensions produced decisive DENY with insufficient context.
+- Policy coverage was 58 decisive / 38 UNKNOWN. Expected-authorization correctness was 48/96 overall and 48/58 among decisive policy decisions.
+- Current G1 alert disposition therefore conflates policy uncertainty/configuration quality with vulnerability evidence.
+- At 1% projected prevalence, measured G1 sensitivity/specificity imply PPV=.022284 and ~438.75 false alerts per 1,000 observations. This is a mathematical projection, not an observed production rate.
+- Phase 5 must introduce explicit POLICY_GAP, AMBIGUOUS_POLICY, STALE_POLICY, INCOMPLETE_CONTEXT and INCONCLUSIVE states before further external-validity expansion.
+- Phase 4 stress data is now frozen evidence and must not be reused as a tuning target.
+- Real-world prevalence, automatic policy extraction, cross-framework behavior, Burp desktop runtime and authorized external-target performance remain unverified.
+
 ## Sprint 13 Phase 3 policy-generalization limitations — 2026-09-25
 
 - G1 measured TP=8/TN=16/FP=0/FN=0 on the 24-case untouched internal evaluation after algorithm freeze.
