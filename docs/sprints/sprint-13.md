@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 HELD-OUT EVALUATION COMPLETE.
+**Status:** PHASE 1 COMPLETE; PHASE 2 IMPLEMENTED / MEASUREMENT PENDING CI.
 
 ## Objective
 
@@ -72,7 +72,7 @@ retaining this original hold-out result unchanged.
 
 ## Remaining Sprint 13 program
 
-Phase 2 — automatic authorization-dimension discovery.  
+Phase 2 — automatic authorization-dimension discovery — IMPLEMENTED, measurement pending CI.  
 Phase 3 — policy-generalization redesign using explicit learned/configured policy semantics, followed by a new non-tuned evaluation set.  
 Phase 4 — larger, less-balanced and adversarial negative populations.  
 Phase 5 — cross-framework API fixtures.  
@@ -86,3 +86,25 @@ The result is valid only for the separately frozen synthetic localhost hold-out 
 authored inside the same project and is not independent third-party replication. Registered authorization dimensions
 are still supplied, so dimension discovery remains unmeasured. No production accuracy, real-world safety, superiority,
 or external-target claim is established.
+
+
+## Phase 2 — Automatic authorization-dimension discovery
+
+Phase 2 removes the supplied-dimension assumption from the measured prediction path.
+
+New frozen research inputs:
+- `GT-S13-DIMENSION-FEATURES`: 32 cases with no registered dimension or vulnerability label;
+- `GT-S13-DIMENSION-LABELS`: sealed post-prediction scoring labels.
+
+New execution components:
+- `scripts/sprint13_dimension_inference.py`;
+- `scripts/run-sprint13-dimension-discovery.py`;
+- `scripts/verify-sprint13-dimension-discovery.py`;
+- `scripts/verify-sprint13-dimension-discovery.sh`;
+- `.github/workflows/sprint13-dimension-discovery.yml`.
+
+The inference engine uses observable endpoint/request/response/identity structure and emits an interpretable evidence
+score, winning dimension, confidence and score margin. A0-A7 then receive only the inferred dimension. Registered
+dimensions are joined afterward for multiclass scoring.
+
+No Phase 2 accuracy result is claimed until the dedicated CI campaign succeeds.
