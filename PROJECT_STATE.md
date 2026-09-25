@@ -3,22 +3,45 @@
 ## Current state — 2026-09-25
 
 **Current research boundary:** Sprint 13 Phase 7 — Real Burp Desktop / Montoya Runtime Validation.  
-**Decision:** PHASE 7 HARNESS READY; EXECUTION BLOCKED AT BURP EULA ACCEPTANCE.  
+**Decision:** PHASE 7 COMPLETE; EXPLICITLY AUTHORIZED EXTERNAL-TARGET VALIDATION NEXT.  
 **Working branch:** `s13-burp-montoya-runtime`.  
 **Phase 6B evidence:** frozen and unchanged.  
-**Phase 7 development run:** `36178508712` — failed only at interactive Burp EULA prompt after build/checksum/lab preflight passed.  
-**Real Montoya initialization:** NOT YET MEASURED.  
-**Real Burp Proxy callbacks:** NOT YET MEASURED.  
-**Real ACRA passive pipeline through Burp:** NOT YET MEASURED.  
-**External authorized-target validation:** NOT STARTED.
+**Successful Phase 7 development workflow:** `36179678105`.  
+**Phase 7 development freeze:** `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`.  
+**Successful post-freeze evaluation workflow:** `36180110271`.  
+**Measured evaluation head:** `b1cf0336c530a3678de64aee699067a4793e3857`.  
+**Real Burp Desktop 2026.7.3:** PASS.  
+**Real Montoya initialization:** PASS.  
+**Real Burp Proxy request/response callbacks:** PASS.  
+**Real ACRA passive pipeline through Burp:** PASS.  
+**Development GT-INTEGRATION-001 context:** PASS.  
+**Untouched contexts:** 2/2 on both independent real-Burp passes.  
+**Semantic repeatability:** PASS.  
+**Secret-exclusion:** PASS.  
+**External authorized-target validation:** NOT STARTED / NEXT.
 
-The repository now contains an opt-in Phase 7 probe that records non-secret runtime evidence only. It is disabled by
-default and active execution remains disabled.
+### Phase 7 measured evidence
 
-The next executable action requires explicit authorization to accept the PortSwigger Burp Suite Community Edition EULA
-for this controlled CI validation run.
+The actual shaded ACRA extension was loaded inside the pinned real Burp Desktop JAR. Controlled HTTP traffic was sent
+through Burp Proxy rather than directly to the application. Montoya callbacks were observed and the resulting
+transactions entered ACRA's passive intelligence pipeline.
 
-## Current state — 2026-09-25
+The post-freeze evaluation used new synthetic tenants/users/resources and separate labels:
+- tenant-c / user-c / document 3001;
+- tenant-d / user-d / document 4001.
+
+Both independent Burp executions reconstructed both expected contexts exactly at the measured fields
+(principal, tenant, resource ID, action, response status, resolved/observed context status).
+
+The opt-in runtime probe records no headers, tokens, cookies, request bodies or response bodies. Active execution remains
+disabled.
+
+### Remaining Sprint 13 gates
+
+1. Phase 8 — explicitly authorized external-target validation;
+2. Final — research/reproducibility freeze and release-candidate evidence consolidation.
+
+## Previous Sprint 13 Phase 6B state
 
 **Current research boundary:** Sprint 13 — Actual Local Cross-Framework Runtime Validation.  
 **Decision:** S13 PHASE 6B COMPLETE; REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION NEXT.  
