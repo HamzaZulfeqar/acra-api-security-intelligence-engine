@@ -1,5 +1,20 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 5 governance limitations — 2026-09-25
+
+- Governed actionable findings measured TP=8/TN=48/FP=0/FN=8 on the 64-case untouched internal evaluation: precision=1.000000, recall=.500000, F1=.666667.
+- The eight positive cases not promoted to actionable findings were policy-gap cases and were routed to review; escalation coverage was 1.000000 and silent positive count was 0.
+- Review load remains substantial in the constructed uncertainty-heavy corpus: 40/64 cases (62.5%) were review-required.
+- The 62.5% review rate is not a production analyst-workload estimate.
+- Policy-health status is explicitly supplied by the registry; Phase 5 does not automatically determine whether policy is stale/current.
+- POLICY_GAP and ambiguity classification depend on configured policy-registry coverage/matching quality.
+- The governance layer was evaluated on synthetic snapshot observations rather than real framework/runtime traffic.
+- Phase 5 exact disposition accuracy (64/64) does not establish production accuracy or independent replication.
+- Cross-framework serialization, routing, middleware and request-body differences remain unmeasured.
+- Real Burp desktop runtime and authorized external-target behavior remain unverified.
+- The Phase 5 development and untouched evaluation corpora are frozen evidence and must not be used as tuning targets.
+- Phase 6 must test the same governance contract across independently structured framework fixtures before any cross-framework claim.
+
 ## Sprint 13 Phase 4 adversarial / base-rate findings — 2026-09-25
 
 - G1 measured TP=8/TN=49/FP=39/FN=0 on the 96-case negative-heavy stress corpus: precision=.170213, recall=1.000000, specificity=.556818, FPR=.443182, F1=.290909, MCC=.307860.
