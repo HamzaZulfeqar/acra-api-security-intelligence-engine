@@ -1,5 +1,17 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 3 policy-generalization limitations — 2026-09-25
+
+- G1 measured TP=8/TN=16/FP=0/FN=0 on the 24-case untouched internal evaluation after algorithm freeze.
+- The perfect fixture metrics apply only to explicit configured-policy semantics; they do not establish automatic policy extraction or real-world scanner accuracy.
+- The evaluation registry is supplied by configuration. Misconfigured, incomplete, stale, or conflicting policy registries remain a separate product risk.
+- Policy-engine UNKNOWN currently falls back to locked A7; large-scale UNKNOWN-policy behavior has not yet been base-rate stressed.
+- The Phase 3 evaluation is small, synthetic, internally authored and deliberately structured across eight dimensions.
+- The 8-positive / 16-negative evaluation is still far more balanced than real vulnerability prevalence; precision under realistic low-prevalence conditions is not measured.
+- Cross-framework behavior, gateway transformations, opaque route naming, real Burp desktop operation and external authorized targets remain unverified.
+- The development and untouched evaluation corpora are now frozen evidence and must not be reused for later tuning.
+- Phase 4 must stress larger negative populations, policy ambiguity, policy absence, overlapping policies, stale policy, malformed policy and realistic prevalence.
+
 ## Sprint 13 Phase 2 dimension-discovery findings — 2026-09-25
 
 - Automatic dimension discovery measured 31/32 correct across the frozen S12+S13 synthetic corpus: accuracy=.968750, macro-F1=.968254.
