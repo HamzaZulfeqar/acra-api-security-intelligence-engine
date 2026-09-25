@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "s13-dimension-labels-v1",
+  "labelSetId": "GT-S13-DIMENSION-LABELS",
+  "featureDatasetId": "GT-S13-DIMENSION-FEATURES",
+  "sealedForInference": true,
+  "caseCount": 32,
+  "cases": [
+    {
+      "caseId": "S11-GT-OBJECT-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-OBJECT-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S11-GT-TENANT-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-TENANT-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S11-GT-RBAC-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-RBAC-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S11-GT-WORKFLOW-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-WORKFLOW-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S11-GT-ROUTING-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-ROUTING-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S11-GT-PROPERTY-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-PROPERTY-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S11-GT-BATCH-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-BATCH-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S11-GT-INDIRECT-POS-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S11-GT-INDIRECT-NEG-001",
+      "sourceDataset": "S12_CALIBRATION",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-OBJECT-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-OBJECT-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-TENANT-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-TENANT-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-RBAC-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-RBAC-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-WORKFLOW-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-WORKFLOW-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-ROUTING-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-ROUTING-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-PROPERTY-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-PROPERTY-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-BATCH-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-BATCH-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "S13-HO-INDIRECT-POS-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "S13-HO-INDIRECT-NEG-001",
+      "sourceDataset": "S13_HOLDOUT",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    }
+  ]
+}
