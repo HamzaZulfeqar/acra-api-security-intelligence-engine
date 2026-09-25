@@ -2,6 +2,37 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 13 Phase 1 HELD-OUT EXTERNAL-VALIDITY EVALUATION COMPLETE.**
+
+Canonical Phase 1 evidence:
+- branch: `s13-heldout-external-validity`;
+- locked Sprint 12 base: `bd944e83a6edefafba56caebaa35e89fc107c282`;
+- measured head: `e515a31d91d775d5f0f35c32a48507455f84992d`;
+- successful workflow: `36143281129`;
+- feature corpus: `GT-S13-HOLDOUT-FEATURES`, 16 cases / 8 positive / 8 hard-negative controls;
+- labels sealed separately and physically absent during prediction: PASS;
+- 128 locked A0-A7 prediction rows: PASS;
+- two-run prediction/evaluation repeatability: PASS;
+- secure/vulnerable oracle validation: PASS;
+- Maven package: BUILD SUCCESS.
+
+Held-out A7 result:
+- TP=8 / TN=3 / FP=5 / FN=0;
+- precision=.615385 / recall=1.000000 / F1=.761905;
+- five hard-negative false positives expose limited policy generalization.
+
+The original held-out result is frozen as research evidence and must not be tuned away. Registered authorization
+dimensions are still supplied, so automatic dimension discovery remains NOT MEASURED.
+
+**Next gate:** Sprint 13 Phase 2 — automatic authorization-dimension discovery.
+
+See:
+- `sprint-13.md`;
+- `../research/sprint-13-heldout-protocol.md`;
+- `../research/EXPERIMENT_REGISTRY.md`.
+
+## Previous gate — Sprint 12
+
 **Sprint 12 CONTROLLED RESEARCH EXECUTION COMPLETE — registered synthetic/localhost scope.**
 
 Canonical Sprint 12 evidence:
