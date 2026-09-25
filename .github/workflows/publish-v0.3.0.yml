@@ -28,7 +28,8 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Verify exact publication source
+      - name: Verify exact publication source and current release state
+        id: publication_state
         shell: bash
         run: |
           set -euo pipefail
@@ -38,14 +39,23 @@ jobs:
           test "$(cat VERSION)" = "0.3.0"
           grep -q "Apache License" LICENSE
           test -f NOTICE
-          git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_TAG" >/dev/null 2>&1 && {
-            echo "Tag already exists; refusing duplicate publication."
-            exit 1
-          } || true
-          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 && {
-            echo "Release already exists; refusing duplicate publication."
-            exit 1
-          } || true
+
+          if TAG_LINE="$(git ls-remote --tags origin "refs/tags/$RELEASE_TAG")" && [[ -n "$TAG_LINE" ]]; then
+            TAG_SHA="$(printf '%s\n' "$TAG_LINE" | awk '{print $1}')"
+            test "$TAG_SHA" = "$EXPECTED_MAIN_SHA"
+            echo "tag_exists=true" >> "$GITHUB_OUTPUT"
+            echo "SPRINT15_EXISTING_TAG_VERIFY PASS tag=$RELEASE_TAG sha=$TAG_SHA"
+          else
+            echo "tag_exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "release_exists=true" >> "$GITHUB_OUTPUT"
+            echo "SPRINT15_EXISTING_RELEASE_DETECTED tag=$RELEASE_TAG"
+          else
+            echo "release_exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
           echo "SPRINT15_PUBLICATION_SOURCE PASS sha=$ACTUAL"
 
       - uses: actions/setup-python@v5
@@ -66,7 +76,8 @@ jobs:
           bash scripts/verify-sprint15-release-promotion.sh
           echo "SPRINT15_MAIN_PUBLICATION_REVALIDATION PASS"
 
-      - name: Create v0.3.0 GitHub Release
+      - name: Create v0.3.0 GitHub Release when absent
+        if: steps.publication_state.outputs.release_exists != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -77,17 +88,22 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gh release view "$RELEASE_TAG"             --repo "$GITHUB_REPOSITORY"             --json tagName,name,isDraft,isPrerelease,isLatest,url,targetCommitish             > build/release/published-release.json
+          gh release view "$RELEASE_TAG"             --repo "$GITHUB_REPOSITORY"             --json tagName,name,isDraft,isPrerelease,url,targetCommitish             > build/release/published-release.json
           gh release view "$RELEASE_TAG"             --repo "$GITHUB_REPOSITORY"             --json assets             > build/release/published-assets.json
           python3 - <<'PY'
           import json
           from pathlib import Path
+
+          expected_sha="1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71"
           release=json.loads(Path("build/release/published-release.json").read_text())
           assets=json.loads(Path("build/release/published-assets.json").read_text())["assets"]
+
           assert release["tagName"]=="v0.3.0"
           assert release["name"]=="ACRA v0.3.0"
           assert release["isDraft"] is False
           assert release["isPrerelease"] is False
+          assert release["targetCommitish"]==expected_sha
+
           names={a["name"] for a in assets}
           expected={
               "acra-burp-extension-0.3.0.jar",
@@ -97,6 +113,7 @@ jobs:
           }
           missing=expected-names
           assert not missing, f"missing release assets: {sorted(missing)}"
+
           print("SPRINT15_PUBLISHED_RELEASE_VERIFY PASS")
           print("release_url="+release["url"])
           PY
