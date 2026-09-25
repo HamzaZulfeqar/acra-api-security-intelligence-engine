@@ -29,6 +29,7 @@
 | EXP-S13-POLICY-GEN-001 | Configurable policy semantics with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-POLICY-EVAL-FEATURES + GT-S13-POLICY-EVAL-LABELS | G1 TP=8/TN=16/FP=0/FN=0, P=1/R=1/F1=1 on 24-case internal configured-policy evaluation; locked A7 FP=12 |
 | EXP-S13-BASERATE-001 | Adversarial negative-heavy policy/base-rate stress | COMPLETED_CONTROLLED_STRESS | GT-S13-BASERATE-FEATURES + GT-S13-BASERATE-LABELS | 96 cases, 8.33% prevalence; G1 TP=8/TN=49/FP=39/FN=0, P=.170213/R=1/F1=.290909; explicit-policy controls 0 FP, policy-degraded controls dominate FP |
 | EXP-S13-GOVERNANCE-001 | Policy reliability and uncertainty governance with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-GOV-EVAL-FEATURES + GT-S13-GOV-EVAL-LABELS | 64/64 dispositions; actionable TP=8/TN=48/FP=0/FN=8, P=1/R=.5; escalation coverage=1.0; silent positives=0 |
+| EXP-S13-XFRAME-001 | Framework-shaped serialization normalization with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-XFRAME-EVAL-FEATURES + GT-S13-XFRAME-EVAL-LABELS | raw dimension=60/64 and disposition=32/64; normalized dimension=64/64 and disposition=64/64; snapshot representations only |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -207,3 +208,28 @@ states. Thus candidate recall and escalation coverage are intentionally differen
 The result demonstrates only the controlled governance contract: degraded policy evidence can be separated from
 actionable vulnerability findings without silently dropping positives in this synthetic corpus. It does not establish
 real-world analyst workload, production accuracy, automatic policy-health detection or cross-framework generalization.
+
+
+## Sprint 13 Phase 6A cross-framework-shaped normalization — 2026-09-25
+
+Development workflow `36173526384` succeeded after adding the framework-neutral normalization boundary. The normalizer
+was frozen at `4011b9c05b99b14da66733aea47de43256060990`.
+
+Untouched evaluation workflow `36173838561` succeeded at
+`f3180a1877aaffd224a6d3a2734ddc25bf28c24b`.
+
+Evaluation result:
+- raw dimension: 60/64;
+- raw governed disposition: 32/64;
+- normalized dimension: 64/64;
+- normalized governed disposition: 64/64.
+
+Per framework style:
+- FastAPI-shaped: raw 16/16 dimension + 16/16 disposition; normalized 16/16 + 16/16;
+- Flask-shaped: raw 16/16 + 16/16; normalized 16/16 + 16/16;
+- Express-shaped: raw 14/16 + 0/16; normalized 16/16 + 16/16;
+- Spring-shaped: raw 14/16 + 0/16; normalized 16/16 + 16/16.
+
+This experiment validates only the tested request/response serialization representations. It does not establish actual
+framework runtime behavior, middleware/router behavior or framework-version compatibility. Phase 6B remains required for
+real local framework runtime validation.
