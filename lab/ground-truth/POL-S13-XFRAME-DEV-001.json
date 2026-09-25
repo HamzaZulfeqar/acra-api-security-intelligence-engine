@@ -1,0 +1,783 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-XFRAME-DEV-001",
+  "purpose": "Sprint 13 Phase 6A cross-framework-shaped development registry",
+  "policies": [
+    {
+      "policyId": "XDEV-FASTAPI-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/fastapi/assets/asset-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FASTAPI-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/fastapi/workspaces/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FASTAPI-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/fastapi/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FASTAPI-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/fastapi/workflows/release/resources/release-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FASTAPI-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/+fastapi/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FASTAPI-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xdev/fastapi/accounts/alice/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XDEV-FASTAPI-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/fastapi/assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FASTAPI-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/fastapi/references/ref-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "fastapi-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/flask/assets/asset-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/flask/workspaces/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/flask/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/flask/workflows/release/resources/release-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/+flask/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xdev/flask/accounts/alice/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/flask/assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-FLASK-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/flask/references/ref-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "flask-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/express/assets/asset-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/express/workspaces/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/express/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/express/workflows/release/resources/release-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/+express/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xdev/express/accounts/alice/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/express/assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-EXPRESS-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/express/references/ref-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "express-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/spring/assets/asset-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/spring/workspaces/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/spring/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/spring/workflows/release/resources/release-1/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/+spring/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "cloud-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/xdev/spring/accounts/alice/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/xdev/spring/assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "XDEV-SPRING-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/xdev/spring/references/ref-blue$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6A-dev-1",
+        "sourceRevision": "spring-dev-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    }
+  ]
+}
