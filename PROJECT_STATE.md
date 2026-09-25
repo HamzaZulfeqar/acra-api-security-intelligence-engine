@@ -2,51 +2,64 @@
 
 ## Current state — 2026-09-25
 
-**Current research boundary:** Sprint 13 — Held-Out External Validity and Generalization.  
-**Decision:** S13 PHASE 1 HELD-OUT EVALUATION COMPLETE; PHASE 2 NEXT.  
-**Working branch:** `s13-heldout-external-validity`.  
-**Locked Sprint 12 base:** `bd944e83a6edefafba56caebaa35e89fc107c282`.  
-**Measured Phase 1 head:** `e515a31d91d775d5f0f35c32a48507455f84992d`.  
-**Successful workflow:** GitHub Actions `36143281129` — SUCCESS.  
-**Held-out corpus:** 16 cases, 8 positive, 8 hard-negative, 8 registered dimensions.  
-**Prediction rows:** 128 = 16 cases × 8 locked variants.  
-**Blind-label gate:** PASS — label file absent during both prediction passes.  
-**Repeatability:** PASS — prediction and evaluation artifacts byte-identical across repeated execution.  
-**Oracle validation:** PASS — secure/vulnerable expected decisions verified for all 16 cases.  
+**Current research boundary:** Sprint 13 — Automatic Authorization-Dimension Discovery.  
+**Decision:** S13 PHASE 2 COMPLETE; POLICY GENERALIZATION NEXT.  
+**Working branch:** `s13-dimension-discovery`.  
+**Phase 1 immutable base:** `30acba767e4ce969909f1d018b23535e9c12b582`.  
+**Measured Phase 2 head:** `3f4b4238efe514b7ef1fe65b2cd477233c54fa73`.  
+**Successful workflow:** GitHub Actions `36145805521` — SUCCESS.  
+**Dimension-free corpus:** 32 cases.  
+**Sealed labels:** 32 cases.  
+**Blind-label gate:** PASS — dimension/vulnerability label file absent during both prediction passes.  
+**Dimension inferences:** 32.  
+**Downstream predictions:** 256 = 32 cases × 8 A0-A7 variants.  
+**Repeatability:** PASS.  
 **Product compilation:** Maven BUILD SUCCESS.  
-**Automatic dimension discovery:** NOT MEASURED — Sprint 13 Phase 2.  
 **Real Burp desktop runtime/publication:** UNVERIFIED / DEFERRED.  
 **External authorized-target validation:** NOT PERFORMED.
 
-### Sprint 13 Phase 1 measured held-out results
+### Sprint 13 Phase 2 measured dimension-discovery results
 
-| Variant | TP | TN | FP | FN | Precision | Recall | F1 |
+| Dataset | Correct | Accuracy | Macro-F1 |
+|---|---:|---:|---:|
+| Sprint 12 calibration | 15/16 | .937500 | .933333 |
+| Sprint 13 holdout | 16/16 | 1.000000 | 1.000000 |
+| Combined | 31/32 | .968750 | .968254 |
+
+Confidence distribution: 30 HIGH, 2 MEDIUM.
+
+The retained mismatch is the canonical Sprint 12 routing control `/api/v1/s8/admin`, inferred as
+`RBAC_AUTHORIZATION` because the observable response exposes an explicit required-role signal while the canonical
+path itself contains no routing anomaly.
+
+### Downstream A7 with inferred dimensions only
+
+| Dataset | TP | TN | FP | FN | Precision | Recall | F1 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| A0 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 |
-| A1 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 |
-| A2 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
-| A3 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
-| A4 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
-| A5 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
-| A6 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
-| A7 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+| Sprint 12 calibration | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+| Sprint 13 holdout | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
 
-The five A7 false positives are retained as generalization evidence: legitimate platform-wide tenant administration,
-a new security-admin role, a valid DRAFT→PENDING requester transition, legitimate security-admin equivalent-route
-access, and an allowed `nickname` property.
+Phase 2 removes the supplied `dimension` dependency for the measured fixtures without changing their prior A7 binary
+results. The five Phase 1 false positives therefore remain a separate policy-generalization problem.
 
-No detector tuning is permitted inside this frozen Phase 1 result. The next work is Sprint 13 Phase 2 automatic
-authorization-dimension discovery.
+**Next work:** Sprint 13 Phase 3 — policy-generalization redesign using explicit/configurable policy semantics and a new
+untouched evaluation corpus. The Phase 1 holdout and Phase 2 dimension corpus remain frozen evidence and must not be
+used as tuning targets.
 
-Canonical Sprint 13 Phase 1 details:
-- `docs/sprints/sprint-13.md`
-- `docs/research/sprint-13-heldout-protocol.md`
-- `lab/ground-truth/GT-S13-HOLDOUT-FEATURES.json`
-- `lab/ground-truth/GT-S13-HOLDOUT-LABELS.json`
-- `scripts/run-sprint13-heldout.py`
-- `scripts/verify-sprint13-heldout.py`
-- `scripts/verify-sprint13-heldout.sh`
-- `.github/workflows/sprint13-heldout.yml`
+Canonical Phase 2 details:
+- `docs/research/sprint-13-dimension-discovery-protocol.md`
+- `lab/ground-truth/GT-S13-DIMENSION-FEATURES.json`
+- `lab/ground-truth/GT-S13-DIMENSION-LABELS.json`
+- `scripts/sprint13_dimension_inference.py`
+- `scripts/run-sprint13-dimension-discovery.py`
+- `scripts/verify-sprint13-dimension-discovery.py`
+- `scripts/verify-sprint13-dimension-discovery.sh`
+- `.github/workflows/sprint13-dimension-discovery.yml`
+
+## Previous Sprint 13 Phase 1 state
+
+Phase 1 held-out evaluation remains frozen at GitHub Actions run `36143281129`: A7 measured
+TP=8/TN=3/FP=5/FN=0, precision=.615385, recall=1, F1=.761905 on the 16-case synthetic holdout.
 
 ## Previous Sprint 12 research state
 
