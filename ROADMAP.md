@@ -2,6 +2,22 @@
 
 ## Current gate — 2026-09-25
 
+Sprint 12 — **Reproduction & Interoperability Exports — IN PROGRESS** on
+`s12-reproduction-interoperability-exports`.
+
+Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36122252879`.
+
+Current Sprint 12 boundary:
+
+- deterministic review-only reproduction package: VERIFIED;
+- canonical JSON + SHA-256: VERIFIED;
+- raw principal replaced by fingerprint: VERIFIED;
+- candidate rationale structurally omitted: VERIFIED;
+- candidate state / severity / confidence kept separate: VERIFIED;
+- SARIF: NOT YET IMPLEMENTED;
+- Burp Issue adapter: NOT YET IMPLEMENTED;
+- real Burp desktop runtime: UNVERIFIED / DEFERRED.
+
 Sprint 11 — **Research Evaluation & Ablation — SOFTWARE COMPLETE** on
 `s11-research-evaluation-ablation`.
 
@@ -25,7 +41,7 @@ Current evidence boundary:
 Sprint 10 remains the frozen previous SOFTWARE COMPLETE release base at
 `59022c4a25718f38ea7ec2f010911344d1aa0698`.
 
-No next sprint is started by this closure. Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
+Sprint 12 was subsequently started from the verified Sprint 11 closure head after a requirements-gap review. Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
 
 ---
 

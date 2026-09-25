@@ -148,3 +148,17 @@ RB-0 remains authoritative. Sprint 1 adds stable implementation requirements wit
 - **RES-014** No A0–A7 metric may be recorded as an actual result before corresponding controlled execution evidence exists.
 - **RES-015** Controlled-dataset results shall not be generalized to real-world scanner accuracy or novelty without separate evidence.
 
+
+## Sprint 12 reproduction / interoperability requirements
+
+- **FR-064** A versioned reproduction package shall be generated from existing finding/report evidence without creating a new vulnerability verdict.
+- **FR-065** Reproduction packages shall preserve candidate state, severity, confidence, endpoint/resource context, assessment/evidence/policy lineage and deterministic finding identity.
+- **FR-066** Raw principal identifiers shall be excluded from normal reproduction exports by default and replaced with deterministic fingerprints where correlation is required.
+- **FR-067** SARIF export shall conform to SARIF 2.1.0 structure and preserve ACRA review-only candidate semantics rather than implying confirmed exploitation.
+- **FR-068** Burp Issue integration shall be implemented only in the Montoya adapter layer; `acra-core` shall remain free of Burp/Montoya dependencies.
+- **FR-069** REJECTED and INCONCLUSIVE reproduction packages shall not be eligible for Burp Issue creation.
+- **NFR-013** JSON, SARIF and Burp Issue projections shall be deterministic for identical reproduction-package state.
+- **SEC-014** Reproduction exports shall structurally omit candidate rationale/raw contradictory narrative where unnecessary and apply universal redaction as a secondary control.
+- **SEC-015** SARIF and Burp Issue projections shall not persist raw bearer/session/API-key credential material.
+- **RES-016** Interoperability verification shall distinguish standards/schema compatibility from real Burp desktop runtime validation.
+

@@ -2,6 +2,30 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 12 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+
+Canonical Sprint 12 evidence:
+- branch: `s12-reproduction-interoperability-exports`;
+- immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`;
+- Phase 1 run: `36122252879` — SUCCESS at `46a43350d5357f78f0756b6ce20329ef750e0cfb`;
+- reproduction package foundation: PASS, 30 assertions;
+- canonical JSON reproduction export: PASS;
+- review-only candidate boundary: PASS;
+- raw principal hashing / rationale omission / secret redaction: PASS;
+- retained Sprint 6–11 reporting/export regressions: PASS;
+- SARIF export: NOT YET IMPLEMENTED;
+- Burp Issue adapter: NOT YET IMPLEMENTED;
+- real Burp desktop runtime: UNVERIFIED / DEFERRED.
+
+Next dependency-ordered milestone:
+1. implement standards-conformant SARIF 2.1.0 export from the canonical reproduction package;
+2. keep candidate != confirmed-vulnerability semantics explicit in SARIF properties;
+3. map severity separately from confidence;
+4. preserve endpoint/evidence/fingerprint provenance without raw secrets;
+5. verify deterministic SARIF and schema-critical required fields before Burp Issue integration.
+
+## Previous release boundary — Sprint 11
+
 **Sprint 11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.**
 
 Canonical Sprint 11 evidence:

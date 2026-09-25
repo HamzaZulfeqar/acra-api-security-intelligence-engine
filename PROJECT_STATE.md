@@ -2,9 +2,14 @@
 
 ## Current state — 2026-09-25
 
-**Current release boundary:** Sprint 11 — Research Evaluation & Ablation — SOFTWARE COMPLETE.  
-**Decision:** S11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.  
-**Working branch:** `s11-research-evaluation-ablation`.  
+**Current sprint:** Sprint 12 — Reproduction & Interoperability Exports (in progress).  
+**Decision:** S12 PHASE 1 VERIFIED COMPLETE; deterministic review-only reproduction package + canonical JSON verified.  
+**Working branch:** `s12-reproduction-interoperability-exports`.  
+**Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
+**Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 11 post-closure final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
+**Sprint 11 final-status checkpoint SHA-256:** `ea3d65bb5d89d5986328fe91330689f865716766074428291403589180edc30f`.  
+**Sprint 12 Phase 1 verification:** GitHub Actions run `36122252879` — SUCCESS at source commit `46a43350d5357f78f0756b6ce20329ef750e0cfb`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -35,6 +40,30 @@
 **Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
 **Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
 **Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
+
+### Sprint 12 verified progress
+
+Phase 1 deterministic reproduction-package foundation is **VERIFIED COMPLETE**:
+
+- versioned `acra-reproduction-package-v1` core contract;
+- source is existing `FindingCandidate` + `AuthorizationReport`, not a new finding verdict;
+- candidate state, severity and confidence remain independent;
+- every package is explicitly `reviewOnly = true`;
+- only `CANDIDATE` state is `issueEligible`; REJECTED and INCONCLUSIVE remain non-issue states;
+- raw principal is replaced by SHA-256 fingerprint;
+- candidate rationale and contradictory narrative are structurally excluded from the package;
+- assessment/evidence/policy lineage is retained;
+- cross-project/state/dimension/assessment/evidence mismatches fail closed;
+- package ID/fingerprint and JSON export are deterministic;
+- canonical JSON export has stable SHA-256;
+- Reporter plugin adapter `reproduction-json-v1` is verified;
+- retained Sprint 6–11 reporting/export suites remain green.
+
+Phase 1 verification: GitHub Actions run `36122252879` — SUCCESS at
+`46a43350d5357f78f0756b6ce20329ef750e0cfb`.
+
+Sprint 12 does **not** yet claim SARIF export or actual Burp Issue creation. Those are separate later phases.
+Real Burp desktop runtime remains **UNVERIFIED / DEFERRED**.
 
 ### Sprint 11 final closure
 
