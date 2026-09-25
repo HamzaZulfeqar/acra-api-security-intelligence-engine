@@ -2,41 +2,72 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 Phase 3 CONFIGURABLE POLICY GENERALIZATION COMPLETE.**
+**Sprint 13 Phase 4 ADVERSARIAL / BASE-RATE STRESS COMPLETE.**
 
-Canonical Phase 3 evidence:
-- branch: `s13-policy-generalization`;
-- Phase 2 immutable base: `2d030735401e336292ec5d18d7e01702c1e70039`;
-- successful development workflow: `36148740338`;
-- algorithm freeze: `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`;
-- untouched evaluation workflow: `36149071484`;
-- measured evaluation head: `82ae165b702d18b0eae872d51f8f695f723fec13`;
-- evaluation corpus: 24 cases / 8 positive / 16 legitimate controls;
-- automatic dimension inference: 24/24;
-- explicit policy decisions: 24/24;
-- UNKNOWN policy decisions: 0;
-- frozen algorithm diff gate: PASS;
-- sealed-label absence during both prediction passes: PASS;
-- repeatability: PASS;
+Canonical evidence:
+- branch: `s13-adversarial-base-rate`;
+- Phase 3 completion base: `53e1995b22c29f1a4672cf16ffa420f5cf74fde0`;
+- frozen decision algorithms: `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`;
+- successful workflow: `36168752869`;
+- measured head: `ed1601542739cce20be48c001ae4e663bfdcf890`;
+- corpus: 96 cases / 8 positive / 88 negative / 8.333333% prevalence;
+- dimension inference: 96/96;
+- Phase 3 evidence lock: PASS;
+- algorithm-freeze gate: PASS;
+- policy-registry robustness: PASS;
+- label-absence gate: PASS;
+- two-run repeatability: PASS;
 - Maven package: BUILD SUCCESS.
 
-Untouched evaluation:
-- locked A7: TP=8 / TN=4 / FP=12 / FN=0, P=.4 / R=1 / F1=.571429;
-- policy-generalized G1: TP=8 / TN=16 / FP=0 / FN=0, P=1 / R=1 / F1=1.
+Measured G1 stress result:
+- TP=8 / TN=49 / FP=39 / FN=0;
+- precision=.170213;
+- recall=1.000000;
+- specificity=.556818;
+- FPR=.443182;
+- F1=.290909;
+- MCC=.307860.
 
-Interpretation:
-- explicit configured policy semantics removed the measured false positives on this internal synthetic corpus;
-- automatic dimension discovery remained intact;
-- this does not prove automatic policy extraction or production accuracy;
-- the evaluation result is frozen and cannot be reused as a tuning target.
+False-positive concentration:
+- EXPLICIT_ALLOW: 0/40;
+- NO_POLICY: 12/16;
+- AMBIGUOUS_POLICY: 12/16;
+- STALE_POLICY: 8/8;
+- INCOMPLETE_CONTEXT: 7/8.
 
-**Next gate:** Sprint 13 Phase 4 — larger, less-balanced and adversarial negative populations with realistic base-rate
-stress and explicit prevalence-sensitive precision reporting.
+The measured dependency is now explicit: configured-policy semantics work when policy is healthy, but current UNKNOWN
+fallback / stale-policy handling creates excessive alert noise when policy quality degrades.
+
+**Next gate — Sprint 13 Phase 5: Policy Reliability & Uncertainty Governance**
+
+Required direction:
+- explicit `POLICY_GAP` state for no matching policy;
+- explicit `AMBIGUOUS_POLICY` state;
+- explicit stale/version-drift state;
+- explicit incomplete-context state;
+- separate `INCONCLUSIVE` from vulnerability `CANDIDATE`;
+- policy-health score/status in evidence;
+- do not promote UNKNOWN policy to a vulnerability candidate solely via locked-A7 fallback;
+- preserve raw evidence and allow human review;
+- new development corpus + new untouched evaluation corpus;
+- Phase 4 corpus remains frozen evidence and cannot become a tuning target.
+
+Cross-framework fixture validation moves after this uncertainty-governance dependency is addressed.
 
 See:
 - `sprint-13.md`;
-- `../research/sprint-13-policy-generalization-protocol.md`;
+- `../research/sprint-13-adversarial-base-rate-protocol.md`;
 - `../research/EXPERIMENT_REGISTRY.md`.
+
+## Previous gate — Sprint 13 Phase 3
+
+**Sprint 13 Phase 3 CONFIGURABLE POLICY GENERALIZATION COMPLETE.**
+
+Canonical Phase 3 evaluation:
+- workflow: `36149071484`;
+- 24 cases / 8 positive / 16 negative;
+- G1 TP=8/TN=16/FP=0/FN=0;
+- configured-policy result remains frozen internal evidence.
 
 ## Previous gate — Sprint 13 Phase 2
 
