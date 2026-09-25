@@ -1,6 +1,6 @@
 # Sprint 13 — Finding Lifecycle Governance
 
-Status: **IN PROGRESS — Phases 1–4 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–5 VERIFIED**  
 Branch: `s13-finding-lifecycle-governance`  
 Immutable Sprint 12 base: `9ced79ba0986ce90884b745342769e88c38a68c2`
 
@@ -202,12 +202,65 @@ Verified:
 
 Phase 4 is **VERIFIED COMPLETE**.
 
+## Phase 5 — security hardening and bounded engineering observations
+
+Security-hardening coverage:
+
+- secret-bearing reviewer references rejected;
+- secret-bearing decision references rejected;
+- secret-bearing lifecycle evidence references rejected;
+- evidence-free transition requests rejected;
+- CRITICAL prioritization remains REVIEW_REQUIRED until explicit reviewed confirmation;
+- invalid transition paths fail closed;
+- stale governed-finding fingerprints fail closed;
+- candidate-fingerprint drift fails closed;
+- risk-assessment drift fails closed;
+- false-positive closure remains historically unconfirmed;
+- closed findings cannot silently reopen;
+- report/export cannot mutate governed-finding state;
+- report schema excludes raw candidate principal and rationale fields;
+- report summary queue-denominator mismatches fail closed;
+- Reporter rejects invalid model input.
+
+Bounded engineering observations cover 100 / 1,000 / 10,000 REVIEW_REQUIRED governed findings across:
+
+- workspace population;
+- immutable snapshot creation;
+- deterministic governance report generation.
+
+### Phase 5 verification
+
+GitHub Actions run `36080369571`: **SUCCESS** at source commit
+`3ba4f96f8fbf43b0e025a280cd8763fd28d6f75a`.
+
+Verified evidence:
+
+- `Sprint13GovernanceSecurityHardeningTestSuite`: PASS, 25 assertions;
+- `Sprint13GovernancePerformanceObservationTestSuite`: PASS, 19 assertions;
+- governance reporting regression: PASS, 37 assertions;
+- governance UI regression: PASS, 66 assertions;
+- lifecycle foundation: PASS, 41 assertions;
+- governance workspace: PASS, 25 assertions;
+- exact Java 21 compilation with warnings as errors: PASS;
+- Maven core `test-compile`: PASS;
+- Core / Sprint 2 / Sprint 3 workflows: PASS at exact Phase 5 head;
+- report artifacts + `performance-s13.csv`: uploaded by Sprint 13 workflow.
+
+Observed CI values:
+
+| Governed findings | Population | Snapshot | Report | Approx JVM memory delta |
+|---:|---:|---:|---:|---:|
+| 100 | 144 ms | 3 ms | 56 ms | 8,642,448 bytes |
+| 1,000 | 193 ms | 0 ms | 31 ms | 14,033,624 bytes |
+| 10,000 | 891 ms | 5 ms | 283 ms | 11,939,608 bytes |
+
+These values are environment-specific engineering observations from one CI run. They are not benchmarks, SLOs,
+scanner-accuracy evidence, production capacity guarantees or real-world workload claims.
+
+Phase 5 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 5 must add security/reproducibility hardening and bounded engineering observations:
-
-1. lifecycle/report secret-bearing metadata rejection;
-2. workspace stale/drift/identity collision hardening regressions;
-3. report non-mutation and confirmation-history invariants under adversarial cases;
-4. bounded 100 / 1,000 / 10,000 governed-finding workspace/report observations;
-5. no benchmark/SLO or real-world capacity claims.
+Remaining Sprint 13 work is final requirements traceability, retained release/regression verification,
+deterministic source packaging and final software audit. Real Burp desktop runtime/publication remains a separate
+**UNVERIFIED / DEFERRED** validation lane.

@@ -168,6 +168,30 @@ Phase 4 verification: source run `36079738535` — SUCCESS at
 `55d76ad0ff3f3536e5e76c9eefa8f3f6c1b00f04`.
 Artifact retention: run `36079852878` — SUCCESS.
 
-## Phase 5 dependency
+## Phase 5 hardening / bounded-observation boundary
 
-Adversarial security/reproducibility tests and bounded engineering observations must precede Sprint 13 final closure.
+Phase 5 adds adversarial validation and engineering observations without changing lifecycle authority.
+
+Hardening invariants:
+
+1. Reviewer, decision and lifecycle-evidence references reject recognized secret-bearing material.
+2. Evidence is mandatory for lifecycle transitions.
+3. Severity/confidence cannot bypass REVIEW_REQUIRED.
+4. Invalid transitions, stale snapshots, candidate drift and risk-assessment drift fail closed.
+5. False-positive closure never becomes historically confirmed.
+6. CLOSED findings cannot silently reopen.
+7. Report/export cannot mutate governed-finding identity, history or fingerprint.
+8. Report schema omits raw candidate principal and rationale fields.
+9. Invalid report queue denominators fail closed.
+
+Bounded observations exercise 100, 1,000 and 10,000 REVIEW_REQUIRED governed findings across workspace population,
+snapshot generation and deterministic report generation. The collected timings and approximate memory deltas are
+diagnostic observations only; they are not benchmarks, SLOs or production-capacity evidence.
+
+Phase 5 verification: GitHub Actions run `36080369571` — SUCCESS at
+`3ba4f96f8fbf43b0e025a280cd8763fd28d6f75a`.
+
+## Final closure dependency
+
+Sprint 13 requires requirements traceability, retained regression, deterministic source packaging and a final
+software audit before SOFTWARE COMPLETE can be claimed.

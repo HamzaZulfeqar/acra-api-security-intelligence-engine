@@ -2,32 +2,40 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 IN PROGRESS — Phases 1–4 VERIFIED COMPLETE.**
+**Sprint 13 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
 
 Canonical Sprint 13 evidence:
 - branch: `s13-finding-lifecycle-governance`;
 - immutable Sprint 12 base: `9ced79ba0986ce90884b745342769e88c38a68c2`;
 - Sprint 12 post-documentation final closure: `36076372089` — SUCCESS;
 - Sprint 12 final-status ZIP SHA-256: `5787e12f42f368f40017a15d5b22fd6653cf20ad7463d4f690c844d7c5538c21`;
-- Phase 1 verification: `36077162629` — SUCCESS at `e2f4019f85270bab3498521a080b8e9ea59cf347`;
-- finding lifecycle foundation: PASS, 41 assertions;
+- Phase 1: `36077162629` — SUCCESS, lifecycle foundation 41 assertions;
+- Phase 2: `36077517602` — SUCCESS, governance workspace 25 assertions;
+- Phase 3: `36079250303` — SUCCESS, read-only governance UI 55 assertions;
+- Phase 4: `36079738535` — SUCCESS, reporting 37 assertions / UI 66 assertions;
+- Phase 4 evidence retention: `36079852878` — SUCCESS;
+- Phase 5: `36080369571` — SUCCESS at `3ba4f96f8fbf43b0e025a280cd8763fd28d6f75a`;
+- Phase 5 hardening: PASS, 25 assertions;
+- Phase 5 bounded observations: PASS, 19 assertions;
 - automatic confirmation: FORBIDDEN;
-- initial state: REVIEW_REQUIRED;
-- human-reviewed confirmation/event evidence: REQUIRED.
+- lifecycle UI/report side-effect transitions: NONE;
+- real Burp desktop runtime/publication: UNVERIFIED / DEFERRED.
 
-Verified Phase 3:
-- Finding Governance top-level UI: PASS;
-- seven read-only governance/history views: PASS;
-- critical severity != confirmation: PASS;
-- no lifecycle/publication action controls: PASS;
-- UI suite: PASS, 55 assertions.
+Verified Phase 5 observations:
+- 100 findings: population 144 ms / snapshot 3 ms / report 56 ms;
+- 1,000 findings: population 193 ms / snapshot 0 ms / report 31 ms;
+- 10,000 findings: population 891 ms / snapshot 5 ms / report 283 ms.
+
+These are engineering observations only, not benchmarks or SLOs.
 
 Next dependency-ordered milestone:
-1. generate a deterministic governance report from the immutable snapshot;
-2. export canonical JSON + Markdown with stable SHA-256;
-3. project complete lifecycle event history and evidence references;
-4. preserve confirmed-history accounting independently from current terminal state;
-5. expose report views without adding lifecycle or publication side effects.
+1. freeze Sprint 13 requirements traceability;
+2. run full Sprint 13 plus retained Sprint 12/11/10/9/8/7/6 release foundations;
+3. produce official Maven package;
+4. run retained Sprint 2 / Sprint 3 regressions and governance/reproduction UI regressions;
+5. generate deterministic Sprint 13 source checkpoint;
+6. validate archive safe paths, duplicate absence, clean extraction and per-file SHA-256 equality;
+7. publish final Sprint 13 software audit while keeping real Burp desktop runtime/publication separately unverified.
 
 ## Previous release boundary — Sprint 12
 

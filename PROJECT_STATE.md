@@ -3,7 +3,7 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 13 — Finding Lifecycle Governance (in progress).  
-**Decision:** S13 PHASES 1–4 VERIFIED COMPLETE; lifecycle governance + read-only UI + deterministic reporting verified.  
+**Decision:** S13 PHASES 1–5 VERIFIED COMPLETE; lifecycle/report hardening and bounded engineering observations verified.  
 **Working branch:** `s13-finding-lifecycle-governance`.  
 **Immutable Sprint 12 base:** `9ced79ba0986ce90884b745342769e88c38a68c2`.  
 **Sprint 12:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -14,6 +14,8 @@
 **Sprint 13 Phase 3 verification:** GitHub Actions run `36079250303` — SUCCESS at source commit `b109b58c0a6ac7de032035e55ae57daffe6a84f6`.  
 **Sprint 13 Phase 4 verification:** GitHub Actions run `36079738535` — SUCCESS at source commit `55d76ad0ff3f3536e5e76c9eefa8f3f6c1b00f04`.  
 **Sprint 13 Phase 4 evidence retention:** GitHub Actions run `36079852878` — SUCCESS at commit `920d4dffde757e11009957990fa08930af0531e7`.  
+**Sprint 13 Phase 5 verification:** GitHub Actions run `36080369571` — SUCCESS at source commit `3ba4f96f8fbf43b0e025a280cd8763fd28d6f75a`.  
+**Sprint 13 Phase 5 retained Core/S2/S3:** SUCCESS at the exact Phase 5 head.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-documentation final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
@@ -117,8 +119,33 @@ Sprint 13 Phase 4 deterministic governance reporting is **VERIFIED COMPLETE**:
 - exact source head Core / Sprint 2 / Sprint 3 workflows: PASS;
 - canonical JSON / SHA-256 / Markdown evidence archived by run `36079852878`.
 
-The next dependency is lifecycle/report security hardening plus bounded workspace/report performance observations
-before final traceability and reproducible closure. Real Burp desktop publication remains UNVERIFIED / DEFERRED.
+Sprint 13 Phase 5 security/reproducibility hardening and bounded engineering observations is **VERIFIED COMPLETE**:
+
+- secret-bearing reviewer, decision and lifecycle-evidence references fail closed;
+- transitions without evidence fail closed;
+- CRITICAL severity remains REVIEW_REQUIRED until explicit human confirmation;
+- invalid transition skips, stale fingerprints, candidate-fingerprint drift and risk-assessment drift fail closed;
+- false-positive closure remains historically unconfirmed and cannot silently reopen;
+- report/export cannot mutate governed-finding fingerprints or lifecycle history;
+- governance report excludes raw candidate principal/rationale schema;
+- report summary denominator inconsistencies fail closed;
+- Reporter rejects invalid report models;
+- governance security-hardening suite: PASS, 25 assertions;
+- bounded 100 / 1,000 / 10,000 governance workspace/report observations: PASS, 19 assertions;
+- performance CSV archived with report evidence;
+- exact Phase 5 Core / Sprint 2 / Sprint 3 workflows: PASS.
+
+Observed CI values from run `36080369571`:
+
+- 100 findings: population 144 ms, snapshot 3 ms, report 56 ms, approx memory delta 8,642,448 bytes;
+- 1,000 findings: population 193 ms, snapshot 0 ms, report 31 ms, approx memory delta 14,033,624 bytes;
+- 10,000 findings: population 891 ms, snapshot 5 ms, report 283 ms, approx memory delta 11,939,608 bytes.
+
+These are one-run engineering observations only. They are not benchmarks, SLOs, scanner-accuracy evidence, production
+capacity guarantees or real-world workload claims.
+
+The next dependency is final Sprint 13 requirements traceability, retained regression, reproducible packaging and
+software audit. Real Burp desktop publication remains UNVERIFIED / DEFERRED.
 
 ### Sprint 12 verified progress
 
