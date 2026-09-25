@@ -3,6 +3,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+git config core.fileMode false
 chmod +x ./scripts/*.sh
 
 echo "=== Sprint 14 retained executable regression chain ==="
