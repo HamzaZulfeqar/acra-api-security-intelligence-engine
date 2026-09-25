@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+      - s14-productization-release-hardening
   pull_request:
     branches:
       - main
