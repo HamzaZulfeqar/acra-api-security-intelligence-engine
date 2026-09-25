@@ -280,8 +280,8 @@ Development evidence:
 
 The implementation was frozen at `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`.
 
-Post-freeze evaluation workflow `36180110271` succeeded at
-`b1cf0336c530a3678de64aee699067a4793e3857` using a separately created localhost fixture and sealed labels.
+Post-freeze evaluation workflow `36180569483` succeeded at
+`e24a91297bf33bfe18a47453e8c191432b496b20` using a separately created localhost fixture and sealed labels.
 
 Both independent evaluation passes measured:
 - INIT=1;
@@ -294,7 +294,7 @@ Both independent evaluation passes measured:
 - label absence during traffic passes=PASS;
 - secret-exclusion=PASS.
 
-Normalized semantic evaluation artifacts were identical across both passes.
+Normalized semantic evaluation artifacts were identical across both passes. The final strengthened gate also verified the packaged Findings & Reproduction review surface, publication-eligibility guard, absence of automatic Burp issue-publication wiring, and disabled active execution default.
 
 This experiment establishes controlled real Burp/Montoya runtime integration only. It does not establish production
 scanner accuracy, arbitrary Burp-version compatibility, external-target effectiveness or independent replication.
