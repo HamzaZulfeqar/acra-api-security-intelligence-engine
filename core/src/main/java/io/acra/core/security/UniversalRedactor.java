@@ -46,7 +46,7 @@ public final class UniversalRedactor {
     );
 
     private static final Pattern HEADER_TEXT = Pattern.compile(
-        "(?im)((?:^|\\r?\\n)\\s*(?:authorization|proxy[-_]authorization|cookie|set[-_]cookie|x[-_]api[-_]key|api[-_]key|x[-_]auth[-_]token|x[-_]api[-_]token)\\s*[:=]\\s*)([^\\r\\n]+)"
+        "(?i)(\\b(?:authorization|proxy[-_]authorization|cookie|set[-_]cookie|x[-_]api[-_]key|api[-_]key|x[-_]auth[-_]token|x[-_]api[-_]token)\\s*[:=]\\s*)([^\\r\\n]+)"
     );
 
     private static final Pattern BEARER = Pattern.compile(
