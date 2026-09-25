@@ -1,14 +1,12 @@
 # ACRA Burp Extension Adapter
 
-Current repository candidate: `v0.3.0-rc1`.
+Current stable release: `v0.3.0`.
 
 The extension remains a thin adapter over `acra-core`. It observes HTTP traffic, maps it to ACRA transactions, runs passive context/reconnaissance intelligence and presents observation views. Core authorization logic must not be moved into Burp-specific classes.
 
-Sprint 3 source includes tabs for Overview, Traffic, Contexts, Endpoints, Parameters, Identities, Tenants, Resources, Routes, Context Graph and Configuration.
-
 ## Runtime status
 
-Real Burp Desktop / Montoya runtime validation is now verified under the controlled Sprint 13 Phase 7 boundary.
+Real Burp Desktop / Montoya runtime validation is verified under the controlled Sprint 13 Phase 7 boundary.
 
 Canonical strengthened evidence:
 - Burp Suite Community Edition 2026.7.3 JAR;
@@ -24,7 +22,8 @@ Canonical strengthened evidence:
 - no automatic issue-publication wiring: PASS.
 
 This is controlled headless localhost evidence, not arbitrary Burp-version compatibility or production/external-target
-validation. Visual/manual desktop UX inspection remains outside this automated evidence lane.
+validation.
 
-The Phase 7 evidence probe is opt-in and disabled in ordinary use. Active request execution remains disabled by default
-with the existing safety controls.
+The Phase 7 evidence probe is opt-in and disabled in ordinary use. Active request execution remains disabled by default.
+
+License: Apache-2.0. See the repository `LICENSE` and `NOTICE`.

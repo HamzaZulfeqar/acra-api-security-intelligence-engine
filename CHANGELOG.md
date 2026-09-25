@@ -3,6 +3,27 @@
 All notable ACRA changes are recorded here. Research metrics remain governed by the canonical experiment registry and
 final claim boundary rather than being generalized from changelog summaries.
 
+## [0.3.0] — 2026-09-26
+
+### Stable release promotion
+
+- Promoted the hardened `0.3.0-rc1` candidate to stable `0.3.0`.
+- Selected the Apache License, Version 2.0 (`Apache-2.0`).
+- Added full `LICENSE` and project `NOTICE` distribution files.
+- Added Maven license metadata.
+- Added stable release packaging, manifest, checksums and promotion verification.
+- Revalidated the retained executable regression chain and Maven build under the stable version.
+- Preserved the Sprint 13 frozen research boundary without adding external-target or production-accuracy claims.
+
+### Security/release boundary
+
+- Active execution remains disabled by default.
+- Candidate findings remain distinct from confirmed vulnerabilities.
+- Automatic Burp issue publication remains unwired.
+- External-target validation remained NOT PERFORMED before the research freeze.
+- GitHub-native Dependency Review remains unavailable while the repository Dependency Graph is disabled; the Sprint 15
+  direct-dependency contract and Maven dependency inventory remain part of promotion validation.
+
 ## [0.3.0-rc1] — 2026-09-26
 
 ### Release-candidate hardening
@@ -12,8 +33,7 @@ final claim boundary rather than being generalized from changelog summaries.
 - Added deterministic release-candidate packaging, checksums and manifest generation.
 - Added version-consistency and frozen-research integrity gates.
 - Added dedicated Sprint 14 release-hardening CI and release documentation.
-- Preserved version `0.3.0-rc1`; no version promotion has been claimed.
-- Public release remains blocked because no software license has been selected.
+- Preserved version `0.3.0-rc1` during Sprint 14.
 
 ### Research/runtime evidence inherited from frozen Sprint 13
 

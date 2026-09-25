@@ -7,31 +7,35 @@
     "releaseHardeningRunId": 36185936876,
     "securityRunId": 36185936941
   },
-  "state": "PREPARED_BLOCKED",
-  "publicReleaseAuthorized": false,
+  "state": "READY_FOR_PROMOTION",
+  "publicReleaseAuthorized": true,
+  "ownerApproval": {
+    "approvedAt": "2026-09-26",
+    "license": "Apache-2.0",
+    "targetVersion": "0.3.0",
+    "releaseType": "stable"
+  },
   "licenseDecision": {
-    "status": "UNRESOLVED",
-    "spdxIdentifier": null,
-    "note": "No software license has been explicitly selected."
+    "status": "SELECTED",
+    "spdxIdentifier": "Apache-2.0",
+    "name": "Apache License, Version 2.0",
+    "noticeFile": "NOTICE"
   },
   "versionDecision": {
-    "status": "UNRESOLVED",
-    "targetVersion": null,
+    "status": "SELECTED",
+    "targetVersion": "0.3.0",
     "allowedTargets": [
       "0.3.0-rc1",
       "0.3.0"
     ],
-    "note": "No explicit decision has been made to publish the RC as a prerelease or promote it to 0.3.0."
+    "note": "Owner approved stable promotion from 0.3.0-rc1 to 0.3.0."
   },
   "publication": {
-    "gitTag": null,
+    "gitTag": "v0.3.0",
     "githubRelease": null,
-    "releaseType": null
+    "releaseType": "stable"
   },
-  "blockers": [
-    "Explicit software-license selection required.",
-    "Explicit version-promotion decision required."
-  ],
+  "blockers": [],
   "immutableBoundaries": {
     "sprint13FrozenHead": "d6797222d31984a45fbc80674193d0388757b24c",
     "externalTargetValidation": "NOT_PERFORMED",
@@ -40,20 +44,20 @@
   "securityChecks": {
     "codeql": {
       "status": "PASS",
-      "workflowRunId": 36195804280
+      "workflowRunId": 36196539717
     },
     "gitleaks": {
       "status": "PASS",
-      "workflowRunId": 36195804280
+      "workflowRunId": 36196539717
     },
     "githubDependencyReview": {
       "status": "UNAVAILABLE",
-      "workflowRunId": 36195804280,
+      "workflowRunId": 36196539717,
       "reason": "GitHub Dependency Graph is not enabled for the repository; no vulnerability result was produced."
     },
     "localDependencyContract": {
       "status": "PASS",
-      "workflowRunId": 36195798931,
+      "workflowRunId": 36196536069,
       "coreDirectDependencies": 0,
       "extensionDirectDependencies": 2,
       "customRepositories": 0,

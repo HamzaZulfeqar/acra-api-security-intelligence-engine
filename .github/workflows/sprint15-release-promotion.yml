@@ -1,4 +1,4 @@
-name: Sprint 15 Release Promotion Preflight
+name: Sprint 15 Stable Release Promotion
 
 on:
   push:
@@ -13,34 +13,34 @@ permissions:
   contents: read
 
 concurrency:
-  group: sprint15-release-promotion-${{ github.ref }}
+  group: sprint15-stable-promotion-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  promotion-preflight:
+  promotion:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
           cache: maven
-
-      - name: Run promotion preflight
+      - name: Run stable promotion gate
         run: bash scripts/verify-sprint15-release-promotion.sh
-
-      - name: Upload revalidated release candidate
+      - name: Upload stable release assets
         uses: actions/upload-artifact@v4
         with:
-          name: acra-release-promotion-preflight
-          path: build/release/**
+          name: acra-0.3.0-stable-release
+          path: |
+            build/release/acra-0.3.0.zip
+            build/release/acra-0.3.0/acra-burp-extension-0.3.0.jar
+            build/release/release-manifest.json
+            build/release/SHA256SUMS
           if-no-files-found: error

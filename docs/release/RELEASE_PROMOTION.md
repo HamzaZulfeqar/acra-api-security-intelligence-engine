@@ -3,122 +3,65 @@
 **Stage:** Sprint 15 — Release Promotion  
 **Branch:** `s15-release-promotion`  
 **Source RC:** `0.3.0-rc1`  
-**Source hardening head:** `88f2a75f190f6e8853609db2dc9d73929434ad0d`
+**Target:** `0.3.0` stable  
+**License:** Apache-2.0
 
 ## Current state
 
-**PREPARED / BLOCKED — no public release has been authorized.**
+**READY_FOR_PROMOTION — owner-approved stable target and license selected.**
 
-Sprint 14 established a technically hardened release candidate. Release Promotion now governs the transition from that
-candidate to a Git tag / GitHub Release.
+The project owner explicitly approved:
+- Apache License, Version 2.0;
+- stable promotion from `0.3.0-rc1` to `0.3.0`;
+- public release promotion after all stable gates pass.
 
-Two explicit decisions are still required:
+## Promotion contract
 
-1. software license;
-2. version/publication target.
-
-No release tag or GitHub Release may be created until both are resolved.
-
-## Promotion choices
-
-### Version path A — publish the existing release candidate
-
-Keep:
-
-`0.3.0-rc1`
-
-and publish it as a GitHub **pre-release**.
-
-This preserves the current candidate identity and is appropriate when additional user/runtime feedback is still expected.
-
-### Version path B — promote to stable
-
-Promote:
-
-`0.3.0-rc1` → `0.3.0`
-
-This requires updating:
-- `VERSION`;
-- parent Maven version;
-- core parent version;
-- Burp-extension parent version;
-- release notes/changelog;
-- package/artifact names.
-
-The full Sprint 14 hardening/security gates must then be rerun against the stable-version commit.
-
-## License decision
-
-The repository currently grants no explicit software reuse/distribution license.
-
-Common choices for this type of project include:
-
-| License | Practical effect |
-|---|---|
-| Apache-2.0 | Permissive; includes an explicit patent grant and notice requirements. |
-| MIT | Very short permissive license; broad reuse with copyright/license notice preservation. |
-| GPL-3.0-or-later | Strong copyleft; redistributed derivative works generally must remain GPL-compatible/open under its terms. |
-
-The project owner must explicitly select the license. Sprint 15 will not infer one from project type.
-
-## Promotion gates
-
-Promotion to READY requires:
-
-- Sprint 14 release-hardening evidence remains valid;
-- Sprint 13 research remains frozen;
-- license decision is explicit and `LICENSE` contains the selected license;
-- version decision is explicit;
-- version contract is internally consistent;
-- release notes match the selected target;
-- CodeQL and Gitleaks pass on the promotion commit;
-- release bundle/checksums are regenerated from the promotion commit;
-- no unsupported external-target/production claims are introduced.
-
-## Publication boundary
-
-Even after release promotion, the frozen research claim boundary remains unchanged:
-
-- Phase 8 external-target validation: NOT PERFORMED;
-- production accuracy: NOT ESTABLISHED;
-- production safety: NOT ESTABLISHED;
-- arbitrary framework/Burp compatibility: NOT ESTABLISHED.
-
-A public software release is a packaging/distribution event, not new validation evidence.
-
-## Machine-readable state
-
-See:
-
-`release/promotion-decision.json`
-
-The promotion verifier intentionally passes in `PREPARED_BLOCKED` state only when publication remains disabled and the
-unresolved decisions are represented honestly.
-
-## Next transition
-
-After explicit license + version decisions:
-
-`PREPARED_BLOCKED → READY_FOR_PROMOTION → PUBLISHED`
-
-The `PUBLISHED` state must record the exact tag, release URL/identifier and final artifact hashes.
-
+Before publication:
+- Sprint 13 frozen research must remain unchanged;
+- Sprint 14 hardened source must remain in ancestry;
+- `VERSION` and all Maven versions must equal `0.3.0`;
+- `LICENSE` must contain Apache-2.0;
+- `NOTICE` must be present;
+- direct dependency contract must pass;
+- retained executable regressions must pass;
+- Maven clean verify must pass;
+- stable package/checksum verification must pass;
+- CodeQL and Gitleaks must pass;
+- external-target/production claim boundaries must remain unchanged.
 
 ## Dependency-review status
 
-The pull-request security workflow attempted GitHub's native Dependency Review action. GitHub reported that Dependency
-Review is not supported because the repository Dependency Graph is not enabled.
+GitHub native Dependency Review is unavailable because the repository Dependency Graph is disabled. This is a platform
+configuration limitation, not a vulnerability result.
 
-This is a repository-feature limitation, not a reported vulnerable-dependency finding.
+Sprint 15 separately enforces:
+- zero direct dependencies in `acra-core`;
+- only `acra-core` and the provided Montoya API as direct extension dependencies;
+- no custom Maven repositories;
+- no system-scoped dependencies;
+- no SNAPSHOT dependencies;
+- Maven dependency-tree generation.
 
-Sprint 15 therefore also performs a repository-local dependency contract/inventory gate:
-- `acra-core`: zero direct dependencies;
-- Burp extension: only `io.acra:acra-core` and the provided PortSwigger Montoya API are allowed as direct dependencies;
-- custom Maven repositories: prohibited by the promotion contract;
-- system-scoped dependencies: prohibited;
-- SNAPSHOT dependencies/versions: prohibited;
-- Maven dependency tree is emitted during promotion preflight.
+## Stable publication assets
 
-For GitHub-native Dependency Review to become a passing PR check, the repository owner must enable the Dependency Graph
-in GitHub repository security settings. Until then its failure should be interpreted as **UNAVAILABLE**, not as a clean
-dependency-vulnerability scan.
+Expected:
+- `acra-burp-extension-0.3.0.jar`;
+- `acra-0.3.0.zip`;
+- `release-manifest.json`;
+- `SHA256SUMS`.
+
+## Claim boundary
+
+Stable publication does not create new research evidence.
+
+Phase 8 external-target validation remained **NOT PERFORMED** before the Sprint 13 freeze. Production accuracy, production
+safety, arbitrary framework/Burp compatibility and external-target effectiveness remain unsupported claims.
+
+## State transition
+
+`PREPARED_BLOCKED → READY_FOR_PROMOTION`
+
+After all current-head CI/security gates pass, publication may proceed to:
+
+`READY_FOR_PROMOTION → PUBLISHED`

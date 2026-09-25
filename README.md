@@ -1,9 +1,10 @@
 # ACRA — API Access Control & Routing Auditor
 
-**Current candidate:** `v0.3.0-rc1`  
+**Current release:** `v0.3.0`  
+**License:** Apache-2.0  
 **Runtime:** Java 21  
 **Burp integration:** Montoya API 2026.7  
-**Research state:** Sprint 13 frozen; Sprint 14 productization/release hardening in progress.
+**Research state:** Sprint 13 frozen; stable release promotion validated through Sprint 15.
 
 ACRA is a security-research and engineering project for analyzing API authorization behavior from correlated HTTP,
 identity, tenant, ownership, role, workflow, routing, property, batch and indirect-reference evidence.
@@ -48,37 +49,24 @@ Requirements:
 - Maven
 - Git
 
-Build and run the project test suite:
-
 ```bash
 mvn --batch-mode --no-transfer-progress clean verify
 ```
 
-The shaded Burp extension candidate is produced at:
+The shaded Burp extension is produced at:
 
 ```text
-extension/burp-extension/target/acra-burp-extension-0.3.0-rc1.jar
+extension/burp-extension/target/acra-burp-extension-0.3.0.jar
 ```
 
-## Release-candidate packaging
-
-Sprint 14 adds a deterministic packaging layer around a fixed Maven build input.
+## Stable release packaging
 
 ```bash
-mvn --batch-mode --no-transfer-progress clean verify
-python3 scripts/package-sprint14-release.py
-python3 scripts/verify-sprint14-release.py
+bash scripts/verify-sprint15-release-promotion.sh
 ```
 
-Generated files are written under `build/release/` and include:
-
-- the shaded Burp extension JAR;
-- a deterministic release ZIP;
-- a machine-readable release manifest;
-- SHA-256 checksums;
-- release/readme/security/license/claim-boundary documentation.
-
-The package is a **release candidate**, not a public release.
+The stable packaging lane verifies the promotion decision, dependency contract, retained executable regression chain,
+Maven build, package contents, license/NOTICE presence, checksums and deterministic fixed-input ZIP packaging.
 
 ## Verified runtime boundary
 
@@ -98,7 +86,6 @@ This evidence is limited to the exact controlled localhost runtime boundary. It 
 accuracy, arbitrary Burp-version compatibility, external-target effectiveness or independent real-world validation.
 
 See:
-
 - `docs/research/FINAL_RESEARCH_FREEZE.md`
 - `docs/research/FINAL_CLAIM_BOUNDARY.md`
 - `docs/research/FINAL_EVIDENCE_MANIFEST.json`
@@ -108,14 +95,12 @@ See:
 
 ACRA is developed for authorized security research.
 
-Current release-candidate rules include:
-
-- active execution disabled by default;
+- active execution is disabled by default;
 - candidate != confirmed vulnerability;
 - no automatic Burp issue publication;
-- uncertainty routed to review;
-- no secrets in research/runtime evidence probes;
-- external testing only with explicit authorization and scope.
+- uncertainty is routed to review;
+- research/runtime evidence probes exclude secret-bearing material;
+- external testing requires explicit authorization and scope.
 
 See `SECURITY.md`.
 
@@ -123,23 +108,22 @@ See `SECURITY.md`.
 
 Sprint 13 is frozen with eight canonical completed controlled experiments.
 
-Phase 8 external-target validation was **NOT PERFORMED** before the freeze. Therefore this repository does not claim:
+Phase 8 external-target validation was **NOT PERFORMED** before the freeze. Therefore this release does not claim:
 
 - production scanner accuracy;
 - production safety;
 - external-target effectiveness;
 - independent real-world validation.
 
-Any later external validation must be a new post-freeze experiment/version.
+A public software release is a packaging/distribution event, not new validation evidence.
 
-## License status
+## License
 
-**No software license has been selected yet.**
+ACRA is licensed under the **Apache License, Version 2.0**.
 
-The repository's `LICENSE` file intentionally records this unresolved state. Until a license is explicitly selected,
-do not treat the source or packaged release candidate as granting reuse, redistribution or modification rights.
+SPDX: `Apache-2.0`
 
-This is currently a blocker for public release promotion.
+See `LICENSE` and `NOTICE`.
 
 ## Maintainer
 
@@ -148,10 +132,6 @@ GitHub: `HamzaZulfeqar`
 
 ## Version
 
-Source-of-truth version:
-
 ```text
-0.3.0-rc1
+0.3.0
 ```
-
-See `VERSION`, the Maven POMs and `CHANGELOG.md`.
