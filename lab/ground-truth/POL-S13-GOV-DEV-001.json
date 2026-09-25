@@ -224,7 +224,6 @@
       },
       "rules": {
         "tenantField": "tenant_id",
-        "targetTenantPathGroup": "tenant",
         "crossTenantRoles": [
           "platform-admin"
         ],
