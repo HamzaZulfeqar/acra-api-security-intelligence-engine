@@ -171,7 +171,20 @@ Phase 5 verification: run `36075554684` — SUCCESS at
 `01aa13abd0385d6976eae15f583fd956afe69f5e`.
 Retained Core/Sprint2/Sprint3: `36075554589` / `36075554624` / `36075554697` — SUCCESS.
 
-## Final closure dependency
+## Final closure
 
-Sprint 12 now requires requirements traceability, complete retained regressions, deterministic source packaging,
-archive-integrity verification and final audit before SOFTWARE COMPLETE can be claimed.
+Sprint 12 final closure passed in GitHub Actions run `36076016842` at closure-candidate source commit
+`12916add6d3d9005746fac347904abb0cf678c11`.
+
+Closure evidence:
+
+- deterministic JSON/SARIF artifacts: PASS;
+- official Maven package and retained regressions: PASS;
+- deterministic source archive: PASS;
+- closure-candidate SHA-256: `b451ee8c6a5c1cac2fc0177d24e3fd46fb3c2cb52c16ab856a21c3d6f8efbe9b`;
+- entries: 1026;
+- unsafe paths / duplicate entries: 0 / 0;
+- clean extraction / per-file SHA-256 equality: PASS / PASS.
+
+The architecture is therefore **SOFTWARE COMPLETE** for the implemented Sprint 12 boundary. Real Burp desktop
+SiteMap publication remains a separate UNVERIFIED / DEFERRED runtime validation lane.

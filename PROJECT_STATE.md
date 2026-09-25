@@ -2,8 +2,8 @@
 
 ## Current state — 2026-09-25
 
-**Current sprint:** Sprint 12 — Reproduction & Standards Export (in progress).  
-**Decision:** S12 PHASES 1–5 VERIFIED COMPLETE; reproduction/publication hardening and retained regressions verified.  
+**Current release boundary:** Sprint 12 — Reproduction & Standards Export — SOFTWARE COMPLETE.  
+**Decision:** S12 SOFTWARE COMPLETE — Phases 1–5 plus dedicated final closure VERIFIED.  
 **Working branch:** `s12-reproduction-standards-export`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
@@ -15,6 +15,8 @@
 **Sprint 12 Phase 4 verification:** GitHub Actions run `36070071498` — SUCCESS at source commit `a3328f7df32391f6aaa4a2f867de8590ba6fab52`.  
 **Sprint 12 Phase 5 verification:** GitHub Actions run `36075554684` — SUCCESS at source commit `01aa13abd0385d6976eae15f583fd956afe69f5e`.  
 **Sprint 12 Phase 5 retained Core/S2/S3:** runs `36075554589` / `36075554624` / `36075554697` — SUCCESS.  
+**Sprint 12 final closure:** GitHub Actions run `36076016842` — SUCCESS at closure-candidate source commit `12916add6d3d9005746fac347904abb0cf678c11`.  
+**Sprint 12 closure-candidate ZIP SHA-256:** `b451ee8c6a5c1cac2fc0177d24e3fd46fb3c2cb52c16ab856a21c3d6f8efbe9b` — 1026 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -116,8 +118,27 @@ Sprint 12 Phase 5 security/reproducibility hardening is **VERIFIED COMPLETE**:
 - retained Sprint 2/3 stub contract was extended minimally for AuditIssue/SiteMap while Maven still compiles against real Montoya 2026.7;
 - dedicated Sprint 12 / Core / Sprint 2 / Sprint 3 workflows all pass at the exact Phase 5 head.
 
-The next dependency is Sprint 12 final traceability, deterministic source packaging, retained regression closure and
-final software audit. Real Burp desktop/site-map publication remains UNVERIFIED / DEFERRED.
+Sprint 12 final closure is **VERIFIED COMPLETE**:
+
+- full Sprint 12 verifier: PASS;
+- canonical JSON/SARIF evidence artifacts + SHA-256 sidecars: PASS;
+- retained Sprint 11 / 10 / 9 / 8 / 7 / 6 foundations: PASS;
+- official Maven package: PASS;
+- Sprint 2 regression: PASS, 52 tests;
+- Sprint 3 core / adapter regressions: PASS, 47 / 11 tests;
+- Sprint 6 / 7 / 8 / 9 / 10 / 12 headless UI regressions: PASS, 27 / 20 / 23 / 59 / 230 / 34 assertions;
+- deterministic Sprint 12 source checkpoint: PASS;
+- archive safe paths / duplicate absence / clean extraction / per-file SHA-256 equality: PASS;
+- closure-candidate archive: `acra-sprint-12-final.zip`;
+- closure-candidate SHA-256: `b451ee8c6a5c1cac2fc0177d24e3fd46fb3c2cb52c16ab856a21c3d6f8efbe9b`;
+- entries: 1026.
+
+The source hash identifies the successful pre-promotion closure-candidate snapshot. Final-status documentation changes
+alter the source archive by definition; the canonical post-documentation digest is emitted through the external
+`.sha256` sidecar on the final revalidation run.
+
+Real Burp desktop load/handler/UI and real desktop `SiteMap.add(AuditIssue)` publication remain
+**UNVERIFIED / DEFERRED**. Headless injected publication evidence is not represented as live desktop validation.
 
 ### Sprint 11 final closure
 

@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 12 IN PROGRESS — Phases 1–5 VERIFIED COMPLETE.**
+**Sprint 12 SOFTWARE COMPLETE — final closure verified.**
 
 Canonical Sprint 12 evidence:
 - branch: `s12-reproduction-standards-export`;
@@ -14,6 +14,9 @@ Canonical Sprint 12 evidence:
 - Phase 3 verification: `36069442716` — SUCCESS at `45554b8c912f9f5fb23b39267606c3fb5dd110a6`;
 - Phase 4 verification: `36070071498` — SUCCESS at `a3328f7df32391f6aaa4a2f867de8590ba6fab52`;
 - Phase 5 verification: `36075554684` — SUCCESS at `01aa13abd0385d6976eae15f583fd956afe69f5e`;
+- final closure: `36076016842` — SUCCESS at `12916add6d3d9005746fac347904abb0cf678c11`;
+- closure-candidate ZIP SHA-256: `b451ee8c6a5c1cac2fc0177d24e3fd46fb3c2cb52c16ab856a21c3d6f8efbe9b`;
+- closure-candidate entries: 1026;
 - standards foundation: PASS, 34 assertions;
 - deterministic JSON reproduction export: PASS;
 - deterministic SARIF 2.1.0 review export: PASS;
@@ -57,13 +60,17 @@ Verified Phase 5:
 - retained Core / Sprint 2 / Sprint 3 workflows: PASS;
 - real desktop SiteMap publication: UNVERIFIED / DEFERRED.
 
-Next dependency-ordered milestone:
-1. freeze Sprint 12 requirements traceability;
-2. run complete Sprint 12 plus retained release/regression lanes;
-3. produce official Maven package;
-4. generate deterministic Sprint 12 source checkpoint + manifest + SHA-256;
-5. validate archive safe paths, duplicate absence, clean extraction and per-file hash equality;
-6. publish final software audit without promoting real Burp desktop runtime evidence.
+Final Sprint 12 closure:
+- complete Sprint 12 + retained release/regression lanes: PASS;
+- canonical JSON/SARIF artifacts: PASS;
+- official Maven package: PASS;
+- deterministic source checkpoint: PASS;
+- unsafe paths / duplicate entries: 0 / 0;
+- clean extraction / per-file hash equality: PASS / PASS;
+- real Burp desktop SiteMap publication: UNVERIFIED / DEFERRED.
+
+No later sprint scope is pre-claimed by this closure. The next roadmap item must be selected from remaining verified
+backlog/debt on a separate branch.
 
 ## Previous release boundary — Sprint 11
 

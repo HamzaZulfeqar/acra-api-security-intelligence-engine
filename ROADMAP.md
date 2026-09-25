@@ -2,10 +2,10 @@
 
 ## Current gate — 2026-09-25
 
-Sprint 12 — **Reproduction & Standards Export** is IN PROGRESS on
+Sprint 12 — **Reproduction & Standards Export** is SOFTWARE COMPLETE on
 `s12-reproduction-standards-export`.
 
-Phases 1–5 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36075554684`.
+Phases 1–5 plus dedicated final closure are VERIFIED COMPLETE. Closure run: `36076016842`.
 
 Current evidence boundary:
 
@@ -24,6 +24,8 @@ Current evidence boundary:
 - retained Core/Sprint 2/Sprint 3 regressions: VERIFIED;
 - service remains unregistered from ACRAExtension bootstrap;
 - raw principal/rationale/secret-bearing material excluded;
+- deterministic final source package: VERIFIED — 1026 entries;
+- closure-candidate ZIP SHA-256: `b451ee8c6a5c1cac2fc0177d24e3fd46fb3c2cb52c16ab856a21c3d6f8efbe9b`;
 - real Burp issue publication and desktop runtime remain UNVERIFIED / DEFERRED.
 
 Sprint 11 remains the frozen SOFTWARE COMPLETE release base at

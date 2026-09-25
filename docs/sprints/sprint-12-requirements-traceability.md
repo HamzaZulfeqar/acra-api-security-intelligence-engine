@@ -1,11 +1,10 @@
 # Sprint 12 Requirements Traceability
 
-Status: **CLOSURE CANDIDATE — Phases 1–5 verified; final closure pending**  
+Status: **SOFTWARE COMPLETE — final closure verified**  
 Branch: `s12-reproduction-standards-export`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
-PASS means implementation plus executable evidence exists. Sprint 12 is not SOFTWARE COMPLETE until the dedicated
-final closure workflow passes. Real Burp desktop SiteMap publication remains a separate runtime validation lane.
+PASS means implementation plus executable evidence exists. The dedicated Sprint 12 final closure workflow has passed. Real Burp desktop SiteMap publication remains a separate runtime validation lane.
 
 | ID | Requirement | Implementation evidence | Verification evidence | Status |
 |---|---|---|---|---|
@@ -26,10 +25,10 @@ final closure workflow passes. Real Burp desktop SiteMap publication remains a s
 | S12-06 | Candidate-package drift fails closed | `S12ReproductionWorkspace` | Phase 5 hardening | PASS |
 | S12-07 | Publication URL excludes credentials/query/fragment | approval + receipt validation | Phase 5 hardening | PASS |
 | S12-08 | Legacy S2/S3 stub contracts and real Montoya Maven compile both pass | Montoya stubs + Maven dependency | Phase 5 exact-head regressions | PASS |
-| S12-09 | Canonical JSON/SARIF evidence files archived | evidence artifact suite | final closure workflow | PENDING |
-| S12-10 | Official Maven package and retained release regressions | final verifier | final closure workflow | PENDING |
-| S12-11 | Deterministic source ZIP + manifest + SHA-256 | `package-sprint12.sh` | final closure workflow | PENDING |
-| S12-12 | Safe archive/no duplicates/clean extraction/per-file equality | package verifier | final closure workflow | PENDING |
+| S12-09 | Canonical JSON/SARIF evidence files archived | evidence artifact suite | run 36076016842 | PASS |
+| S12-10 | Official Maven package and retained release regressions | final verifier | run 36076016842 | PASS |
+| S12-11 | Deterministic source ZIP + manifest + SHA-256 | `package-sprint12.sh` | run 36076016842 | PASS |
+| S12-12 | Safe archive/no duplicates/clean extraction/per-file equality | package verifier | run 36076016842 | PASS |
 | S12-13 | Real Burp desktop SiteMap publication | separate runtime gate | no current desktop publication evidence | UNVERIFIED / DEFERRED |
 
 ## Verified phase gates
@@ -48,4 +47,21 @@ evidence proves the software boundary only; it does not prove real Burp desktop 
 
 ## Final closure gate
 
-Pending dedicated Sprint 12 Final Closure workflow verification.
+GitHub Actions run `36076016842`: **SUCCESS** at closure-candidate source commit
+`12916add6d3d9005746fac347904abb0cf678c11`.
+
+Final closure evidence:
+
+- canonical JSON/SARIF artifact generation: PASS;
+- official Maven package: PASS;
+- retained release/regression lanes: PASS;
+- deterministic source ZIP: PASS;
+- entries: 1026;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- closure-candidate ZIP SHA-256: `b451ee8c6a5c1cac2fc0177d24e3fd46fb3c2cb52c16ab856a21c3d6f8efbe9b`.
+
+The closure-candidate hash identifies the successful pre-final-status source snapshot. Post-documentation packaging
+is represented by the external `.sha256` sidecar to avoid a recursive embedded-hash dependency.
