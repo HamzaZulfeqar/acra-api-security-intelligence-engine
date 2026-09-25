@@ -18,6 +18,8 @@ CP="$BUILD/main:$BUILD/test"
 java -ea -cp "$CP" io.acra.core.tests.sprint13.Sprint13FindingLifecycleFoundationTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint13.Sprint13FindingGovernanceWorkspaceTestSuite
 java -ea -cp "$CP" io.acra.core.tests.sprint13.Sprint13GovernanceReportingExportTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint13.Sprint13GovernanceSecurityHardeningTestSuite
+java -ea -cp "$CP" io.acra.core.tests.sprint13.Sprint13GovernancePerformanceObservationTestSuite
 
 bash ./scripts/verify-sprint12-foundation.sh
 
