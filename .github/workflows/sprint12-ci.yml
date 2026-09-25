@@ -37,3 +37,9 @@ jobs:
         run: bash ./scripts/verify-sprint12-foundation.sh
       - name: Verify Maven core test compilation
         run: mvn --batch-mode --no-transfer-progress -pl core test-compile
+      - name: Upload Sprint 12 export evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint12-reproduction-exports
+          path: build/s12-foundation/reporting/
+          if-no-files-found: error
