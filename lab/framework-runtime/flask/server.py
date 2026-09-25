@@ -23,8 +23,8 @@ def workflow(resource_id):
     body=request.get_json(silent=True) or {}
     return jsonify(**body,resource_id=resource_id,state=body.get("to_state"),role=request.headers.get("X-Role",""))
 
-@app.get("/runtime/flask/routing/audit")
-def routing(): return jsonify(area="audit",role=request.headers.get("X-Role",""),route_form="canonical")
+@app.get("/runtime/flask/routing/equivalent")
+def routing(): return jsonify(area="route",role=request.headers.get("X-Role",""),route_form="canonical")
 
 @app.patch("/runtime/flask/accounts/<account>/preferences")
 def preferences(account):
