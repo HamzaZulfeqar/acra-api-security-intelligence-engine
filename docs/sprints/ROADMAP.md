@@ -2,6 +2,38 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 13 Phase 7 REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION — IN PROGRESS, BLOCKED ONLY AT EXPLICIT EULA ACCEPTANCE.**
+
+Phase 7 branch: `s13-burp-montoya-runtime`.
+
+Implemented:
+- opt-in real-runtime evidence probe in the ACRA extension;
+- real Burp Desktop 2026.7.3 download and checksum pin;
+- shaded extension build;
+- controlled secure localhost lab startup;
+- Burp user-config extension preload;
+- real proxy callback / pipeline verification harness;
+- secret-exclusion verification;
+- Phase 6B evidence lock.
+
+Development run `36178508712` verified:
+- Phase 6B evidence lock: PASS;
+- ACRA extension build: PASS;
+- Burp binary integrity: PASS;
+- localhost lab health: PASS.
+
+The run then reached Burp's first-use legal prompt:
+`Do you accept the license agreement? (y/n)`
+
+No answer was supplied automatically. Explicit user authorization is required before the CI harness may accept that EULA.
+
+Phase 7 is therefore **not complete yet**. Montoya initialization, real Burp Proxy callbacks and pipeline processing remain
+unmeasured until an authorized rerun.
+
+See `../research/sprint-13-burp-montoya-runtime-protocol.md`.
+
+## Current gate — 2026-09-25
+
 **Sprint 13 Phase 6B ACTUAL LOCAL FRAMEWORK RUNTIME VALIDATION COMPLETE.**
 
 Canonical evidence:
