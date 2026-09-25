@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "acra-final-research-freeze-v1",
+  "freezeId": "ACRA-S13-FINAL-FREEZE-2026-09-26",
+  "project": "ACRA API Security Intelligence Engine",
+  "freezeState": "FINAL_CANDIDATE",
+  "preFreezeBase": "7786097a4ea94bba7f7285218ed1c91d5d4062cd",
+  "branch": "s13-final-research-freeze",
+  "evidenceModel": "canonical measured commits + workflow runs + frozen protocols + machine-verifiable repository hashes",
+  "phase8": {
+    "status": "NOT_PERFORMED",
+    "rationale": "Final freeze selected before any explicitly authorized external-target experiment was registered.",
+    "claimBoundary": "No external-target effectiveness, production safety, or production accuracy claim is permitted.",
+    "futureRule": "Any later authorized external-target validation must be a new post-freeze experiment/version and must not rewrite Sprint 13 evidence."
+  },
+  "canonicalExperiments": [
+    {
+      "id": "EXP-S13-HOLDOUT-A0-A7",
+      "phase": "1",
+      "runId": 36143281129,
+      "measuredHead": "e515a31d91d775d5f0f35c32a48507455f84992d",
+      "result": "A7 TP=8 TN=3 FP=5 FN=0; P=.615385 R=1 F1=.761905",
+      "scope": "synthetic localhost held-out"
+    },
+    {
+      "id": "EXP-S13-DIMENSION-001",
+      "phase": "2",
+      "runId": 36145805521,
+      "measuredHead": "3f4b4238efe514b7ef1fe65b2cd477233c54fa73",
+      "result": "31/32 dimensions correct; accuracy=.968750 macro-F1=.968254",
+      "scope": "synthetic localhost S12+S13 corpus"
+    },
+    {
+      "id": "EXP-S13-POLICY-GEN-001",
+      "phase": "3",
+      "runId": 36149071484,
+      "measuredHead": "82ae165b702d18b0eae872d51f8f695f723fec13",
+      "algorithmFreeze": "c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd",
+      "result": "G1 TP=8 TN=16 FP=0 FN=0 on 24-case configured-policy evaluation",
+      "scope": "internal configured-policy evaluation"
+    },
+    {
+      "id": "EXP-S13-BASERATE-001",
+      "phase": "4",
+      "runId": 36168752869,
+      "measuredHead": "ed1601542739cce20be48c001ae4e663bfdcf890",
+      "result": "G1 TP=8 TN=49 FP=39 FN=0 on 96-case 8.33% prevalence stress corpus",
+      "scope": "synthetic negative-heavy stress"
+    },
+    {
+      "id": "EXP-S13-GOVERNANCE-001",
+      "phase": "5",
+      "runId": 36170353179,
+      "measuredHead": "46f77a8d76b160cec70f7aef3f612e0d63af56da",
+      "governanceFreeze": "11afbb80be24116c9facd0d4b0791f4a12efed3a",
+      "result": "64/64 exact dispositions; actionable TP=8 TN=48 FP=0 FN=8; escalation coverage=1.0",
+      "scope": "synthetic internal governance evaluation"
+    },
+    {
+      "id": "EXP-S13-XFRAME-001",
+      "phase": "6A",
+      "runId": 36173838561,
+      "measuredHead": "f3180a1877aaffd224a6d3a2734ddc25bf28c24b",
+      "normalizationFreeze": "4011b9c05b99b14da66733aea47de43256060990",
+      "result": "normalized dimension 64/64; normalized disposition 64/64",
+      "scope": "framework-shaped snapshots only"
+    },
+    {
+      "id": "EXP-S13-XRUNTIME-001",
+      "phase": "6B",
+      "runId": 36175649455,
+      "measuredHead": "e4d50d69161b8c2af8df30c334a0f51e3599c925",
+      "developmentFreeze": "683933836d2c2fa5ec155bc8e224be87e6958e95",
+      "result": "64/64 live HTTP; 64/64 dimensions; 64/64 governed dispositions",
+      "scope": "real localhost FastAPI/Flask/Express/Spring Boot"
+    },
+    {
+      "id": "EXP-S13-BURP-001",
+      "phase": "7",
+      "runId": 36180569483,
+      "measuredHead": "e24a91297bf33bfe18a47453e8c191432b496b20",
+      "developmentFreeze": "4bb7b952fb5cd0692efc6153d51b6885a7d38f9d",
+      "result": "two independent real-Burp passes; each INIT=1 REQUEST=2 RESPONSE=2 PROCESSED=2 CONTEXT=2/2; review/publication boundary PASS",
+      "scope": "real Burp Desktop 2026.7.3 against controlled localhost"
+    }
+  ],
+  "requiredProtocols": [
+    "docs/research/sprint-13-heldout-protocol.md",
+    "docs/research/sprint-13-dimension-discovery-protocol.md",
+    "docs/research/sprint-13-policy-generalization-protocol.md",
+    "docs/research/sprint-13-adversarial-base-rate-protocol.md",
+    "docs/research/sprint-13-policy-uncertainty-governance-protocol.md",
+    "docs/research/sprint-13-cross-framework-normalization-protocol.md",
+    "docs/research/sprint-13-cross-framework-runtime-protocol.md",
+    "docs/research/sprint-13-burp-montoya-runtime-protocol.md"
+  ],
+  "finalClaimBoundaryFile": "docs/research/FINAL_CLAIM_BOUNDARY.md",
+  "reproducibilityFile": "docs/research/FINAL_REPRODUCIBILITY.md",
+  "finalFreezeFile": "docs/research/FINAL_RESEARCH_FREEZE.md"
+}

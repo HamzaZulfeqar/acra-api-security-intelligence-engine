@@ -1,0 +1,49 @@
+name: Sprint 13 Final Research Reproducibility Freeze
+
+on:
+  push:
+    branches:
+      - s13-final-research-freeze
+    paths:
+      - 'docs/research/FINAL_*.md'
+      - 'docs/research/FINAL_EVIDENCE_MANIFEST.json'
+      - 'docs/research/EXPERIMENT_REGISTRY.md'
+      - 'docs/research/sprint-13-*-protocol.md'
+      - 'docs/testing/**'
+      - 'KNOWN_ISSUES.md'
+      - 'PROJECT_STATE.md'
+      - 'lab/ground-truth/**'
+      - 'scripts/run-sprint13-*.py'
+      - 'scripts/verify-sprint13-*.py'
+      - 'scripts/verify-sprint13-final-research-freeze.sh'
+      - '.github/workflows/sprint13-*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final-research-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify final research and reproducibility freeze
+        run: bash scripts/verify-sprint13-final-research-freeze.sh
+      - name: Upload final freeze evidence inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint13-final-research-freeze
+          path: build/s13-final-freeze/**
+          if-no-files-found: warn
