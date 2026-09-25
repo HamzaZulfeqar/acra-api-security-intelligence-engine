@@ -30,6 +30,7 @@
 | EXP-S13-BASERATE-001 | Adversarial negative-heavy policy/base-rate stress | COMPLETED_CONTROLLED_STRESS | GT-S13-BASERATE-FEATURES + GT-S13-BASERATE-LABELS | 96 cases, 8.33% prevalence; G1 TP=8/TN=49/FP=39/FN=0, P=.170213/R=1/F1=.290909; explicit-policy controls 0 FP, policy-degraded controls dominate FP |
 | EXP-S13-GOVERNANCE-001 | Policy reliability and uncertainty governance with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-GOV-EVAL-FEATURES + GT-S13-GOV-EVAL-LABELS | 64/64 dispositions; actionable TP=8/TN=48/FP=0/FN=8, P=1/R=.5; escalation coverage=1.0; silent positives=0 |
 | EXP-S13-XFRAME-001 | Framework-shaped serialization normalization with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-XFRAME-EVAL-FEATURES + GT-S13-XFRAME-EVAL-LABELS | raw dimension=60/64 and disposition=32/64; normalized dimension=64/64 and disposition=64/64; snapshot representations only |
+| EXP-S13-XRUNTIME-001 | Actual local FastAPI/Flask/Express/Spring Boot runtime validation | COMPLETED_CONTROLLED_RUNTIME | GT-S13-XRUNTIME-EVAL-FEATURES + GT-S13-XRUNTIME-EVAL-LABELS | 64/64 live HTTP responses, 64/64 dimensions, 64/64 governed dispositions; 16/16 per framework; localhost only |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -233,3 +234,29 @@ Per framework style:
 This experiment validates only the tested request/response serialization representations. It does not establish actual
 framework runtime behavior, middleware/router behavior or framework-version compatibility. Phase 6B remains required for
 real local framework runtime validation.
+
+
+## Sprint 13 Phase 6B actual local framework runtime validation — 2026-09-25
+
+Development workflow `36175284755` completed successfully. After correcting a development-only routing/RBAC fixture
+ambiguity, the runtime-development state was frozen at `683933836d2c2fa5ec155bc8e224be87e6958e95`.
+
+Untouched runtime evaluation workflow `36175649455` completed successfully at
+`e4d50d69161b8c2af8df30c334a0f51e3599c925`.
+
+CI launched real local FastAPI/Uvicorn, Flask, Express/Node.js and Spring Boot/Java 21 services, verified all four health
+endpoints and sent 64 real HTTP requests.
+
+Untouched evaluation result:
+- live HTTP 200: 64/64;
+- automatic dimension inference: 64/64;
+- governed disposition: 64/64;
+- each framework: 16/16 HTTP, 16/16 dimension, 16/16 disposition;
+- prediction/evaluation repeatability: PASS;
+- labels absent during both prediction passes: PASS;
+- development evidence freeze: PASS;
+- Phase 6A normalizer and upstream reasoning freeze: PASS;
+- Maven ACRA product package: BUILD SUCCESS.
+
+This is controlled localhost runtime evidence only. It does not establish arbitrary framework/version compatibility,
+Burp desktop runtime behavior, external-target effectiveness, production accuracy or independent replication.
