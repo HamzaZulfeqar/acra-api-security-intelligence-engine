@@ -3,13 +3,14 @@
 ## Current state — 2026-09-25
 
 **Current sprint:** Sprint 12 — Reproduction & Interoperability Exports (in progress).  
-**Decision:** S12 PHASE 1 VERIFIED COMPLETE; deterministic review-only reproduction package + canonical JSON verified.  
+**Decision:** S12 PHASES 1–2 VERIFIED COMPLETE; reproduction package + JSON + SARIF verified.  
 **Working branch:** `s12-reproduction-interoperability-exports`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-closure final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
 **Sprint 11 final-status checkpoint SHA-256:** `ea3d65bb5d89d5986328fe91330689f865716766074428291403589180edc30f`.  
 **Sprint 12 Phase 1 verification:** GitHub Actions run `36122252879` — SUCCESS at source commit `46a43350d5357f78f0756b6ce20329ef750e0cfb`.  
+**Sprint 12 Phase 2 verification:** GitHub Actions run `36122759287` — SUCCESS at source commit `3e5c63962c007865a85dfdd23edac2165f3075d7`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -62,7 +63,22 @@ Phase 1 deterministic reproduction-package foundation is **VERIFIED COMPLETE**:
 Phase 1 verification: GitHub Actions run `36122252879` — SUCCESS at
 `46a43350d5357f78f0756b6ce20329ef750e0cfb`.
 
-Sprint 12 does **not** yet claim SARIF export or actual Burp Issue creation. Those are separate later phases.
+Sprint 12 Phase 2 SARIF export is **VERIFIED COMPLETE**:
+
+- SARIF version `2.1.0` with the OASIS Errata 01 schema URI;
+- deterministic ACRA rule ID derived from authorization dimensions;
+- CANDIDATE → SARIF `kind=review`, `level=none`;
+- REJECTED → `kind=pass`, `level=none`;
+- INCONCLUSIVE → `kind=open`, `level=none`;
+- ACRA severity/confidence retained separately in the SARIF property bag;
+- finding/reproduction fingerprints retained;
+- review-only and issue-eligibility state retained;
+- no fabricated source-code locations for API endpoints;
+- raw principal, bearer material and candidate rationale remain excluded;
+- Java semantic test + independent Python structure validation: PASS;
+- CI SARIF artifact upload: PASS.
+
+Sprint 12 does **not** yet claim actual Burp Issue creation. That remains the next adapter-layer phase.
 Real Burp desktop runtime remains **UNVERIFIED / DEFERRED**.
 
 ### Sprint 11 final closure

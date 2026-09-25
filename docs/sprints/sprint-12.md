@@ -1,6 +1,6 @@
 # Sprint 12 — Reproduction & Interoperability Exports
 
-Status: **IN PROGRESS — Phase 1 VERIFIED**  
+Status: **IN PROGRESS — Phases 1–2 VERIFIED**  
 Branch: `s12-reproduction-interoperability-exports`  
 Immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`
 
@@ -57,8 +57,49 @@ Not yet implemented:
 - live Burp issue registration;
 - real Burp desktop runtime validation.
 
+## Phase 2 — SARIF 2.1.0 interoperability
+
+Implemented:
+
+- public `CanonicalJsonDocumentWriter` wrapper for deterministic standards documents;
+- `ReproductionSarifExporter`;
+- `ReproductionSarifReporter`;
+- SARIF `version=2.1.0`;
+- official OASIS 2.1.0 Errata 01 schema URI;
+- ACRA driver + deterministic authorization rule descriptor;
+- deterministic result fingerprints;
+- candidate-state mapping:
+  - CANDIDATE → `kind=review`, `level=none`;
+  - REJECTED → `kind=pass`, `level=none`;
+  - INCONCLUSIVE → `kind=open`, `level=none`;
+- ACRA severity and confidence preserved as separate result properties;
+- review-only and issue-eligibility properties preserved;
+- endpoint/resource/evidence/assessment/policy lineage retained in minimized properties;
+- no fabricated physical/source-code locations for API endpoints;
+- secret-safe canonical SARIF + SHA-256;
+- CI artifact upload.
+
+### Phase 2 verification
+
+GitHub Actions run `36122759287`: **SUCCESS** at source commit
+`3e5c63962c007865a85dfdd23edac2165f3075d7`.
+
+Verified:
+
+- `Sprint12SarifExportTestSuite`: PASS, 30 assertions;
+- independent Python SARIF structure parser: PASS;
+- SARIF version/schema/run/tool/result/rule structure: PASS;
+- CANDIDATE review semantics: PASS;
+- level-none requirement for non-fail kinds: PASS;
+- raw principal / bearer / rationale exclusion: PASS;
+- Maven core `test-compile`: PASS;
+- SARIF artifact archived by CI: PASS.
+
+Phase 2 is **VERIFIED COMPLETE**.
+
 ## Next dependency
 
-Phase 2 owns deterministic SARIF 2.1.0 projection from the canonical reproduction package. It must preserve
-review-only candidate semantics, severity/confidence separation, secret-safe provenance and stable rule/result
-identity. Actual Burp Issue creation remains a later adapter-layer phase.
+Phase 3 owns the Burp Issue adapter. Montoya-specific types must remain under
+`extension/burp-extension`; the adapter must require an issue-eligible CANDIDATE reproduction package plus a real
+`HttpRequestResponse` with a usable URL. REJECTED/INCONCLUSIVE packages must fail closed and no Burp issue may be
+registered from core alone.

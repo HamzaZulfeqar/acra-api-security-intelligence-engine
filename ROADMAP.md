@@ -5,7 +5,7 @@
 Sprint 12 — **Reproduction & Interoperability Exports — IN PROGRESS** on
 `s12-reproduction-interoperability-exports`.
 
-Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36122252879`.
+Phases 1–2 are VERIFIED COMPLETE. Latest gate: GitHub Actions run `36122759287`.
 
 Current Sprint 12 boundary:
 
@@ -14,7 +14,7 @@ Current Sprint 12 boundary:
 - raw principal replaced by fingerprint: VERIFIED;
 - candidate rationale structurally omitted: VERIFIED;
 - candidate state / severity / confidence kept separate: VERIFIED;
-- SARIF: NOT YET IMPLEMENTED;
+- SARIF 2.1.0: VERIFIED;
 - Burp Issue adapter: NOT YET IMPLEMENTED;
 - real Burp desktop runtime: UNVERIFIED / DEFERRED.
 

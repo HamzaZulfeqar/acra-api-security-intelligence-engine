@@ -34,8 +34,39 @@ canonical ReproductionPackage
 Phase 1 verification: run `36122252879` — SUCCESS at
 `46a43350d5357f78f0756b6ce20329ef750e0cfb`.
 
-## Phase 2 boundary
+## Phase 2 SARIF boundary
 
-SARIF projection consumes only the canonical reproduction package. It must emit SARIF 2.1.0-compatible top-level
-version/schema/run/tool/result structure and keep ACRA-specific review state in explicit properties. It must not
-invent source-code line locations for API endpoints.
+```text
+ReproductionPackage
+        |
+        v
+ReproductionSarifExporter
+        |
+        +--> OASIS SARIF 2.1.0 log
+        +--> ACRA rule descriptor
+        +--> review/pass/open result
+        +--> stable fingerprints
+        +--> minimized ACRA properties
+```
+
+Phase 2 invariants:
+
+1. SARIF version is 2.1.0 and identifies the OASIS Errata 01 schema.
+2. CANDIDATE is encoded as `kind=review`, not `fail`.
+3. REJECTED is `pass`; INCONCLUSIVE is `open`.
+4. All three non-fail kinds use `level=none`.
+5. ACRA severity/confidence remain separate properties.
+6. Endpoint context is not misrepresented as a source-code physical location.
+7. Finding and reproduction fingerprints remain stable.
+8. Raw principal, secrets, rationale and contradictory narrative are excluded.
+9. The SARIF Reporter plugin uses the canonical exporter.
+10. SARIF projection does not change finding truth.
+
+Phase 2 verification: run `36122759287` — SUCCESS at
+`3e5c63962c007865a85dfdd23edac2165f3075d7`.
+
+## Phase 3 boundary
+
+Burp Issue integration belongs exclusively to the Montoya extension module. Core supplies only the canonical
+reproduction package. The adapter must require actual request/response evidence and must never create an issue from
+REJECTED or INCONCLUSIVE state.
