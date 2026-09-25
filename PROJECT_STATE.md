@@ -2,6 +2,24 @@
 
 ## Current state — 2026-09-25
 
+**Current research boundary:** Sprint 13 Phase 7 — Real Burp Desktop / Montoya Runtime Validation.  
+**Decision:** PHASE 7 HARNESS READY; EXECUTION BLOCKED AT BURP EULA ACCEPTANCE.  
+**Working branch:** `s13-burp-montoya-runtime`.  
+**Phase 6B evidence:** frozen and unchanged.  
+**Phase 7 development run:** `36178508712` — failed only at interactive Burp EULA prompt after build/checksum/lab preflight passed.  
+**Real Montoya initialization:** NOT YET MEASURED.  
+**Real Burp Proxy callbacks:** NOT YET MEASURED.  
+**Real ACRA passive pipeline through Burp:** NOT YET MEASURED.  
+**External authorized-target validation:** NOT STARTED.
+
+The repository now contains an opt-in Phase 7 probe that records non-secret runtime evidence only. It is disabled by
+default and active execution remains disabled.
+
+The next executable action requires explicit authorization to accept the PortSwigger Burp Suite Community Edition EULA
+for this controlled CI validation run.
+
+## Current state — 2026-09-25
+
 **Current research boundary:** Sprint 13 — Actual Local Cross-Framework Runtime Validation.  
 **Decision:** S13 PHASE 6B COMPLETE; REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION NEXT.  
 **Working branch:** `s13-cross-framework-runtime`.  
