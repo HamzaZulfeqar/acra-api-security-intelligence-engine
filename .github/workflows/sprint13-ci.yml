@@ -39,3 +39,13 @@ jobs:
         run: bash ./scripts/verify-sprint13-foundation.sh
       - name: Verify Maven core test compilation
         run: mvn --batch-mode --no-transfer-progress -pl core test-compile
+      - name: Upload Sprint 13 governance report evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint13-governance-report-evidence
+          path: |
+            build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.json
+            build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.json.sha256
+            build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.md
+          if-no-files-found: warn
