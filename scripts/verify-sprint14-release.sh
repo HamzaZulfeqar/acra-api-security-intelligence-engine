@@ -3,6 +3,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+chmod +x ./scripts/*.sh
+
 echo "=== Sprint 14 retained executable regression chain ==="
 bash scripts/verify-sprint11-final.sh
 echo "SPRINT14_EXECUTABLE_REGRESSION_CHAIN PASS"
