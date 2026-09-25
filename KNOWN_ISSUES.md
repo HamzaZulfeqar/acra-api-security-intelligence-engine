@@ -1,5 +1,20 @@
 # Known Issues and Technical Debt
 
+## Final Sprint 13 frozen limitations — 2026-09-26
+
+- Sprint 13 research is frozen after Phases 1–7.
+- Phase 8 explicitly authorized external-target validation was NOT PERFORMED before freeze.
+- No production accuracy, production safety, external-target effectiveness, or independent real-world validation claim is supported.
+- Automatic organizational-policy discovery remains unproven; configured policy registries are supplied research inputs.
+- Phase 4 demonstrated substantial false positives when policy was absent, ambiguous, stale, or context was incomplete; those historical results remain frozen.
+- Phase 5 governance reduces unsafe promotion by routing uncertainty to review, but its review rate is not a production SOC workload estimate.
+- Cross-framework evidence covers the exact tested fixtures/runtime versions only.
+- Real Burp evidence covers Burp Suite Community Edition 2026.7.3 / Montoya 2026.7 only.
+- Phase 7 validated passive Burp integration; active vulnerability execution remained disabled.
+- Real Burp issue publication was intentionally not exercised; review/publication eligibility guards were verified instead.
+- The final evidence inventory hashes tracked repository evidence, not ephemeral third-party CI runner state.
+- Any future external validation or algorithm change must be a new post-freeze experiment/version.
+
 ## Sprint 13 Phase 7 real Burp/Montoya limitations — 2026-09-25
 
 - Real Burp Suite Community Edition 2026.7.3 / Montoya runtime validation is complete for controlled localhost traffic.
