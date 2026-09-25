@@ -5,6 +5,11 @@ import io.acra.core.domain.finding.FindingCandidate;
 import io.acra.core.domain.finding.FindingLifecycleTransitionRequest;
 import io.acra.core.domain.finding.GovernedFinding;
 import io.acra.core.engine.FindingLifecycleService;
+import io.acra.core.reporting.s13.S13GovernanceExportArtifact;
+import io.acra.core.reporting.s13.S13GovernanceReport;
+import io.acra.core.reporting.s13.S13GovernanceReportExporter;
+import io.acra.core.reporting.s13.S13GovernanceReportGenerator;
+import java.time.Instant;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -12,6 +17,8 @@ public final class FindingGovernanceWorkspace {
     private final TreeMap<String, GovernedFinding> findings = new TreeMap<>();
     private final TreeMap<String, String> candidateFindings = new TreeMap<>();
     private final FindingLifecycleService lifecycle = new FindingLifecycleService();
+    private final S13GovernanceReportGenerator reportGenerator = new S13GovernanceReportGenerator();
+    private final S13GovernanceReportExporter reportExporter = new S13GovernanceReportExporter();
 
     public synchronized GovernedFinding open(
             FindingCandidate candidate,
@@ -70,6 +77,18 @@ public final class FindingGovernanceWorkspace {
             throw new IllegalArgumentException("findingId required");
         }
         return findings.get(findingId.strip());
+    }
+
+    public synchronized S13GovernanceReport report(Instant at) {
+        return reportGenerator.generate(snapshot(), at);
+    }
+
+    public synchronized S13GovernanceExportArtifact exportJson(Instant at) {
+        return reportExporter.json(report(at));
+    }
+
+    public synchronized S13GovernanceExportArtifact exportMarkdown(Instant at) {
+        return reportExporter.markdown(report(at));
     }
 
     public synchronized FindingGovernanceSnapshot snapshot() {
