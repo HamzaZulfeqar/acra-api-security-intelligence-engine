@@ -1,5 +1,31 @@
 # ACRA Project State
 
+## Current state — 2026-09-26 — Sprint 16 Public Onboarding
+
+**Decision:** PUBLIC ONBOARDING IMPLEMENTED; REPOSITORY ADMIN HARDENING PENDING.  
+**Working branch:** `s16-public-onboarding-hardening`.  
+**Public release:** `v0.3.0` remains published.  
+**Onboarding workflow:** `36202814898` — SUCCESS.  
+**Public clone/build smoke:** PASS.  
+**Published release JAR checksum smoke:** PASS.  
+**README Quick Start:** ADDED.  
+**Burp installation guide:** ADDED.  
+**First-run verification:** ADDED.  
+**Troubleshooting:** ADDED.  
+**CODEOWNERS:** ADDED.  
+**ACRA startup version text:** CORRECTED TO `v0.3.0`.  
+**Main branch protection:** PENDING OWNER ADMIN SETTING.  
+**Dependency Graph:** PENDING OWNER ADMIN SETTING.  
+**Tracking issue:** #6.
+
+The public repository now supports the documented path:
+
+`git clone → build → load in Burp → set authorized scope → verify passive observation`
+
+Repository-side onboarding is complete. Full repository-hardening closure requires the two GitHub admin settings above.
+
+## Previous state — ACRA v0.3.0 Published
+
 ## Current state — 2026-09-26 — ACRA v0.3.0 Published
 
 **Decision:** ACRA `v0.3.0` STABLE RELEASE PUBLISHED.  
