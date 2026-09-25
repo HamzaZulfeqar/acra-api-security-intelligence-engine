@@ -2,6 +2,54 @@
 
 ## Current state — 2026-09-25
 
+**Current research boundary:** Sprint 13 — Held-Out External Validity and Generalization.  
+**Decision:** S13 PHASE 1 HELD-OUT EVALUATION COMPLETE; PHASE 2 NEXT.  
+**Working branch:** `s13-heldout-external-validity`.  
+**Locked Sprint 12 base:** `bd944e83a6edefafba56caebaa35e89fc107c282`.  
+**Measured Phase 1 head:** `e515a31d91d775d5f0f35c32a48507455f84992d`.  
+**Successful workflow:** GitHub Actions `36143281129` — SUCCESS.  
+**Held-out corpus:** 16 cases, 8 positive, 8 hard-negative, 8 registered dimensions.  
+**Prediction rows:** 128 = 16 cases × 8 locked variants.  
+**Blind-label gate:** PASS — label file absent during both prediction passes.  
+**Repeatability:** PASS — prediction and evaluation artifacts byte-identical across repeated execution.  
+**Oracle validation:** PASS — secure/vulnerable expected decisions verified for all 16 cases.  
+**Product compilation:** Maven BUILD SUCCESS.  
+**Automatic dimension discovery:** NOT MEASURED — Sprint 13 Phase 2.  
+**Real Burp desktop runtime/publication:** UNVERIFIED / DEFERRED.  
+**External authorized-target validation:** NOT PERFORMED.
+
+### Sprint 13 Phase 1 measured held-out results
+
+| Variant | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| A0 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 |
+| A1 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 |
+| A2 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+| A3 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+| A4 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+| A5 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+| A6 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+| A7 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 |
+
+The five A7 false positives are retained as generalization evidence: legitimate platform-wide tenant administration,
+a new security-admin role, a valid DRAFT→PENDING requester transition, legitimate security-admin equivalent-route
+access, and an allowed `nickname` property.
+
+No detector tuning is permitted inside this frozen Phase 1 result. The next work is Sprint 13 Phase 2 automatic
+authorization-dimension discovery.
+
+Canonical Sprint 13 Phase 1 details:
+- `docs/sprints/sprint-13.md`
+- `docs/research/sprint-13-heldout-protocol.md`
+- `lab/ground-truth/GT-S13-HOLDOUT-FEATURES.json`
+- `lab/ground-truth/GT-S13-HOLDOUT-LABELS.json`
+- `scripts/run-sprint13-heldout.py`
+- `scripts/verify-sprint13-heldout.py`
+- `scripts/verify-sprint13-heldout.sh`
+- `.github/workflows/sprint13-heldout.yml`
+
+## Previous Sprint 12 research state
+
 **Current research boundary:** Sprint 12 — Controlled A0-A7 Authorization Ablation Evaluation.  
 **Decision:** S12 CONTROLLED RESEARCH EXECUTION COMPLETE for the registered synthetic/localhost boundary.  
 **Working branch:** `s12-a0-a7-research-evaluation`.  
