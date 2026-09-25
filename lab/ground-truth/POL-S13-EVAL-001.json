@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-EVAL-001",
+  "purpose": "Untouched Phase 3 evaluation registry created after algorithm freeze c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd",
+  "policies": [
+    {
+      "policyId": "EVAL-OBJECT-RECORD",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/eval/v2/records/record-(?:red|blue)$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL-TENANT-REPORT",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/eval/v2/workspaces/(?P<workspace>red|blue)/reports/report-(?:red|blue)$",
+      "priority": 100,
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "workspace",
+        "crossTenantRoles": [
+          "cloud-governor"
+        ],
+        "delegatedRoles": [
+          "workspace-agent"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL-RBAC-SECLOG",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/eval/v2/management/security-log$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "deniedRoles": [
+          "disabled-operator"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL-WORKFLOW-RELEASE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/eval/v2/workflows/release/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          },
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL-PROPERTY-PREFS",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/eval/v2/accounts/(?:robin|casey)/preferences$",
+      "priority": 100,
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-governor": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "policyId": "EVAL-ROUTING-SECLOG",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/eval/+v2/management/security-log$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "canonicalRoles": [
+          "security-operator",
+          "cloud-governor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL-BATCH-RECORD",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/eval/v2/records/bulk$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL-INDIRECT-RECORD",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/eval/v2/references/ref-(?:red|blue)$",
+      "priority": 100,
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    }
+  ]
+}
