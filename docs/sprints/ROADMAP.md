@@ -2,43 +2,58 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 Phase 6A CROSS-FRAMEWORK-SHAPED NORMALIZATION COMPLETE.**
+**Sprint 13 Phase 6B ACTUAL LOCAL FRAMEWORK RUNTIME VALIDATION COMPLETE.**
 
 Canonical evidence:
-- branch: `s13-cross-framework-generalization`;
-- Phase 5 completion base: `8f57460aabd62d7c009838d8207dd702aad651a1`;
-- successful development workflow: `36173526384`;
-- normalization freeze: `4011b9c05b99b14da66733aea47de43256060990`;
-- successful untouched evaluation workflow: `36173838561`;
-- measured evaluation head: `f3180a1877aaffd224a6d3a2734ddc25bf28c24b`;
-- 64 framework-shaped evaluation cases;
-- raw dimension 60/64;
-- raw disposition 32/64;
-- normalized dimension 64/64;
-- normalized disposition 64/64;
-- Phase 5 evidence lock: PASS;
-- normalization/upstream freeze: PASS;
+- branch: `s13-cross-framework-runtime`;
+- Phase 6A completion base: `84fff082a63c62d847d8b9df4bb17421d7d4bdb2`;
+- successful development workflow: `36175284755`;
+- development freeze: `683933836d2c2fa5ec155bc8e224be87e6958e95`;
+- successful untouched evaluation workflow: `36175649455`;
+- measured evaluation head: `e4d50d69161b8c2af8df30c334a0f51e3599c925`;
+- real localhost FastAPI/Uvicorn: PASS;
+- real localhost Flask: PASS;
+- real localhost Express/Node.js: PASS;
+- real localhost Spring Boot/Java 21: PASS;
+- live HTTP responses: 64/64;
+- automatic dimension inference: 64/64;
+- governed dispositions: 64/64;
+- per framework: 16/16 HTTP, 16/16 dimension, 16/16 disposition;
+- development freeze gate: PASS;
+- Phase 6A normalizer/upstream freeze: PASS;
 - blind-label gate: PASS;
 - repeatability: PASS;
-- Maven package: BUILD SUCCESS.
+- Maven product package: BUILD SUCCESS.
 
-The result demonstrates that a framework-neutral alias normalizer restores the frozen reasoning contract for the tested
-snake_case/camelCase snapshot representations. It does **not** prove real framework runtime compatibility.
+Phase 6B establishes controlled localhost runtime compatibility for the exact framework/runtime versions exercised in CI.
+It does not establish Burp desktop integration, arbitrary framework-version compatibility, production accuracy or
+external-target effectiveness.
 
-**Next gate — Sprint 13 Phase 6B: Actual Local Framework Runtime Validation**
+**Next gate — Sprint 13 Phase 7: Real Burp Desktop / Montoya Runtime Validation**
 
 Required direction:
-- launch real localhost fixtures in CI;
-- FastAPI runtime;
-- Flask runtime;
-- Express runtime;
-- Spring Boot/Spring-style Java runtime where practical;
-- collect real HTTP request/response observations;
-- normalize captured transport evidence with the frozen `4011b9c0...` normalizer;
-- preserve Phase 5 governance and all upstream freezes;
-- compare runtime-observed dimension/disposition results by framework;
-- do not use Burp yet;
-- do not claim external-target validation.
+- load the built ACRA extension into a real Burp Suite desktop/runtime environment;
+- validate Montoya API extension initialization;
+- route controlled localhost traffic through Burp;
+- confirm ACRA receives real Burp request/response objects;
+- verify normalized evidence reaches the frozen dimension/policy/governance pipeline;
+- validate finding/review materialization without auto-publishing unverified issues;
+- retain localhost-only authorization and scope controls;
+- preserve Phase 6B and all earlier research evidence unchanged.
+
+After Phase 7, two gates remain:
+1. explicitly authorized external-target validation;
+2. final research/reproducibility freeze.
+
+## Previous gate — Sprint 13 Phase 6A
+
+**Sprint 13 Phase 6A CROSS-FRAMEWORK-SHAPED NORMALIZATION COMPLETE.**
+
+Canonical Phase 6A evaluation:
+- workflow: `36173838561`;
+- normalized dimension: 64/64;
+- normalized disposition: 64/64;
+- snapshot representation only.
 
 ## Previous gate — Sprint 13 Phase 5
 
