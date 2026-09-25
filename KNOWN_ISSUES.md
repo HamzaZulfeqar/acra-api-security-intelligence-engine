@@ -1,5 +1,20 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 7 real Burp/Montoya limitations — 2026-09-25
+
+- Real Burp Suite Community Edition 2026.7.3 / Montoya runtime validation is complete for controlled localhost traffic.
+- The strengthened canonical evaluation workflow is `36180569483` at `e24a91297bf33bfe18a47453e8c191432b496b20`.
+- Two independent post-freeze Burp runs each measured INIT=1, REQUEST=2, RESPONSE=2, PROCESSED=2 and expected context reconstruction=2/2.
+- The result covers the pinned Burp 2026.7.3 JAR and Montoya 2026.7 compile contract only; arbitrary Burp versions remain unverified.
+- The evaluation is headless CI runtime evidence. The ACRA Swing suite tab was constructed/registered successfully, but visual/manual desktop UX behavior was not independently inspected by a human in this experiment.
+- The packaged Findings & Reproduction surface, publication-eligibility guard and absence of automatic issue-publication wiring were verified. Actual publication of a confirmed Burp issue was intentionally not exercised.
+- Active ACRA request execution remained disabled. Phase 7 validates passive observation/integration, not active vulnerability execution.
+- In probe mode only, passive collection is widened to ALL_TRAFFIC to avoid dependency on interactive Burp Target-scope configuration. Normal defaults remain IN_SCOPE_ONLY.
+- The runtime evidence probe is opt-in and intentionally excludes headers, credentials, tokens, cookies, request bodies and response bodies.
+- The evaluation used synthetic localhost identities/resources and does not establish production scanner accuracy or external-target effectiveness.
+- Phase 8 must use only an explicitly authorized target with scope documented before any traffic is generated.
+- Phase 7 source/runtime evidence is frozen and must not be reused as a tuning target.
+
 ## Sprint 13 Phase 6B actual local framework runtime limitations — 2026-09-25
 
 - Phase 6B launched real localhost FastAPI/Uvicorn, Flask, Express/Node.js and Spring Boot/Java 21 applications in CI.
