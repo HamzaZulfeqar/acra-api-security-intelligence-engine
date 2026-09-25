@@ -1,0 +1,68 @@
+name: Sprint 13 Final Closure
+
+on:
+  push:
+    branches:
+      - s13-finding-lifecycle-governance
+    paths:
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'lab/**'
+      - 'tests/**'
+      - 'scripts/verify-sprint13-final.sh'
+      - 'scripts/verify-sprint13-foundation.sh'
+      - 'scripts/package-sprint13.sh'
+      - 'scripts/verify-sprint12-foundation.sh'
+      - 'scripts/verify-sprint11-foundation.sh'
+      - 'scripts/verify-sprint10-foundation.sh'
+      - 'scripts/verify-sprint9-foundation.sh'
+      - 'scripts/verify-sprint8-foundation.sh'
+      - 'scripts/verify-sprint7-foundation.sh'
+      - 'scripts/verify-sprint6-foundation.sh'
+      - '.github/workflows/sprint13-final.yml'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - 'docs/sprints/sprint-13-requirements-traceability.md'
+      - 'docs/sprints/sprint-13-final-software-audit.md'
+      - 'docs/sprints/sprint-13.md'
+      - 'docs/architecture/s13-finding-lifecycle-governance.md'
+      - 'docs/testing/TEST_MATRIX.md'
+      - 'docs/research/REQUIREMENTS.md'
+      - 'PROJECT_STATE.md'
+      - 'ROADMAP.md'
+      - 'docs/sprints/ROADMAP.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize scripts
+        run: chmod +x ./scripts/*.sh
+      - name: Run Sprint 13 final verification
+        run: bash ./scripts/verify-sprint13-final.sh
+      - name: Upload Sprint 13 final checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-13-final-checkpoint
+          path: |
+            build/s13-final-package/acra-sprint-13-final.zip
+            build/s13-final-package/acra-sprint-13-final.zip.sha256
+            build/s13-final-package/sprint13-package-manifest.txt
+            build/s13-final-package/sprint13-package-verification.json
+            build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.json
+            build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.json.sha256
+            build/s13-foundation/reporting/S13-GOVERNANCE-REPORT.md
+            build/s13-foundation/performance/performance-s13.csv
+          if-no-files-found: warn
