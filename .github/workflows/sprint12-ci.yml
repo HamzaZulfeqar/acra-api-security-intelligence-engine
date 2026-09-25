@@ -6,7 +6,10 @@ on:
       - s12-reproduction-exports
     paths:
       - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'tests/montoya-stubs/**'
       - 'scripts/verify-sprint12-foundation.sh'
+      - 'scripts/verify-sprint12-burp-projection.sh'
       - '.github/workflows/sprint12-ci.yml'
       - 'docs/sprints/sprint-12.md'
       - 'docs/architecture/s12-reproduction-exports.md'
@@ -37,3 +40,5 @@ jobs:
         run: bash ./scripts/verify-sprint12-foundation.sh
       - name: Verify Maven core and Burp adapter compilation
         run: mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
+      - name: Execute Sprint 12 Burp projection against Montoya API
+        run: bash ./scripts/verify-sprint12-burp-projection.sh
