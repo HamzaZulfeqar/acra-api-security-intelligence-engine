@@ -2,57 +2,55 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 Phase 5 POLICY RELIABILITY & UNCERTAINTY GOVERNANCE COMPLETE.**
+**Sprint 13 Phase 6A CROSS-FRAMEWORK-SHAPED NORMALIZATION COMPLETE.**
 
 Canonical evidence:
-- branch: `s13-policy-uncertainty-governance`;
-- Phase 4 completion base: `a07cf497e6689c9b1d161ae2e22c747fdbac33f7`;
-- successful development workflow: `36169960606`;
-- governance freeze: `11afbb80be24116c9facd0d4b0791f4a12efed3a`;
-- successful untouched evaluation workflow: `36170353179`;
-- measured evaluation head: `46f77a8d76b160cec70f7aef3f612e0d63af56da`;
-- evaluation corpus: 64 cases;
-- dimension inference: 64/64;
-- exact governed disposition: 64/64;
-- Phase 4 evidence lock: PASS;
-- governance/upstream algorithm freeze: PASS;
-- label-absence gate: PASS;
+- branch: `s13-cross-framework-generalization`;
+- Phase 5 completion base: `8f57460aabd62d7c009838d8207dd702aad651a1`;
+- successful development workflow: `36173526384`;
+- normalization freeze: `4011b9c05b99b14da66733aea47de43256060990`;
+- successful untouched evaluation workflow: `36173838561`;
+- measured evaluation head: `f3180a1877aaffd224a6d3a2734ddc25bf28c24b`;
+- 64 framework-shaped evaluation cases;
+- raw dimension 60/64;
+- raw disposition 32/64;
+- normalized dimension 64/64;
+- normalized disposition 64/64;
+- Phase 5 evidence lock: PASS;
+- normalization/upstream freeze: PASS;
+- blind-label gate: PASS;
 - repeatability: PASS;
 - Maven package: BUILD SUCCESS.
 
-Measured comparison:
-- frozen A7: TP=16/TN=21/FP=27/FN=0, P=.372093/R=1/F1=.542373;
-- legacy G1: TP=16/TN=25/FP=23/FN=0, P=.410256/R=1/F1=.581818;
-- governed actionable findings: TP=8/TN=48/FP=0/FN=8, P=1/R=.5/F1=.666667.
+The result demonstrates that a framework-neutral alias normalizer restores the frozen reasoning contract for the tested
+snake_case/camelCase snapshot representations. It does **not** prove real framework runtime compatibility.
 
-Governance routing:
-- positive review count=8;
-- negative review count=32;
-- escalation coverage (actionable candidate or review)=1.0;
-- silent positive count=0;
-- review rate=.625;
-- actionable candidate rate=.125.
-
-Phase 5 resolves the Phase 4 false-actionable problem inside this controlled corpus by separating uncertainty from
-confirmed candidate state. The reduced actionable recall is intentional because policy-gap positives remain review-only
-until authoritative policy exists.
-
-**Next gate — Sprint 13 Phase 6: Cross-Framework Generalization**
+**Next gate — Sprint 13 Phase 6B: Actual Local Framework Runtime Validation**
 
 Required direction:
-- preserve Phase 5 dispositions and governance freeze;
-- test equivalent authorization semantics across independently structured API fixtures;
-- include at least Python/FastAPI, Flask, Node/Express and Java/Spring-style representations where practical;
-- avoid framework-specific endpoint-name shortcuts;
-- verify dimension inference, configured-policy semantics and uncertainty governance separately;
-- include framework-specific routing/body/serialization differences;
-- keep real Burp desktop and external authorized-target validation as later independent gates;
-- create a new development set and a new untouched cross-framework evaluation set.
+- launch real localhost fixtures in CI;
+- FastAPI runtime;
+- Flask runtime;
+- Express runtime;
+- Spring Boot/Spring-style Java runtime where practical;
+- collect real HTTP request/response observations;
+- normalize captured transport evidence with the frozen `4011b9c0...` normalizer;
+- preserve Phase 5 governance and all upstream freezes;
+- compare runtime-observed dimension/disposition results by framework;
+- do not use Burp yet;
+- do not claim external-target validation.
 
-See:
-- `sprint-13.md`;
-- `../research/sprint-13-policy-uncertainty-governance-protocol.md`;
-- `../research/EXPERIMENT_REGISTRY.md`.
+## Previous gate — Sprint 13 Phase 5
+
+**Sprint 13 Phase 5 POLICY RELIABILITY & UNCERTAINTY GOVERNANCE COMPLETE.**
+
+Canonical Phase 5 evaluation:
+- workflow: `36170353179`;
+- 64/64 dimensions;
+- 64/64 governed dispositions;
+- governed actionable FP=0;
+- escalation coverage=1.0;
+- silent positive count=0.
 
 ## Previous gate — Sprint 13 Phase 4
 
