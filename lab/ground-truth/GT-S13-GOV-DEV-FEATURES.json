@@ -282,7 +282,7 @@
         "status": 200,
         "body": {
           "id": "report-blue",
-          "tenant_id": "blue"
+          "tenant_id": "red"
         }
       }
     },
@@ -303,7 +303,7 @@
         "status": 200,
         "body": {
           "id": "report-blue",
-          "tenant_id": "blue"
+          "tenant_id": "red"
         }
       }
     },
@@ -442,9 +442,9 @@
       "method": "GET",
       "path": "/govdev/v1/unregistered-management/audit",
       "actor": {
-        "sub": "alice",
+        "sub": "sec",
         "tenant_id": "red",
-        "role": "user"
+        "role": "security-admin"
       },
       "oracle": {
         "type": "HTTP_STATUS_AUTHZ"
@@ -453,7 +453,7 @@
         "status": 200,
         "body": {
           "area": "audit",
-          "role": "user",
+          "role": "security-admin",
           "required_role": "security-admin"
         }
       }
@@ -464,9 +464,9 @@
       "method": "GET",
       "path": "/govdev/v1/ambiguous-management/audit",
       "actor": {
-        "sub": "alice",
+        "sub": "sec",
         "tenant_id": "red",
-        "role": "user"
+        "role": "security-admin"
       },
       "oracle": {
         "type": "HTTP_STATUS_AUTHZ"
@@ -475,7 +475,7 @@
         "status": 200,
         "body": {
           "area": "audit",
-          "role": "user",
+          "role": "security-admin",
           "required_role": "security-admin"
         }
       }
@@ -650,9 +650,9 @@
       "method": "POST",
       "path": "/govdev/v1/unregistered-workflows/change/resources/change-1/transition",
       "actor": {
-        "sub": "alice",
+        "sub": "reviewer",
         "tenant_id": "red",
-        "role": "requester"
+        "role": "approver"
       },
       "requestBody": {
         "action": "APPROVE",
@@ -670,7 +670,7 @@
           "from_state": "PENDING",
           "to_state": "APPROVED",
           "state": "APPROVED",
-          "role": "requester"
+          "role": "approver"
         }
       }
     },
@@ -680,9 +680,9 @@
       "method": "POST",
       "path": "/govdev/v1/ambiguous-workflows/change/resources/change-1/transition",
       "actor": {
-        "sub": "alice",
+        "sub": "reviewer",
         "tenant_id": "red",
-        "role": "requester"
+        "role": "approver"
       },
       "requestBody": {
         "action": "APPROVE",
@@ -700,7 +700,7 @@
           "from_state": "PENDING",
           "to_state": "APPROVED",
           "state": "APPROVED",
-          "role": "requester"
+          "role": "approver"
         }
       }
     },
@@ -856,9 +856,9 @@
       "method": "GET",
       "path": "/govdev//v1/unregistered-management/audit",
       "actor": {
-        "sub": "alice",
+        "sub": "sec",
         "tenant_id": "red",
-        "role": "user"
+        "role": "security-admin"
       },
       "oracle": {
         "type": "HTTP_STATUS_AUTHZ"
@@ -867,7 +867,7 @@
         "status": 200,
         "body": {
           "area": "audit",
-          "role": "user",
+          "role": "security-admin",
           "route_form": "duplicate-separator"
         }
       }
@@ -878,9 +878,9 @@
       "method": "GET",
       "path": "/govdev//v1/ambiguous-management/audit",
       "actor": {
-        "sub": "alice",
+        "sub": "sec",
         "tenant_id": "red",
-        "role": "user"
+        "role": "security-admin"
       },
       "oracle": {
         "type": "HTTP_STATUS_AUTHZ"
@@ -889,7 +889,7 @@
         "status": 200,
         "body": {
           "area": "audit",
-          "role": "user",
+          "role": "security-admin",
           "route_form": "duplicate-separator"
         }
       }
@@ -1053,7 +1053,7 @@
         "role": "user"
       },
       "requestBody": {
-        "risk_level": "high"
+        "nickname": "Alice"
       },
       "oracle": {
         "type": "HTTP_STATUS_AUTHZ"
@@ -1063,7 +1063,7 @@
         "body": {
           "id": "alice",
           "applied_properties": [
-            "risk_level"
+            "nickname"
           ]
         }
       }
@@ -1079,7 +1079,7 @@
         "role": "user"
       },
       "requestBody": {
-        "risk_level": "high"
+        "nickname": "Alice"
       },
       "oracle": {
         "type": "HTTP_STATUS_AUTHZ"
@@ -1089,7 +1089,7 @@
         "body": {
           "id": "alice",
           "applied_properties": [
-            "risk_level"
+            "nickname"
           ]
         }
       }
