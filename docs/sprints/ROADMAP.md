@@ -2,37 +2,45 @@
 
 ## Current gate — 2026-09-25
 
-**Sprint 13 Phase 7 REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION — IN PROGRESS, BLOCKED ONLY AT EXPLICIT EULA ACCEPTANCE.**
+**Sprint 13 Phase 7 REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION COMPLETE.**
 
-Phase 7 branch: `s13-burp-montoya-runtime`.
+Canonical evidence:
+- branch: `s13-burp-montoya-runtime`;
+- Phase 6B completion base: `d35e2a54891357e680253e2cfc766c3e4bb6f88d`;
+- successful real-Burp development workflow: `36179678105`;
+- Phase 7 development freeze: `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`;
+- successful post-freeze evaluation workflow: `36180110271`;
+- measured evaluation head: `b1cf0336c530a3678de64aee699067a4793e3857`;
+- Burp Suite Community Edition 2026.7.3 JAR checksum: PASS;
+- real Montoya extension initialization: PASS;
+- real Burp Proxy request callbacks: PASS;
+- real Burp Proxy response callbacks: PASS;
+- ACRA passive pipeline processing: PASS;
+- development `GT-INTEGRATION-001` context reconstruction: PASS;
+- untouched evaluation contexts: 2/2 in each of two independent Burp runs;
+- label absence during evaluation traffic: PASS;
+- secret-exclusion gate: PASS;
+- semantic repeatability: PASS;
+- active ACRA execution remained disabled.
 
-Implemented:
-- opt-in real-runtime evidence probe in the ACRA extension;
-- real Burp Desktop 2026.7.3 download and checksum pin;
-- shaded extension build;
-- controlled secure localhost lab startup;
-- Burp user-config extension preload;
-- real proxy callback / pipeline verification harness;
-- secret-exclusion verification;
-- Phase 6B evidence lock.
+The Phase 7 evidence probe is opt-in and disabled during normal extension operation.
 
-Development run `36178508712` verified:
-- Phase 6B evidence lock: PASS;
-- ACRA extension build: PASS;
-- Burp binary integrity: PASS;
-- localhost lab health: PASS.
+**Next gate — Sprint 13 Phase 8: Explicitly Authorized External-Target Validation**
 
-The run then reached Burp's first-use legal prompt:
-`Do you accept the license agreement? (y/n)`
+Phase 8 must:
+- use only a target the user owns or is explicitly authorized to test;
+- define written scope and prohibited actions before traffic generation;
+- begin with passive/read-only validation;
+- preserve Phase 7 and all earlier research evidence unchanged;
+- separate target behavior from ACRA inference/policy/governance errors;
+- retain review-only semantics for uncertainty;
+- record exact target/application version and authorization basis without storing secrets;
+- stop on scope ambiguity, destructive behavior, or unexpected state change.
 
-No answer was supplied automatically. Explicit user authorization is required before the CI harness may accept that EULA.
+After Phase 8, one final gate remains:
+- final research/reproducibility freeze and release-candidate evidence consolidation.
 
-Phase 7 is therefore **not complete yet**. Montoya initialization, real Burp Proxy callbacks and pipeline processing remain
-unmeasured until an authorized rerun.
-
-See `../research/sprint-13-burp-montoya-runtime-protocol.md`.
-
-## Current gate — 2026-09-25
+## Previous gate — Sprint 13 Phase 6B
 
 **Sprint 13 Phase 6B ACTUAL LOCAL FRAMEWORK RUNTIME VALIDATION COMPLETE.**
 
