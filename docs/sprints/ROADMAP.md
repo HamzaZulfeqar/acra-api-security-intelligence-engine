@@ -1,5 +1,36 @@
 # ROADMAP
 
+## Current gate — Sprint 16 Public Onboarding & Repository Hardening — 2026-09-26
+
+**REPOSITORY-SIDE ONBOARDING COMPLETE; ADMIN SETTINGS PENDING.**
+
+Implemented:
+- README Quick Start;
+- official `v0.3.0` clone commands;
+- Java 21 / Maven build instructions;
+- Burp Java-extension installation guide;
+- first-run verification;
+- authorized-scope guidance;
+- troubleshooting guide;
+- CODEOWNERS;
+- true public clone/build smoke workflow;
+- published-release asset checksum smoke;
+- corrected `v0.3.0` startup message.
+
+Canonical onboarding workflow:
+- `36202814898` — SUCCESS.
+
+Remaining repository-admin actions:
+1. protect `main` with PR + required status checks;
+2. enable GitHub Dependency Graph;
+3. confirm native Dependency Review performs real analysis.
+
+Tracking issue: #6.
+
+Once those two settings are verified, the repository can be marked **PROFESSIONAL PUBLIC REPOSITORY HARDENING COMPLETE**.
+
+## Previous release gate — ACRA v0.3.0
+
 ## Current release state — ACRA v0.3.0 — 2026-09-26
 
 **STABLE RELEASE PUBLISHED.**

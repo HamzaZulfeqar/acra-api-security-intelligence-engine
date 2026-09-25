@@ -1,0 +1,74 @@
+name: Public Onboarding Smoke
+
+on:
+  push:
+    branches:
+      - main
+      - s16-public-onboarding-hardening
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-onboarding-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  onboarding:
+    name: Public Onboarding Smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: maven
+
+      - name: Verify repository onboarding contract
+        run: bash scripts/verify-public-onboarding.sh
+
+      - name: Verify true public clone and build
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET_REF="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
+          WORK="$(mktemp -d)"
+          trap 'rm -rf "$WORK"' EXIT
+
+          git clone --depth 1 --branch "$TARGET_REF" "https://github.com/${GITHUB_REPOSITORY}.git" "$WORK/acra"
+          cd "$WORK/acra"
+
+          test "$(cat VERSION)" = "0.3.0"
+          mvn --batch-mode --no-transfer-progress clean verify -pl extension/burp-extension -am
+          test -f extension/burp-extension/target/acra-burp-extension-0.3.0.jar
+
+          echo "SPRINT16_PUBLIC_GIT_CLONE PASS ref=$TARGET_REF"
+          echo "SPRINT16_PUBLIC_CLONE_BUILD PASS"
+
+      - name: Verify published v0.3.0 JAR remains available
+        shell: bash
+        run: |
+          set -euo pipefail
+          JAR="/tmp/acra-burp-extension-0.3.0.jar"
+          curl --fail --location --retry 3 \
+            "https://github.com/${GITHUB_REPOSITORY}/releases/download/v0.3.0/acra-burp-extension-0.3.0.jar" \
+            --output "$JAR"
+          echo "95e3271328a77fe76e8c66728b4045a5f83ed782cc797382173ce87cc842f22e  $JAR" | sha256sum -c -
+          echo "SPRINT16_PUBLIC_RELEASE_ASSET PASS"

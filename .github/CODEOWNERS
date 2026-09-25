@@ -1,0 +1,9 @@
+# Default ownership for the public repository.
+* @HamzaZulfeqar
+
+# Security-sensitive release and automation surfaces.
+/.github/ @HamzaZulfeqar
+/scripts/ @HamzaZulfeqar
+/SECURITY.md @HamzaZulfeqar
+/LICENSE @HamzaZulfeqar
+/NOTICE @HamzaZulfeqar
