@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 COMPLETE; PHASE 6A COMPLETE; PHASE 6B ACTUAL LOCAL FRAMEWORK RUNTIME VALIDATION COMPLETE.
+**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 COMPLETE; PHASE 6A COMPLETE; PHASE 6B COMPLETE; PHASE 7 REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION COMPLETE.
 
 ## Objective
 
@@ -72,13 +72,11 @@ retaining this original hold-out result unchanged.
 
 ## Remaining Sprint 13 program
 
-Phase 2 — automatic authorization-dimension discovery — COMPLETE.  
-Phase 3 — policy-generalization redesign using explicit learned/configured policy semantics, followed by a new non-tuned evaluation set.  
-Phase 4 — larger, less-balanced and adversarial negative populations.  
-Phase 5 — cross-framework API fixtures.  
-Phase 6 — real Burp desktop runtime validation.  
-Phase 7 — explicitly authorized external-target validation where available.  
-Phase 8 — final research freeze, limitations and reproducibility package.
+Phases 1–7 are complete under their recorded controlled evidence boundaries.
+
+Remaining:
+- Phase 8 — explicitly authorized external-target validation;
+- Final gate — research freeze, limitations, reproducibility package and release-candidate evidence consolidation.
 
 ## Claim boundary
 
@@ -497,3 +495,78 @@ establish arbitrary framework/version compatibility, production deployment behav
 external-target effectiveness or real-world vulnerability accuracy.
 
 **Next dependency:** Phase 7 — real Burp desktop / Montoya runtime validation against the controlled local lab.
+
+
+## Phase 7 — Real Burp Desktop / Montoya runtime validation
+
+**Branch:** `s13-burp-montoya-runtime`.  
+**Successful development workflow:** `36179678105`.  
+**Development freeze:** `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`.  
+**Successful untouched evaluation workflow:** `36180110271`.  
+**Measured evaluation head:** `b1cf0336c530a3678de64aee699067a4793e3857`.  
+**Burp Desktop:** Community Edition 2026.7.3.  
+**Burp SHA-256:** `c8262dc5426f38bedc490d66c5d21b6ff77d6dc6d85cefe6a66c882690134069`.  
+**Montoya compile contract:** 2026.7.
+
+Phase 7 validates the actual ACRA shaded extension inside the real Burp Desktop / Montoya runtime rather than using a
+mocked Montoya interface.
+
+### Development result
+
+After explicit user authorization to accept the Burp Community Edition EULA, the development gate measured:
+- Phase 6B evidence lock: PASS;
+- Maven/shaded extension build: BUILD SUCCESS;
+- pinned Burp binary checksum: PASS;
+- controlled secure localhost ACRA-Lab health: PASS;
+- real ACRA Montoya initialization: PASS;
+- Burp Proxy request callbacks: 2;
+- Burp Proxy response callbacks: 2;
+- ACRA passive pipeline processed events: 2;
+- `GT-INTEGRATION-001` context reconstruction: PASS;
+- secret-bearing material excluded from the runtime probe: PASS.
+
+Development workflow: `36179678105`.
+
+### Post-freeze untouched evaluation
+
+After development freeze, a separate localhost fixture was created with unseen synthetic identities/resources:
+- `tenant-c / user-c / document 3001`;
+- `tenant-d / user-d / document 4001`.
+
+Expected contexts were stored separately in `GT-S13-BURP-EVAL-LABELS` and physically absent during both real-Burp
+traffic passes.
+
+Untouched evaluation workflow `36180110271` measured, on each of two independent Burp runs:
+- real Burp initialization: 1/1;
+- Proxy request callbacks: 2/2;
+- Proxy response callbacks: 2/2;
+- ACRA pipeline processed events: 2/2;
+- expected context reconstruction: 2/2;
+- all target traffic: loopback-only;
+- response tool source: `PROXY`;
+- label absence during traffic generation: PASS;
+- secret-exclusion gate: PASS;
+- semantic repeatability between the two runs: PASS;
+- extension-source development freeze: PASS;
+- Maven build: BUILD SUCCESS.
+
+Raw runtime evidence is intentionally not byte-identical because Burp message IDs/timestamps are runtime observations.
+The normalized semantic evaluation artifacts are identical across both passes.
+
+### Phase 7 implementation boundary
+
+The runtime evidence probe is opt-in through:
+
+`-Dacra.phase7.probeFile=<path>`
+
+It records non-secret runtime metadata only. Normal extension use does not enable the probe. In automated probe mode,
+passive collection is temporarily widened to `ALL_TRAFFIC` so the test does not depend on interactive Target-scope
+configuration; active execution remains disabled.
+
+### Phase 7 claim boundary
+
+The result establishes controlled real Burp Desktop 2026.7.3 / Montoya runtime operation for ACRA against localhost
+traffic. It does not establish arbitrary Burp-version compatibility, production scanner accuracy, external-target
+effectiveness, automatic confirmed-vulnerability publication, or independent third-party replication.
+
+**Next gate:** Phase 8 — explicitly authorized external-target validation.
