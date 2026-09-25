@@ -1,0 +1,48 @@
+name: Sprint 13 Policy Generalization Development
+
+on:
+  push:
+    branches:
+      - s13-policy-generalization
+    paths:
+      - 'scripts/sprint13_policy_semantics.py'
+      - 'scripts/run-sprint13-policy-dev.py'
+      - 'scripts/verify-sprint13-policy-dev.py'
+      - 'scripts/verify-sprint13-policy-dev.sh'
+      - 'lab/ground-truth/POL-S13-DEV-001.json'
+      - 'lab/ground-truth/GT-S13-POLICY-DEV-*.json'
+      - '.github/workflows/sprint13-policy-dev.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy-development:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize Phase 3 development scripts
+        run: chmod +x ./scripts/run-sprint13-policy-dev.py ./scripts/verify-sprint13-policy-dev.py ./scripts/verify-sprint13-policy-dev.sh
+      - name: Execute Phase 3 development campaign
+        run: bash ./scripts/verify-sprint13-policy-dev.sh
+      - name: Compile product modules
+        run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
+      - name: Upload development artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-13-policy-dev
+          path: |
+            build/s13-policy-dev/**
+          if-no-files-found: warn
