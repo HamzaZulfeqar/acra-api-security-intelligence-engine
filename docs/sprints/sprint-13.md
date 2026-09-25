@@ -3,7 +3,9 @@
 **Date:** 2026-09-25  
 **Branch:** `s13-heldout-external-validity`  
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
-**Status:** PHASE 1 IMPLEMENTED / MEASUREMENT PENDING CI.
+**Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
+**Successful workflow:** `36143281129`  
+**Status:** PHASE 1 HELD-OUT EVALUATION COMPLETE.
 
 ## Objective
 
@@ -13,32 +15,74 @@ Phase 1 is intentionally a failure-capable held-out evaluation. It freezes new i
 locks the Sprint 12 A0-A7 rules, removes labels from the prediction workspace, evaluates previously unseen policy
 semantics, then joins labels only after prediction.
 
-## Phase 1 deliverables
+## Phase 1 integrity gates
 
-- separate held-out API fixture: `lab/heldout-api/server.py`;
-- frozen feature corpus: `GT-S13-HOLDOUT-FEATURES`;
-- sealed label set: `GT-S13-HOLDOUT-LABELS`;
-- blind prediction runner;
-- post-prediction label/oracle verifier;
-- hard-negative false-positive accounting;
-- deterministic two-run verification;
-- locked Sprint 12 rule-diff gate;
-- CI workflow and research artifact upload.
+- separate held-out API fixture: PASS;
+- frozen feature corpus: PASS;
+- sealed labels stored separately from prediction inputs: PASS;
+- label file physically absent during both prediction passes: PASS;
+- Sprint 12 runner/verifier unchanged from the Sprint 12 base: PASS;
+- 16 cases × 8 variants = 128 prediction rows: PASS;
+- secure/vulnerable oracle expectations verified for all 16 cases: PASS;
+- deterministic prediction artifacts across two blind runs: PASS;
+- deterministic evaluation artifacts across two label-join runs: PASS;
+- secret-material scan: PASS;
+- Maven product package: BUILD SUCCESS.
+
+Feature corpus SHA-256:
+`fcd31dba730b728c31cf3b42bb674c49e31a41cd983de2a0c0ebb1040cd745ce`.
+
+## Measured held-out result
+
+| Variant | TP | TN | FP | FN | Precision | Recall | F1 | Hard-negative FP |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| A0 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 | 8 |
+| A1 | 8 | 0 | 8 | 0 | .500000 | 1.000000 | .666667 | 8 |
+| A2 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A3 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A4 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A5 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A6 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+| A7 | 8 | 3 | 5 | 0 | .615385 | 1.000000 | .761905 | 5 |
+
+## Interpretation
+
+The held-out corpus preserved recall for all eight positive cases but exposed five false positives that the Sprint 12
+calibration fixture did not reveal. The locked A7 rules therefore do not generalize cleanly to the new legitimate policy
+semantics.
+
+The five hard-negative failures are deliberate and diagnostically useful:
+
+1. a `platform-admin` role legitimately crossing a tenant boundary;
+2. a new `security-admin` privileged role;
+3. a valid requester workflow transition `DRAFT -> PENDING`;
+4. legitimate `security-admin` access through the equivalent duplicate-separator route;
+5. an allowed profile property named `nickname`.
+
+A2 resolves the three controls whose ownership evidence transfers cleanly. A3-A7 do not reduce the remaining five false
+positives because their policy semantics are fixture-specific. This is evidence of overfitting/limited policy
+generalization, not a reason to modify the frozen result.
 
 ## Research rule
 
-Sprint 13 Phase 1 must not tune A0-A7 to improve held-out metrics.
+Sprint 13 Phase 1 does not tune A0-A7 to improve these held-out metrics.
 
-If the held-out evaluation reveals false positives or false negatives, those failures are recorded as evidence.
-Any later rule revision must be a separately versioned experiment with the original held-out result retained.
+Any revised detector must be versioned as a later experiment and evaluated against a new development/tuning set while
+retaining this original hold-out result unchanged.
 
 ## Remaining Sprint 13 program
 
 Phase 2 — automatic authorization-dimension discovery.  
-Phase 3 — larger, less-balanced and adversarial negative populations.  
-Phase 4 — cross-framework API fixtures.  
-Phase 5 — real Burp desktop runtime validation.  
-Phase 6 — explicitly authorized external-target validation where available.  
-Phase 7 — final research freeze, limitations and reproducibility package.
+Phase 3 — policy-generalization redesign using explicit learned/configured policy semantics, followed by a new non-tuned evaluation set.  
+Phase 4 — larger, less-balanced and adversarial negative populations.  
+Phase 5 — cross-framework API fixtures.  
+Phase 6 — real Burp desktop runtime validation.  
+Phase 7 — explicitly authorized external-target validation where available.  
+Phase 8 — final research freeze, limitations and reproducibility package.
 
-No broader external-validity claim is made until the relevant phase has actually executed.
+## Claim boundary
+
+The result is valid only for the separately frozen synthetic localhost hold-out fixture. The fixture is separately
+authored inside the same project and is not independent third-party replication. Registered authorization dimensions
+are still supplied, so dimension discovery remains unmeasured. No production accuracy, real-world safety, superiority,
+or external-target claim is established.
