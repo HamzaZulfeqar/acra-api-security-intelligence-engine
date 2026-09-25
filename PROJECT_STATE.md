@@ -2,53 +2,71 @@
 
 ## Current state — 2026-09-25
 
-**Current research boundary:** Sprint 13 — Cross-Framework Generalization.  
-**Decision:** S13 PHASE 6A COMPLETE; REAL LOCAL FRAMEWORK RUNTIME VALIDATION NEXT.  
-**Working branch:** `s13-cross-framework-generalization`.  
-**Phase 5 completion base:** `8f57460aabd62d7c009838d8207dd702aad651a1`.  
-**Development workflow:** GitHub Actions `36173526384` — SUCCESS.  
-**Normalization freeze:** `4011b9c05b99b14da66733aea47de43256060990`.  
-**Untouched evaluation workflow:** GitHub Actions `36173838561` — SUCCESS.  
-**Measured evaluation head:** `f3180a1877aaffd224a6d3a2734ddc25bf28c24b`.  
-**Evaluation corpus:** 64 framework-shaped snapshots.  
-**Raw dimension:** 60/64.  
-**Raw disposition:** 32/64.  
-**Normalized dimension:** 64/64.  
-**Normalized disposition:** 64/64.  
+**Current research boundary:** Sprint 13 — Actual Local Cross-Framework Runtime Validation.  
+**Decision:** S13 PHASE 6B COMPLETE; REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION NEXT.  
+**Working branch:** `s13-cross-framework-runtime`.  
+**Phase 6A completion base:** `84fff082a63c62d847d8b9df4bb17421d7d4bdb2`.  
+**Runtime development workflow:** GitHub Actions `36175284755` — SUCCESS.  
+**Runtime development freeze:** `683933836d2c2fa5ec155bc8e224be87e6958e95`.  
+**Untouched runtime evaluation workflow:** GitHub Actions `36175649455` — SUCCESS.  
+**Measured evaluation head:** `e4d50d69161b8c2af8df30c334a0f51e3599c925`.  
+**FastAPI/Uvicorn runtime:** PASS.  
+**Flask runtime:** PASS.  
+**Express/Node.js runtime:** PASS.  
+**Spring Boot/Java 21 runtime:** PASS.  
+**Live HTTP:** 64/64.  
+**Dimension inference:** 64/64.  
+**Governed disposition:** 64/64.  
 **Repeatability:** PASS.  
-**Phase 5 evidence lock:** PASS.  
-**Normalization/upstream freeze:** PASS.  
-**Product compilation:** Maven BUILD SUCCESS.  
-**Actual FastAPI/Flask/Express/Spring runtime:** NOT YET MEASURED.  
-**Real Burp desktop runtime:** UNVERIFIED / DEFERRED.  
+**Development evidence lock:** PASS.  
+**Phase 6A normalizer/upstream freeze:** PASS.  
+**Maven product compilation:** BUILD SUCCESS.  
+**Real Burp desktop runtime:** UNVERIFIED / NEXT.  
 **External authorized-target validation:** NOT PERFORMED.
 
-### Phase 6A interpretation
+### Sprint 13 Phase 6B measured result
 
-FastAPI- and Flask-shaped snake_case snapshots already matched the canonical reasoning schema. Express- and Spring-shaped
-camelCase snapshots caused policy/governance mismatches before normalization despite most dimensions still being inferred.
+| Framework | Live HTTP | Dimension | Governed disposition |
+|---|---:|---:|---:|
+| FastAPI / Uvicorn | 16/16 | 16/16 | 16/16 |
+| Flask | 16/16 | 16/16 | 16/16 |
+| Express / Node.js | 16/16 | 16/16 | 16/16 |
+| Spring Boot / Java 21 | 16/16 | 16/16 | 16/16 |
+| **Total** | **64/64** | **64/64** | **64/64** |
 
-The frozen neutral normalizer restored all 64 dimensions and all 64 expected governed dispositions on the untouched
-snapshot evaluation.
+The evaluation used separate post-freeze runtime fixtures and new route/resource/role/workflow/property vocabulary.
 
-This is serialization-shape evidence only. It does not prove actual framework runtime compatibility.
+### Evidence boundary
 
-**Next work: Sprint 13 Phase 6B — Actual Local Framework Runtime Validation**
-- launch local framework servers in CI;
-- send real HTTP requests;
-- capture live response bodies/statuses;
-- feed captured observations through the frozen normalization/reasoning stack;
-- report results separately per framework.
+This is controlled localhost runtime evidence for the exact versions exercised by CI. It does not prove:
+- arbitrary framework or dependency-version compatibility;
+- production deployment behavior;
+- real Burp desktop integration;
+- external-target safety/effectiveness;
+- real-world vulnerability accuracy.
 
-Canonical Phase 6A details:
-- `docs/research/sprint-13-cross-framework-normalization-protocol.md`
-- `scripts/sprint13_cross_framework_normalization.py`
-- `lab/ground-truth/GT-S13-XFRAME-EVAL-FEATURES.json`
-- `lab/ground-truth/GT-S13-XFRAME-EVAL-LABELS.json`
-- `lab/ground-truth/POL-S13-XFRAME-EVAL-001.json`
-- `scripts/run-sprint13-cross-framework-eval.py`
-- `scripts/verify-sprint13-cross-framework-eval.py`
-- `scripts/verify-sprint13-cross-framework-eval.sh`
+**Next work: Sprint 13 Phase 7 — Real Burp Desktop / Montoya Runtime Validation.**
+
+Remaining gates after Phase 6B:
+1. Phase 7 — real Burp desktop / Montoya runtime validation;
+2. Phase 8 — explicitly authorized external-target validation;
+3. final research/reproducibility freeze.
+
+Canonical Phase 6B details:
+- `docs/research/sprint-13-cross-framework-runtime-protocol.md`;
+- `lab/framework-runtime/`;
+- `lab/framework-runtime-eval/`;
+- `lab/ground-truth/GT-S13-XRUNTIME-EVAL-FEATURES.json`;
+- `lab/ground-truth/GT-S13-XRUNTIME-EVAL-LABELS.json`;
+- `lab/ground-truth/POL-S13-XRUNTIME-EVAL-001.json`;
+- `scripts/run-sprint13-cross-framework-runtime-eval.py`;
+- `scripts/verify-sprint13-cross-framework-runtime-eval.py`;
+- `scripts/verify-sprint13-cross-framework-runtime-eval.sh`.
+
+## Previous Sprint 13 Phase 6A state
+
+Phase 6A remains frozen at workflow `36173838561`: normalized framework-shaped snapshot evaluation measured
+64/64 dimensions and 64/64 governed dispositions.
 
 ## Previous Sprint 13 Phase 4 state
 
