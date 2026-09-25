@@ -21,6 +21,8 @@ import javax.swing.table.AbstractTableModel;
 public final class S13FindingGovernancePanel extends JPanel {
     private final FindingGovernanceWorkspace workspace;
     private final JTextArea overview = view("s13-governance-overview");
+    private final JTextArea reportView = view("s13-governance-report-view");
+    private final JTextArea jsonView = view("s13-governance-json-view");
     private final FindingModel reviewModel = new FindingModel();
     private final FindingModel confirmedModel = new FindingModel();
     private final FindingModel remediationModel = new FindingModel();
@@ -68,6 +70,9 @@ public final class S13FindingGovernancePanel extends JPanel {
         retestModel.update(snapshot.queue(FindingGovernanceQueue.RETEST));
         terminalModel.update(snapshot.queue(FindingGovernanceQueue.TERMINAL));
         historyModel.update(snapshot.findings());
+        java.time.Instant previewAt = java.time.Instant.EPOCH;
+        reportView.setText(workspace.exportMarkdown(previewAt).content());
+        jsonView.setText(workspace.exportJson(previewAt).content());
     }
 
     private JTabbedPane buildTabs() {
@@ -80,6 +85,8 @@ public final class S13FindingGovernancePanel extends JPanel {
         tabs.addTab("Retest", table(retestModel, "s13-governance-retest-table"));
         tabs.addTab("Terminal", table(terminalModel, "s13-governance-terminal-table"));
         tabs.addTab("History", table(historyModel, "s13-governance-history-table"));
+        tabs.addTab("Report", new JScrollPane(reportView));
+        tabs.addTab("JSON Export", new JScrollPane(jsonView));
         return tabs;
     }
 
