@@ -1,0 +1,393 @@
+{
+  "schemaVersion": "s13-governance-labels-v1",
+  "labelSetId": "GT-S13-GOV-DEV-LABELS",
+  "featureDatasetId": "GT-S13-GOV-DEV-FEATURES",
+  "developmentOnly": true,
+  "caseCount": 64,
+  "cases": [
+    {
+      "caseId": "DEV5-01-CUR-POS",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-01-CUR-NEG",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-01-CUR-DENY",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-01-GAP-POS",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-01-GAP-NEG",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-01-AMB-NEG",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-01-STALE-NEG",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-01-INC-NEG",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    },
+    {
+      "caseId": "DEV5-02-CUR-POS",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-02-CUR-NEG",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-02-CUR-DENY",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-02-GAP-POS",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-02-GAP-NEG",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-02-AMB-NEG",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-02-STALE-NEG",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-02-INC-NEG",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    },
+    {
+      "caseId": "DEV5-03-CUR-POS",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-03-CUR-NEG",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-03-CUR-DENY",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-03-GAP-POS",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-03-GAP-NEG",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-03-AMB-NEG",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-03-STALE-NEG",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-03-INC-NEG",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    },
+    {
+      "caseId": "DEV5-04-CUR-POS",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-04-CUR-NEG",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-04-CUR-DENY",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-04-GAP-POS",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-04-GAP-NEG",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-04-AMB-NEG",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-04-STALE-NEG",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-04-INC-NEG",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    },
+    {
+      "caseId": "DEV5-05-CUR-POS",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-05-CUR-NEG",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-05-CUR-DENY",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-05-GAP-POS",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-05-GAP-NEG",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-05-AMB-NEG",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-05-STALE-NEG",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-05-INC-NEG",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    },
+    {
+      "caseId": "DEV5-06-CUR-POS",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-06-CUR-NEG",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-06-CUR-DENY",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-06-GAP-POS",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-06-GAP-NEG",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-06-AMB-NEG",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-06-STALE-NEG",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-06-INC-NEG",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    },
+    {
+      "caseId": "DEV5-07-CUR-POS",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-07-CUR-NEG",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-07-CUR-DENY",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-07-GAP-POS",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-07-GAP-NEG",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-07-AMB-NEG",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-07-STALE-NEG",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-07-INC-NEG",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    },
+    {
+      "caseId": "DEV5-08-CUR-POS",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "DEV5-08-CUR-NEG",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "DEV5-08-CUR-DENY",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "CONTROL_ENFORCED"
+    },
+    {
+      "caseId": "DEV5-08-GAP-POS",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-08-GAP-NEG",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "POLICY_GAP"
+    },
+    {
+      "caseId": "DEV5-08-AMB-NEG",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AMBIGUOUS_POLICY"
+    },
+    {
+      "caseId": "DEV5-08-STALE-NEG",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "STALE_POLICY"
+    },
+    {
+      "caseId": "DEV5-08-INC-NEG",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "INCOMPLETE_CONTEXT"
+    }
+  ]
+}
