@@ -43,7 +43,7 @@ open(cfg,"w",encoding="utf-8").write(json.dumps(value))
 PY
 
 # User explicitly authorized acceptance of the PortSwigger Burp Suite Community Edition EULA for this controlled localhost Phase 7 CI run.
-printf 'y\\n' | java -Djava.awt.headless=true -Dacra.phase7.probeFile="$PROBE" -Xmx2g   -jar "$BURP_JAR" --user-config-file="$USERCFG" >"$WORK/burp.log" 2>&1 &
+printf 'y\n' | java -Djava.awt.headless=true -Dacra.phase7.probeFile="$PROBE" -Xmx2g   -jar "$BURP_JAR" --user-config-file="$USERCFG" >"$WORK/burp.log" 2>&1 &
 BURP_PID="$!"; PIDS+=("$BURP_PID")
 
 for _ in $(seq 1 120); do
