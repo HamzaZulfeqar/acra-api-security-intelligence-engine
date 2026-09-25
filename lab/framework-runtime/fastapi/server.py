@@ -28,9 +28,9 @@ def audit(x_role: str|None=Header(default=None)):
 async def workflow(resource_id: str, body: dict[str,Any], x_role: str|None=Header(default=None)):
     return {**body,"resource_id":resource_id,"state":body.get("to_state"),"role":x_role or ""}
 
-@app.get("/runtime/fastapi/routing/audit")
+@app.get("/runtime/fastapi/routing/equivalent")
 def routing(x_role: str|None=Header(default=None)):
-    return {"area":"audit","role":x_role or "","route_form":"canonical"}
+    return {"area":"route","role":x_role or "","route_form":"canonical"}
 
 @app.patch("/runtime/fastapi/accounts/{account}/preferences")
 async def preferences(account: str, body: dict[str,Any]):
