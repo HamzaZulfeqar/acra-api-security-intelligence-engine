@@ -56,6 +56,17 @@ def normalize_case(case: dict[str, Any]) -> dict[str, Any]:
     result = normalize_value(case)
     if not isinstance(result, dict):
         raise AssertionError("normalized case must remain an object")
+
+    # JSON-list oracle metadata contains field names as string values rather
+    # than dictionary keys. Normalize those references to the same canonical
+    # names used by normalized response items.
+    oracle = result.get("oracle")
+    if isinstance(oracle, dict) and oracle.get("type") == "JSON_LIST_DECISION":
+        for field_ref in ("listField", "matchField", "decisionField"):
+            value = oracle.get(field_ref)
+            if isinstance(value, str):
+                oracle[field_ref] = KEY_ALIASES.get(value, value)
+
     return result
 
 def normalize_observation(observation: dict[str, Any]) -> dict[str, Any]:
