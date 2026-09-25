@@ -148,3 +148,15 @@ RB-0 remains authoritative. Sprint 1 adds stable implementation requirements wit
 - **RES-014** No A0–A7 metric may be recorded as an actual result before corresponding controlled execution evidence exists.
 - **RES-015** Controlled-dataset results shall not be generalized to real-world scanner accuracy or novelty without separate evidence.
 
+
+
+## Sprint 12 reproduction/export requirements
+
+- **FR-064** Finding-candidate reproduction packages shall be deterministic, versioned and secret-safe.
+- **FR-065** Reproduction packages shall structurally exclude raw credentials, raw request/response bodies, principal identifiers, tenant identifiers and free-form candidate rationale by default.
+- **FR-066** SARIF export shall use SARIF 2.1.0-compatible structure and preserve review-only/non-confirmed semantics.
+- **FR-067** Burp Issue export shall be represented by a deterministic core draft independent of Montoya runtime types.
+- **FR-068** A Burp extension adapter may project a verified draft to Montoya types, but real issue submission shall remain a separate runtime validation gate.
+- **NFR-013** JSON, SARIF and Burp Issue draft outputs shall be deterministic for identical reproduction-package state.
+- **SEC-014** Exported reproduction artifacts shall apply structural minimization plus universal redaction as independent defenses.
+- **SAFE-011** Reproduction export shall perform no network dispatch, exploitation, scanning or automatic issue submission.

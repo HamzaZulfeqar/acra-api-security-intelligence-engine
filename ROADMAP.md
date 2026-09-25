@@ -2,30 +2,24 @@
 
 ## Current gate — 2026-09-25
 
-Sprint 11 — **Research Evaluation & Ablation — SOFTWARE COMPLETE** on
-`s11-research-evaluation-ablation`.
+Sprint 12 — **Reproduction & Interchange Exports** is IN PROGRESS on
+`s12-reproduction-exports`.
 
-Dedicated final closure: GitHub Actions run `36066400016` — SUCCESS at closure-candidate source
-`f832af1defde242530408589bd9f8732cef533d5`.
+Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36128103735`.
 
-Current evidence boundary:
+Current boundary:
 
-- A0–A7 protocol, controlled dataset, fixture layer, evidence collection, prediction execution, evaluation and reporting are verified;
-- 15 controlled synthetic localhost cases: 8 positive / 7 negative;
-- prediction campaign: 120 EXECUTED cells;
-- A0–A5: TP8/TN0/FP7/FN0, precision .533333, recall 1, F1 .695652;
-- A6–A7: TP8/TN7/FP0/FN0, precision/recall/F1 = 1 within the controlled dataset;
-- evidence completeness = 1.0 for A0–A7;
-- closure ZIP SHA-256: `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba`;
-- archive entries: 986; safe paths / duplicate detection / clean extraction / per-file SHA-256 equality: PASS;
-- deterministic JSON/Markdown research reporting is verified and archived;
-- real Burp desktop runtime remains UNVERIFIED / DEFERRED;
-- controlled measurements are not real-world scanner-accuracy or novelty claims.
+- deterministic minimized reproduction package: VERIFIED;
+- JSON reproduction export: VERIFIED;
+- SARIF 2.1.0 reproduction export: VERIFIED;
+- review candidate remains non-confirmed in all exports;
+- Burp Issue projection/submission: NOT YET VERIFIED;
+- real Burp desktop runtime remains UNVERIFIED / DEFERRED.
 
-Sprint 10 remains the frozen previous SOFTWARE COMPLETE release base at
-`59022c4a25718f38ea7ec2f010911344d1aa0698`.
+Sprint 11 remains the frozen SOFTWARE COMPLETE release base at
+`61441818179fed4aa1c1a143960bef53b6df9a11`.
 
-No next sprint is started by this closure. Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
+Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
 
 ---
 

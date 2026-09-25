@@ -1,3 +1,17 @@
-# Future reporting
+# Reporting and reproduction exports
 
-Finding reporters and JSON/Burp Issue/SARIF reproduction exports remain future work. Sprint 2 exposes observations in the Burp-local UI but does not create vulnerability findings.
+Sprint 12 Phase 1 adds a generic, deterministic, minimized reproduction package for review-only finding
+candidates.
+
+Verified targets:
+
+- JSON reproduction export;
+- SARIF 2.1.0 review export.
+
+Current boundary:
+
+- candidates are not promoted to confirmed vulnerabilities;
+- principal/tenant identifiers, free-form rationale, raw request/response bodies and credentials are excluded;
+- SARIF uses review semantics and `confirmed=false`;
+- Burp Issue projection is the next Sprint 12 dependency;
+- real Burp issue submission remains UNVERIFIED / DEFERRED until a separate desktop-runtime gate.

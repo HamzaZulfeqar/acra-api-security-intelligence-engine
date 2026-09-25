@@ -2,9 +2,12 @@
 
 ## Current state — 2026-09-25
 
-**Current release boundary:** Sprint 11 — Research Evaluation & Ablation — SOFTWARE COMPLETE.  
-**Decision:** S11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.  
-**Working branch:** `s11-research-evaluation-ablation`.  
+**Current sprint:** Sprint 12 — Reproduction & Interchange Exports (in progress).  
+**Decision:** S12 PHASE 1 VERIFIED COMPLETE; deterministic JSON + SARIF reproduction export foundation verified.  
+**Working branch:** `s12-reproduction-exports`.  
+**Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
+**Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 12 Phase 1 verification:** GitHub Actions run `36128103735` — SUCCESS at source commit `b829c06cfe4c440984305192bd817eb44f5403d3`.  
 **Sprint 11 closure-candidate source commit:** `f832af1defde242530408589bd9f8732cef533d5`.  
 **Sprint 11 dedicated final closure:** GitHub Actions run `36066400016` — SUCCESS.  
 **Sprint 11 closure-candidate ZIP SHA-256:** `6d14693aa4056ee149c4c2f9496f7bb3d044783c7962bdf43f4453e8f2c3aaba` — 986 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.  
@@ -35,6 +38,22 @@
 **Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
 **Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
 **Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
+
+### Sprint 12 verified progress
+
+Phase 1 deterministic reproduction package + JSON/SARIF export is **VERIFIED COMPLETE**:
+
+- generic minimized `ReproductionPackage` built from review-only `FindingCandidate`;
+- deterministic package identity and SHA-256 artifact digests;
+- principal identifiers, tenant identifiers, rationale and raw request/response material excluded from the package schema;
+- JSON reproduction export is deterministic and secret-safe;
+- SARIF 2.1.0 export uses a stable ACRA authorization-review rule;
+- review candidates export as SARIF `warning`, while rejected/inconclusive controls export as `note`;
+- SARIF explicitly records `confirmed=false` and never emits candidate state as `error`;
+- retained Sprint 11 / Sprint 10 / Sprint 9 reporting regressions remain green;
+- real Burp issue submission remains **UNVERIFIED / DEFERRED** until a separate adapter/runtime gate.
+
+FR-013 is **PARTIALLY IMPLEMENTED**: JSON + SARIF are verified; Burp Issue projection/submission remains the next dependency.
 
 ### Sprint 11 final closure
 

@@ -2,6 +2,29 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 12 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+
+Canonical Sprint 12 evidence:
+- branch: `s12-reproduction-exports`;
+- immutable Sprint 11 base: `61441818179fed4aa1c1a143960bef53b6df9a11`;
+- Phase 1 verification run: `36128103735` — SUCCESS at `b829c06cfe4c440984305192bd817eb44f5403d3`;
+- reproduction package identity/minimization: PASS;
+- deterministic JSON export: PASS;
+- SARIF 2.1.0 review export: PASS;
+- non-confirmation boundary: PASS;
+- retained S11/S10/S9 reporting regressions: PASS;
+- real Burp issue submission: UNVERIFIED / DEFERRED.
+
+Next dependency-ordered milestone:
+1. define a deterministic Burp Issue draft model in core without Montoya dependency;
+2. project review candidate state to Burp-compatible severity/confidence semantics without auto-confirmation;
+3. add an extension-side adapter boundary from the draft to the Burp/Montoya layer;
+4. keep real Burp issue submission disabled/unverified until desktop runtime validation;
+5. complete FR-013 only after JSON + SARIF + Burp Issue projection are all verified.
+
+## Previous release boundary — Sprint 11
+
+
 **Sprint 11 SOFTWARE COMPLETE — Phases 1–10 plus dedicated final closure VERIFIED.**
 
 Canonical Sprint 11 evidence:
