@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""Sprint 13 Phase 2 automatic authorization-dimension discovery evaluation."""
+"""Sprint 13 Phase 2 blind dimension inference + downstream prediction.
+
+This process intentionally has no dependency on the sealed dimension-label file.
+It consumes only GT-S13-DIMENSION-FEATURES and produces unlabelled inference and
+A0-A7 downstream prediction artifacts.
+"""
 from __future__ import annotations
 
-import base64
 import hashlib
 import importlib.util
 import json
@@ -13,20 +17,17 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-S12_DATASET = ROOT / "lab" / "ground-truth" / "GT-S11-AUTHORIZATION-RESEARCH.json"
-S13_FEATURES = ROOT / "lab" / "ground-truth" / "GT-S13-HOLDOUT-FEATURES.json"
-S13_LABELS = ROOT / "lab" / "ground-truth" / "GT-S13-HOLDOUT-LABELS.json"
+FEATURES = ROOT / "lab" / "ground-truth" / "GT-S13-DIMENSION-FEATURES.json"
 S12_SERVER = ROOT / "lab" / "vulnerable-api" / "basic-api" / "server.py"
 S13_SERVER = ROOT / "lab" / "heldout-api" / "server.py"
 S12_RUNNER = ROOT / "scripts" / "run-sprint12-ablation.py"
 INFERENCE_MODULE = ROOT / "scripts" / "sprint13_dimension_inference.py"
 OUT_DIR = ROOT / "build" / "s13-dimension-discovery"
-RESULT = OUT_DIR / "evaluation.json"
-ROWS = OUT_DIR / "cases.jsonl"
+RESULT = OUT_DIR / "predictions.json"
+ROWS = OUT_DIR / "predictions.jsonl"
 
 def load_module(path, name):
     spec = importlib.util.spec_from_file_location(name, path)
@@ -35,8 +36,8 @@ def load_module(path, name):
     spec.loader.exec_module(module)
     return module
 
-S12 = load_module(S12_RUNNER, "acra_s12_phase2")
-DIM = load_module(INFERENCE_MODULE, "acra_s13_dimension")
+S12 = load_module(S12_RUNNER, "acra_s12_phase2_predict")
+DIM = load_module(INFERENCE_MODULE, "acra_s13_dimension_predict")
 
 def canonical_bytes(value):
     return json.dumps(value, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -62,11 +63,11 @@ def wait_ready(port):
                     return
         except Exception:
             time.sleep(0.05)
-    raise RuntimeError("dimension-discovery fixture did not become ready")
+    raise RuntimeError("Sprint 13 Phase 2 fixture did not become ready")
 
-def start_server(server, env_name, mode, port):
+def start_server(server, env_name, port):
     env = dict(os.environ)
-    env[env_name] = mode
+    env[env_name] = "vulnerable"
     env["PORT"] = str(port)
     process = subprocess.Popen(
         [sys.executable, str(server)],
@@ -109,18 +110,13 @@ def request_case(port, case):
             parsed = None
     return {"status": status, "body": parsed}
 
-def execute_dataset(cases, server, env_name):
+def execute_fixture(cases, server, env_name):
     port = free_port()
-    process = start_server(server, env_name, "vulnerable", port)
+    process = start_server(server, env_name, port)
     observations = {}
     try:
         for case in sorted(cases, key=lambda item: item["caseId"]):
-            sanitized = DIM.observable_case({
-                key: value
-                for key, value in case.items()
-                if key not in DIM.FORBIDDEN_KEYS
-            })
-            observations[case["caseId"]] = request_case(port, sanitized)
+            observations[case["caseId"]] = request_case(port, case)
     finally:
         process.terminate()
         try:
@@ -130,75 +126,45 @@ def execute_dataset(cases, server, env_name):
             process.wait(timeout=5)
     return observations
 
-def dimension_metrics(rows):
-    labels = list(DIM.DIMENSIONS)
-    confusion = {
-        actual: {predicted: 0 for predicted in labels}
-        for actual in labels
-    }
-    for row in rows:
-        confusion[row["registeredDimension"]][row["inferredDimension"]] += 1
+def main():
+    dataset = json.loads(FEATURES.read_text(encoding="utf-8"))
+    if dataset.get("datasetId") != "GT-S13-DIMENSION-FEATURES":
+        raise AssertionError("unexpected Sprint 13 Phase 2 feature dataset")
+    if dataset.get("registeredDimensionSeparated") is not True:
+        raise AssertionError("registered dimensions must be separated from Phase 2 features")
+    if dataset.get("vulnerabilityLabelsSeparated") is not True:
+        raise AssertionError("vulnerability labels must be separated from Phase 2 features")
 
-    total = len(rows)
-    correct = sum(1 for row in rows if row["registeredDimension"] == row["inferredDimension"])
-    per_class = {}
-    f1_values = []
-    for label in labels:
-        tp = confusion[label][label]
-        fp = sum(confusion[actual][label] for actual in labels if actual != label)
-        fn = sum(confusion[label][predicted] for predicted in labels if predicted != label)
-        precision = None if tp + fp == 0 else tp / (tp + fp)
-        recall = None if tp + fn == 0 else tp / (tp + fn)
-        f1 = None
-        if precision is not None and recall is not None and precision + recall > 0:
-            f1 = 2 * precision * recall / (precision + recall)
-        per_class[label] = {
-            "support": sum(confusion[label].values()),
-            "tp": tp,
-            "fp": fp,
-            "fn": fn,
-            "precision": precision,
-            "recall": recall,
-            "f1": f1,
-        }
-        f1_values.append(0.0 if f1 is None else f1)
+    cases = dataset.get("cases")
+    if not isinstance(cases, list) or len(cases) != 32:
+        raise AssertionError("Phase 2 requires the frozen 32-case dimension-free corpus")
 
-    return {
-        "count": total,
-        "correct": correct,
-        "accuracy": None if total == 0 else correct / total,
-        "macroF1": None if not f1_values else sum(f1_values) / len(f1_values),
-        "confusion": confusion,
-        "perClass": per_class,
-    }
+    for case in cases:
+        forbidden = DIM.FORBIDDEN_KEYS.intersection(case)
+        if forbidden:
+            raise AssertionError(f"feature dataset leaked forbidden inference fields: {sorted(forbidden)}")
 
-def binary_metrics(rows):
-    return S12.confusion(rows)
+    s12_cases = [case for case in cases if case.get("fixture") == "ACRA_LAB"]
+    s13_cases = [case for case in cases if case.get("fixture") == "S13_HOLDOUT"]
+    if len(s12_cases) != 16 or len(s13_cases) != 16:
+        raise AssertionError("unexpected Phase 2 fixture partition")
 
-def evaluate_dataset(dataset_id, cases, observations, truth_by_case):
-    inference_rows = []
-    downstream_rows = []
+    observations = {}
+    observations.update(execute_fixture(s12_cases, S12_SERVER, "ACRA_LAB_MODE"))
+    observations.update(execute_fixture(s13_cases, S13_SERVER, "ACRA_HOLDOUT_MODE"))
 
+    rows = []
+    case_summaries = []
     for case in sorted(cases, key=lambda item: item["caseId"]):
-        case_id = case["caseId"]
+        observable = DIM.observable_case(case)
+        observation = observations[case["caseId"]]
+        inference = DIM.infer_dimension(observable, observation)
 
-        # Construct an observable-only view. The inference function itself rejects
-        # dimension and label fields as a second boundary.
-        raw_observable = {
-            key: value
-            for key, value in case.items()
-            if key not in DIM.FORBIDDEN_KEYS
-        }
-        observable = DIM.observable_case(raw_observable)
-        inference = DIM.infer_dimension(observable, observations[case_id])
-
-        registered_dimension = case["dimension"]
-        inference_rows.append({
-            "datasetId": dataset_id,
-            "caseId": case_id,
-            "registeredDimension": registered_dimension,
+        case_summaries.append({
+            "caseId": case["caseId"],
+            "sourceDataset": case["sourceDataset"],
+            "fixture": case["fixture"],
             "inferredDimension": inference["dimension"],
-            "correct": inference["dimension"] == registered_dimension,
             "confidence": inference["confidence"],
             "topScore": inference["topScore"],
             "margin": inference["margin"],
@@ -206,23 +172,22 @@ def evaluate_dataset(dataset_id, cases, observations, truth_by_case):
             "evidence": inference["evidence"],
         })
 
-        # Downstream ACRA gets only the inferred dimension.
         prediction_case = dict(observable)
         prediction_case["dimension"] = inference["dimension"]
         for variant, experiment_id, capabilities in S12.VARIANTS:
             prediction = S12.predict(
                 prediction_case,
-                observations[case_id],
+                observation,
                 set(capabilities),
             )
-            downstream_rows.append({
-                "datasetId": dataset_id,
+            rows.append({
+                "caseId": case["caseId"],
+                "sourceDataset": case["sourceDataset"],
+                "fixture": case["fixture"],
                 "variant": variant,
                 "experimentId": experiment_id,
-                "caseId": case_id,
-                "registeredDimension": registered_dimension,
                 "inferredDimension": inference["dimension"],
-                "groundTruth": truth_by_case[case_id],
+                "confidence": inference["confidence"],
                 "prediction": prediction["prediction"],
                 "observedDecision": prediction["observedDecision"],
                 "status": prediction["status"],
@@ -230,113 +195,34 @@ def evaluate_dataset(dataset_id, cases, observations, truth_by_case):
                 "reasons": prediction["reasons"],
             })
 
-    by_variant = {}
-    for variant, _, _ in S12.VARIANTS:
-        subset = [row for row in downstream_rows if row["variant"] == variant]
-        by_variant[variant] = binary_metrics(subset)
-
-    return {
-        "dimensionRows": inference_rows,
-        "downstreamRows": downstream_rows,
-        "dimensionMetrics": dimension_metrics(inference_rows),
-        "downstreamMetrics": by_variant,
-    }
-
-def main():
-    s12 = json.loads(S12_DATASET.read_text(encoding="utf-8"))
-    s13 = json.loads(S13_FEATURES.read_text(encoding="utf-8"))
-
-    s12_cases = s12["cases"]
-    s13_cases = s13["cases"]
-
-    if len(s12_cases) != 16 or len(s13_cases) != 16:
-        raise AssertionError("Phase 2 requires the frozen 16-case S12 and 16-case S13 corpora")
-
-    # Observe both datasets before loading the separately sealed S13 vulnerability labels.
-    s12_observations = execute_dataset(
-        s12_cases,
-        S12_SERVER,
-        "ACRA_LAB_MODE",
-    )
-    s13_observations = execute_dataset(
-        s13_cases,
-        S13_SERVER,
-        "ACRA_HOLDOUT_MODE",
-    )
-
-    # Registered dimensions are used only as post-inference evaluation labels.
-    s12_truth = {case["caseId"]: case["groundTruth"] for case in s12_cases}
-
-    # Load S13 vulnerability labels only after all endpoint observations have been collected.
-    s13_labels = json.loads(S13_LABELS.read_text(encoding="utf-8"))
-    s13_truth = {item["caseId"]: item["groundTruth"] for item in s13_labels["cases"]}
-
-    s12_eval = evaluate_dataset(
-        "GT-S11-AUTHORIZATION-RESEARCH",
-        s12_cases,
-        s12_observations,
-        s12_truth,
-    )
-    s13_eval = evaluate_dataset(
-        "GT-S13-HOLDOUT-FEATURES",
-        s13_cases,
-        s13_observations,
-        s13_truth,
-    )
-
-    combined_dimension_rows = s12_eval["dimensionRows"] + s13_eval["dimensionRows"]
-    combined_metrics = dimension_metrics(combined_dimension_rows)
-
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
     artifact = {
-        "schemaVersion": "s13-dimension-discovery-v1",
+        "schemaVersion": "s13-dimension-predictions-v1",
+        "featureDatasetId": dataset["datasetId"],
+        "featureDatasetSha256": sha256(FEATURES),
         "sourceCommit": git_head(),
         "inferenceEngineSha256": sha256(INFERENCE_MODULE),
         "lockedSprint12RunnerSha256": sha256(S12_RUNNER),
-        "datasets": {
-            "s12Calibration": {
-                "datasetId": s12["groundTruthId"],
-                "datasetSha256": sha256(S12_DATASET),
-                "dimensionMetrics": s12_eval["dimensionMetrics"],
-                "downstreamMetrics": s12_eval["downstreamMetrics"],
-            },
-            "s13Holdout": {
-                "datasetId": s13["datasetId"],
-                "datasetSha256": sha256(S13_FEATURES),
-                "labelSha256": sha256(S13_LABELS),
-                "dimensionMetrics": s13_eval["dimensionMetrics"],
-                "downstreamMetrics": s13_eval["downstreamMetrics"],
-            },
-        },
-        "combinedDimensionMetrics": combined_metrics,
+        "caseCount": len(cases),
+        "variantCount": len(S12.VARIANTS),
+        "predictionRowCount": len(rows),
+        "cases": case_summaries,
         "boundary": {
             "registeredDimensionAvailableToInference": False,
             "vulnerabilityLabelsAvailableToInference": False,
+            "labelFileRequired": False,
             "endpointMethodUsed": True,
             "endpointPathUsed": True,
             "identityContextUsed": True,
             "requestStructureUsed": True,
             "responseStructureUsed": True,
-            "responseValuesUsedOnlyForStructuralOrPolicySignals": True,
             "dimensionInjectedIntoDownstreamFromInferenceOnly": True,
         },
-        "claimBoundary": [
-            "dimension accuracy is measured only on the frozen S12 and S13 synthetic localhost corpora",
-            "the deterministic evidence rules are authored within the project and are not independently trained",
-            "path semantics are observable evidence but may not generalize across naming conventions",
-            "no external-target or production accuracy claim is established",
-        ],
+        "scope": "synthetic localhost S12 calibration + S13 holdout fixtures only",
     }
-
-    all_rows = []
-    for row in s12_eval["dimensionRows"] + s13_eval["dimensionRows"]:
-        all_rows.append({"rowType": "DIMENSION", **row})
-    for row in s12_eval["downstreamRows"] + s13_eval["downstreamRows"]:
-        all_rows.append({"rowType": "DOWNSTREAM", **row})
-
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
     RESULT.write_bytes(canonical_bytes(artifact) + b"\n")
     ROWS.write_text(
-        "".join(json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n" for row in all_rows),
+        "".join(json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n" for row in rows),
         encoding="utf-8",
     )
     for path in (RESULT, ROWS):
@@ -345,27 +231,15 @@ def main():
             encoding="utf-8",
         )
 
-    for name, evaluation in (("S12", s12_eval), ("S13", s13_eval)):
-        dm = evaluation["dimensionMetrics"]
-        print(
-            "SPRINT13_DIMENSION_RESULT "
-            f"{name} correct={dm['correct']}/{dm['count']} "
-            f"accuracy={dm['accuracy']:.6f} macro_f1={dm['macroF1']:.6f}"
-        )
-        for variant in ("A0", "A2", "A7"):
-            m = evaluation["downstreamMetrics"][variant]
-            print(
-                "SPRINT13_DIMENSION_DOWNSTREAM "
-                f"{name} {variant} TP={m['tp']} TN={m['tn']} FP={m['fp']} FN={m['fn']} "
-                f"precision={m['precision'] if m['precision'] is not None else 'N/A'} "
-                f"recall={m['recall'] if m['recall'] is not None else 'N/A'} "
-                f"f1={m['f1'] if m['f1'] is not None else 'N/A'}"
-            )
+    confidence_counts = {}
+    for case in case_summaries:
+        confidence_counts[case["confidence"]] = confidence_counts.get(case["confidence"], 0) + 1
 
     print(
-        "SPRINT13_DIMENSION_COMBINED "
-        f"correct={combined_metrics['correct']}/{combined_metrics['count']} "
-        f"accuracy={combined_metrics['accuracy']:.6f} macro_f1={combined_metrics['macroF1']:.6f}"
+        "SPRINT13_DIMENSION_PREDICTION PASS "
+        f"cases={len(cases)} rows={len(rows)} "
+        f"confidence={json.dumps(confidence_counts, sort_keys=True, separators=(',', ':'))} "
+        f"features_sha256={sha256(FEATURES)}"
     )
 
 if __name__ == "__main__":
