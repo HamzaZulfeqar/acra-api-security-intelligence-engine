@@ -1,0 +1,47 @@
+name: Sprint 13 Cross Framework Evaluation
+
+on:
+  push:
+    branches:
+      - s13-cross-framework-generalization
+    paths:
+      - 'lab/ground-truth/POL-S13-XFRAME-EVAL-001.json'
+      - 'lab/ground-truth/GT-S13-XFRAME-EVAL-*.json'
+      - 'scripts/run-sprint13-cross-framework-eval.py'
+      - 'scripts/verify-sprint13-cross-framework-eval.py'
+      - 'scripts/verify-sprint13-cross-framework-eval.sh'
+      - 'docs/research/sprint-13-cross-framework-normalization-protocol.md'
+      - '.github/workflows/sprint13-cross-framework-eval.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  xframe-evaluation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize Phase 6A evaluation scripts
+        run: chmod +x ./scripts/run-sprint13-cross-framework-eval.py ./scripts/verify-sprint13-cross-framework-eval.py ./scripts/verify-sprint13-cross-framework-eval.sh
+      - name: Execute Phase 6A untouched framework-shaped evaluation
+        run: bash ./scripts/verify-sprint13-cross-framework-eval.sh
+      - name: Compile product modules
+        run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
+      - name: Upload Phase 6A evaluation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-13-xframe-eval
+          path: build/s13-xframe-eval/**
+          if-no-files-found: warn
