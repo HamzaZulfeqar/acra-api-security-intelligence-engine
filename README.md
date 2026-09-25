@@ -1,222 +1,157 @@
-﻿# Hi, I'm Hamza Zulfeqar ðŸ‘‹
+# ACRA — API Access Control & Routing Auditor
 
-### Cybersecurity Undergraduate | Offensive Security | SOC & API Security
+**Current candidate:** `v0.3.0-rc1`  
+**Runtime:** Java 21  
+**Burp integration:** Montoya API 2026.7  
+**Research state:** Sprint 13 frozen; Sprint 14 productization/release hardening in progress.
 
-I'm a Cybersecurity undergraduate at **Shifa Tameer-e-Millat University** focused on building practical security engineering capabilities across **Security Operations, Offensive Security, API Security, Threat Detection, Digital Forensics, and Security Automation**.
+ACRA is a security-research and engineering project for analyzing API authorization behavior from correlated HTTP,
+identity, tenant, ownership, role, workflow, routing, property, batch and indirect-reference evidence.
 
-I work on security-focused projects that combine cybersecurity research with software engineering, automation, and real-world security testing methodologies.
+The project is implemented as a Java core plus a Burp Suite extension adapter.
 
----
+## What ACRA does
 
-## ðŸ›¡ï¸ Cybersecurity Focus
+ACRA passively observes API traffic and builds structured security context for authorization analysis. Its architecture
+supports:
 
-- Security Operations & SOC Fundamentals
-- Threat Detection & Security Monitoring
-- Vulnerability Assessment
-- Penetration Testing Methodologies
-- API Security & Authorization Testing
-- OWASP Security Testing
-- Digital Forensics
-- Network Security
-- Threat Hunting
-- MITRE ATT&CK
-- Security Automation
-- Purple Team & Detection Validation
+- object-level authorization analysis;
+- tenant-boundary analysis;
+- role/function authorization analysis;
+- workflow/state authorization analysis;
+- routing-equivalence analysis;
+- property-level authorization analysis;
+- batch authorization analysis;
+- indirect-reference analysis;
+- evidence correlation and governed uncertainty;
+- review-oriented finding candidates and reproduction artifacts.
 
----
+ACRA deliberately distinguishes a **candidate** from a **confirmed vulnerability**. Uncertain policy/context states are
+routed to review rather than silently promoted.
 
-## ðŸ’» Technical Skills
+## Repository layout
 
-### Security Engineering
-- Vulnerability Assessment
-- Penetration Testing
-- API Security Testing
-- Authorization & Access-Control Analysis
-- Security Monitoring
-- Incident Investigation
-- Digital Forensics
-- Threat Detection
-- Security Automation
+```text
+core/                     Framework-neutral ACRA domain and reasoning code
+extension/burp-extension/ Burp Suite / Montoya adapter and UI
+lab/                      Controlled local research fixtures
+scripts/                  Verification, packaging and research automation
+docs/                      Architecture, testing, research and sprint records
+.github/workflows/         CI, security and research gates
+```
 
-### Security Tools & Platforms
-- Burp Suite
-- Wazuh
-- Splunk
-- Suricata
-- pfSense
-- Shuffle SOAR
-- MITRE ATT&CK
+## Build
 
-### Development
-- Java
-- Python
-- PowerShell
-- REST APIs
+Requirements:
+
+- JDK 21
 - Maven
-- JUnit
 - Git
-- GitHub
 
-### Infrastructure & DevSecOps
-- Linux
-- Docker
-- GitHub Actions
-- CI/CD Concepts
-- Network Security
-- Secure Software Development
+Build and run the project test suite:
 
----
+```bash
+mvn --batch-mode --no-transfer-progress clean verify
+```
 
-## ðŸš€ Current Projects
+The shaded Burp extension candidate is produced at:
 
-### ACRA â€” API Access Control & Routing Auditor
+```text
+extension/burp-extension/target/acra-burp-extension-0.3.0-rc1.jar
+```
 
-A professional security research project focused on identifying complex API authorization and access-control weaknesses through correlated analysis of application behavior.
+## Release-candidate packaging
 
-ACRA is being developed as a **Burp Suite extension using the Montoya API**, with a focus on analyzing:
+Sprint 14 adds a deterministic packaging layer around a fixed Maven build input.
 
-- URI and resource relationships
-- Authentication and authorization context
-- User roles and privileges
-- Multi-tenant boundaries
-- Resource ownership
-- Workflow state
-- Routing behavior
-- Differential request/response analysis
-- Evidence correlation
-- Security findings and classification
+```bash
+mvn --batch-mode --no-transfer-progress clean verify
+python3 scripts/package-sprint14-release.py
+python3 scripts/verify-sprint14-release.py
+```
 
-**Tech Stack:** Java â€¢ Burp Suite Montoya API â€¢ Maven â€¢ JUnit
+Generated files are written under `build/release/` and include:
 
----
+- the shaded Burp extension JAR;
+- a deterministic release ZIP;
+- a machine-readable release manifest;
+- SHA-256 checksums;
+- release/readme/security/license/claim-boundary documentation.
 
-### SOCDEFEND-X PurpleOps
+The package is a **release candidate**, not a public release.
 
-A cybersecurity research and FYP project focused on **purple-team defense validation, telemetry correlation, and response verification** in controlled security environments.
+## Verified runtime boundary
 
-The platform integrates security telemetry and defensive technologies to evaluate whether simulated attack scenarios are properly detected, correlated, investigated, and responded to.
+Sprint 13 Phase 7 loaded the actual shaded ACRA extension inside real Burp Suite Community Edition 2026.7.3 and observed:
 
-**Technologies & Integrations:**
+- real Montoya extension initialization;
+- real Burp Proxy request callbacks;
+- real Burp Proxy response callbacks;
+- ACRA passive-pipeline processing;
+- correct post-freeze context reconstruction on two unseen localhost cases in two independent runs;
+- review/publication eligibility protections;
+- active execution disabled.
 
-- Wazuh
-- Suricata
-- pfSense
-- Shuffle SOAR
-- MITRE ATT&CK
-- Security Telemetry
-- Detection Engineering
-- Incident Response
-- Purple-Team Validation
+Canonical strengthened Phase 7 workflow: `36180569483`.
 
----
+This evidence is limited to the exact controlled localhost runtime boundary. It does **not** establish production
+accuracy, arbitrary Burp-version compatibility, external-target effectiveness or independent real-world validation.
 
-### DASE Engine
+See:
 
-**DNS Artifact Reconstruction & Anti-Forensics Detection**
+- `docs/research/FINAL_RESEARCH_FREEZE.md`
+- `docs/research/FINAL_CLAIM_BOUNDARY.md`
+- `docs/research/FINAL_EVIDENCE_MANIFEST.json`
+- `docs/research/FINAL_REPRODUCIBILITY.md`
 
-A cybersecurity research project focused on reconstructing DNS activity from artifacts such as:
+## Safety model
 
-- DNS PCAP data
-- Logs
-- Cache artifacts
-- Timestamps
+ACRA is developed for authorized security research.
 
-The project also explores detection of potential anti-forensics activity including artifact manipulation, cache wiping, log tampering, and timestamp-related inconsistencies.
+Current release-candidate rules include:
 
----
+- active execution disabled by default;
+- candidate != confirmed vulnerability;
+- no automatic Burp issue publication;
+- uncertainty routed to review;
+- no secrets in research/runtime evidence probes;
+- external testing only with explicit authorization and scope.
 
-## ðŸŽ“ Education
+See `SECURITY.md`.
 
-**BS Cyber Security**  
-Shifa Tameer-e-Millat University  
-2023 â€“ 2027
+## Research status
 
-Focused on cybersecurity, networking, security engineering, digital forensics, offensive security, and secure software development.
+Sprint 13 is frozen with eight canonical completed controlled experiments.
 
----
+Phase 8 external-target validation was **NOT PERFORMED** before the freeze. Therefore this repository does not claim:
 
-## ðŸ’¼ Experience & Leadership
+- production scanner accuracy;
+- production safety;
+- external-target effectiveness;
+- independent real-world validation.
 
-### Offensive Security Intern (2 Months)
-**ITSOLERA Pvt. Ltd.**
+Any later external validation must be a new post-freeze experiment/version.
 
-Completed a 2-month internship focused on practical offensive-security activities, security research, and vulnerability assessment methodologies.
+## License status
 
-### Student Ambassador
-**ITSOLERA Pvt. Ltd.**
+**No software license has been selected yet.**
 
-Supporting technical and student-focused engagement initiatives.
+The repository's `LICENSE` file intentionally records this unresolved state. Until a license is explicitly selected,
+do not treat the source or packaged release candidate as granting reuse, redistribution or modification rights.
 
-### Vice President
-**Shifa Cyber Security Society**
+This is currently a blocker for public release promotion.
 
-Contributing to cybersecurity community activities, coordination, leadership, and student engagement.
+## Maintainer
 
-### Deputy Director Registration
-**Shifa Student Society**
+Hamza Zulfiqar  
+GitHub: `HamzaZulfeqar`
 
-Worked on registration operations, verification, coordination, data management, and event administration.
+## Version
 
----
+Source-of-truth version:
 
-## ðŸ“œ Certifications
+```text
+0.3.0-rc1
+```
 
-- **Certified Ethical Hacker (CEH)** â€” EC-Council
-- **Digital Forensics & Cybersecurity Training** â€” NAVTTC / Metapi
-- **How to Sell Your Digital Skills on Freelancing Platforms** â€” Shifa Cyber Security Society
-
----
-
-## ðŸ”¬ Areas of Research
-
-I'm particularly interested in:
-
-- API Security
-- Broken Access Control
-- Authorization Testing
-- Security Automation
-- Detection Engineering
-- Threat Hunting
-- Purple Team Operations
-- Digital Forensics
-- Adversary Simulation
-- SOC Engineering
-- Offensive Security Research
-- Security Tool Development
-
----
-
-## ðŸ“ˆ Currently Developing
-
-I'm continuously strengthening my capabilities in:
-
-- Advanced API Security
-- Offensive Security & VAPT
-- SOC Operations
-- Threat Detection
-- Detection Engineering
-- MITRE ATT&CK
-- Digital Forensics
-- Security Automation
-- DevSecOps
-- Secure Software Engineering
-
----
-
-## ðŸ“Š GitHub
-
-I use GitHub to document cybersecurity research, security tooling, academic projects, experiments, and practical implementations.
-
-**Focus:** Build â†’ Test â†’ Analyze â†’ Automate â†’ Secure
-
----
-
-## ðŸ“« Connect With Me
-
-- **GitHub:** https://github.com/HamzaZulfeqar
-- **LinkedIn:** https://www.linkedin.com/in/hamzisticcs
-- **Email:** hamzisticcs@gmail.com
-
----
-
-> **Building practical cybersecurity capabilities through research, engineering, automation, and continuous security testing.**
+See `VERSION`, the Maven POMs and `CHANGELOG.md`.
