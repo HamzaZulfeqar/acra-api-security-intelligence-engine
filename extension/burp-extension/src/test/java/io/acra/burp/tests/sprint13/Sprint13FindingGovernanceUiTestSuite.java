@@ -77,7 +77,7 @@ public final class Sprint13FindingGovernanceUiTestSuite {
         JTabbedPane tabs = find(panel, JTabbedPane.class, "s13-governance-tabs");
         for (String title : Set.of(
                 "Overview", "Review Required", "Confirmed", "Remediation",
-                "Retest", "Terminal", "History")) {
+                "Retest", "Terminal", "History", "Report", "JSON Export")) {
             check(indexOf(tabs, title) >= 0, "Sprint 13 sub-tab installed: " + title);
             assertions++;
         }
@@ -164,6 +164,37 @@ public final class Sprint13FindingGovernanceUiTestSuite {
                     "each fixture lifecycle event retains one evidence reference");
             assertions++;
         }
+
+        JTextArea report = find(panel, JTextArea.class, "s13-governance-report-view");
+        check(report.getText().contains("ACRA Sprint 13 Finding Governance Report"),
+                "governance report view renders canonical Markdown");
+        assertions++;
+        check(report.getText().contains("Historically confirmed: 3"),
+                "governance report preserves confirmed-history count");
+        assertions++;
+        check(report.getText().contains("Lifecycle events: 7"),
+                "governance report preserves lifecycle event count");
+        assertions++;
+        check(report.getText().contains("severity/confidence do not confirm findings"),
+                "governance report preserves lifecycle trust boundary");
+        assertions++;
+
+        JTextArea json = find(panel, JTextArea.class, "s13-governance-json-view");
+        check(json.getText().contains("\"reportVersion\":\"s13-governance-report-v1\""),
+                "governance JSON view renders canonical report version");
+        assertions++;
+        check(json.getText().contains("\"confirmedHistoryCount\":3"),
+                "governance JSON view preserves confirmed-history count");
+        assertions++;
+        check(json.getText().contains("\"lifecycleEventCount\":7"),
+                "governance JSON view preserves lifecycle event count");
+        assertions++;
+        check(!json.getText().contains("DummyPassword"),
+                "governance JSON excludes source-candidate rationale secret material");
+        assertions++;
+        check(!json.getText().contains("\"principalId\""),
+                "governance JSON excludes raw candidate principal field");
+        assertions++;
 
         check(actionButtonCount(panel) == 0,
                 "governance panel exposes no lifecycle or publication action button");
