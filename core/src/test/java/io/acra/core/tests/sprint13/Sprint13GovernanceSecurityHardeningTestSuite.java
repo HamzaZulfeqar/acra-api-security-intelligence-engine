@@ -167,10 +167,11 @@ public final class Sprint13GovernanceSecurityHardeningTestSuite {
         TestSupport.assertTrue(!fp.confirmed(),
                 "false-positive closure remains historically unconfirmed");
         assertions++;
+        final var closedFalsePositive = fp;
         TestSupport.assertThrows(IllegalArgumentException.class,
                 () -> workspace.transition(
-                        fp.findingId(),
-                        fp.fingerprint(),
+                        closedFalsePositive.findingId(),
+                        closedFalsePositive.fingerprint(),
                         request(
                                 FindingLifecycleAction.CONFIRM,
                                 "reviewer-reopen",
