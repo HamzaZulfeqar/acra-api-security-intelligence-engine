@@ -4,7 +4,7 @@
 **Branch:** `s16-public-onboarding-hardening`  
 **Base:** published `main` at `10e34aa690bb0947bcb94198df0ce7b284d84cde`  
 **Release:** `v0.3.0`  
-**State:** IMPLEMENTATION IN PROGRESS
+**State:** REPOSITORY-SIDE IMPLEMENTATION COMPLETE; ADMIN SETTINGS PENDING
 
 ## Objective
 
@@ -60,3 +60,31 @@ Full repository-hardening closure additionally requires owner-side confirmation 
 - `main` is protected;
 - Dependency Graph is enabled;
 - Dependency Review performs real analysis.
+
+
+## Canonical repository-side validation
+
+GitHub Actions run `36202814898` — **SUCCESS**.
+
+Verified:
+- onboarding contract: PASS;
+- stable version/license consistency: PASS;
+- Maven build: PASS;
+- shaded Burp extension JAR creation: PASS;
+- real public `git clone` of the Sprint 16 branch: PASS;
+- cloned repository Maven build: PASS;
+- published `v0.3.0` JAR availability: PASS;
+- published JAR SHA-256: PASS.
+
+The startup log was corrected from the stale historical `v0.2.0-rc1` text to the actual stable version:
+
+`ACRA v0.3.0 initialized in passive observation mode. Active vulnerability scanning is disabled.`
+
+## Repository-admin follow-up
+
+Tracked issue: #6 — `Sprint 16 admin hardening: protect main and enable Dependency Graph`.
+
+Repository-side implementation is complete. Full Sprint 16 hardening remains open until:
+- GitHub reports `main` as protected;
+- Dependency Graph is enabled;
+- native Dependency Review performs real analysis.
