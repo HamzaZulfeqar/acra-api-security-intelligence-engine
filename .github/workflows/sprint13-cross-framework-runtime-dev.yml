@@ -1,0 +1,65 @@
+name: Sprint 13 Cross Framework Runtime Development
+
+on:
+  push:
+    branches:
+      - s13-cross-framework-runtime
+    paths:
+      - 'lab/framework-runtime/**'
+      - 'lab/ground-truth/POL-S13-XRUNTIME-DEV-001.json'
+      - 'lab/ground-truth/GT-S13-XRUNTIME-DEV-*.json'
+      - 'scripts/run-sprint13-cross-framework-runtime-dev.py'
+      - 'scripts/verify-sprint13-cross-framework-runtime-dev.py'
+      - 'scripts/verify-sprint13-cross-framework-runtime-dev.sh'
+      - '.github/workflows/sprint13-cross-framework-runtime-dev.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-development:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Install Python framework runtimes
+        run: python -m pip install --disable-pip-version-check fastapi==0.115.12 uvicorn==0.34.2 Flask==3.1.0
+
+      - name: Install Express runtime
+        working-directory: lab/framework-runtime/express
+        run: npm install --no-audit --no-fund
+
+      - name: Normalize Phase 6B scripts
+        run: chmod +x ./scripts/run-sprint13-cross-framework-runtime-dev.py ./scripts/verify-sprint13-cross-framework-runtime-dev.py ./scripts/verify-sprint13-cross-framework-runtime-dev.sh
+
+      - name: Execute real local framework runtime campaign
+        run: bash ./scripts/verify-sprint13-cross-framework-runtime-dev.sh
+
+      - name: Compile ACRA product modules
+        run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
+
+      - name: Upload Phase 6B runtime artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-13-xruntime-dev
+          path: |
+            build/s13-xruntime-dev/**
+          if-no-files-found: warn
