@@ -35,9 +35,9 @@ public class RuntimeApplication {
     Map<String,Object> out=new LinkedHashMap<>(body); out.put("resourceId",resourceId); out.put("state",body.get("toState")); out.put("role",role); return out;
   }
 
-  @GetMapping("/runtime/spring/routing/audit")
+  @GetMapping("/runtime/spring/routing/equivalent")
   public Map<String,Object> routing(@RequestHeader(value="X-Role",defaultValue="") String role){
-    return Map.of("area","audit","role",role,"routeForm","canonical");
+    return Map.of("area","route","role",role,"routeForm","canonical");
   }
 
   @PatchMapping("/runtime/spring/accounts/{account}/preferences")
