@@ -1,5 +1,34 @@
 # Test Matrix
 
+## Sprint 13 Phase 3 configurable policy generalization — 2026-09-25
+
+Canonical untouched evaluation: GitHub Actions run `36149071484` — **PASS** at
+`82ae165b702d18b0eae872d51f8f695f723fec13`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Phase 2 immutable base | dimension engine/history preserved | PASS |
+| Phase 3 algorithm freeze | policy engine + dimension engine + locked A7 unchanged from `c7c66336...` | PASS |
+| Development corpus | 24 cases, 8 positive / 16 legitimate controls | PASS |
+| Development repeatability | two prediction/evaluation passes | PASS |
+| Development label absence | labels removed during prediction | PASS |
+| Untouched evaluation corpus | created only after algorithm freeze | PASS |
+| Evaluation label absence | labels physically removed during both prediction passes | PASS |
+| Automatic dimension inference | 24/24 evaluation cases | PASS |
+| Explicit configured-policy decisions | 24/24 decisive, UNKNOWN=0 | PASS |
+| Locked A7 evaluation | TP=8/TN=4/FP=12/FN=0 | P=.4 / R=1 / F1=.571429 |
+| Policy-generalized G1 evaluation | TP=8/TN=16/FP=0/FN=0 | P=1 / R=1 / F1=1 |
+| Evaluation repeatability | byte-identical prediction and evaluation artifacts | PASS |
+| Artifact SHA-256 | prediction/evaluation JSON + JSONL | PASS |
+| Secret-material scan | bearer/Authorization/cookie material excluded | PASS |
+| Maven package | product modules compile/package after evaluation | BUILD SUCCESS |
+| Automatic policy extraction | not part of configured-policy experiment | NOT MEASURED |
+| Real Burp desktop runtime | separate validation lane | UNVERIFIED / DEFERRED |
+| External authorized target | outside Phase 3 | NOT PERFORMED |
+
+The G1 1.0 values are controlled internal fixture results and must not be generalized to production accuracy.
+Phase 4 must test larger, less-balanced and adversarial negative populations.
+
 ## Sprint 13 Phase 2 automatic authorization-dimension discovery — 2026-09-25
 
 Measured successful workflow: GitHub Actions run `36145805521` — **PASS** at
