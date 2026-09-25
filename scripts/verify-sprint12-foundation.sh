@@ -62,4 +62,10 @@ for forbidden in ("super-secret-token","DoNotExport","Authorization: Bearer"):
 print("SPRINT12_SARIF_STRUCTURE PASS version=2.1.0 kind=review level=none locations=absent")
 PY
 
+mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
+MONTOYA_JAR="$HOME/.m2/repository/net/portswigger/burp/extensions/montoya-api/2026.7/montoya-api-2026.7.jar"
+test -f "$MONTOYA_JAR"
+BURP_CP="extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes:$MONTOYA_JAR"
+java -ea -cp "$BURP_CP" io.acra.burp.tests.sprint12.Sprint12BurpIssueAdapterTestSuite
+
 echo "SPRINT12_REPRODUCTION_EXPORT_FOUNDATION_VERIFICATION PASS"
