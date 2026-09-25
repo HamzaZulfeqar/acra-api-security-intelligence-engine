@@ -27,6 +27,7 @@
 | EXP-S13-HOLDOUT-A0-A7 | Locked A0-A7 held-out generalization evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-HOLDOUT-FEATURES + GT-S13-HOLDOUT-LABELS | A7 TP=8/TN=3/FP=5/FN=0, P=.615385/R=1/F1=.761905; 5 hard-negative FP |
 | EXP-S13-DIMENSION-001 | Blind automatic authorization-dimension discovery + inferred-dimension A0-A7 | COMPLETED_CONTROLLED_LOCAL | GT-S13-DIMENSION-FEATURES + GT-S13-DIMENSION-LABELS | 31/32 dimensions correct; accuracy=.968750, macro-F1=.968254; S13 holdout 16/16; downstream A7 unchanged vs prior measured fixtures |
 | EXP-S13-POLICY-GEN-001 | Configurable policy semantics with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-POLICY-EVAL-FEATURES + GT-S13-POLICY-EVAL-LABELS | G1 TP=8/TN=16/FP=0/FN=0, P=1/R=1/F1=1 on 24-case internal configured-policy evaluation; locked A7 FP=12 |
+| EXP-S13-BASERATE-001 | Adversarial negative-heavy policy/base-rate stress | COMPLETED_CONTROLLED_STRESS | GT-S13-BASERATE-FEATURES + GT-S13-BASERATE-LABELS | 96 cases, 8.33% prevalence; G1 TP=8/TN=49/FP=39/FN=0, P=.170213/R=1/F1=.290909; explicit-policy controls 0 FP, policy-degraded controls dominate FP |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -149,3 +150,30 @@ Untouched evaluation result:
 The result demonstrates that explicit configured policy semantics can remove these synthetic false positives without
 loss of recall on this internal corpus. It does **not** establish automatic policy discovery, production accuracy,
 third-party replication or external validity. No post-result algorithm tuning is permitted inside this experiment.
+
+
+## Sprint 13 Phase 4 adversarial / base-rate stress — 2026-09-25
+
+GitHub Actions run `36168752869` completed successfully at
+`ed1601542739cce20be48c001ae4e663bfdcf890`.
+
+The 96-case corpus contains 8 positive cases and 88 legitimate controls (8.333333% measured prevalence). The Phase 3
+decision algorithms were frozen and the Phase 3 evidence set was protected by an immutable-history gate.
+
+Measured results:
+- locked A7: TP=8/TN=20/FP=68/FN=0, P=.105263/R=1/SPEC=.227273/FPR=.772727/F1=.190476/MCC=.154672;
+- G1: TP=8/TN=49/FP=39/FN=0, P=.170213/R=1/SPEC=.556818/FPR=.443182/F1=.290909/MCC=.307860.
+
+G1 false positives by policy condition:
+- explicit configured ALLOW: 0/40;
+- no policy: 12/16;
+- ambiguous policy: 12/16;
+- stale policy: 8/8;
+- incomplete context: 7/8.
+
+Policy decisions were decisive for 58/96 cases and UNKNOWN for 38/96. Expected-authorization correctness was 48/96
+overall and 48/58 among decisive decisions.
+
+The experiment demonstrates that configured policy semantics can strongly reduce false positives when policy is healthy,
+but current UNKNOWN fallback and stale/incomplete policy handling produce an unacceptable alert rate under degraded
+policy quality. The result is frozen evidence; no post-result tuning is permitted inside this experiment.
