@@ -3,6 +3,10 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+echo "=== Sprint 14 retained executable regression chain ==="
+bash scripts/verify-sprint11-final.sh
+echo "SPRINT14_EXECUTABLE_REGRESSION_CHAIN PASS"
+
 echo "=== Sprint 14 Maven clean verify ==="
 mvn --batch-mode --no-transfer-progress clean verify
 
