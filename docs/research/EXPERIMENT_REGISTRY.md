@@ -3,7 +3,7 @@
 | Experiment ID | Name | State | Dataset | Result |
 |---|---|---|---|---|
 | EXP-INTEGRATION-001 | Live traffic to Security Context | COMPLETED_PARTIAL | GT-INTEGRATION-001 | PARTIAL, local live HTTP PASS; Burp stage BLOCKED |
-| EXP-BURP-INTEGRATION-001 | Real Burp/Montoya to ACRA-Lab runtime validation | BLOCKED | GT-INTEGRATION-001 | UNVERIFIED, Burp/Maven runtime unavailable |
+| EXP-BURP-INTEGRATION-001 | Real Burp/Montoya to ACRA-Lab runtime validation | COMPLETED_CONTROLLED_RUNTIME | GT-INTEGRATION-001 | real Burp 2026.7.3 initialization/proxy/pipeline PASS in Sprint 13 Phase 7; GT-INTEGRATION-001 context PASS |
 | EXP-RECON-001 | Sprint 3 endpoint reconnaissance | COMPLETED_LOCAL | GT-RECON-S3 | PASS on 10-operation local fixture; Burp UNVERIFIED |
 | EXP-ID-001 | Semantic identifier classification | COMPLETED_CONTROLLED | Six labeled ID fixtures | precision 1.0000, recall 1.0000 within fixture scope |
 | EXP-OPENAPI-001 | OpenAPI/traffic correlation | COMPLETED_CONTROLLED | GT-RECON-S3 + OpenAPI fixture | 10/10 documented-observed locally |
@@ -31,6 +31,7 @@
 | EXP-S13-GOVERNANCE-001 | Policy reliability and uncertainty governance with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-GOV-EVAL-FEATURES + GT-S13-GOV-EVAL-LABELS | 64/64 dispositions; actionable TP=8/TN=48/FP=0/FN=8, P=1/R=.5; escalation coverage=1.0; silent positives=0 |
 | EXP-S13-XFRAME-001 | Framework-shaped serialization normalization with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-XFRAME-EVAL-FEATURES + GT-S13-XFRAME-EVAL-LABELS | raw dimension=60/64 and disposition=32/64; normalized dimension=64/64 and disposition=64/64; snapshot representations only |
 | EXP-S13-XRUNTIME-001 | Actual local FastAPI/Flask/Express/Spring Boot runtime validation | COMPLETED_CONTROLLED_RUNTIME | GT-S13-XRUNTIME-EVAL-FEATURES + GT-S13-XRUNTIME-EVAL-LABELS | 64/64 live HTTP responses, 64/64 dimensions, 64/64 governed dispositions; 16/16 per framework; localhost only |
+| EXP-S13-BURP-001 | Real Burp Desktop 2026.7.3 / Montoya runtime validation with post-freeze localhost evaluation | COMPLETED_CONTROLLED_RUNTIME | GT-S13-BURP-EVAL-FEATURES + GT-S13-BURP-EVAL-LABELS | two independent real-Burp passes; each INIT=1, REQUEST=2, RESPONSE=2, PROCESSED=2, context=2/2; semantic repeatability PASS |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -260,3 +261,40 @@ Untouched evaluation result:
 
 This is controlled localhost runtime evidence only. It does not establish arbitrary framework/version compatibility,
 Burp desktop runtime behavior, external-target effectiveness, production accuracy or independent replication.
+
+
+## Sprint 13 Phase 7 real Burp Desktop / Montoya runtime validation — 2026-09-25
+
+The real-Burp development workflow `36179678105` succeeded after explicit authorization to accept the Burp Suite
+Community Edition EULA for the controlled localhost CI run.
+
+Development evidence:
+- real Burp Desktop 2026.7.3 JAR;
+- official SHA-256 matched;
+- ACRA shaded extension loaded through Burp user configuration;
+- Montoya `initialize()` observed;
+- two real Burp Proxy request callbacks;
+- two real Burp Proxy response callbacks;
+- two ACRA passive-pipeline processed events;
+- `GT-INTEGRATION-001` context reconstruction PASS.
+
+The implementation was frozen at `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`.
+
+Post-freeze evaluation workflow `36180110271` succeeded at
+`b1cf0336c530a3678de64aee699067a4793e3857` using a separately created localhost fixture and sealed labels.
+
+Both independent evaluation passes measured:
+- INIT=1;
+- REQUEST=2;
+- RESPONSE=2;
+- PROCESSED=2;
+- expected contexts=2/2;
+- Burp tool source=PROXY;
+- localhost-only requests;
+- label absence during traffic passes=PASS;
+- secret-exclusion=PASS.
+
+Normalized semantic evaluation artifacts were identical across both passes.
+
+This experiment establishes controlled real Burp/Montoya runtime integration only. It does not establish production
+scanner accuracy, arbitrary Burp-version compatibility, external-target effectiveness or independent replication.
