@@ -1,0 +1,1028 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-GOV-EVAL-001",
+  "purpose": "Untouched Phase 5 governance evaluation registry",
+  "createdAfterGovernanceFreeze": "11afbb80be24116c9facd0d4b0791f4a12efed3a",
+  "policies": [
+    {
+      "policyId": "EVAL5-OBJECT_AUTHORIZATION-CURRENT",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/records/record-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-OBJECT_AUTHORIZATION-AMB-A",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/ambiguous-records/record-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-OBJECT_AUTHORIZATION-AMB-B",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/ambiguous-records/record-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-OBJECT_AUTHORIZATION-STALE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/stale-records/record-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-OBJECT_AUTHORIZATION-INCOMPLETE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/incomplete-records/record-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-TENANT_AUTHORIZATION-CURRENT",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/workspaces/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-governor"
+        ],
+        "delegatedRoles": [
+          "workspace-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-TENANT_AUTHORIZATION-AMB-A",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/workspaces/(?P<tenant>alpha|beta)/ambiguous-reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-governor"
+        ],
+        "delegatedRoles": [
+          "workspace-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-TENANT_AUTHORIZATION-AMB-B",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/workspaces/(?P<tenant>alpha|beta)/ambiguous-reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-governor"
+        ],
+        "delegatedRoles": [
+          "workspace-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-TENANT_AUTHORIZATION-STALE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/workspaces/(?P<tenant>alpha|beta)/stale-reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "cloud-governor-v1"
+        ],
+        "delegatedRoles": [
+          "workspace-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-TENANT_AUTHORIZATION-INCOMPLETE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/workspaces/(?:alpha|beta)/incomplete-reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "crossTenantRoles": [
+          "cloud-governor"
+        ],
+        "delegatedRoles": [
+          "workspace-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-RBAC_AUTHORIZATION-CURRENT",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/management/security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-RBAC_AUTHORIZATION-AMB-A",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/management/ambiguous-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-RBAC_AUTHORIZATION-AMB-B",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/management/ambiguous-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-RBAC_AUTHORIZATION-STALE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/management/stale-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator-v1"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-RBAC_AUTHORIZATION-INCOMPLETE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/management/incomplete-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-WORKFLOW_AUTHORIZATION-CURRENT",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/workflows/release/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          },
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-WORKFLOW_AUTHORIZATION-AMB-A",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/workflows/release/ambiguous/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          },
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-WORKFLOW_AUTHORIZATION-AMB-B",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/workflows/release/ambiguous/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          },
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-WORKFLOW_AUTHORIZATION-STALE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/workflows/release/stale/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          },
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager-v1"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-WORKFLOW_AUTHORIZATION-INCOMPLETE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/workflows/release/incomplete/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          },
+          {
+            "action": "RELEASE",
+            "from": "PENDING",
+            "to": "LIVE",
+            "roles": [
+              "release-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-ROUTING_AUTHORIZATION-CURRENT",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/+v2/management/security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "canonicalRoles": [
+          "security-operator",
+          "cloud-governor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-ROUTING_AUTHORIZATION-AMB-A",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/+v2/management/ambiguous-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "canonicalRoles": [
+          "security-operator",
+          "cloud-governor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-ROUTING_AUTHORIZATION-AMB-B",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/+v2/management/ambiguous-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "canonicalRoles": [
+          "security-operator",
+          "cloud-governor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-ROUTING_AUTHORIZATION-STALE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/+v2/management/stale-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator-v1"
+        ],
+        "canonicalRoles": [
+          "security-operator-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-ROUTING_AUTHORIZATION-INCOMPLETE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/+v2/management/incomplete-security-audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "cloud-governor"
+        ],
+        "canonicalRoles": [
+          "security-operator",
+          "cloud-governor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-PROPERTY_AUTHORIZATION-CURRENT",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/goveval/v2/accounts/(?:robin|casey)/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "EVAL5-PROPERTY_AUTHORIZATION-AMB-A",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/goveval/v2/accounts/(?:robin|casey)/ambiguous-preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "EVAL5-PROPERTY_AUTHORIZATION-AMB-B",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/goveval/v2/accounts/(?:robin|casey)/ambiguous-preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "EVAL5-PROPERTY_AUTHORIZATION-STALE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/goveval/v2/accounts/(?:robin|casey)/stale-preferences$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "EVAL5-PROPERTY_AUTHORIZATION-INCOMPLETE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/goveval/v2/accounts/(?:robin|casey)/incomplete-preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "EVAL5-BATCH_AUTHORIZATION-CURRENT",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/records/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-BATCH_AUTHORIZATION-AMB-A",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/records/ambiguous-bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-BATCH_AUTHORIZATION-AMB-B",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/records/ambiguous-bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-BATCH_AUTHORIZATION-STALE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/records/stale-bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-BATCH_AUTHORIZATION-INCOMPLETE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/goveval/v2/records/incomplete-bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-INDIRECT_REFERENCE_AUTHORIZATION-CURRENT",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/references/ref-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-INDIRECT_REFERENCE_AUTHORIZATION-AMB-A",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/references/ambiguous/ref-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-a",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-INDIRECT_REFERENCE_AUTHORIZATION-AMB-B",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/references/ambiguous/ref-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0-b",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-INDIRECT_REFERENCE_AUTHORIZATION-STALE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/references/stale/ref-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "5.1.0",
+        "sourceRevision": "eval-policy-old",
+        "lastValidatedAt": "2026-02-10"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "EVAL5-INDIRECT_REFERENCE_AUTHORIZATION-INCOMPLETE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/goveval/v2/references/incomplete/ref-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6.0.0",
+        "sourceRevision": "eval-policy-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "record-supervisor"
+        ]
+      }
+    }
+  ]
+}
