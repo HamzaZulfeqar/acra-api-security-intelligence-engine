@@ -32,6 +32,8 @@
 | EXP-S13-XFRAME-001 | Framework-shaped serialization normalization with post-freeze untouched evaluation | COMPLETED_CONTROLLED_HELDOUT | GT-S13-XFRAME-EVAL-FEATURES + GT-S13-XFRAME-EVAL-LABELS | raw dimension=60/64 and disposition=32/64; normalized dimension=64/64 and disposition=64/64; snapshot representations only |
 | EXP-S13-XRUNTIME-001 | Actual local FastAPI/Flask/Express/Spring Boot runtime validation | COMPLETED_CONTROLLED_RUNTIME | GT-S13-XRUNTIME-EVAL-FEATURES + GT-S13-XRUNTIME-EVAL-LABELS | 64/64 live HTTP responses, 64/64 dimensions, 64/64 governed dispositions; 16/16 per framework; localhost only |
 | EXP-S13-BURP-001 | Real Burp Desktop 2026.7.3 / Montoya runtime validation with post-freeze localhost evaluation | COMPLETED_CONTROLLED_RUNTIME | GT-S13-BURP-EVAL-FEATURES + GT-S13-BURP-EVAL-LABELS | two independent real-Burp passes; each INIT=1, REQUEST=2, RESPONSE=2, PROCESSED=2, context=2/2; semantic repeatability PASS |
+| EXP-S13-EXTERNAL-001 | Explicitly authorized external-target validation | NOT_PERFORMED_BY_FINAL_FREEZE | none | No external target was registered/tested before final freeze; no external-validity claim |
+| EXP-S13-FINAL-FREEZE-001 | Final research and reproducibility freeze | COMPLETED_REPRODUCIBILITY_GATE | FINAL_EVIDENCE_MANIFEST + final claim/reproducibility docs | run 36183344395 PASS; 8 canonical experiments; 158 evidence files hashed; 33 research/policy JSON files parsed; Maven BUILD SUCCESS |
 
 Sprint 3 measured metrics are deliberately limited to controlled local fixtures. They do not establish real-world scanner precision, authorization-vulnerability accuracy or novelty.
 
@@ -298,3 +300,23 @@ Normalized semantic evaluation artifacts were identical across both passes. The 
 
 This experiment establishes controlled real Burp/Montoya runtime integration only. It does not establish production
 scanner accuracy, arbitrary Burp-version compatibility, external-target effectiveness or independent replication.
+
+
+## Sprint 13 final research/reproducibility freeze — 2026-09-26
+
+Final freeze validation workflow `36183344395` succeeded at candidate commit
+`3bc7df2f19d8b208f4586dfd4469d9b045e275f8`.
+
+Verified:
+- eight canonical Sprint 13 completed experiments remain in Git ancestry;
+- all canonical experiment IDs remain registered;
+- 33 Sprint 13 research/policy JSON files parse successfully;
+- Phase 7 implementation remains unchanged after its development freeze;
+- Phase 8 claim boundary remains NOT PERFORMED;
+- 158 tracked research/testing/workflow evidence files received deterministic SHA-256 inventory entries;
+- two verifier passes produced identical inventory/summary artifacts;
+- Maven package completed successfully;
+- git diff check passed.
+
+Phase 8 was intentionally not performed before the freeze. Future external-target validation must use a new post-freeze
+experiment/version and may not overwrite Sprint 13 metrics or claims.
