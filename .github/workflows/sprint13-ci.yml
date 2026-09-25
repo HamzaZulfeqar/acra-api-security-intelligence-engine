@@ -1,0 +1,41 @@
+name: Sprint 13 Finding Lifecycle Verification
+
+on:
+  push:
+    branches:
+      - s13-finding-lifecycle-governance
+    paths:
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'tests/**'
+      - 'scripts/verify-sprint13-foundation.sh'
+      - 'scripts/verify-sprint12-foundation.sh'
+      - '.github/workflows/sprint13-ci.yml'
+      - 'docs/sprints/sprint-13.md'
+      - 'docs/architecture/s13-finding-lifecycle-governance.md'
+      - 'docs/research/REQUIREMENTS.md'
+      - 'PROJECT_STATE.md'
+      - 'ROADMAP.md'
+      - 'docs/sprints/ROADMAP.md'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sprint13-finding-lifecycle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize scripts
+        run: chmod +x ./scripts/*.sh
+      - name: Verify Sprint 13 finding lifecycle foundation
+        run: bash ./scripts/verify-sprint13-foundation.sh
+      - name: Verify Maven core test compilation
+        run: mvn --batch-mode --no-transfer-progress -pl core test-compile
