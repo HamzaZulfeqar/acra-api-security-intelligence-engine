@@ -8,6 +8,7 @@ on:
       - 'lab/burp-runtime-eval/**'
       - 'lab/ground-truth/GT-S13-BURP-EVAL-*.json'
       - 'scripts/verify-sprint13-burp-runtime-eval.py'
+      - 'scripts/verify-sprint13-burp-review-boundary.py'
       - 'scripts/verify-sprint13-burp-runtime-eval.sh'
       - '.github/workflows/sprint13-burp-runtime-eval.yml'
   workflow_dispatch:
