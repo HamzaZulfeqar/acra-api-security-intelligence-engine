@@ -1,7 +1,29 @@
 # ACRA v0.3.0-rc1 — Release Readiness
 
 **Sprint 14 branch:** `s14-productization-release-hardening`  
-**Candidate:** `0.3.0-rc1`
+**Candidate:** `0.3.0-rc1`  
+**Technical hardening:** PASS  
+**Public release eligibility:** BLOCKED — LICENSE UNRESOLVED
+
+## Measured hardening result
+
+| Gate | Result |
+|---|---|
+| Release-hardening workflow `36185472934` | PASS |
+| Retained executable regression chain | PASS |
+| Maven clean verify | BUILD SUCCESS |
+| Version contract | PASS |
+| Frozen Sprint 13 research lock | PASS |
+| Packaged JAR identity | PASS |
+| Release manifest / ZIP / checksums | PASS |
+| Fixed-input package repeatability | PASS |
+| Dependency inventory | GENERATED |
+| CI artifact upload | PASS |
+| CodeQL workflow `36185473086` | COMPLETED SUCCESSFULLY |
+| Gitleaks workflow `36185473086` | PASS |
+| Dependency Review | N/A on branch push; runs on pull request |
+| Public release | BLOCKED — no license selected |
+
 
 ## Technical release-candidate gates
 

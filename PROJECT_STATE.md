@@ -1,5 +1,34 @@
 # ACRA Project State
 
+## Current state — 2026-09-26 — Sprint 14
+
+**Decision:** TECHNICAL RELEASE CANDIDATE HARDENED; PUBLIC RELEASE BLOCKED BY LICENSE.  
+**Working branch:** `s14-productization-release-hardening`.  
+**Candidate version:** `0.3.0-rc1`.  
+**Frozen research base:** Sprint 13 head `d6797222d31984a45fbc80674193d0388757b24c`.  
+**Release-hardening workflow:** `36185472934` — SUCCESS.  
+**Security workflow:** `36185473086` — CodeQL SUCCESS; Gitleaks SUCCESS.  
+**Retained executable regression chain:** PASS.  
+**Maven clean verify:** BUILD SUCCESS.  
+**Release bundle:** GENERATED + VERIFIED + UPLOADED.  
+**Version promotion:** NOT PERFORMED.  
+**Git tag / GitHub Release:** NOT CREATED.  
+**Software license:** UNRESOLVED — PUBLIC RELEASE BLOCKER.
+
+### Sprint 14 release-candidate boundary
+
+Sprint 14 changes productization/release tooling and documentation only; it does not rewrite Sprint 13 research evidence.
+
+The current candidate can be used as a controlled internal/research RC. Public distribution remains blocked until an
+explicit software-license decision is made. After that, version/tag/release promotion requires a separate explicit gate.
+
+Canonical Sprint 14 documents:
+- `docs/sprints/sprint-14.md`;
+- `docs/release/RELEASE_CANDIDATE_0.3.0-rc1.md`;
+- `docs/release/RELEASE_READINESS.md`.
+
+## Previous state — Sprint 13 final research freeze
+
 ## Current state — 2026-09-26
 
 **Research decision:** SPRINT 13 FINAL RESEARCH & REPRODUCIBILITY FREEZE COMPLETE.  

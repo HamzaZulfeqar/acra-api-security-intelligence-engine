@@ -1,5 +1,37 @@
 # ROADMAP
 
+## Current productization gate — Sprint 14 — 2026-09-26
+
+**TECHNICAL RELEASE CANDIDATE HARDENING COMPLETE.**
+
+Canonical engineering evidence:
+- branch: `s14-productization-release-hardening`;
+- frozen Sprint 13 base: `d6797222d31984a45fbc80674193d0388757b24c`;
+- release-hardening run: `36185472934` — SUCCESS;
+- security run: `36185473086` — CodeQL SUCCESS / Gitleaks SUCCESS;
+- candidate version: `0.3.0-rc1`;
+- retained executable regression chain: PASS;
+- Maven clean verify: BUILD SUCCESS;
+- deterministic fixed-input release packaging: PASS;
+- release manifest/checksums/JAR identity: PASS;
+- dependency inventory: generated;
+- release artifact: uploaded.
+
+**Public-release state: BLOCKED.**
+
+Hard blocker:
+- no software license has been selected.
+
+Therefore Sprint 14 does not create a tag, GitHub Release, or version promotion.
+
+The next release-promotion decision is external to the completed technical hardening gate:
+1. explicitly choose a software license;
+2. review release notes;
+3. explicitly decide whether to retain `0.3.0-rc1` or promote to `0.3.0`;
+4. only then create a public tag/release workflow.
+
+## Previous research gate — Sprint 13 final freeze
+
 ## Final Sprint 13 research state — 2026-09-26
 
 **FINAL RESEARCH & REPRODUCIBILITY FREEZE COMPLETE.**
