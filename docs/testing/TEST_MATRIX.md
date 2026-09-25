@@ -1,5 +1,69 @@
 # Test Matrix
 
+## Sprint 13 Phase 4 adversarial / base-rate stress — 2026-09-25
+
+Canonical workflow: GitHub Actions run `36168752869` — **PASS** at
+`ed1601542739cce20be48c001ae4e663bfdcf890`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Phase 3 evidence lock | Phase 3 dev/eval corpora + runners unchanged | PASS |
+| Frozen algorithm gate | locked A7 + dimension + policy engines unchanged | PASS |
+| Stress corpus | 96 cases: 8 positive / 88 negative | PASS |
+| Measured prevalence | 8.333333% | PASS |
+| Dimension inference | 96/96 | PASS |
+| Bad schema registry | fail closed | PASS |
+| Empty/non-list policies | fail closed | PASS |
+| Duplicate policy ID | fail closed | PASS |
+| Invalid dimension / missing regex / invalid regex | fail closed | PASS |
+| Equal-priority ambiguity | UNKNOWN | PASS |
+| Missing policy | UNKNOWN | PASS |
+| Priority resolution | deterministic higher priority | PASS |
+| UNKNOWN fallback invariant | preserves locked A7 | PASS |
+| Explicit ALLOW | suppresses candidate | PASS |
+| Explicit DENY + observed ALLOW | promotes mismatch | PASS |
+| Blind label boundary | label file removed during both prediction passes | PASS |
+| Prediction repeatability | byte-identical | PASS |
+| Evaluation repeatability | byte-identical | PASS |
+| SHA-256 sidecars | prediction/evaluation JSON + JSONL | PASS |
+| Secret-material scan | bearer/Authorization/cookie material excluded | PASS |
+| Maven package | product modules compile/package | BUILD SUCCESS |
+
+### Measured classifier result
+
+| Variant | TP | TN | FP | FN | Precision | Recall | Specificity | FPR | NPV | Balanced Acc. | F1 | MCC |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Locked A7 | 8 | 20 | 68 | 0 | .105263 | 1.000000 | .227273 | .772727 | 1.000000 | .613636 | .190476 | .154672 |
+| G1 | 8 | 49 | 39 | 0 | .170213 | 1.000000 | .556818 | .443182 | 1.000000 | .778409 | .290909 | .307860 |
+
+G1 Wilson 95% intervals:
+- sensitivity [.675592, 1.000000];
+- specificity [.452818, .656065];
+- precision [.088864, .301398];
+- NPV [.927302, 1.000000].
+
+### G1 false positives by policy condition
+
+| Condition | Count | FP | FN | UNKNOWN policy |
+|---|---:|---:|---:|---:|
+| EXPLICIT_ALLOW | 40 | 0 | 0 | 0 |
+| NO_POLICY | 16 | 12 | 0 | 16 |
+| AMBIGUOUS_POLICY | 16 | 12 | 0 | 16 |
+| STALE_POLICY | 8 | 8 | 0 | 0 |
+| INCOMPLETE_CONTEXT | 8 | 7 | 0 | 6 |
+| POSITIVE | 8 | 0 | 0 | 0 |
+
+### G1 prevalence projection
+
+| Assumed prevalence | Projected PPV | Projected NPV | Alerts / 1,000 | False alerts / 1,000 |
+|---:|---:|---:|---:|---:|
+| 1% | .022284 | 1.000000 | 448.750000 | 438.750000 |
+| 5% | .106152 | 1.000000 | 471.022727 | 421.022727 |
+| 8.333333% | .170213 | 1.000000 | 489.583333 | 406.250000 |
+| 10% | .200456 | 1.000000 | 498.863636 | 398.863636 |
+
+The projections derive mathematically from measured sensitivity/specificity and are not additional observed datasets.
+
 ## Sprint 13 Phase 3 configurable policy generalization — 2026-09-25
 
 Canonical untouched evaluation: GitHub Actions run `36149071484` — **PASS** at
