@@ -8,8 +8,8 @@
 **Phase 6B evidence:** frozen and unchanged.  
 **Successful Phase 7 development workflow:** `36179678105`.  
 **Phase 7 development freeze:** `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`.  
-**Successful post-freeze evaluation workflow:** `36180110271`.  
-**Measured evaluation head:** `b1cf0336c530a3678de64aee699067a4793e3857`.  
+**Successful post-freeze evaluation workflow:** `36180569483`.  
+**Measured evaluation head:** `e24a91297bf33bfe18a47453e8c191432b496b20`.  
 **Real Burp Desktop 2026.7.3:** PASS.  
 **Real Montoya initialization:** PASS.  
 **Real Burp Proxy request/response callbacks:** PASS.  
@@ -18,6 +18,9 @@
 **Untouched contexts:** 2/2 on both independent real-Burp passes.  
 **Semantic repeatability:** PASS.  
 **Secret-exclusion:** PASS.  
+**Review/publication boundary:** PASS.  
+**Automatic Burp issue publication:** NOT WIRED.  
+**Active execution default:** DISABLED.  
 **External authorized-target validation:** NOT STARTED / NEXT.
 
 ### Phase 7 measured evidence
