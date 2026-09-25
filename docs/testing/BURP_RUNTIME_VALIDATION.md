@@ -1,3 +1,35 @@
+# Burp Runtime Validation
+
+## Current verified status — Sprint 13 Phase 7
+
+The latest controlled real-Burp validation is complete.
+
+Canonical strengthened evidence:
+- Burp Suite Community Edition 2026.7.3;
+- official JAR SHA-256 `c8262dc5426f38bedc490d66c5d21b6ff77d6dc6d85cefe6a66c882690134069`;
+- Montoya compile contract 2026.7;
+- development workflow `36179678105`;
+- development freeze `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`;
+- final post-freeze workflow `36180569483`;
+- measured head `e24a91297bf33bfe18a47453e8c191432b496b20`.
+
+Measured final gate:
+- real Montoya initialization: PASS;
+- real Burp Proxy request callbacks: PASS;
+- real Burp Proxy response callbacks: PASS;
+- passive ACRA processing: PASS;
+- post-freeze context reconstruction: 2/2 on each of two runs;
+- semantic repeatability: PASS;
+- secret-exclusion: PASS;
+- review/publication boundary: PASS;
+- active execution default: DISABLED.
+
+This is controlled localhost/headless runtime evidence only.
+
+The historical Sprint 2 runbook is preserved below for provenance.
+
+---
+
 # Sprint 2 Burp Runtime Validation Runbook
 
 This runbook is the mandatory promotion gate from `v0.2.0-rc1` to `v0.2.0`.

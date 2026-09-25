@@ -1,0 +1,1121 @@
+{
+  "schemaVersion": "s13-xruntime-features-v1",
+  "datasetId": "GT-S13-XRUNTIME-EVAL-FEATURES",
+  "purpose": "Untouched Phase 6B live runtime evaluation plan",
+  "createdAfterDevelopmentFreeze": "683933836d2c2fa5ec155bc8e224be87e6958e95",
+  "labelSeparated": true,
+  "policyRegistryId": "POL-S13-XRUNTIME-EVAL-001",
+  "caseCount": 64,
+  "frameworks": [
+    "FASTAPI",
+    "FLASK",
+    "EXPRESS",
+    "SPRING"
+  ],
+  "cases": [
+    {
+      "caseId": "RTEVAL-001-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/documents/doc-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-002-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/documents/doc-alpha",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-003-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/organizations/beta/reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-004-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/organizations/beta/reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "org-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-005-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/admin/security-log",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-006-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/admin/security-log",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-007-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime-eval/fastapi/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "from_state": "STAGED",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-008-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime-eval/fastapi/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "deploy-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "from_state": "STAGED",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-009-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/routing/equivalent",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-010-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/routing/equivalent",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-011-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "PATCH",
+      "path": "/runtime-eval/fastapi/profiles/robin/settings",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTEVAL-012-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "PATCH",
+      "path": "/runtime-eval/fastapi/profiles/robin/settings",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTEVAL-013-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime-eval/fastapi/documents/bulk-fetch",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "doc-beta",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "doc-beta"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-014-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime-eval/fastapi/documents/bulk-fetch",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "doc-alpha",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "doc-alpha"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-015-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/links/link-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-016-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime-eval/fastapi/links/link-alpha",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-017-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/documents/doc-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-018-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/documents/doc-alpha",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-019-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/organizations/beta/reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-020-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/organizations/beta/reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "org-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-021-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/admin/security-log",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-022-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/admin/security-log",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-023-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime-eval/flask/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "from_state": "STAGED",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-024-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime-eval/flask/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "deploy-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "from_state": "STAGED",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-025-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/routing/equivalent",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-026-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/routing/equivalent",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-027-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "PATCH",
+      "path": "/runtime-eval/flask/profiles/robin/settings",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTEVAL-028-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "PATCH",
+      "path": "/runtime-eval/flask/profiles/robin/settings",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTEVAL-029-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime-eval/flask/documents/bulk-fetch",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "doc-beta",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "doc-beta"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-030-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime-eval/flask/documents/bulk-fetch",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "doc-alpha",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "doc-alpha"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-031-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/links/link-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-032-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime-eval/flask/links/link-alpha",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-033-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/documents/doc-beta",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-034-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/documents/doc-alpha",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-035-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/organizations/beta/reports/report-beta",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-036-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/organizations/beta/reports/report-beta",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "org-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-037-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/admin/security-log",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-038-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/admin/security-log",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-039-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime-eval/express/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "fromState": "STAGED",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-040-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime-eval/express/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "deploy-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "fromState": "STAGED",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-041-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/routing/equivalent",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-042-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/routing/equivalent",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-043-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "PATCH",
+      "path": "/runtime-eval/express/profiles/robin/settings",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTEVAL-044-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "PATCH",
+      "path": "/runtime-eval/express/profiles/robin/settings",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTEVAL-045-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime-eval/express/documents/bulk-fetch",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "doc-beta",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "doc-beta"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-046-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime-eval/express/documents/bulk-fetch",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "doc-alpha",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "doc-alpha"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-047-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/links/link-beta",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-048-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime-eval/express/links/link-alpha",
+      "actor": {
+        "userId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-049-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/documents/doc-beta",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-050-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/documents/doc-alpha",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-051-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/organizations/beta/reports/report-beta",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-052-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/organizations/beta/reports/report-beta",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "org-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-053-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/admin/security-log",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-054-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/admin/security-log",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-055-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime-eval/spring/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "fromState": "STAGED",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-056-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime-eval/spring/workflows/deploy/resources/deploy-1/transition",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "deploy-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "DEPLOY",
+        "fromState": "STAGED",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTEVAL-057-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/routing/equivalent",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-058-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/routing/equivalent",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "audit-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-059-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "PATCH",
+      "path": "/runtime-eval/spring/profiles/robin/settings",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTEVAL-060-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "PATCH",
+      "path": "/runtime-eval/spring/profiles/robin/settings",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTEVAL-061-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime-eval/spring/documents/bulk-fetch",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "doc-beta",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "doc-beta"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-062-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime-eval/spring/documents/bulk-fetch",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "doc-alpha",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "doc-alpha"
+        ]
+      }
+    },
+    {
+      "caseId": "RTEVAL-063-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/links/link-beta",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTEVAL-064-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_EVAL",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime-eval/spring/links/link-alpha",
+      "actor": {
+        "principalId": "robin",
+        "tenantId": "alpha",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    }
+  ]
+}

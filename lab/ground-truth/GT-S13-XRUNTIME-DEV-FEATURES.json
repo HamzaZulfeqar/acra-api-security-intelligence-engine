@@ -1,0 +1,1120 @@
+{
+  "schemaVersion": "s13-xruntime-features-v1",
+  "datasetId": "GT-S13-XRUNTIME-DEV-FEATURES",
+  "purpose": "Phase 6B actual localhost framework runtime development plan",
+  "labelSeparated": true,
+  "policyRegistryId": "POL-S13-XRUNTIME-DEV-001",
+  "caseCount": 64,
+  "frameworks": [
+    "FASTAPI",
+    "FLASK",
+    "EXPRESS",
+    "SPRING"
+  ],
+  "cases": [
+    {
+      "caseId": "RTDEV-001-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/assets/asset-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-002-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/assets/asset-red",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-003-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-004-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-005-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/management/audit",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-006-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/management/audit",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-007-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime/fastapi/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-008-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime/fastapi/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "release-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-009-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/routing/equivalent",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-010-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/routing/equivalent",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-011-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "PATCH",
+      "path": "/runtime/fastapi/accounts/alice/preferences",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTDEV-012-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "PATCH",
+      "path": "/runtime/fastapi/accounts/alice/preferences",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTDEV-013-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime/fastapi/assets/bulk-read",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-014-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "POST",
+      "path": "/runtime/fastapi/assets/bulk-read",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-red",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-red"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-015-FASTAPI-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/references/ref-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-016-FASTAPI-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FASTAPI",
+      "method": "GET",
+      "path": "/runtime/fastapi/references/ref-red",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-017-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/assets/asset-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-018-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/assets/asset-red",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-019-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-020-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-021-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/management/audit",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-022-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/management/audit",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-023-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime/flask/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-024-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime/flask/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "release-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-025-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/routing/equivalent",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-026-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/routing/equivalent",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-027-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "PATCH",
+      "path": "/runtime/flask/accounts/alice/preferences",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTDEV-028-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "PATCH",
+      "path": "/runtime/flask/accounts/alice/preferences",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTDEV-029-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime/flask/assets/bulk-read",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-blue"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-030-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "POST",
+      "path": "/runtime/flask/assets/bulk-read",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-red",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-red"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-031-FLASK-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/references/ref-blue",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-032-FLASK-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "FLASK",
+      "method": "GET",
+      "path": "/runtime/flask/references/ref-red",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-033-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/assets/asset-blue",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-034-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/assets/asset-red",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-035-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/workspaces/blue/reports/report-blue",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-036-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/workspaces/blue/reports/report-blue",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-037-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/management/audit",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-038-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/management/audit",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-039-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime/express/workflows/release/resources/release-1/transition",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "fromState": "PENDING",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-040-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime/express/workflows/release/resources/release-1/transition",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "release-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "fromState": "PENDING",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-041-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/routing/equivalent",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-042-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/routing/equivalent",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-043-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "PATCH",
+      "path": "/runtime/express/accounts/alice/preferences",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTDEV-044-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "PATCH",
+      "path": "/runtime/express/accounts/alice/preferences",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTDEV-045-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime/express/assets/bulk-read",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "asset-blue"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-046-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "POST",
+      "path": "/runtime/express/assets/bulk-read",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "asset-red",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "asset-red"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-047-EXPRESS-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/references/ref-blue",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-048-EXPRESS-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "EXPRESS",
+      "method": "GET",
+      "path": "/runtime/express/references/ref-red",
+      "actor": {
+        "userId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-049-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/assets/asset-blue",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-050-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/assets/asset-red",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-051-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/workspaces/blue/reports/report-blue",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-052-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/workspaces/blue/reports/report-blue",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "cloud-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-053-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/management/audit",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-054-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/management/audit",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-055-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime/spring/workflows/release/resources/release-1/transition",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "author"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "fromState": "PENDING",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-056-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime/spring/workflows/release/resources/release-1/transition",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "release-manager"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "fromState": "PENDING",
+        "toState": "LIVE",
+        "approved": true
+      }
+    },
+    {
+      "caseId": "RTDEV-057-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/routing/equivalent",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-058-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/routing/equivalent",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-059-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "PATCH",
+      "path": "/runtime/spring/accounts/alice/preferences",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      }
+    },
+    {
+      "caseId": "RTDEV-060-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "PATCH",
+      "path": "/runtime/spring/accounts/alice/preferences",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      }
+    },
+    {
+      "caseId": "RTDEV-061-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime/spring/assets/bulk-read",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "asset-blue",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "asset-blue"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-062-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "POST",
+      "path": "/runtime/spring/assets/bulk-read",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resourceId",
+        "matchValue": "asset-red",
+        "decisionField": "decision"
+      },
+      "requestBody": {
+        "resourceIds": [
+          "asset-red"
+        ]
+      }
+    },
+    {
+      "caseId": "RTDEV-063-SPRING-POS",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/references/ref-blue",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "RTDEV-064-SPRING-NEG",
+      "family": "PHASE6B_RUNTIME_DEV",
+      "frameworkStyle": "SPRING",
+      "method": "GET",
+      "path": "/runtime/spring/references/ref-red",
+      "actor": {
+        "principalId": "alice",
+        "tenantId": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    }
+  ]
+}

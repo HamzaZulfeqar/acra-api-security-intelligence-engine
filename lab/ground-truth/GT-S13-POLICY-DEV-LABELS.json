@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "s13-policy-labels-v1",
+  "labelSetId": "GT-S13-POLICY-DEV-LABELS",
+  "featureDatasetId": "GT-S13-POLICY-DEV-FEATURES",
+  "developmentOnly": true,
+  "caseCount": 24,
+  "cases": [
+    {
+      "caseId": "DEV-OBJ-POS-001",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-OBJ-NEG-OWNER",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-OBJ-NEG-ADMIN",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-TEN-POS-001",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-TEN-NEG-SAME",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-TEN-NEG-GLOBAL",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-RBAC-POS-001",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-RBAC-NEG-LEAD",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-RBAC-NEG-ROOT",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-WF-POS-SELFAPPROVE",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-WF-NEG-SUBMIT",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-WF-NEG-APPROVE",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-PROP-POS-SEC",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-PROP-NEG-ALIAS",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-PROP-NEG-ADMIN",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-ROUTE-POS-001",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-ROUTE-NEG-LEAD",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-ROUTE-NEG-ROOT",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-BATCH-POS-001",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-BATCH-NEG-OWNER",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-BATCH-NEG-ADMIN",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-IND-POS-001",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE"
+    },
+    {
+      "caseId": "DEV-IND-NEG-OWNER",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    },
+    {
+      "caseId": "DEV-IND-NEG-ADMIN",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE"
+    }
+  ]
+}

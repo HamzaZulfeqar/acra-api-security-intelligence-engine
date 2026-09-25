@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "s13-burp-eval-labels-v1",
+  "labelSetId": "GT-S13-BURP-EVAL-LABELS",
+  "featureDatasetId": "GT-S13-BURP-EVAL-FEATURES",
+  "untouchedEvaluation": true,
+  "developmentFreeze": "4bb7b952fb5cd0692efc6153d51b6885a7d38f9d",
+  "cases": [
+    {
+      "caseId": "BURP-EVAL-001",
+      "expected": {
+        "principal": "user-c",
+        "tenant": "tenant-c",
+        "resourceId": "3001",
+        "action": "READ",
+        "responseStatus": 200
+      }
+    },
+    {
+      "caseId": "BURP-EVAL-002",
+      "expected": {
+        "principal": "user-d",
+        "tenant": "tenant-d",
+        "resourceId": "4001",
+        "action": "READ",
+        "responseStatus": 200
+      }
+    }
+  ]
+}

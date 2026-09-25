@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "s13-holdout-labels-v1",
+  "labelSetId": "GT-S13-HOLDOUT-LABELS",
+  "featureDatasetId": "GT-S13-HOLDOUT-FEATURES",
+  "sealedForPrediction": true,
+  "positiveLabelMeaning": "Secure hold-out fixture denies while vulnerable hold-out fixture allows the same unauthorized operation.",
+  "negativeLabelMeaning": "Secure and vulnerable hold-out fixtures produce the same legitimate authorization decision.",
+  "cases": [
+    {
+      "caseId": "S13-HO-OBJECT-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "cross-owner object access"
+    },
+    {
+      "caseId": "S13-HO-OBJECT-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "legitimate owner access"
+    },
+    {
+      "caseId": "S13-HO-TENANT-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "cross-tenant report access"
+    },
+    {
+      "caseId": "S13-HO-TENANT-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "platform administrator legitimately crosses tenant boundary"
+    },
+    {
+      "caseId": "S13-HO-RBAC-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "non-privileged actor reaches admin audit surface"
+    },
+    {
+      "caseId": "S13-HO-RBAC-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "new legitimate privileged role security-admin"
+    },
+    {
+      "caseId": "S13-HO-WORKFLOW-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "requester self-approves change"
+    },
+    {
+      "caseId": "S13-HO-WORKFLOW-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "valid requester SUBMIT transition uses PENDING state"
+    },
+    {
+      "caseId": "S13-HO-ROUTING-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "duplicate-separator route bypass by reader"
+    },
+    {
+      "caseId": "S13-HO-ROUTING-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "security-admin legitimately uses equivalent route"
+    },
+    {
+      "caseId": "S13-HO-PROPERTY-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "unauthorized is_staff property update"
+    },
+    {
+      "caseId": "S13-HO-PROPERTY-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "nickname is an allowed property in the held-out API"
+    },
+    {
+      "caseId": "S13-HO-BATCH-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "first-item batch authorization leaks file-south"
+    },
+    {
+      "caseId": "S13-HO-BATCH-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "single owned resource batch"
+    },
+    {
+      "caseId": "S13-HO-INDIRECT-POS-001",
+      "groundTruth": "POSITIVE",
+      "secureExpected": "DENY",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "share alias resolves to another owner's object"
+    },
+    {
+      "caseId": "S13-HO-INDIRECT-NEG-001",
+      "groundTruth": "NEGATIVE",
+      "secureExpected": "ALLOW",
+      "vulnerableExpected": "ALLOW",
+      "rationale": "share alias resolves to actor-owned object"
+    }
+  ]
+}

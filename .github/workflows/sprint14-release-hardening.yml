@@ -1,0 +1,49 @@
+name: Sprint 14 Productization Release Hardening
+
+on:
+  push:
+    branches:
+      - s14-productization-release-hardening
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sprint14-release-hardening-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-hardening:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Verify and package release candidate
+        run: bash scripts/verify-sprint14-release.sh
+
+      - name: Record dependency inventory
+        run: |
+          mkdir -p build/release
+          mvn --batch-mode --no-transfer-progress dependency:tree -DoutputFile=build/release/maven-dependency-tree.txt
+
+      - name: Upload release candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-0.3.0-rc1-release-candidate
+          path: |
+            build/release/**
+          if-no-files-found: error

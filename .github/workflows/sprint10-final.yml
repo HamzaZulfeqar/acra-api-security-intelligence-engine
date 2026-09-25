@@ -1,0 +1,63 @@
+name: Sprint 10 Final Closure
+
+on:
+  push:
+    branches:
+      - s10-batch-indirect-authorization
+    paths:
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'lab/**'
+      - 'tests/**'
+      - 'scripts/verify-sprint10-final.sh'
+      - 'scripts/verify-sprint10-foundation.sh'
+      - 'scripts/package-sprint10.sh'
+      - 'scripts/verify-sprint9-foundation.sh'
+      - 'scripts/verify-sprint8-foundation.sh'
+      - 'scripts/verify-sprint7-foundation.sh'
+      - 'scripts/verify-sprint6-foundation.sh'
+      - '.github/workflows/sprint10-final.yml'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - 'docs/sprints/sprint-10-requirements-traceability.md'
+      - 'docs/sprints/sprint-10-final-software-audit.md'
+      - 'docs/sprints/sprint-10.md'
+      - 'docs/testing/TEST_MATRIX.md'
+      - 'PROJECT_STATE.md'
+      - 'docs/sprints/ROADMAP.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize scripts
+        run: chmod +x ./scripts/*.sh
+      - name: Run Sprint 10 final verification
+        run: bash ./scripts/verify-sprint10-final.sh
+      - name: Upload Sprint 10 final checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-10-final-checkpoint
+          path: |
+            build/s10-final-package/acra-sprint-10-final.zip
+            build/s10-final-package/acra-sprint-10-final.zip.sha256
+            build/s10-final-package/sprint10-package-manifest.txt
+            build/s10-final-package/sprint10-package-verification.json
+            build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.json
+            build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.json.sha256
+            build/s10-foundation/reporting/S10-BATCH-INDIRECT-REPORT.md
+            build/s10-foundation/performance/performance-s10.csv
+            build/s10-foundation/*.log
+          if-no-files-found: warn

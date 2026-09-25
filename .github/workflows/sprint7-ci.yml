@@ -1,0 +1,63 @@
+name: Sprint 7 Verification
+
+on:
+  push:
+    branches:
+      - s7-workflow-token-binding
+    paths:
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'lab/**'
+      - 'scripts/verify-sprint7-foundation.sh'
+      - 'scripts/verify-sprint7-controlled-execution.sh'
+      - 'scripts/verify-sprint7-lab-contract.sh'
+      - '.github/workflows/sprint7-ci.yml'
+      - 'docs/sprints/sprint-07.md'
+      - 'docs/architecture/s7-workflow-token-binding.md'
+      - 'PROJECT_STATE.md'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sprint7:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize scripts
+        run: chmod +x ./scripts/*.sh
+      - name: Verify Sprint 7 workflow/token-binding foundation
+        run: bash ./scripts/verify-sprint7-foundation.sh
+      - name: Verify Sprint 7 lab contract
+        run: bash ./scripts/verify-sprint7-lab-contract.sh
+      - name: Verify Sprint 7 controlled workflow planning and execution
+        run: bash ./scripts/verify-sprint7-controlled-execution.sh
+      - name: Verify retained Sprint 6 foundation
+        run: bash ./scripts/verify-sprint6-foundation.sh
+      - name: Compile Sprint 7 product UI
+        run: mvn --batch-mode --no-transfer-progress -pl extension/burp-extension -am test-compile
+      - name: Verify retained Sprint 4 UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint4.Sprint4UiTestSuite
+      - name: Verify retained Sprint 6 authorization UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint6.Sprint6AuthorizationUiTestSuite
+      - name: Verify Sprint 7 workflow UI
+        run: java -ea -Djava.awt.headless=true -cp extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes io.acra.burp.tests.sprint7.Sprint7WorkflowUiTestSuite
+      - name: Upload Sprint 7 controlled workflow logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint7-controlled-workflow
+          path: |
+            build/s7-foundation/lab/*.log
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.json.sha256
+            build/s7-foundation/reporting/S7-WORKFLOW-REPORT.md
+            build/s7-foundation/performance/performance-s7.csv
+          if-no-files-found: warn

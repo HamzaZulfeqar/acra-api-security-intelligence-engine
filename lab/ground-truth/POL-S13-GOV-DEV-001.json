@@ -1,0 +1,1027 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-GOV-DEV-001",
+  "purpose": "Phase 5 uncertainty governance development registry",
+  "policies": [
+    {
+      "policyId": "DEV5-OBJECT_AUTHORIZATION-CURRENT",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/assets/asset-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-OBJECT_AUTHORIZATION-AMB-A",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-assets/asset-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-OBJECT_AUTHORIZATION-AMB-B",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-assets/asset-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-OBJECT_AUTHORIZATION-STALE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/stale-assets/asset-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-OBJECT_AUTHORIZATION-INCOMPLETE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/incomplete-assets/asset-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-TENANT_AUTHORIZATION-CURRENT",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/tenants/(?P<tenant>red|blue)/reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "platform-admin"
+        ],
+        "delegatedRoles": [
+          "tenant-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-TENANT_AUTHORIZATION-AMB-A",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/tenants/(?P<tenant>red|blue)/ambiguous-reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "platform-admin"
+        ],
+        "delegatedRoles": [
+          "tenant-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-TENANT_AUTHORIZATION-AMB-B",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/tenants/(?P<tenant>red|blue)/ambiguous-reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "platform-admin"
+        ],
+        "delegatedRoles": [
+          "tenant-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-TENANT_AUTHORIZATION-STALE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/tenants/(?P<tenant>red|blue)/stale-reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "platform-admin-v1"
+        ],
+        "delegatedRoles": [
+          "tenant-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-TENANT_AUTHORIZATION-INCOMPLETE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/tenants/(?:red|blue)/incomplete-reports/report-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "crossTenantRoles": [
+          "platform-admin"
+        ],
+        "delegatedRoles": [
+          "tenant-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-RBAC_AUTHORIZATION-CURRENT",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-RBAC_AUTHORIZATION-AMB-A",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-RBAC_AUTHORIZATION-AMB-B",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-RBAC_AUTHORIZATION-STALE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/stale-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin-v1"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-RBAC_AUTHORIZATION-INCOMPLETE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/incomplete-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "deniedRoles": [
+          "suspended"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-WORKFLOW_AUTHORIZATION-CURRENT",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/workflows/change/resources/change-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "SUBMIT",
+            "from": "DRAFT",
+            "to": "PENDING",
+            "roles": [
+              "requester"
+            ]
+          },
+          {
+            "action": "APPROVE",
+            "from": "PENDING",
+            "to": "APPROVED",
+            "roles": [
+              "approver"
+            ],
+            "requiredTrueFields": [
+              "approval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-WORKFLOW_AUTHORIZATION-AMB-A",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-workflows/change/resources/change-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "SUBMIT",
+            "from": "DRAFT",
+            "to": "PENDING",
+            "roles": [
+              "requester"
+            ]
+          },
+          {
+            "action": "APPROVE",
+            "from": "PENDING",
+            "to": "APPROVED",
+            "roles": [
+              "approver"
+            ],
+            "requiredTrueFields": [
+              "approval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-WORKFLOW_AUTHORIZATION-AMB-B",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-workflows/change/resources/change-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "SUBMIT",
+            "from": "DRAFT",
+            "to": "PENDING",
+            "roles": [
+              "requester"
+            ]
+          },
+          {
+            "action": "APPROVE",
+            "from": "PENDING",
+            "to": "APPROVED",
+            "roles": [
+              "approver"
+            ],
+            "requiredTrueFields": [
+              "approval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-WORKFLOW_AUTHORIZATION-STALE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/stale-workflows/change/resources/change-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "SUBMIT",
+            "from": "DRAFT",
+            "to": "PENDING",
+            "roles": [
+              "requester"
+            ]
+          },
+          {
+            "action": "APPROVE",
+            "from": "PENDING",
+            "to": "APPROVED",
+            "roles": [
+              "approver-v1"
+            ],
+            "requiredTrueFields": [
+              "approval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-WORKFLOW_AUTHORIZATION-INCOMPLETE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/incomplete-workflows/change/resources/change-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "SUBMIT",
+            "from": "DRAFT",
+            "to": "PENDING",
+            "roles": [
+              "requester"
+            ]
+          },
+          {
+            "action": "APPROVE",
+            "from": "PENDING",
+            "to": "APPROVED",
+            "roles": [
+              "approver"
+            ],
+            "requiredTrueFields": [
+              "approval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-ROUTING_AUTHORIZATION-CURRENT",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/+v1/management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "platform-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-ROUTING_AUTHORIZATION-AMB-A",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/+v1/ambiguous-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "platform-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-ROUTING_AUTHORIZATION-AMB-B",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/+v1/ambiguous-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "platform-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-ROUTING_AUTHORIZATION-STALE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/+v1/stale-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin-v1"
+        ],
+        "canonicalRoles": [
+          "security-admin-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-ROUTING_AUTHORIZATION-INCOMPLETE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/+v1/incomplete-management/audit$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "security-admin",
+          "platform-admin"
+        ],
+        "canonicalRoles": [
+          "security-admin",
+          "platform-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-PROPERTY_AUTHORIZATION-CURRENT",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/govdev/v1/accounts/(?:alice|bob)/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "nickname",
+            "locale"
+          ],
+          "profile-admin": [
+            "nickname",
+            "locale",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "DEV5-PROPERTY_AUTHORIZATION-AMB-A",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-accounts/(?:alice|bob)/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "nickname",
+            "locale"
+          ],
+          "profile-admin": [
+            "nickname",
+            "locale",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "DEV5-PROPERTY_AUTHORIZATION-AMB-B",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-accounts/(?:alice|bob)/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "nickname",
+            "locale"
+          ],
+          "profile-admin": [
+            "nickname",
+            "locale",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "DEV5-PROPERTY_AUTHORIZATION-STALE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/govdev/v1/stale-accounts/(?:alice|bob)/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "nickname",
+            "locale"
+          ],
+          "profile-admin": [
+            "nickname",
+            "locale"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "DEV5-PROPERTY_AUTHORIZATION-INCOMPLETE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/govdev/v1/incomplete-accounts/(?:alice|bob)/preferences$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "nickname",
+            "locale"
+          ],
+          "profile-admin": [
+            "nickname",
+            "locale",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "DEV5-BATCH_AUTHORIZATION-CURRENT",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-BATCH_AUTHORIZATION-AMB-A",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-BATCH_AUTHORIZATION-AMB-B",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-BATCH_AUTHORIZATION-STALE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/stale-assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-BATCH_AUTHORIZATION-INCOMPLETE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/govdev/v1/incomplete-assets/bulk-read$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-INDIRECT_REFERENCE_AUTHORIZATION-CURRENT",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/references/ref-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-INDIRECT_REFERENCE_AUTHORIZATION-AMB-A",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-references/ref-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-INDIRECT_REFERENCE_AUTHORIZATION-AMB-B",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/ambiguous-references/ref-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.1",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-INDIRECT_REFERENCE_AUTHORIZATION-STALE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/stale-references/ref-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "STALE",
+        "policyVersion": "4.2.0",
+        "sourceRevision": "dev-policy-source-old",
+        "lastValidatedAt": "2026-01-15"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "DEV5-INDIRECT_REFERENCE_AUTHORIZATION-INCOMPLETE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/govdev/v1/incomplete-references/ref-(?:red|blue)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "5.0.0",
+        "sourceRevision": "dev-policy-source-r1",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-admin"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "schemaVersion": "s13-policy-features-v1",
+  "datasetId": "GT-S13-POLICY-EVAL-FEATURES",
+  "purpose": "Untouched Phase 3 evaluation corpus created after algorithm freeze",
+  "createdAfterAlgorithmFreeze": "c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd",
+  "labelSeparated": true,
+  "policyRegistryId": "POL-S13-EVAL-001",
+  "caseCount": 24,
+  "cases": [
+    {
+      "caseId": "EVAL-OBJ-POS-001",
+      "method": "GET",
+      "path": "/eval/v2/records/record-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue",
+          "title": "Blue record"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-OBJ-NEG-OWNER",
+      "method": "GET",
+      "path": "/eval/v2/records/record-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-red",
+          "owner_id": "robin",
+          "tenant_id": "red",
+          "title": "Red record"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-OBJ-NEG-SUP",
+      "method": "GET",
+      "path": "/eval/v2/records/record-blue",
+      "actor": {
+        "sub": "soren",
+        "tenant_id": "red",
+        "role": "record-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-blue",
+          "owner_id": "casey",
+          "tenant_id": "blue",
+          "title": "Blue record"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-TEN-POS-001",
+      "method": "GET",
+      "path": "/eval/v2/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue",
+          "owner_id": "casey"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-TEN-NEG-SAME",
+      "method": "GET",
+      "path": "/eval/v2/workspaces/red/reports/report-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-red",
+          "tenant_id": "red",
+          "owner_id": "manager-red"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-TEN-NEG-DELEGATED",
+      "method": "GET",
+      "path": "/eval/v2/workspaces/blue/reports/report-blue",
+      "actor": {
+        "sub": "agent",
+        "tenant_id": "red",
+        "role": "workspace-agent",
+        "delegated_tenants": [
+          "blue"
+        ]
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-blue",
+          "tenant_id": "blue",
+          "owner_id": "casey"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-RBAC-POS-001",
+      "method": "GET",
+      "path": "/eval/v2/management/security-log",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-log",
+          "role": "user",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-RBAC-NEG-OPS",
+      "method": "GET",
+      "path": "/eval/v2/management/security-log",
+      "actor": {
+        "sub": "ophelia",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-log",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-RBAC-NEG-GOV",
+      "method": "GET",
+      "path": "/eval/v2/management/security-log",
+      "actor": {
+        "sub": "governor",
+        "tenant_id": "global",
+        "role": "cloud-governor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-log",
+          "role": "cloud-governor",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-WF-POS-SELFREL",
+      "method": "POST",
+      "path": "/eval/v2/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "author"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-WF-NEG-PROP",
+      "method": "POST",
+      "path": "/eval/v2/workflows/release/resources/release-2/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "author"
+      },
+      "requestBody": {
+        "action": "PROPOSE",
+        "from_state": "NEW",
+        "to_state": "PENDING",
+        "approved": false
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "PROPOSE",
+          "from_state": "NEW",
+          "to_state": "PENDING",
+          "state": "PENDING",
+          "role": "author"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-WF-NEG-REL",
+      "method": "POST",
+      "path": "/eval/v2/workflows/release/resources/release-3/transition",
+      "actor": {
+        "sub": "riley",
+        "tenant_id": "red",
+        "role": "release-manager"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "release-manager"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-PROP-POS-RISK",
+      "method": "PATCH",
+      "path": "/eval/v2/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-PROP-NEG-LOCALE",
+      "method": "PATCH",
+      "path": "/eval/v2/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-PROP-NEG-GOV",
+      "method": "PATCH",
+      "path": "/eval/v2/accounts/casey/preferences",
+      "actor": {
+        "sub": "gwen",
+        "tenant_id": "blue",
+        "role": "account-governor"
+      },
+      "requestBody": {
+        "risk_level": "review"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "casey",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-ROUTE-POS-001",
+      "method": "GET",
+      "path": "/eval//v2/management/security-log",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-log",
+          "role": "user",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-ROUTE-NEG-OPS",
+      "method": "GET",
+      "path": "/eval//v2/management/security-log",
+      "actor": {
+        "sub": "ophelia",
+        "tenant_id": "red",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-log",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-ROUTE-NEG-GOV",
+      "method": "GET",
+      "path": "/eval//v2/management/security-log",
+      "actor": {
+        "sub": "governor",
+        "tenant_id": "global",
+        "role": "cloud-governor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-log",
+          "role": "cloud-governor",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-BATCH-POS-001",
+      "method": "POST",
+      "path": "/eval/v2/records/bulk",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-red",
+          "record-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-red",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "red"
+            },
+            {
+              "record_id": "record-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "blue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-BATCH-NEG-OWNER",
+      "method": "POST",
+      "path": "/eval/v2/records/bulk",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-red"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-red",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-red",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "red"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-BATCH-NEG-SUP",
+      "method": "POST",
+      "path": "/eval/v2/records/bulk",
+      "actor": {
+        "sub": "soren",
+        "tenant_id": "red",
+        "role": "record-supervisor"
+      },
+      "requestBody": {
+        "ids": [
+          "record-blue"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-blue",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-blue",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "blue"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-IND-POS-001",
+      "method": "GET",
+      "path": "/eval/v2/references/ref-blue",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "record-blue",
+          "resource": {
+            "id": "record-blue",
+            "owner_id": "casey",
+            "tenant_id": "blue"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-IND-NEG-OWNER",
+      "method": "GET",
+      "path": "/eval/v2/references/ref-red",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "red",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-red",
+          "resolved_resource_id": "record-red",
+          "resource": {
+            "id": "record-red",
+            "owner_id": "robin",
+            "tenant_id": "red"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL-IND-NEG-SUP",
+      "method": "GET",
+      "path": "/eval/v2/references/ref-blue",
+      "actor": {
+        "sub": "soren",
+        "tenant_id": "red",
+        "role": "record-supervisor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-blue",
+          "resolved_resource_id": "record-blue",
+          "resource": {
+            "id": "record-blue",
+            "owner_id": "casey",
+            "tenant_id": "blue"
+          }
+        }
+      }
+    }
+  ]
+}

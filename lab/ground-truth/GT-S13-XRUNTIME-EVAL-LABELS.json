@@ -1,0 +1,458 @@
+{
+  "schemaVersion": "s13-xruntime-labels-v1",
+  "labelSetId": "GT-S13-XRUNTIME-EVAL-LABELS",
+  "featureDatasetId": "GT-S13-XRUNTIME-EVAL-FEATURES",
+  "untouchedEvaluation": true,
+  "developmentFreeze": "683933836d2c2fa5ec155bc8e224be87e6958e95",
+  "caseCount": 64,
+  "cases": [
+    {
+      "caseId": "RTEVAL-001-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-002-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-003-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-004-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-005-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-006-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-007-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-008-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-009-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-010-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-011-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-012-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-013-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-014-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-015-FASTAPI-POS",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-016-FASTAPI-NEG",
+      "frameworkStyle": "FASTAPI",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-017-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-018-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-019-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-020-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-021-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-022-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-023-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-024-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-025-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-026-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-027-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-028-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-029-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-030-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-031-FLASK-POS",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-032-FLASK-NEG",
+      "frameworkStyle": "FLASK",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-033-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-034-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-035-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-036-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-037-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-038-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-039-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-040-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-041-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-042-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-043-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-044-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-045-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-046-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-047-EXPRESS-POS",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-048-EXPRESS-NEG",
+      "frameworkStyle": "EXPRESS",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-049-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-050-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "OBJECT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-051-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-052-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "TENANT_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-053-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-054-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "RBAC_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-055-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-056-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "WORKFLOW_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-057-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-058-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "ROUTING_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-059-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-060-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "PROPERTY_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-061-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-062-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "BATCH_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    },
+    {
+      "caseId": "RTEVAL-063-SPRING-POS",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "POSITIVE",
+      "expectedDisposition": "VULNERABILITY_CANDIDATE"
+    },
+    {
+      "caseId": "RTEVAL-064-SPRING-NEG",
+      "frameworkStyle": "SPRING",
+      "registeredDimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "groundTruth": "NEGATIVE",
+      "expectedDisposition": "AUTHORIZED_CONTROL"
+    }
+  ]
+}

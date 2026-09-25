@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "s13-burp-eval-features-v1",
+  "datasetId": "GT-S13-BURP-EVAL-FEATURES",
+  "purpose": "Post-development-freeze controlled real-Burp runtime requests",
+  "createdAfterDevelopmentFreeze": "4bb7b952fb5cd0692efc6153d51b6885a7d38f9d",
+  "labelSeparated": true,
+  "cases": [
+    {
+      "caseId": "BURP-EVAL-001",
+      "method": "GET",
+      "path": "/api/v1/tenants/tenant-c/documents/3001",
+      "claims": {
+        "sub": "user-c",
+        "tenant_id": "tenant-c",
+        "role": "viewer"
+      }
+    },
+    {
+      "caseId": "BURP-EVAL-002",
+      "method": "GET",
+      "path": "/api/v1/tenants/tenant-d/documents/4001",
+      "claims": {
+        "sub": "user-d",
+        "tenant_id": "tenant-d",
+        "role": "editor"
+      }
+    }
+  ]
+}

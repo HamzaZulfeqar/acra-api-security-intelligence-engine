@@ -1,5 +1,27 @@
 # Test Matrix
 
+## Sprint 5 final closure — newly executed 2026-09-23
+
+GitHub Actions run `35872345270` on Temurin JDK 21.0.12.1: **PASS**.
+
+| Suite | Reported checks/assertions | Result |
+|---|---:|---|
+| Core regression | 43 | PASS |
+| Sprint 3 core | 47 | PASS |
+| Sprint 4 core | 54 | PASS |
+| Sprint 4 engine security | 52 | PASS |
+| Sprint 4 graph integration | 87 | PASS |
+| Sprint 4 product completion | 132 | PASS |
+| S5 assessment guards | 58 | PASS |
+| S5 correlation safety | 58 | PASS |
+| S5 evidence integrity | 24 | PASS |
+| S5 policy validation | 4 | PASS |
+| S5 serialization security | 156 | PASS |
+| S5 final closure | 21 | PASS |
+| **Total represented** | **736** | **PASS** |
+
+Compilation used `--release 21 -Xlint:all -Werror`. Legacy counts are suite-reported checks, not reclassified raw assertion invocations.
+
 Current S5 defensive verification: `docs/testing/artifacts/verification-s5-defensive.json` and `docs/sprints/sprint-05-final-software-closure.md`. The S5 suite is partial; missing modules have no executable evidence. Historical records below are retained.
 
 Canonical test matrix: [`docs/testing/TEST_MATRIX.md`](docs/testing/TEST_MATRIX.md).

@@ -21,6 +21,12 @@ import java.util.TreeMap;
  * that every unrelated request dimension remains equivalent to the baseline.
  */
 public final class RequestEquivalenceGuard {
+    private static final java.util.Set<String> AUTH_CONTEXT_HEADERS = java.util.Set.of(
+            "authorization", "proxy-authorization", "cookie", "x-api-key", "api-key",
+            "x-auth-token", "x-api-token");
+    private final io.acra.core.active.execution.AuthenticatedContextSubstitutionResolver contextResolver =
+            new io.acra.core.active.execution.AuthenticatedContextSubstitutionResolver();
+
     public ValidationDecision evaluate(SecurityTest test, RequestSet requests) {
         if (test == null || requests == null) {
             return ValidationDecision.invalid("test and built requests are required for equivalence validation");
@@ -43,7 +49,27 @@ public final class RequestEquivalenceGuard {
 
         HttpRequest expected;
         try {
-            expected = expectedMutation(builtBaseline, mutation);
+            if (mutation.type() == MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION) {
+                if (mutation.targetLocation() != MutationLocation.CONTEXT) {
+                    return ValidationDecision.invalid("authenticated context substitution requires CONTEXT location");
+                }
+                if (!test.baselineDefinition().contextRef().equals(mutation.sourceContext())) {
+                    return ValidationDecision.invalid("authenticated context substitution source does not match baseline context");
+                }
+                var targetDefinition = contextResolver.resolve(test, mutation.targetContext());
+                expected = targetDefinition.request();
+                if (!test.baselineDefinition().resourceRef().equals(targetDefinition.resourceRef())) {
+                    return ValidationDecision.invalid("authenticated context substitution changed resource reference");
+                }
+                if (!sameNonAuthenticationRequest(builtBaseline, expected)) {
+                    return ValidationDecision.invalid("authenticated context substitution changed non-authentication request dimensions");
+                }
+                if (!authenticationContextChanged(builtBaseline, expected)) {
+                    return ValidationDecision.invalid("authenticated context substitution did not change authentication material");
+                }
+            } else {
+                expected = expectedMutation(builtBaseline, mutation);
+            }
         } catch (RuntimeException invalid) {
             return ValidationDecision.invalid("declared mutation is invalid: " + invalid.getMessage());
         }
@@ -66,6 +92,7 @@ public final class RequestEquivalenceGuard {
             case HEADER, IDENTITY, ROLE ->
                     headers = replaceHeaderExactlyOnce(headers, mutation.originalValue(), mutation.mutatedValue());
             case COOKIE -> cookies = replaceMapValueExactlyOnce(cookies, mutation.originalValue(), mutation.mutatedValue());
+            case CONTEXT -> throw new IllegalArgumentException("CONTEXT mutation requires explicit SecurityTest controls");
             case BODY -> body = replaceBody(body, mutation);
             case RESOURCE, TENANT -> {
                 if (occurrences(target, mutation.originalValue()) == 1) {
@@ -90,6 +117,7 @@ public final class RequestEquivalenceGuard {
         EnumSet<MutationLocation> allowed = switch (type) {
             case IDENTITY_SUBSTITUTION -> EnumSet.of(MutationLocation.IDENTITY, MutationLocation.HEADER, MutationLocation.COOKIE);
             case ROLE_SUBSTITUTION -> EnumSet.of(MutationLocation.ROLE, MutationLocation.HEADER, MutationLocation.COOKIE);
+            case AUTHENTICATED_CONTEXT_SUBSTITUTION -> EnumSet.of(MutationLocation.CONTEXT);
             case TENANT_SUBSTITUTION -> EnumSet.of(MutationLocation.TENANT, MutationLocation.PATH,
                     MutationLocation.QUERY, MutationLocation.HEADER, MutationLocation.COOKIE, MutationLocation.BODY);
             case RESOURCE_SUBSTITUTION -> EnumSet.of(MutationLocation.RESOURCE, MutationLocation.PATH,
@@ -99,7 +127,7 @@ public final class RequestEquivalenceGuard {
                     MutationLocation.PATH, MutationLocation.QUERY);
             case METHOD_REPRESENTATION -> EnumSet.of(MutationLocation.METHOD);
             case PROPERTY -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY, MutationLocation.HEADER);
-            case COLLECTION, BATCH -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY,
+            case COLLECTION, BATCH, INDIRECT_REFERENCE -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY,
                     MutationLocation.PATH, MutationLocation.RESOURCE);
             case WORKFLOW_TRANSITION -> EnumSet.of(MutationLocation.BODY, MutationLocation.QUERY,
                     MutationLocation.PATH, MutationLocation.RESOURCE, MutationLocation.HEADER);
@@ -164,6 +192,31 @@ public final class RequestEquivalenceGuard {
             offset += value.length();
         }
         return count;
+    }
+
+    private static boolean sameNonAuthenticationRequest(HttpRequest first, HttpRequest second) {
+        return sameAuthorityAndProtocol(first, second)
+                && first.method() == second.method()
+                && first.rawTarget().equals(second.rawTarget())
+                && java.util.Arrays.equals(first.body(), second.body())
+                && nonAuthenticationHeaders(first.headers()).equals(nonAuthenticationHeaders(second.headers()));
+    }
+
+    private static boolean authenticationContextChanged(HttpRequest first, HttpRequest second) {
+        return !authenticationHeaders(first.headers()).equals(authenticationHeaders(second.headers()))
+                || !first.cookies().equals(second.cookies());
+    }
+
+    private static List<HttpHeader> nonAuthenticationHeaders(List<HttpHeader> headers) {
+        return headers.stream()
+                .filter(header -> !AUTH_CONTEXT_HEADERS.contains(header.name().toLowerCase(java.util.Locale.ROOT)))
+                .toList();
+    }
+
+    private static List<HttpHeader> authenticationHeaders(List<HttpHeader> headers) {
+        return headers.stream()
+                .filter(header -> AUTH_CONTEXT_HEADERS.contains(header.name().toLowerCase(java.util.Locale.ROOT)))
+                .toList();
     }
 
     private static boolean sameAuthorityAndProtocol(HttpRequest first, HttpRequest second) {

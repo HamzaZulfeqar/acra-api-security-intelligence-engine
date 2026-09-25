@@ -1,9 +1,10 @@
 # S5-10 authorization orchestration
 
-Audit date: 2026-09-09. Software status: MISSING.
+Final status: **COMPLETE** — 2026-09-23.
 
-The actual repository contains S4 Observation/Evidence and the existing S5 assessment records. These remain reusable and are not replaced. Source inspection found no complete authorization-result orchestrator.
+Implemented `AuthorizationAnalysisRequest`, `AuthorizationAnalysisResult` and `AuthorizationOrchestrator`.
 
-The remaining scope includes missing context normalization and missing S5 modules. No implementation or executable result is claimed for this requirement. This defensive continuation does not add an automated vulnerability discovery or reproduction workflow.
+Final chain:
+`EvidenceReferenceValidator → AuthorizationContextNormalizer → BOLA/BFLA → tenant/workflow/property assessments → AuthorizationAssessmentCorrelationService → AuthorizationFindingEvaluator → AuthorizationSeverityEvaluator`.
 
-Current decision and evidence: `sprint-05-final-software-closure.md`. S5 remains SOFTWARE PARTIAL; S6 is not started. This file is an audit record, not a completed module.
+Reporting is provided by `AuthorizationReportGenerator`. Final Java-21 verification is recorded in `docs/sprints/sprint-05-final-completion.md`.

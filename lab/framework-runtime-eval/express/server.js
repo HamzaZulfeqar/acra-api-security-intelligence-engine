@@ -1,0 +1,11 @@
+const express=require("express");const app=express();app.use(express.json());
+app.get("/health",(req,res)=>res.json({status:"ok",framework:"express-eval"}));
+app.get("/runtime-eval/express/documents/:docId",(req,res)=>{const id=req.params.docId,owner=id==="doc-alpha"?"robin":"casey",tenant=id==="doc-alpha"?"alpha":"beta";res.json({id,ownerId:owner,tenantId:tenant});});
+app.get("/runtime-eval/express/organizations/:tenant/reports/:reportId",(req,res)=>res.json({id:req.params.reportId,tenantId:req.params.tenant}));
+app.get("/runtime-eval/express/admin/security-log",(req,res)=>res.json({area:"security-log",role:req.get("X-Role")||"",requiredRole:"audit-admin"}));
+app.post("/runtime-eval/express/workflows/deploy/resources/:resourceId/transition",(req,res)=>res.json({...req.body,resourceId:req.params.resourceId,state:req.body.toState,role:req.get("X-Role")||""}));
+app.get("/runtime-eval/express/routing/equivalent",(req,res)=>res.json({area:"route",role:req.get("X-Role")||"",routeForm:"canonical"}));
+app.patch("/runtime-eval/express/profiles/:account/settings",(req,res)=>res.json({id:req.params.account,appliedProperties:Object.keys(req.body).sort()}));
+app.post("/runtime-eval/express/documents/bulk-fetch",(req,res)=>{const items=(req.body.resourceIds||[]).map(id=>({resourceId:id,decision:"ALLOW",ownerId:id==="doc-alpha"?"robin":"casey",tenantId:id==="doc-alpha"?"alpha":"beta"}));res.json({items});});
+app.get("/runtime-eval/express/links/:alias",(req,res)=>{const id=req.params.alias==="link-alpha"?"doc-alpha":"doc-beta",owner=id==="doc-alpha"?"robin":"casey",tenant=id==="doc-alpha"?"alpha":"beta";res.json({alias:req.params.alias,resolvedResourceId:id,resource:{id,ownerId:owner,tenantId:tenant}});});
+app.listen(Number(process.env.PORT||18303),"127.0.0.1",()=>console.log("express-eval-ready"));

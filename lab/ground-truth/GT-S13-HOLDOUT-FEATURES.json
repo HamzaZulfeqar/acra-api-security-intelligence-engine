@@ -1,0 +1,288 @@
+{
+  "schemaVersion": "s13-holdout-features-v1",
+  "datasetId": "GT-S13-HOLDOUT-FEATURES",
+  "definitionState": "FROZEN_BEFORE_EVALUATION",
+  "labelsSeparated": true,
+  "independentOfAcraOutput": true,
+  "dimensionDiscoveryMeasured": false,
+  "scope": "localhost held-out authorization fixture; unseen actor/resource/policy combinations",
+  "cases": [
+    {
+      "caseId": "S13-HO-OBJECT-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/files/file-south",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-OBJECT-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/files/file-north",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-TENANT-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/tenants/south/reports/r-south",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-TENANT-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/tenants/south/reports/r-south",
+      "actor": {
+        "sub": "root",
+        "tenant_id": "global",
+        "role": "platform-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-RBAC-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/admin/audit",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-RBAC-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/admin/audit",
+      "actor": {
+        "sub": "secadmin",
+        "tenant_id": "north",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-WORKFLOW-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "method": "POST",
+      "path": "/holdout/v1/workflows/change-request/resources/chg-1/transition",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "requester"
+      },
+      "requestBody": {
+        "action": "APPROVE",
+        "from_state": "PENDING",
+        "to_state": "APPROVED",
+        "approval": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-WORKFLOW-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "method": "POST",
+      "path": "/holdout/v1/workflows/change-request/resources/chg-1/transition",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "requester"
+      },
+      "requestBody": {
+        "action": "SUBMIT",
+        "from_state": "DRAFT",
+        "to_state": "PENDING",
+        "approval": false
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-ROUTING-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout//v1/admin/audit",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-ROUTING-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout//v1/admin/audit",
+      "actor": {
+        "sub": "secadmin",
+        "tenant_id": "north",
+        "role": "security-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-PROPERTY-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "method": "PATCH",
+      "path": "/holdout/v1/accounts/alice/profile",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "requestBody": {
+        "is_staff": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-PROPERTY-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "method": "PATCH",
+      "path": "/holdout/v1/accounts/alice/profile",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "requestBody": {
+        "nickname": "Alice Heldout"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-BATCH-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "method": "POST",
+      "path": "/holdout/v1/files/batch-read",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "file-north",
+          "file-south"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "file-south",
+        "decisionField": "decision"
+      }
+    },
+    {
+      "caseId": "S13-HO-BATCH-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "method": "POST",
+      "path": "/holdout/v1/files/batch-read",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "file-north"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "file-north",
+        "decisionField": "decision"
+      }
+    },
+    {
+      "caseId": "S13-HO-INDIRECT-POS-001",
+      "family": "HELDOUT_POSITIVE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/share/share-south",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    },
+    {
+      "caseId": "S13-HO-INDIRECT-NEG-001",
+      "family": "HARD_NEGATIVE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "method": "GET",
+      "path": "/holdout/v1/share/share-north",
+      "actor": {
+        "sub": "alice",
+        "tenant_id": "north",
+        "role": "reader"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      }
+    }
+  ]
+}

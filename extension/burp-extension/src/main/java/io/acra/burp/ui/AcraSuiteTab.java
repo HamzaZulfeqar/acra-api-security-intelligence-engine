@@ -7,6 +7,12 @@ import io.acra.core.domain.observation.EvidenceTimelineEntry;
 import io.acra.core.domain.observation.TrafficObservation;
 import io.acra.core.inventory.EndpointAggregate;
 import io.acra.core.active.product.ActiveEngineWorkspace;
+import io.acra.core.product.authorization.S6AuthorizationWorkspace;
+import io.acra.core.product.batchindirect.S10BatchIndirectWorkspace;
+import io.acra.core.product.finding.FindingReviewWorkspace;
+import io.acra.core.product.workflow.S7WorkflowWorkspace;
+import io.acra.core.product.routing.S8RoutingWorkspace;
+import io.acra.core.product.property.S9PropertyWorkspace;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
@@ -26,13 +32,64 @@ public final class AcraSuiteTab {
     private final JTextArea routesView=new JTextArea();
     private final JTextArea graphView=new JTextArea();
     private final ActiveTestingPanel activeTestingPanel;
+    private final S6AuthorizationPanel authorizationPanel;
+    private final S7WorkflowPanel workflowPanel;
+    private final S8RoutingPanel routingPanel;
+    private final S9PropertyPanel propertyPanel;
+    private final S10BatchIndirectPanel batchIndirectPanel;
+    private final S11FindingReviewPanel findingReviewPanel;
     private final Timer refresh;
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope){
-        this(pipeline,scope,new ActiveEngineWorkspace(Clock.systemUTC(),null));
+        this(pipeline,scope,new ActiveEngineWorkspace(Clock.systemUTC(),null),
+                new S6AuthorizationWorkspace(),new S7WorkflowWorkspace(),new S8RoutingWorkspace());
     }
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,ActiveEngineWorkspace activeWorkspace){
+        this(pipeline,scope,activeWorkspace,new S6AuthorizationWorkspace(),new S7WorkflowWorkspace(),
+                new S8RoutingWorkspace());
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace){
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,new S7WorkflowWorkspace(),
+                new S8RoutingWorkspace());
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
+                        S7WorkflowWorkspace workflowWorkspace){
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,workflowWorkspace,new S8RoutingWorkspace());
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
+                        S7WorkflowWorkspace workflowWorkspace,S8RoutingWorkspace routingWorkspace){
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,workflowWorkspace,routingWorkspace,
+                new S9PropertyWorkspace());
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
+                        S7WorkflowWorkspace workflowWorkspace,S8RoutingWorkspace routingWorkspace,
+                        S9PropertyWorkspace propertyWorkspace){
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,workflowWorkspace,routingWorkspace,
+                propertyWorkspace,new S10BatchIndirectWorkspace());
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
+                        S7WorkflowWorkspace workflowWorkspace,S8RoutingWorkspace routingWorkspace,
+                        S9PropertyWorkspace propertyWorkspace,S10BatchIndirectWorkspace batchIndirectWorkspace){
+        this(pipeline,scope,activeWorkspace,authorizationWorkspace,workflowWorkspace,routingWorkspace,
+                propertyWorkspace,batchIndirectWorkspace,new FindingReviewWorkspace("acra-session"));
+    }
+
+    public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope,
+                        ActiveEngineWorkspace activeWorkspace,S6AuthorizationWorkspace authorizationWorkspace,
+                        S7WorkflowWorkspace workflowWorkspace,S8RoutingWorkspace routingWorkspace,
+                        S9PropertyWorkspace propertyWorkspace,S10BatchIndirectWorkspace batchIndirectWorkspace,
+                        FindingReviewWorkspace findingReviewWorkspace){
         JTabbedPane tabs=new JTabbedPane();
         trafficModel=new TrafficModel(pipeline); contextModel=new ContextModel(pipeline); endpointModel=new EndpointModel(pipeline);
         JPanel overviewPanel=new JPanel(new BorderLayout()); overviewPanel.add(overview,BorderLayout.NORTH); tabs.addTab("Overview",overviewPanel);
@@ -48,8 +105,20 @@ public final class AcraSuiteTab {
         tabs.addTab("Context Graph",new JScrollPane(graphView));
         activeTestingPanel=new ActiveTestingPanel(activeWorkspace);
         activeTestingPanel.install(tabs);
+        authorizationPanel=new S6AuthorizationPanel(authorizationWorkspace);
+        authorizationPanel.install(tabs);
+        workflowPanel=new S7WorkflowPanel(workflowWorkspace);
+        workflowPanel.install(tabs);
+        routingPanel=new S8RoutingPanel(routingWorkspace);
+        routingPanel.install(tabs);
+        propertyPanel=new S9PropertyPanel(propertyWorkspace);
+        propertyPanel.install(tabs);
+        batchIndirectPanel=new S10BatchIndirectPanel(batchIndirectWorkspace);
+        batchIndirectPanel.install(tabs);
+        findingReviewPanel=new S11FindingReviewPanel(findingReviewWorkspace);
+        findingReviewPanel.install(tabs);
         tabs.addTab("Configuration",configPanel(scope)); root.add(tabs,BorderLayout.CENTER);
-        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
+        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();authorizationPanel.refresh();workflowPanel.refresh();routingPanel.refresh();propertyPanel.refresh();batchIndirectPanel.refresh();findingReviewPanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
         refresh.start();
     }
 
@@ -69,6 +138,12 @@ public final class AcraSuiteTab {
 
     public Component component(){return root;}
     public ActiveEngineWorkspace activeWorkspace(){return activeTestingPanel.workspace();}
+    public S6AuthorizationWorkspace authorizationWorkspace(){return authorizationPanel.workspace();}
+    public S7WorkflowWorkspace workflowWorkspace(){return workflowPanel.workspace();}
+    public S8RoutingWorkspace routingWorkspace(){return routingPanel.workspace();}
+    public S9PropertyWorkspace propertyWorkspace(){return propertyPanel.workspace();}
+    public S10BatchIndirectWorkspace batchIndirectWorkspace(){return batchIndirectPanel.workspace();}
+    public FindingReviewWorkspace findingReviewWorkspace(){return findingReviewPanel.workspace();}
     public void stop(){refresh.stop();}
 
     private Component trafficPanel(TrafficIntelligencePipeline pipeline){

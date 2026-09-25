@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.acra</groupId><artifactId>acra-parent</artifactId><version>0.3.0-rc1</version><packaging>pom</packaging>
+  <groupId>io.acra</groupId><artifactId>acra-parent</artifactId><version>0.3.0</version><packaging>pom</packaging>
+  <name>ACRA API Access Control &amp; Routing Auditor</name>
+  <description>Evidence-oriented API authorization analysis and Burp Suite integration.</description>
+  <url>https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
   <modules><module>core</module><module>extension/burp-extension</module></modules>
   <properties><maven.compiler.release>21</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><montoya.version>2026.7</montoya.version></properties>
 </project>

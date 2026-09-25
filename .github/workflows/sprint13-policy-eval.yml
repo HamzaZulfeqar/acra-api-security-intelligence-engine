@@ -1,0 +1,48 @@
+name: Sprint 13 Policy Generalization Evaluation
+
+on:
+  push:
+    branches:
+      - s13-policy-generalization
+    paths:
+      - 'scripts/run-sprint13-policy-eval.py'
+      - 'scripts/verify-sprint13-policy-eval.py'
+      - 'scripts/verify-sprint13-policy-eval.sh'
+      - 'lab/ground-truth/POL-S13-EVAL-001.json'
+      - 'lab/ground-truth/GT-S13-POLICY-EVAL-*.json'
+      - 'docs/research/sprint-13-policy-generalization-protocol.md'
+      - '.github/workflows/sprint13-policy-eval.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  untouched-evaluation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize Phase 3 evaluation scripts
+        run: chmod +x ./scripts/run-sprint13-policy-eval.py ./scripts/verify-sprint13-policy-eval.py ./scripts/verify-sprint13-policy-eval.sh
+      - name: Execute untouched Phase 3 evaluation
+        run: bash ./scripts/verify-sprint13-policy-eval.sh
+      - name: Compile product modules
+        run: mvn --batch-mode --no-transfer-progress -Dmaven.test.skip=true package
+      - name: Upload untouched evaluation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-13-policy-eval
+          path: |
+            build/s13-policy-eval/**
+          if-no-files-found: warn

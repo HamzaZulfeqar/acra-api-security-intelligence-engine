@@ -1,0 +1,1641 @@
+{
+  "schemaVersion": "s13-governance-features-v1",
+  "datasetId": "GT-S13-GOV-EVAL-FEATURES",
+  "purpose": "Untouched Phase 5 governance evaluation corpus",
+  "createdAfterGovernanceFreeze": "11afbb80be24116c9facd0d4b0791f4a12efed3a",
+  "labelSeparated": true,
+  "policyRegistryId": "POL-S13-GOV-EVAL-001",
+  "caseCount": 64,
+  "cases": [
+    {
+      "caseId": "EVAL5-01-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-beta",
+          "owner_id": "casey",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-01-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-beta",
+          "owner_id": "robin",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-01-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 403,
+        "body": {
+          "id": "record-beta",
+          "owner_id": "casey",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-01-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/unregistered-records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-beta",
+          "owner_id": "casey",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-01-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/unregistered-records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-beta",
+          "owner_id": "robin",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-01-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/ambiguous-records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-beta",
+          "owner_id": "robin",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-01-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/stale-records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "record-supervisor-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-beta",
+          "owner_id": "robin",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-01-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/incomplete-records/record-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "record-beta",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-beta",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-beta",
+          "tenant_id": "alpha"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 403,
+        "body": {
+          "id": "report-beta",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/unregistered-reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-beta",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/unregistered-reports/report-beta",
+      "actor": {
+        "sub": "governor",
+        "tenant_id": "alpha",
+        "role": "cloud-governor"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-beta",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/ambiguous-reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-beta",
+          "tenant_id": "alpha"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/stale-reports/report-beta",
+      "actor": {
+        "sub": "gov2",
+        "tenant_id": "alpha",
+        "role": "cloud-governor-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-beta",
+          "tenant_id": "beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-02-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/workspaces/beta/incomplete-reports/report-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-beta"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "user",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 403,
+        "body": {
+          "area": "security-audit",
+          "role": "user",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/unregistered-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "user",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/unregistered-security-audit",
+      "actor": {
+        "sub": "operator",
+        "tenant_id": "alpha",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/ambiguous-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/stale-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "security-operator-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator-v2",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-03-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/management/incomplete-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": ""
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "",
+          "required_role": "security-operator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "author"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "author"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "rm",
+        "tenant_id": "alpha",
+        "role": "release-manager"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "release-manager"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/resources/release-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "author"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 403,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "author"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/unregistered/resources/release-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "author"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "author"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/unregistered/resources/release-1/transition",
+      "actor": {
+        "sub": "release",
+        "tenant_id": "alpha",
+        "role": "release-manager"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "release-manager"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/ambiguous/resources/release-1/transition",
+      "actor": {
+        "sub": "rm",
+        "tenant_id": "alpha",
+        "role": "release-manager"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "release-manager"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/stale/resources/release-1/transition",
+      "actor": {
+        "sub": "rm2",
+        "tenant_id": "alpha",
+        "role": "release-manager-v2"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "from_state": "PENDING",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "from_state": "PENDING",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "release-manager-v2"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-04-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/workflows/release/incomplete/resources/release-1/transition",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "author"
+      },
+      "requestBody": {
+        "action": "RELEASE",
+        "to_state": "LIVE",
+        "approved": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "RELEASE",
+          "to_state": "LIVE",
+          "state": "LIVE",
+          "role": "author"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "user",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 403,
+        "body": {
+          "area": "security-audit",
+          "role": "user",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/unregistered-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "user",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/unregistered-security-audit",
+      "actor": {
+        "sub": "operator",
+        "tenant_id": "alpha",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/ambiguous-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "security-operator"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/stale-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "security-operator-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "security-operator-v2",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-05-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval//v2/management/incomplete-security-audit",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": ""
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "security-audit",
+          "role": "",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 403,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/unregistered-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "risk_level": "critical"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/unregistered-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/ambiguous-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "locale": "en-PK"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "locale"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/stale-preferences",
+      "actor": {
+        "sub": "aa",
+        "tenant_id": "alpha",
+        "role": "account-admin"
+      },
+      "requestBody": {
+        "risk_level": "review"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": [
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-06-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "PATCH",
+      "path": "/goveval/v2/accounts/robin/incomplete-preferences",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {},
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "robin",
+          "applied_properties": []
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "DENY",
+              "owner_id": "casey",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/unregistered-bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "ALLOW",
+              "owner_id": "casey",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/unregistered-bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/ambiguous-bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/stale-bulk-read",
+      "actor": {
+        "sub": "sup2",
+        "tenant_id": "alpha",
+        "role": "record-supervisor-v2"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "ALLOW",
+              "owner_id": "robin",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-07-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "POST",
+      "path": "/goveval/v2/records/incomplete-bulk-read",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "requestBody": {
+        "ids": [
+          "record-beta"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "record_id",
+        "matchValue": "record-beta",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "record_id": "record-beta",
+              "decision": "ALLOW",
+              "tenant_id": "beta"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-CUR-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/ref-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "owner_id": "casey",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-CUR-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/ref-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "owner_id": "robin",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-CUR-DENY",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/ref-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 403,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "owner_id": "casey",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-GAP-POS",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/unregistered/ref-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "owner_id": "casey",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-GAP-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/unregistered/ref-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "owner_id": "robin",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-AMB-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/ambiguous/ref-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "owner_id": "robin",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-STALE-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/stale/ref-beta",
+      "actor": {
+        "sub": "sup2",
+        "tenant_id": "alpha",
+        "role": "record-supervisor-v2"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "owner_id": "robin",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "EVAL5-08-INC-NEG",
+      "family": "PHASE5_EVAL",
+      "method": "GET",
+      "path": "/goveval/v2/references/incomplete/ref-beta",
+      "actor": {
+        "sub": "robin",
+        "tenant_id": "alpha",
+        "role": "user"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "ref-beta",
+          "resolved_resource_id": "record-beta",
+          "resource": {
+            "id": "record-beta",
+            "tenant_id": "beta"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,16 +1,22 @@
 package io.acra.core.engine;
 
-import io.acra.core.domain.authorization.*;
 import io.acra.core.active.evidence.EvidenceReferenceValidator;
 import io.acra.core.active.evidence.ExecutionEvidenceStore;
+import io.acra.core.domain.authorization.ActionType;
+import io.acra.core.domain.authorization.AuthorizationContext;
+import io.acra.core.domain.authorization.AuthorizationDecision;
+import io.acra.core.domain.authorization.BolaAssessment;
+import io.acra.core.domain.authorization.BolaAssessmentStatus;
+import io.acra.core.domain.authorization.BolaConfidence;
+import io.acra.core.domain.authorization.ContextStatus;
+import io.acra.core.security.TokenFingerprint;
 import io.acra.core.security.UniversalRedactor;
 import java.util.List;
 import java.util.Locale;
 
-
 /**
- * Deterministic object-level authorization reasoning foundation.
- * Produces assessments only; it does not create vulnerability findings.
+ * Deterministic object-level authorization reasoning.
+ * Produces assessments only; it does not create confirmed vulnerability findings.
  */
 public final class BolaAssessmentEvaluator {
     private static final UniversalRedactor REDACTOR = new UniversalRedactor();
@@ -65,7 +71,6 @@ public final class BolaAssessmentEvaluator {
 
         AuthorizationDecision expected = context.expectedDecision();
         AuthorizationDecision observed = context.observedDecision();
-
         if (!isBinary(expected) || !isBinary(observed)) {
             return assessment(context, observationId, executionId, testId,
                     BolaAssessmentStatus.INCONCLUSIVE, BolaConfidence.INSUFFICIENT,
@@ -83,11 +88,11 @@ public final class BolaAssessmentEvaluator {
                 "Observed decision is consistent with expected authorization decision.");
     }
 
-    private boolean missingRequiredContext(AuthorizationContext c) {
-        return c.principal() == null || isUnknown(c.principal().principalId())
-                || c.resource() == null || isUnknown(c.resource().resourceId())
-                || c.action() == null || c.action().actionType() == ActionType.UNKNOWN
-                || isUnknown(c.ownerPrincipalId()) || isUnknown(c.resource().ownerPrincipalId());
+    private boolean missingRequiredContext(AuthorizationContext context) {
+        return context.principal() == null || isUnknown(context.principal().principalId())
+                || context.resource() == null || isUnknown(context.resource().resourceId())
+                || context.action() == null || context.action().actionType() == ActionType.UNKNOWN
+                || isUnknown(context.ownerPrincipalId()) || isUnknown(context.resource().ownerPrincipalId());
     }
 
     private boolean missingProvenance(String observationId, String executionId, String testId) {
@@ -109,22 +114,23 @@ public final class BolaAssessmentEvaluator {
     }
 
     private String deterministicId(String observationId, String executionId, String testId, String status) {
-        return Integer.toHexString((String.valueOf(observationId) + "|" + String.valueOf(executionId)
-                + "|" + String.valueOf(testId) + "|" + status).hashCode());
+        String material = String.valueOf(observationId) + "|" + String.valueOf(executionId)
+                + "|" + String.valueOf(testId) + "|" + status;
+        return "bola-" + TokenFingerprint.sha256(material).substring(0, 24);
     }
 
-    private BolaAssessment assessment(AuthorizationContext c, String observationId,
+    private BolaAssessment assessment(AuthorizationContext context, String observationId,
                                       String executionId, String testId,
                                       BolaAssessmentStatus status, BolaConfidence confidence,
                                       String rationale) {
-        String principal = c == null || c.principal() == null ? "" : c.principal().principalId();
-        String resource = c == null || c.resource() == null ? "" : c.resource().resourceId();
-        String owner = c == null ? "" : c.ownerPrincipalId();
-        String action = c == null || c.action() == null ? "" : c.action().actionType().name();
-        return new BolaAssessment(deterministicId(observationId, executionId, testId, status.name()), observationId, executionId, testId,
-                principal, resource, owner, action,
-                c == null ? AuthorizationDecision.UNKNOWN : c.expectedDecision(),
-                c == null ? AuthorizationDecision.UNKNOWN : c.observedDecision(),
-                status, confidence, c == null ? List.of() : c.evidenceIds(), rationale);
+        String principal = context == null || context.principal() == null ? "" : context.principal().principalId();
+        String resource = context == null || context.resource() == null ? "" : context.resource().resourceId();
+        String owner = context == null ? "" : context.ownerPrincipalId();
+        String action = context == null || context.action() == null ? "" : context.action().actionType().name();
+        return new BolaAssessment(deterministicId(observationId, executionId, testId, status.name()),
+                observationId, executionId, testId, principal, resource, owner, action,
+                context == null ? AuthorizationDecision.UNKNOWN : context.expectedDecision(),
+                context == null ? AuthorizationDecision.UNKNOWN : context.observedDecision(),
+                status, confidence, context == null ? List.of() : context.evidenceIds(), rationale);
     }
 }

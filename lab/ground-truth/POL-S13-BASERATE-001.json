@@ -1,0 +1,714 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-BASERATE-001",
+  "purpose": "Phase 4 adversarial negative-heavy base-rate stress registry; algorithms frozen from Phase 3",
+  "algorithmFreeze": "c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd",
+  "policies": [
+    {
+      "policyId": "BR-OBJ-STD",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/assets/asset-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor",
+          "asset-auditor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-OBJ-AMB-A",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/ambiguous-assets/asset-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-OBJ-AMB-B",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/ambiguous-assets/asset-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor",
+          "asset-auditor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-OBJ-STALE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/stale-assets/asset-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-governor-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-OBJ-INCOMPLETE",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/incomplete-assets/asset-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-TEN-STD",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/workspaces/(?P<workspace>red|blue|green)/reports/report-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "workspace",
+        "crossTenantRoles": [
+          "cloud-admin"
+        ],
+        "delegatedRoles": [
+          "workspace-delegate"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-TEN-AMB-A",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/workspaces/(?P<workspace>red|blue|green)/ambiguous-reports/report-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "workspace",
+        "crossTenantRoles": [
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-TEN-AMB-B",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/workspaces/(?P<workspace>red|blue|green)/ambiguous-reports/report-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "workspace",
+        "crossTenantRoles": [
+          "cloud-admin",
+          "cloud-auditor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-TEN-STALE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/workspaces/(?P<workspace>red|blue|green)/stale-reports/report-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "workspace",
+        "crossTenantRoles": [
+          "cloud-admin-v1"
+        ],
+        "delegatedRoles": [
+          "workspace-delegate-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-TEN-INCOMPLETE",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/workspaces/(?:red|blue|green)/incomplete-reports/report-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "tenantField": "tenant_id",
+        "crossTenantRoles": [
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-RBAC-STD",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/management/audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "security-lead",
+          "cloud-admin"
+        ],
+        "deniedRoles": [
+          "disabled-operator"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-RBAC-AMB-A",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/management/ambiguous-audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-RBAC-AMB-B",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/management/ambiguous-audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "security-lead"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-RBAC-STALE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/management/stale-audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-RBAC-INCOMPLETE",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/management/incomplete-audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-WF-STD",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/workflows/release/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          },
+          {
+            "action": "APPROVE",
+            "from": "PENDING",
+            "to": "APPROVED",
+            "roles": [
+              "reviewer"
+            ],
+            "requiredTrueFields": [
+              "approval"
+            ]
+          },
+          {
+            "action": "PUBLISH",
+            "from": "APPROVED",
+            "to": "LIVE",
+            "roles": [
+              "publisher"
+            ],
+            "requiredTrueFields": [
+              "published"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "BR-WF-AMB-A",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/workflows/release/ambiguous/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "BR-WF-AMB-B",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/workflows/release/ambiguous/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author",
+              "editor"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "BR-WF-STALE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/workflows/release/stale/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "rules": {
+        "transitions": [
+          {
+            "action": "PUBLISH",
+            "from": "APPROVED",
+            "to": "LIVE",
+            "roles": [
+              "publisher-v1"
+            ],
+            "requiredTrueFields": [
+              "published"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "BR-WF-INCOMPLETE",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/workflows/release/incomplete/resources/release-[0-9]+/transition$",
+      "priority": 100,
+      "rules": {
+        "transitions": [
+          {
+            "action": "PROPOSE",
+            "from": "NEW",
+            "to": "PENDING",
+            "roles": [
+              "author"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "BR-PROP-STD",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/stress/v3/accounts/[a-z0-9-]+/preferences$",
+      "priority": 100,
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ],
+          "account-admin": [
+            "locale",
+            "display_theme",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "BR-PROP-AMB-A",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/stress/v3/accounts/[a-z0-9-]+/ambiguous-preferences$",
+      "priority": 100,
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale"
+          ]
+        }
+      }
+    },
+    {
+      "policyId": "BR-PROP-AMB-B",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/stress/v3/accounts/[a-z0-9-]+/ambiguous-preferences$",
+      "priority": 100,
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ]
+        }
+      }
+    },
+    {
+      "policyId": "BR-PROP-STALE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/stress/v3/accounts/[a-z0-9-]+/stale-preferences$",
+      "priority": 100,
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale"
+          ],
+          "account-admin-v1": [
+            "locale",
+            "risk_level"
+          ]
+        }
+      }
+    },
+    {
+      "policyId": "BR-PROP-INCOMPLETE",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/stress/v3/accounts/[a-z0-9-]+/incomplete-preferences$",
+      "priority": 100,
+      "rules": {
+        "allowedFieldsByRole": {
+          "user": [
+            "locale",
+            "display_theme"
+          ]
+        }
+      }
+    },
+    {
+      "policyId": "BR-ROUTE-STD",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/+v3/management/audit$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "security-lead",
+          "cloud-admin"
+        ],
+        "canonicalRoles": [
+          "security-operator",
+          "security-lead",
+          "cloud-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-ROUTE-AMB-A",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/+v3/management/ambiguous-route$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-ROUTE-AMB-B",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/+v3/management/ambiguous-route$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator",
+          "security-lead"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-ROUTE-STALE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/+v3/management/stale-route$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator-v1"
+        ],
+        "canonicalRoles": [
+          "security-operator-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-ROUTE-INCOMPLETE",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/+v3/management/incomplete-route$",
+      "priority": 100,
+      "rules": {
+        "allowedRoles": [
+          "security-operator"
+        ],
+        "canonicalRoles": [
+          "security-operator"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-BATCH-STD",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/assets/bulk-read$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor",
+          "asset-auditor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-BATCH-AMB-A",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/assets/ambiguous-bulk-read$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-BATCH-AMB-B",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/assets/ambiguous-bulk-read$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor",
+          "asset-auditor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-BATCH-STALE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/assets/stale-bulk-read$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-governor-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-BATCH-INCOMPLETE",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/stress/v3/assets/incomplete-bulk-read$",
+      "priority": 100,
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-IND-STD",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/references/ref-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor",
+          "asset-auditor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-IND-AMB-A",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/references/ambiguous/ref-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-IND-AMB-B",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/references/ambiguous/ref-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor",
+          "asset-auditor"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-IND-STALE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/references/stale/ref-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-governor-v1"
+        ]
+      }
+    },
+    {
+      "policyId": "BR-IND-INCOMPLETE",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/stress/v3/references/incomplete/ref-[a-z0-9-]+$",
+      "priority": 100,
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "asset-supervisor"
+        ]
+      }
+    }
+  ]
+}

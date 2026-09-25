@@ -1,256 +1,720 @@
 # ACRA Project State
 
-## Current state — 2026-09-11
+## Current state — 2026-09-26 — Sprint 15 Release Promotion
+
+**Decision:** RELEASE PROMOTION PREPARED; PUBLICATION BLOCKED PENDING OWNER DECISIONS.  
+**Working branch:** `s15-release-promotion`.  
+**Draft PR:** #4.  
+**Source candidate:** `0.3.0-rc1`.  
+**Sprint 14 hardened source:** `88f2a75f190f6e8853609db2dc9d73929434ad0d`.  
+**Promotion preflight:** `36195798931` — SUCCESS.  
+**CodeQL:** PASS.  
+**Gitleaks:** PASS.  
+**GitHub Dependency Review:** UNAVAILABLE — repository Dependency Graph disabled.  
+**Local dependency contract/inventory:** PASS.  
+**License:** UNRESOLVED.  
+**Version/publication decision:** UNRESOLVED.  
+**Public release authorized:** NO.  
+**Tag/GitHub Release:** NOT CREATED.
+
+The promotion branch is intentionally safe in `PREPARED_BLOCKED` state. No merge, tag, release or license selection
+is implied by CI success.
+
+## Previous state — Sprint 14 technical release hardening
+
+## Current state — 2026-09-26 — Sprint 14
+
+**Decision:** TECHNICAL RELEASE CANDIDATE HARDENED; PUBLIC RELEASE BLOCKED BY LICENSE.  
+**Working branch:** `s14-productization-release-hardening`.  
+**Candidate version:** `0.3.0-rc1`.  
+**Frozen research base:** Sprint 13 head `d6797222d31984a45fbc80674193d0388757b24c`.  
+**Release-hardening workflow:** `36185472934` — SUCCESS.  
+**Security workflow:** `36185473086` — CodeQL SUCCESS; Gitleaks SUCCESS.  
+**Retained executable regression chain:** PASS.  
+**Maven clean verify:** BUILD SUCCESS.  
+**Release bundle:** GENERATED + VERIFIED + UPLOADED.  
+**Version promotion:** NOT PERFORMED.  
+**Git tag / GitHub Release:** NOT CREATED.  
+**Software license:** UNRESOLVED — PUBLIC RELEASE BLOCKER.
+
+### Sprint 14 release-candidate boundary
+
+Sprint 14 changes productization/release tooling and documentation only; it does not rewrite Sprint 13 research evidence.
+
+The current candidate can be used as a controlled internal/research RC. Public distribution remains blocked until an
+explicit software-license decision is made. After that, version/tag/release promotion requires a separate explicit gate.
+
+Canonical Sprint 14 documents:
+- `docs/sprints/sprint-14.md`;
+- `docs/release/RELEASE_CANDIDATE_0.3.0-rc1.md`;
+- `docs/release/RELEASE_READINESS.md`.
+
+## Previous state — Sprint 13 final research freeze
+
+## Current state — 2026-09-26
+
+**Research decision:** SPRINT 13 FINAL RESEARCH & REPRODUCIBILITY FREEZE COMPLETE.  
+**Working branch:** `s13-final-research-freeze`.  
+**Freeze validation workflow:** `36183344395` — SUCCESS.  
+**Validated candidate:** `3bc7df2f19d8b208f4586dfd4469d9b045e275f8`.  
+**Canonical Sprint 13 experiments frozen:** 8.  
+**Evidence-hash inventory:** 158 tracked research/testing/workflow files.  
+**Research/policy JSON integrity:** 33 files parsed.  
+**Maven package:** BUILD SUCCESS.  
+**Phase 8 external-target validation:** NOT PERFORMED.  
+**External-target/production claim:** NOT SUPPORTED.  
+**Remaining Sprint 13 mandatory gates:** NONE.
+
+### Freeze rule
+
+All Sprint 13 measured results and limitations are now immutable historical evidence. Future algorithm changes, active
+execution, Burp-version expansion or external-target validation must use a new post-freeze experiment/version.
+
+Canonical freeze files:
+- `docs/research/FINAL_EVIDENCE_MANIFEST.json`;
+- `docs/research/FINAL_RESEARCH_FREEZE.md`;
+- `docs/research/FINAL_CLAIM_BOUNDARY.md`;
+- `docs/research/FINAL_REPRODUCIBILITY.md`.
+
+## Previous Sprint 13 Phase 7 state
+
+**Current research boundary:** Sprint 13 Phase 7 — Real Burp Desktop / Montoya Runtime Validation.  
+**Decision:** PHASE 7 COMPLETE; EXPLICITLY AUTHORIZED EXTERNAL-TARGET VALIDATION NEXT.  
+**Working branch:** `s13-burp-montoya-runtime`.  
+**Phase 6B evidence:** frozen and unchanged.  
+**Successful Phase 7 development workflow:** `36179678105`.  
+**Phase 7 development freeze:** `4bb7b952fb5cd0692efc6153d51b6885a7d38f9d`.  
+**Successful post-freeze evaluation workflow:** `36180569483`.  
+**Measured evaluation head:** `e24a91297bf33bfe18a47453e8c191432b496b20`.  
+**Real Burp Desktop 2026.7.3:** PASS.  
+**Real Montoya initialization:** PASS.  
+**Real Burp Proxy request/response callbacks:** PASS.  
+**Real ACRA passive pipeline through Burp:** PASS.  
+**Development GT-INTEGRATION-001 context:** PASS.  
+**Untouched contexts:** 2/2 on both independent real-Burp passes.  
+**Semantic repeatability:** PASS.  
+**Secret-exclusion:** PASS.  
+**Review/publication boundary:** PASS.  
+**Automatic Burp issue publication:** NOT WIRED.  
+**Active execution default:** DISABLED.  
+**External authorized-target validation:** NOT STARTED / NEXT.
+
+### Phase 7 measured evidence
+
+The actual shaded ACRA extension was loaded inside the pinned real Burp Desktop JAR. Controlled HTTP traffic was sent
+through Burp Proxy rather than directly to the application. Montoya callbacks were observed and the resulting
+transactions entered ACRA's passive intelligence pipeline.
+
+The post-freeze evaluation used new synthetic tenants/users/resources and separate labels:
+- tenant-c / user-c / document 3001;
+- tenant-d / user-d / document 4001.
+
+Both independent Burp executions reconstructed both expected contexts exactly at the measured fields
+(principal, tenant, resource ID, action, response status, resolved/observed context status).
 
-**Current sprint:** Sprint 5. **Decision:** S5 SOFTWARE PARTIAL. **S6:** NOT STARTED.  
-**Current checkpoint:** `S5-BATCH3-FINAL-CONTINUATION-2026-09-11`.  
-**Source baseline SHA-256:** `34b846321b1e2b4a6791bf8948c127cfba26697ec0425ec8dda8ea782e38df01`.  
-**Working tree:** cumulative changes relative to the verified S5-04 archive; no embedded Git metadata.  
-**Artifact version:** VERSION/POMs remain `0.3.0-rc1`; no release version is promoted by this continuation.
+The opt-in runtime probe records no headers, tokens, cookies, request bodies or response bodies. Active execution remains
+disabled.
+
+### Remaining Sprint 13 gates
+
+1. Phase 8 — explicitly authorized external-target validation;
+2. Final — research/reproducibility freeze and release-candidate evidence consolidation.
+
+## Previous Sprint 13 Phase 6B state
+
+**Current research boundary:** Sprint 13 — Actual Local Cross-Framework Runtime Validation.  
+**Decision:** S13 PHASE 6B COMPLETE; REAL BURP DESKTOP / MONTOYA RUNTIME VALIDATION NEXT.  
+**Working branch:** `s13-cross-framework-runtime`.  
+**Phase 6A completion base:** `84fff082a63c62d847d8b9df4bb17421d7d4bdb2`.  
+**Runtime development workflow:** GitHub Actions `36175284755` — SUCCESS.  
+**Runtime development freeze:** `683933836d2c2fa5ec155bc8e224be87e6958e95`.  
+**Untouched runtime evaluation workflow:** GitHub Actions `36175649455` — SUCCESS.  
+**Measured evaluation head:** `e4d50d69161b8c2af8df30c334a0f51e3599c925`.  
+**FastAPI/Uvicorn runtime:** PASS.  
+**Flask runtime:** PASS.  
+**Express/Node.js runtime:** PASS.  
+**Spring Boot/Java 21 runtime:** PASS.  
+**Live HTTP:** 64/64.  
+**Dimension inference:** 64/64.  
+**Governed disposition:** 64/64.  
+**Repeatability:** PASS.  
+**Development evidence lock:** PASS.  
+**Phase 6A normalizer/upstream freeze:** PASS.  
+**Maven product compilation:** BUILD SUCCESS.  
+**Real Burp desktop runtime:** UNVERIFIED / NEXT.  
+**External authorized-target validation:** NOT PERFORMED.
+
+### Sprint 13 Phase 6B measured result
+
+| Framework | Live HTTP | Dimension | Governed disposition |
+|---|---:|---:|---:|
+| FastAPI / Uvicorn | 16/16 | 16/16 | 16/16 |
+| Flask | 16/16 | 16/16 | 16/16 |
+| Express / Node.js | 16/16 | 16/16 | 16/16 |
+| Spring Boot / Java 21 | 16/16 | 16/16 | 16/16 |
+| **Total** | **64/64** | **64/64** | **64/64** |
+
+The evaluation used separate post-freeze runtime fixtures and new route/resource/role/workflow/property vocabulary.
+
+### Evidence boundary
+
+This is controlled localhost runtime evidence for the exact versions exercised by CI. It does not prove:
+- arbitrary framework or dependency-version compatibility;
+- production deployment behavior;
+- real Burp desktop integration;
+- external-target safety/effectiveness;
+- real-world vulnerability accuracy.
+
+**Next work: Sprint 13 Phase 7 — Real Burp Desktop / Montoya Runtime Validation.**
+
+Remaining gates after Phase 6B:
+1. Phase 7 — real Burp desktop / Montoya runtime validation;
+2. Phase 8 — explicitly authorized external-target validation;
+3. final research/reproducibility freeze.
+
+Canonical Phase 6B details:
+- `docs/research/sprint-13-cross-framework-runtime-protocol.md`;
+- `lab/framework-runtime/`;
+- `lab/framework-runtime-eval/`;
+- `lab/ground-truth/GT-S13-XRUNTIME-EVAL-FEATURES.json`;
+- `lab/ground-truth/GT-S13-XRUNTIME-EVAL-LABELS.json`;
+- `lab/ground-truth/POL-S13-XRUNTIME-EVAL-001.json`;
+- `scripts/run-sprint13-cross-framework-runtime-eval.py`;
+- `scripts/verify-sprint13-cross-framework-runtime-eval.py`;
+- `scripts/verify-sprint13-cross-framework-runtime-eval.sh`.
+
+## Previous Sprint 13 Phase 6A state
+
+Phase 6A remains frozen at workflow `36173838561`: normalized framework-shaped snapshot evaluation measured
+64/64 dimensions and 64/64 governed dispositions.
+
+## Previous Sprint 13 Phase 4 state
+
+Phase 4 remains frozen at workflow `36168752869`: G1 measured TP=8/TN=49/FP=39/FN=0 on the 96-case
+adversarial/base-rate stress corpus, exposing policy-quality uncertainty as the dominant false-positive source.
+
+## Previous Sprint 13 Phase 3 state
+
+Phase 3 remains frozen at evaluation workflow `36149071484`: G1 measured TP=8/TN=16/FP=0/FN=0 on the 24-case
+internal configured-policy evaluation.
+
+## Previous Sprint 13 Phase 2 state
+
+Phase 2 dimension discovery remains frozen at GitHub Actions run `36145805521`: 31/32 combined dimension
+classifications correct, accuracy=.968750, macro-F1=.968254; inferred-dimension A7 preserved the prior measured binary
+results.
+
+## Previous Sprint 13 Phase 1 state
+
+Phase 1 held-out evaluation remains frozen at GitHub Actions run `36143281129`: A7 measured
+TP=8/TN=3/FP=5/FN=0, precision=.615385, recall=1, F1=.761905 on the 16-case synthetic holdout.
+
+## Previous Sprint 12 research state
+
+**Current research boundary:** Sprint 12 — Controlled A0-A7 Authorization Ablation Evaluation.  
+**Decision:** S12 CONTROLLED RESEARCH EXECUTION COMPLETE for the registered synthetic/localhost boundary.  
+**Working branch:** `s12-a0-a7-research-evaluation`.  
+**Verified software base:** Sprint 11 `db78f9e458eeabcabb389abf1949a4f597761564` — SOFTWARE COMPLETE.  
+**First successful measured Sprint 12 run:** GitHub Actions `36065830981` — SUCCESS at `ac8b71ba8883489031fbf1181306c663eb197624`.  
+**Dataset:** `GT-S11-AUTHORIZATION-RESEARCH` — 16 cases, 8 positive, 8 negative, 8 registered dimensions.  
+**Dataset SHA-256:** `f42783717bdd38e8d04b7f59cef98a41441005de426ec78ca1fba58098154d4b`.  
+**Prediction rows:** 128 = 16 cases × 8 variants.  
+**Repeatability:** PASS — deterministic JSON/CSV/JSONL across repeated execution.  
+**Product compilation after campaign:** Maven BUILD SUCCESS.  
+**Real Burp desktop runtime/publication:** UNVERIFIED / DEFERRED.  
+**External-target / real-world accuracy validation:** NOT PERFORMED.
+
+### Sprint 12 measured controlled results
+
+| Variant | Added capability | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| A0 | observed-response baseline | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A1 | + identity | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A2 | + ownership | 8 | 4 | 4 | 0 | .666667 | 1.000000 | .800000 |
+| A3 | + tenant | 8 | 5 | 3 | 0 | .727273 | 1.000000 | .842105 |
+| A4 | + role | 8 | 6 | 2 | 0 | .800000 | 1.000000 | .888889 |
+| A5 | + workflow | 8 | 7 | 1 | 0 | .888889 | 1.000000 | .941176 |
+| A6 | + semantic evidence | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+| A7 | + correlation | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+
+### Research validity boundary
+
+- The predictor never receives `groundTruth`, `secureExpected`, `vulnerableExpected` or `expectedCandidate`.
+- Only the vulnerable localhost ACRA-Lab fixture is observed by the prediction path; labels are joined afterward.
+- The registered authorization dimension is supplied to the campaign. Dimension discovery is therefore **NOT MEASURED**.
+- A1 produced no measured change over A0 in this dataset. Later cumulative capabilities reduced false positives incrementally through A6; A7 produced no additional metric change over A6.
+- The 1.0 A6/A7 fixture values are not evidence of real-world accuracy or external validity.
+- The balanced 16-case dataset is small and synthetic; no statistical-power, confidence-interval or production performance claim is made.
+- Real Burp runtime, external authorized targets, held-out datasets and independent replication remain separate future validation lanes.
+
+Canonical Sprint 12 details:
+- `docs/sprints/sprint-12.md`
+- `docs/research/sprint-12-a0-a7-protocol.md`
+- `scripts/run-sprint12-ablation.py`
+- `scripts/verify-sprint12-research.py`
+- `scripts/verify-sprint12-research.sh`
+- `.github/workflows/sprint12-research.yml`
+
+## Previous Sprint 11 state
+
+Sprint 11 remains **SOFTWARE COMPLETE** at the verified software/local-synthetic boundary. At the Sprint 11
+closure, A0-A7 were correctly recorded as `NOT_RUN / NOT_MEASURED`; Sprint 12 is a later research execution
+layer and does not rewrite the frozen Sprint 11 ground-truth registration artifact.
+
+## Previous Sprint 10 state
+
+### Sprint 10 verified progress
+
+Phase 1 adds the remaining historical Property/Batch/Indirect roadmap scope after property authorization was
+completed in Sprint 9.
+
+Batch foundation:
+- explicit per-item policy and observation models;
+- item-level authorization assessment;
+- mixed ALLOW/DENY outcomes preserved;
+- no aggregate HTTP-success authorization shortcut;
+- missing/ambiguous policy fails closed;
+- cross-project provenance fails closed;
+- deterministic analysis identity.
+
+Indirect-reference foundation:
+- SHA-256 reference fingerprint instead of raw key storage;
+- evidence-backed resolved-resource model;
+- authorization evaluated against resolved target resource;
+- one fingerprint resolving to multiple resources remains explicit conflict;
+- missing/ambiguous resolved-target policy fails closed;
+- cross-project provenance fails closed;
+- deterministic analysis identity.
+
+Verification run `36004146212` passed the new 25-assertion S10 foundation suite, retained S9/S8/S6/S5
+foundations, exact Java 21 compilation with warnings as errors and Maven core test compilation.
+
+Sprint 10 Phase 2 controlled localhost batch/indirect ground truth is **VERIFIED COMPLETE**.
+
+Sprint 10 Phase 3 safe planner/executor integration is **VERIFIED COMPLETE**:
+
+- existing S4 `BATCH` and `INDIRECT_REFERENCE` contracts/mutation families reused;
+- fixed policy-backed seeds only;
+- existing request-equivalence, consent, scope, environment, budget, concurrency, rate-limit and kill-switch gates retained;
+- secure mixed batch: aggregate ALLOW with item-level ALLOW/DENY and 0 candidates;
+- vulnerable mixed batch: foreign item DENY→ALLOW and exactly 1 review candidate;
+- secure fixed indirect alias `share-a → share-b`: resolved foreign target remains DENY and 0 candidates;
+- vulnerable fixed indirect alias: resolved foreign target DENY→ALLOW and exactly 1 review candidate;
+- indirect raw alias remains excluded from persisted resolution state and represented by SHA-256 fingerprint;
+- cross-project provenance remains fail-closed;
+- no identifier guessing, alias enumeration, external-target probing or automatic vulnerability confirmation.
+
+Sprint 10 Phase 4 provenance-gated finding projection is **VERIFIED COMPLETE**:
+
+- batch and indirect projection requests are secret-safe and evidence-bound;
+- evidence plus observation lineage is revalidated before projection;
+- projection-request/assessment mismatches fail closed as INCONCLUSIVE;
+- verified secure controls project to REJECTED;
+- verified DENY→ALLOW mismatches project to review-only CANDIDATE;
+- deterministic candidate identifiers/fingerprints are preserved;
+- cross-project provenance projects to INCONCLUSIVE;
+- projected indirect candidates contain no raw alias material;
+- no confirmed-vulnerability state is introduced.
+
+Sprint 10 Phase 5 deterministic coverage accounting is **VERIFIED COMPLETE**:
+
+- one explicit policy-universe denominator spans batch-item and indirect resolved-target policies;
+- duplicate policy registration is deterministic and non-expanding;
+- UNOBSERVED and OBSERVED_UNASSESSED gaps remain explicit;
+- assessed contexts are separated into CANDIDATE, REJECTED and INCONCLUSIVE;
+- aggregate HTTP success does not count as item/resolution coverage;
+- coverage entries validate observation, assessment and finding consistency;
+- combined coverage ordering and summary ratios are deterministic.
+
+Sprint 10 Phase 6 read-only product workspace and headless Burp UI projection is **VERIFIED COMPLETE**:
+
+- immutable `S10BatchIndirectProductSnapshot` and synchronized `S10BatchIndirectWorkspace`;
+- separate batch and indirect policy/observation/assessment collections with shared candidate and coverage lifecycle;
+- read-only `Batch & Indirect` top-level Burp tab;
+- Overview / Policies / Observations / Assessments / Candidates / Coverage surfaces;
+- no premature Phase 7 Report or JSON Export tabs;
+- raw indirect aliases remain absent from UI tables; only fingerprints/resolved resources are rendered;
+- aggregate HTTP success is explicitly separated from per-item authorization;
+- candidate != confirmed vulnerability and unobserved != secure boundaries are rendered;
+- retained S4/S6/S7/S8/S9 headless UI regressions remain green;
+- real Burp desktop runtime/load/handler/UI validation remains UNVERIFIED / DEFERRED.
+
+Sprint 10 Phase 7 deterministic report/export and read-only UI projection is **VERIFIED COMPLETE**:
+
+- versioned `s10-batch-indirect-report-v1` canonical report model;
+- report-specific minimized policy, observation, assessment, candidate and coverage projections;
+- `policySource`, raw aliases and candidate rationale structurally excluded from exported schema;
+- indirect references represented only by SHA-256 fingerprint plus resolved resource;
+- deterministic report identity derived from report state rather than render timestamp;
+- canonical JSON and deterministic Markdown exports with stable SHA-256 digests;
+- stable `s10-batch-indirect-json-v1` Reporter plugin adapter;
+- `confirmedFindingCount = 0` and explicit unobserved coverage retained;
+- read-only Report and JSON Export views use the canonical workspace exporter;
+- canonical JSON / SHA-256 / Markdown evidence archived by Sprint 10 CI;
+- real Burp desktop runtime remains UNVERIFIED / DEFERRED.
+
+Sprint 10 Phase 8 security hardening and bounded performance observations is **VERIFIED COMPLETE**:
+
+- malformed batch query/fragment endpoints rejected;
+- batch observations without evidence or with duplicate evidence rejected;
+- secret-bearing batch metadata rejected;
+- malformed indirect query/fragment endpoints rejected;
+- raw aliases rejected where SHA-256 fingerprints are required;
+- duplicate indirect evidence rejected;
+- batch resource mismatch and indirect resolved-target mismatch rejected by coverage accounting;
+- policy decision drift for stable coverage identity rejected for both families;
+- Sprint 10 workspace rejects non-S10 and dual-family FindingCandidate projections;
+- report non-confirmation invariant retained;
+- report schema minimization and redaction boundaries retained;
+- bounded 100 / 1,000 / 10,000 mixed policy-context engineering observations recorded.
+
+Observed CI values from run `36055037223`:
+- 100 contexts: population 90 ms, report 28 ms, approx memory delta 3,691,056 bytes;
+- 1,000 contexts: population 95 ms, report 14 ms, approx memory delta 5,843,720 bytes;
+- 10,000 contexts: population 387 ms, report 77 ms, approx memory delta 144,125,280 bytes.
+
+These are one-run engineering observations only, not benchmarks, SLOs, release thresholds, scanner-accuracy evidence or real-world capacity claims.
+
+Sprint 10 final closure is **VERIFIED COMPLETE**:
+
+- exact Temurin Java 21 Sprint 10 verification and all Phase 1–8 suites: PASS;
+- retained Sprint 9 / Sprint 8 / Sprint 7 / Sprint 6 foundations: PASS;
+- official Maven package: PASS;
+- retained Sprint 2 local-contract regression: PASS, 52 tests;
+- retained Sprint 3 core regression: PASS, 47 tests;
+- retained Sprint 3 adapter regression: PASS, 11 tests;
+- Sprint 4 UI: PASS, 26 tests;
+- Sprint 6 Authorization UI: PASS, 27 assertions;
+- Sprint 7 Workflow UI: PASS, 20 assertions;
+- Sprint 8 Routing UI: PASS, 23 assertions;
+- Sprint 9 Property UI: PASS, 59 assertions;
+- Sprint 10 Batch & Indirect UI: PASS, 230 assertions;
+- deterministic Sprint 10 source checkpoint: PASS;
+- archive safe paths / duplicate detection / clean extraction / per-file SHA-256 equality: PASS.
+
+Closure-candidate checkpoint: `acra-sprint-10-final.zip`  
+Closure-candidate source ZIP SHA-256: `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0`  
+Entries: **931**
+
+The source hash identifies the successful pre-promotion closure-candidate snapshot. Final-status documentation changes
+alter the source archive by definition; the canonical post-documentation digest is emitted through the external
+`.sha256` sidecar rather than embedded recursively.
+
+No Sprint 11 scope is started or claimed by this Sprint 10 closure.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
+
+### Sprint 9 verified progress
+
+Phase 1 adds an evidence-backed property-authorization layer on top of the existing Sprint 5 contracts:
+
+- `PropertyAccessObservation` with no property-value storage;
+- deterministic `S9PropertyAuthorizationAnalyzer`;
+- `S9PropertyAuthorizationAnalysis` aggregate;
+- reuse of `PropertyAuthorizationAssessment`, `PropertyPolicy`, `AuthorizationDimensionEvaluator` and
+  `EvidenceReferenceValidator`;
+- exact endpoint/property/operation matching;
+- role/tenant applicability without inferred policy precedence;
+- missing policy → INCONCLUSIVE;
+- multiple applicable policies → explicit ambiguity;
+- cross-project provenance → INCONCLUSIVE;
+- explicit property DENY + observed ALLOW → review-only property candidate;
+- property-specific expected decision separated from object-level request authorization;
+- deterministic analysis identity;
+- secret-bearing observation metadata rejected;
+- no automatic confirmed-vulnerability state.
+
+Verification run `35985518829` passed exact Java 21 compilation with warnings as errors, the new Sprint 9
+foundation suite, retained Sprint 5 final closure, Sprint 6 policy foundation, Sprint 7 workflow foundation,
+Sprint 8 routing-normalization foundation, and Maven core test compilation.
+
+Sprint 9 is **SOFTWARE COMPLETE**. The dedicated final closure passed full regression, official Maven packaging and reproducible checkpoint verification. Sprint 10 is NOT STARTED by this closure; real Burp desktop runtime remains separately UNVERIFIED / DEFERRED.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**.
+
+### Sprint 8 verified progress
+
+The existing Sprint 3 route/template/equivalence layer is reused. New source adds an evidence-backed processing
+trace across `RAW_URI → PROXY → GATEWAY → FRAMEWORK → APPLICATION`.
+
+Current candidate capabilities:
+- explicit processing-stage observations with provenance evidence;
+- deterministic stage ordering and missing-stage accounting;
+- representation change vs route-family variation vs canonical divergence;
+- stage-gap attribution marked INCONCLUSIVE;
+- path-only observation boundary;
+- duplicate-stage and provenance-free observations rejected;
+- no bypass generation, external-target probing or vulnerability promotion.
+
+Phase 1 verification: GitHub Actions run `35961851498` — SUCCESS.
+
+Phase 2 verification: GitHub Actions run `35965612498` — SUCCESS.
+
+Phase 2 adds:
+- evidence-backed path/method/host/API-version/authorization observations across routing stages;
+- routing-only vs authorization-only vs combined boundary differential states;
+- fail-closed handling for stage gaps and unknown authorization context;
+- host/path input hardening;
+- retained Sprint 3 route/core and Sprint 7 foundation regressions.
+
+No bypass generation, external-target probing or vulnerability promotion is claimed by Phase 2.
+
+Phase 3 verification: GitHub Actions run `35966112820` — SUCCESS.
+
+Phase 3 adds:
+- controlled routing ground truth for canonical and duplicate-separator route representations;
+- safe read-only `EQUIVALENT_ROUTE_REPRESENTATION` execution through the existing active engine;
+- explicit scope authorization for both route forms;
+- secure DENY / `NO_CHANGE` control;
+- deliberately vulnerable ALLOW / `UNEXPECTED_CHANGE` differential;
+- retained Sprint 3 core and Sprint 7 regression PASS.
+
+Phase 3 remains localhost-only and does not establish real-world routing/proxy behavior.
+
+Phase 4 verification: GitHub Actions run `35969974964` — SUCCESS.
+
+Phase 4 adds:
+- routing-specific assessment state separated from raw differential classification;
+- candidate promotion only for evidence-backed routing change plus explicit DENY→ALLOW mismatch;
+- existing evidence-store project/test/execution/observation lineage validation;
+- cross-project provenance failure → INCONCLUSIVE;
+- secure control → FindingCandidate REJECTED;
+- deliberately vulnerable controlled case → review-only FindingCandidate CANDIDATE;
+- retained Sprint 3 and Sprint 7 regressions PASS.
+
+FindingCandidate remains review-only and is not an automatically confirmed vulnerability.
+
+Phase 5 verification: GitHub Actions run `35970306700` — SUCCESS.
+
+Phase 5 adds:
+- S8 routing product workspace and immutable snapshot;
+- Burp Routing area with Overview / Stage Traces / Boundary Matrix / Assessments / Candidates;
+- backward-compatible suite-tab constructor integration;
+- retained Sprint 4/6/7 UI regressions;
+- Maven extension compilation and controlled routing log artifact upload.
+
+The Routing UI is read-only and introduces no new active-execution capability.
+
+Phase 6 verification: GitHub Actions run `35970917885` — SUCCESS.
+
+Phase 6 adds:
+- deterministic routing report model and summary;
+- canonical JSON/SHA-256 and Markdown exports;
+- Reporter plugin adapter;
+- Routing Report / JSON Export product views;
+- confirmedFindingCount fixed at 0;
+- shared redaction hardening preventing embedded Authorization text from truncating later JSON fields;
+- retained core/live and S4/S6/S7/S8 UI regressions PASS.
+
+Reports preserve routing observations and review-only candidates without automatic finding confirmation.
+
+Phase 7 verification: GitHub Actions run `35971212640` — SUCCESS.
+
+Phase 7 adds:
+- fail-closed routing/host/stage/mutation hardening;
+- regression coverage for non-truncating embedded-secret redaction;
+- 100 / 1,000 / 10,000 routing-context analysis/report observations;
+- performance CSV artifact;
+- retained core/live/report/UI regressions.
+
+Observed timing/memory values are engineering observations only and are not release thresholds.
+
+### Sprint 8 final closure
+
+Sprint 8 is **SOFTWARE COMPLETE**.
+
+Dedicated final closure: GitHub Actions run `35971753523` — SUCCESS at source commit
+`f6a0c19358b00672711532ec7effe1eed3800e3e`.
+
+Final closure evidence:
+- exact Temurin Java 21 verification: PASS
+- all S8 core/live/assessment/report/security/performance suites: PASS
+- retained Sprint 6 and Sprint 7 foundation: PASS
+- official Maven package: PASS
+- retained Sprint 2: PASS, 52 tests
+- retained Sprint 3: PASS, 47 core + 11 adapter tests
+- retained Sprint 4 / Sprint 6 / Sprint 7 / Sprint 8 UI: PASS, 26 / 27 / 20 / 23
+- deterministic source checkpoint: PASS
+- checkpoint entries: 836
+- unsafe paths: 0
+- duplicate entries: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- closure-candidate ZIP SHA-256:
+  `e063217d3c8795a59ce1cd7e052a2c9b0475a86836239973ef1d470a6c627af7`
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**. Sprint 9 is
+**NOT STARTED** by this closure.
+
+### Sprint 7 frozen closure
+
+- canonical final workflow: GitHub Actions run `35961314354` — SUCCESS
+- canonical final checkpoint: `acra-sprint-07-final.zip`
+- canonical SHA-256: `5e77654d6467cc45c60825cb44bd7c3aa1d4f33c8705d41216d7f258a8187189`
+- entries: 791
+- unsafe paths: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- real Burp desktop runtime: UNVERIFIED / DEFERRED
+
+### Implemented S6 capabilities
+
+- authorization scope taxonomy
+- tenant membership and multi-role assignment
+- role hierarchy with cycle-safe inheritance
+- permission and role-permission models
+- explicit ALLOW / DENY rules
+- explicit default decision and evidence-backed precedence
+- global, shared and delegated authorization
+- effective role and permission resolution
+- tenant relationship classification
+- tenant-isolation and RBAC assessments
+- explicit privileged-action role-escalation assessment
+- policy-conflict assessment
+- policy coverage and effective authorization matrix
+- S6 composition into the existing S5 FindingCandidate and severity/risk architecture
+- policy hydration into the existing SecurityContextGraph with atomic evidence preflight
+- deterministic root-cause grouping foundation
+- policy-import plugin boundary and manual policy builder
+- controlled S6 ACRA-Lab ground truth and secure/vulnerable tenant/RBAC fixtures
+- policy-aware planning recommendations
+- live controlled tenant/RBAC experiment and measurement pipeline
+- policy-aware S6 planning bridge into the existing S4 planner/queue/executor
+- deterministic safe read-only CROSS_TENANT test generation
+- live generated-test execution against secure localhost ACRA-Lab
+- S6 authorization product workspace and Burp UI projection
+- Authorization Overview / Policy / Tenant Map / Roles / Hierarchy / Permissions / Effective Permissions / Conflicts / Coverage views
+- deterministic S6 authorization report model
+- canonical secret-safe JSON report export + SHA-256
+- deterministic Markdown review report
+- Reporter plugin adapter and UI Report / JSON Export projections
+- credential-safe authenticated-context substitution implemented for safe read-only ROLE_COMPARISON
+- ROLE_COMPARISON now generates and executes through explicit contextRef controls without raw credentials in Mutation
+
+### Newly verified planner/execution evidence
+
+GitHub Actions run `35882729813` completed successfully on exact Temurin JDK 21.0.12.1.
+`Sprint6PlannerExecutionIntegrationTestSuite` passed 15 assertions and proved a generated CROSS_TENANT test can
+flow through the existing S4 planner, queue, safety validation and executor into the secure localhost ACRA-Lab.
+Generated test `S6-AUTO-TENANT-a915a78d9e3fd8c06e49c4e9` completed with expected DENY,
+`EXPECTED_CHANGE`, and queue state `COMPLETED`.
+
+### Newly measured S6 evidence
+
+GitHub Actions run `35878508170` completed successfully on exact Temurin JDK 21.0.12.1.
+
+`EXP-S6-TENANT-RBAC-001` executed ten labelled localhost cases.
+
+- naive baseline: TP=2, TN=1, FP=7, FN=0, precision=0.222222, recall=1.000000, F1=0.363636
+- ACRA S6: TP=2, TN=8, FP=0, FN=0, precision=1.000000, recall=1.000000, F1=1.000000
+
+These are controlled-fixture measurements only. They do not establish real-world scanner accuracy.
+
+The campaign also exposed and closed a SHARED-scope isolation defect before the successful run.
+
+### S6 authorization UI verification
+
+GitHub Actions run `35885676715` completed successfully at commit
+`7458b37706bb5ebe24839f3bb7464ef88ed41f4b`.
+
+- Sprint 6 core/live verification: PASS
+- Maven extension test compilation: PASS
+- retained `Sprint4UiTestSuite`: PASS, 26 checks
+- `Sprint6AuthorizationUiTestSuite`: PASS, 22 assertions
+- Authorization product area now renders policy, tenant map, role assignments, hierarchy, permissions,
+  effective authorization matrix, conflict assessments and coverage without inventing missing policy state.
+
+### S6 reporting/export verification
+
+GitHub Actions run `35887862337` completed successfully at commit `b051f08612730a455375e75312ca70d6e5fc9f6f`.
+
+- `Sprint6ReportingExportTestSuite`: PASS, 19 assertions
+- canonical report JSON / digest / Markdown artifact generation: PASS
+- Maven extension compilation: PASS
+- retained `Sprint4UiTestSuite`: PASS, 26 checks
+- `Sprint6AuthorizationUiTestSuite`: PASS, 27 assertions
+- report UI and JSON export UI are backed by the same S6 authorization product workspace
+- report boundary preserves FindingCandidate as review-only and records confirmedFindingCount=0
+
+### S6 performance/security closure verified
+
+GitHub Actions run `35890873379` completed successfully at commit `76389e13b996a02c9f7011b262364b5b03a9231d`.
+
+- `Sprint6PerformanceObservationTestSuite`: PASS, 12 assertions
+- `Sprint6SecurityHardeningTestSuite`: PASS, 13 assertions
+- 100 / 1,000 / 10,000 policy-resolution workloads completed
+- policy-aware recommendation and report-generation workloads completed
+- missing / ambiguous / spoofed authenticated-context references rejected
+- path / non-authentication header / resource drift rejected
+- unchanged authentication material rejected
+- raw viewer/admin credentials excluded from serialized test state
+- conflicting policy produces no executable S6 active seed
+
+Observed CI timings are engineering observations only:
+- 100: resolve 34 ms, planning 1 ms, report 9 ms, approx memory delta 2,948,768 bytes
+- 1,000: resolve 57 ms, planning 2 ms, report 6 ms, approx memory delta 19,825,512 bytes
+- 10,000: resolve 169 ms, planning 4 ms, report 29 ms, approx memory delta 10,003,728 bytes
+
+Memory deltas are JVM-process observations affected by allocation/GC and are not monotonic or release thresholds.
+
+### Legacy Sprint 2 / Sprint 3 CI closure
+
+The retained Sprint 2 and Sprint 3 local-contract test/lab sources were restored from repository commit
+`07a3f60bc2bd2218d0749e497b4f0b9dc57a9c2c`; they were not reconstructed from chat.
+
+Current CI:
+- Sprint 2 run `35890873262`: SUCCESS; Maven package PASS, Sprint2 tests=52, EXP-INTEGRATION-001 local-lab PASS
+- Sprint 3 run `35890873276`: SUCCESS; Maven package PASS, Sprint2 tests=52, Sprint3 core=47, Sprint3 adapter=11, EXP-RECON-001 local-lab PASS
+- official Maven test compilation excludes the legacy local-Montoya-stub suites because those suites target the preserved stub contract rather than the current official Montoya test interface
+- real Burp desktop runtime remains a separate UNVERIFIED/BLOCKED gate
+
+### Sprint 7 verified progress
+
+Phases 1–6 and the final Sprint 7 closure are complete on `s7-workflow-token-binding`.
+
+Latest verified gate: GitHub Actions run `35960826621`.
+
+Phase 3 now adds:
+- controlled secure/vulnerable workflow transition fixtures
+- automatic policy-aware `WORKFLOW_TRANSITION` planning
+- one-variable target-state mutation with request-equivalence invariants
+- state-changing safety classification without destructive auto-execution
+- existing Sprint 4 planner/queue/safety/executor reuse
+- secure DENY / `EXPECTED_CHANGE` control
+- deliberately vulnerable ALLOW / `UNEXPECTED_CHANGE` control
+- secret-safe generated-test serialization
+- fail-closed conflict handling
+- retained Sprint 6 regression PASS
+
+Phase 4 now adds:
+- deterministic workflow transition coverage identities and lifecycle
+- policy/resolution → plan → execution → observation evidence tracking
+- explicit unresolved/planning/observation coverage gaps and ratios
+- fail-closed policy-resolution drift handling
+- S7 workflow product workspace
+- Burp Workflow Overview / Workflow Map / Transition Matrix / Policy Conflicts / Coverage views
+- Maven extension compilation plus retained S4/S6 UI regressions
+
+These are controlled localhost validation results only and do not establish real-world scanner accuracy.
+
+### Sprint 7 final closure
+
+- final workflow: GitHub Actions run `35960826621` — SUCCESS
+- closure candidate checkpoint: `acra-sprint-07-final.zip`
+- closure candidate SHA-256: `0f69ce2e770dc5010f17fe00474455d18f34de11e02460889d428a87a7af9b4d`
+- package entries: 791
+- unsafe paths: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- official Maven package: PASS
+- retained Sprint 2 / Sprint 3 local-contract regressions: PASS
+- retained Sprint 4 / Sprint 6 / Sprint 7 UI regressions: PASS
+- Sprint 8: NOT STARTED
+
+### Residual validation debt
+
+Real Burp desktop runtime/load/handler/UI validation remains UNVERIFIED / DEFERRED. Controlled localhost fixtures
+do not establish real-world scanner accuracy, production authentication behavior or external-target safety.
+
+Canonical final-status checkpoint SHA-256: external sidecar generated by the final-status verification run.
 
-Current authoritative S5 audit: `docs/sprints/sprint-05-final-software-closure.md`. Source inspection found that the previous S5-00..04 completion claims exceeded what the canonical package contained. The context record, BOLA/BFLA and correlator exist; the named observation normalizer and the remaining tenant/workflow/property/candidate/severity/orchestration modules do not.
-
-Defensive work preserved and completed: incomplete/redacted evidence guards, missing endpoint represented honestly, conservative conflict/duplicate correlation, recognized credential redaction in existing models/serializer, focused tests, reproducible verification and continuation packaging scripts. The 2026-09-09 integrated run passes 272 focused S5 assertions and 415 retained suite-reported checks. Exact commands/results are in `docs/testing/artifacts/verification-s5-defensive.json`. Recorded edits are in `docs/sprints/sprint-05-file-changes.json` after packaging; a new baseline byte diff is BLOCKED because the previously verified Downloads ZIP later became unavailable. The new archive is still compared byte-for-byte against the current working tree after clean unpack.
-
-No new S5 live-lab, Burp, external, research or accuracy claim is made. Historical S4 SOFTWARE COMPLETE and S2/S3 Burp Level 3/4 BLOCKED / UNVERIFIED remain unchanged. Maven is BLOCKED; exact JDK 21 runtime is UNVERIFIED; Java 21 target compilation uses the available OpenJDK 26.0.1.
-
-S5 Batch 1 source changes add `EvidenceReferenceValidator` and `EvidenceReferenceValidation` beside the existing `ExecutionEvidenceStore`. Store-backed BOLA/BFLA evaluation and validator-backed correlation now fail closed when evidence ownership, project scope, or replay lineage cannot be proven. `Sprint5EvidenceIntegrityTestSuite` adds focused coverage, but Java 21 compilation/test execution is blocked in this environment: only OpenJDK 17.0.8 was found, `javac` is absent from PATH, and Maven is unavailable. The Batch 1 checkpoint ZIP was independently verified with 604 files, safe paths, clean extraction equality and the required external SHA-256 sidecar. Full remaining S5 software gaps are itemized in the current audit. S6 remains gated on S5 completion.
-
-S5 Batch 2 adds `PolicyValidationEvaluator`, `PolicyValidationResult`, and `PolicyValidationState` for explicit offline tenant, workflow, property, and policy-conflict review. `Sprint5PolicyValidationTestSuite` is present but Java 21 compilation and all new/affected test execution remain blocked because no Java 21 compiler is available; OpenJDK 17.0.8 rejects `--release 21` and Maven is unavailable. S5 remains SOFTWARE PARTIAL and S6 remains NOT STARTED.
-
-The Batch 2 checkpoint archive was independently verified with 609 entries, safe paths, no build/cache entries, clean extraction equality, and an external SHA-256 sidecar. The exact hash is kept outside the archive to avoid recursive self-hashing.
-
-S5 Batch 3 completed source-level integration review. Policy reviews now resolve their observation reference through the existing `EvidenceReferenceValidator`; unknown, forged, cross-project, replay-mismatched, or otherwise unverifiable observations remain inconclusive. The complete defensive chain and security properties were reviewed, but executable Java 21 compilation and tests remain blocked: PATH has no `javac`, the discovered compiler is OpenJDK 17.0.8, and Maven is unavailable. The final S5 decision remains SOFTWARE PARTIAL; S6 is NOT STARTED.
-
-## Historical state before the S5 defensive continuation
-
-The following earlier state and execution records are preserved verbatim as history. They are not the current S5 completion decision.
-
-**Version:** 0.3.0-rc1  
-**Target candidate:** 0.4.0-rc1  
-**Canonical baseline:** RB-0  
-**Current sprint:** Sprint 4  
-**Sprint state:** S4 SOFTWARE COMPLETE / DEFERRED VALIDATION SEPARATE  
-**Repository state:** S4_FINAL_SOFTWARE_CHECKPOINT_VERIFIED  
-**Current checkpoint:** `S4-FINAL-SOFTWARE-CHECKPOINT-2026-09-05`  
-**Implementation claim:** SPRINT 4 CONTROLLED-ACTIVE SOFTWARE IS COMPLETE FOR THE AUTHORIZED LOCAL/SYNTHETIC BOUNDARY: DISPATCH SAFETY, LOOPBACK TRANSPORT, ACRA-LAB EXECUTION, EXISTING-GRAPH HYDRATION, PROFILES/SELECTION/USER MODES, QUEUE, CONSENT, BACKOFF, EXPECTED DECISIONS, COVERAGE/EFFICIENCY, ACTIVE UI SOURCE PROJECTION, CONFIGURED WORKSPACE EXECUTION AND RESEARCH RECORDS ARE LOCALLY VERIFIED; MAVEN IS ENVIRONMENT-BLOCKED AND EXACT JDK 21, BROAD RESEARCH/PERFORMANCE, BURP AND EXTERNAL VALIDATION REMAIN SEPARATE DEFERRED/UNVERIFIED LANES
-
-## Sprint 4 final software audit checkpoint
-
-The canonical recovery input `acra-sprint-04-current-recovered.zip` was verified as SHA-256 `db303eeac4b6ffe44b6756b667b748414797069d235cc541ec0e3326e55266bf`, checked for unsafe paths and extracted cleanly. That recovery initiated a historical 50-row audit which concluded **S4 SOFTWARE PARTIAL**. The current source-driven 52-requirement audit in `docs/sprints/sprint-04-final-software-audit.md` supersedes that checkpoint and concludes **S4 SOFTWARE COMPLETE** for the authorized local/synthetic product boundary; deferred validation lanes remain separate.
-
-The audit reproduced a dispatch-safety gap and made the one authorized engine repair: `RequestEquivalenceGuard` now independently verifies the declared mutation type/location, original value and all unchanged request dimensions before `MutationValidator` can allow dispatch. Focused executor tests prove valid mutation transport equals one, invalid mutation transport equals zero, and contaminated mutation transport equals zero.
-
-The newly executed Java 21 verification passes 54 S4 core, 52 S4 engine-security, 51 S4 localhost, 37 core-regression and 47 Sprint 3 core assertions (241 newly executed). The retained Sprint 3 adapter result remains 11 PASS assertions, for 252 current unique local assertions. Evidence is in `docs/testing/artifacts/verification-s4-final-software-audit.txt`. The secure/vulnerable localhost milestone remains an observation/evidence result only and is not a vulnerability or accuracy claim.
-
-## Sprint 4 pre-implementation gate
-
-`docs/sprints/sprint-04-reconciliation.md` records the verified package hash, full repository inspection, reproduced Sprint 1–3 baseline, named Sprint 3 reuse map, requirement classifications, technical debt and preserved Burp blockers. Core Sprint 4 implementation must not begin before this state marker and that report exist.
-
-The reconciliation authorizes only the verified Sprint 4 gaps. It does not promote Sprint 3, establish real Burp evidence, or claim an active authorization scanner exists yet.
-
-## Sprint 4 core verification checkpoint
-
-Checkpoint `S4-RESUME-2026-08-31-CORE-INTEGRATED` has now completed its focused core verification slice. Three Sprint 4 test files were added under `core/src/test/java/io/acra/core/tests/sprint4/`. The Java 21 main/test compile passes with `--release 21 -Xlint:all -Werror`; the focused Sprint 4 suites pass 54 core assertions and 41 engine-security assertions (95 total). Existing core and Sprint 3 core regressions were rerun and pass 37 and 47 assertions respectively.
-
-No engine main-source defect was observed in this slice. One test-source lint failure (`AutoCloseable` lease not referenced) was fixed in the test only and the full focused slice was rerun successfully. Evidence is recorded in `docs/testing/artifacts/verification-s4-core.txt`.
-
-This checkpoint does **not** establish concrete localhost transport, Sprint 4 ACRA-Lab active execution, FP/FN metrics, graph hydration, active UI behavior, research accuracy, Maven/Montoya packaging, or Burp runtime validation. Observations remain distinct from vulnerability findings.
-
-## Sprint 4 localhost integration checkpoint
-
-The next continuation slice is now executed and evidenced in `docs/testing/artifacts/verification-s4-localhost.txt` and `docs/testing/artifacts/exp-exec-001-localhost.txt`. A single concrete `LocalhostHttpTransport` was added behind the existing `HttpTransport` interface and is construction-bound to an authorized `LAB` target on loopback with redirects disabled. The existing executor, safety validator, request/response models, Sprint 3 semantic fingerprint/comparison code, observation model and evidence store were reused.
-
-The existing ACRA-Lab was extended with isolated Sprint 4 fixtures and independent ground truth `lab/ground-truth/GT-EXEC-S4.json`. The secure live run established baseline/positive `ALLOW`, negative `DENY`, mutation `DENY`, and `EXPECTED_CHANGE`. The vulnerable fixture preserved a valid expected-DENY control but intentionally returned `ALLOW` for the single controlled resource mutation; ACRA stored that mismatch as an observation and classified the four-way comparison `UNEXPECTED_CHANGE`, without manufacturing a confirmed vulnerability finding. HTTP-200 application denial normalized to `DENY`, while dynamic timestamp/request-ID plus formatting/order-only public-response variation remained semantically equivalent. The live timeout remained an operational failure and produced no observation.
-
-One live integration defect was verified and repaired: separate `TestExecutor` instances reused `S4-EXEC-00000001`, weakening evidence traceability. The executor sequence is now process-wide, and the final secure/vulnerable runs produced distinct IDs `S4-EXEC-00000002` and `S4-EXEC-00000003`. A legacy architecture script also required a narrow update so the passive core still forbids network clients while the isolated Sprint 4 active package permits only `LocalhostHttpTransport`.
-
-This is controlled localhost research evidence only. It does not establish scanner accuracy, a vulnerability finding engine, real-world target safety, or Burp runtime behavior.
-
-## Sprint 4 graph-integration checkpoint
-
-Checkpoint `S4-PHASE2-01-GRAPH-INTEGRATION-VERIFIED-2026-09-04` closes the active Observation/Evidence → existing `SecurityContextGraph` software gap without adding a second graph. `ObservationGraphIntegrator` builds an isolated graph delta, verifies execution/test/observation/evidence provenance, refuses incomplete or cross-project context, preflights all identities and only then merges. A configured-versus-observed context disagreement is retained as distinct evidence and `CONFLICTS_WITH` relationships; it is not promoted to a vulnerability edge.
-
-NEWLY EXECUTED verification passes 87 graph-integration, 54 S4 core, 52 S4 engine-security, 60 localhost-integration, 37 core-regression, 47 Sprint 3 core and 11 Sprint 3 adapter assertions: 348 current unique local assertions. The Java sources and tests compile warning-clean for the Java 21 target with `--release 21 -Xlint:all -Werror`; the available compiler/runtime is OpenJDK 26.0.1, so execution on an exact JDK 21 runtime remains UNVERIFIED. Maven remains unavailable.
-
-The live loopback acceptance used the normal `SecurityTest → TestExecutor → LocalhostHttpTransport → ACRA-Lab → Response → Differential → Observation → Evidence → ObservationGraphIntegrator → SecurityContextGraph` path. It produced execution `S4-EXEC-00000002`, observation `S4-EXEC-00000002:observation`, chain evidence `S4-EVIDENCE-00000009`, graph evidence `ev-97dbe353e0decdbb45ee` and relationship `edge-837c5bd8d56408e3c53b`. Credential/session-secret exclusion, project isolation, duplicate hydration, fresh replay identity, historical evidence preservation, incomplete-context refusal, conflict preservation and whole-graph atomicity all pass. Evidence is in `docs/testing/artifacts/verification-s4-graph-integration.txt`.
-
-## Sprint 4 Phase 3 product-completion checkpoint
-
-The next closure batch extends existing components rather than recreating them. Five product profiles now define executable test families, mutation categories, comparison strategies, request/mutation budgets, evidence detail and safety defaults. `ALL`, `AUTOMATIC`, `USER_SELECTED` and `HYBRID` selection modes have exact planner proofs. Beginner, Professional, Researcher and Expert modes now change the real planning profile, depth, limits, evidence and available controls.
-
-Queue lifecycle/operations, prerequisite handling (including absent/failed dependencies), authorized local automatic consent, 429/503/Retry-After/connection failure behavior, unknown-policy `INCONCLUSIVE` handling, active test coverage and request-efficiency accounting are directly verified. `ActiveEngineWorkspace` composes the existing planner, queue and executor; it does not replace them.
-
-The existing Swing suite tab now exposes Test Plan, Test Queue, Test Detail, Execution, Differential Result, Evidence, Safety and Experiment views. Profile, selection, user mode, request/mutation budget, concurrency, rate, coverage and STOP ALL controls are bound to the workspace. Headless UI verification passes 26 assertions. The configured product workspace has a focused plan → queue → existing executor → result/coverage proof. The default Burp construction remains safely disabled until explicit configuration/consent, as required by the reconciliation; passive-to-active provisioning in a real Burp session is deferred adapter/runtime validation rather than a missing local S4 software requirement.
-
-Research software records now cover labelled FP/FN fixtures, TP/TN/FP/FN outcomes, independent ground truth, experiment/run IDs, configuration, ordering and seed, with undefined precision/recall/F1 represented as `N/A`. `EXP-DIFF-001` remains research-deferred and every broad metric remains NOT MEASURED.
-
-NEWLY EXECUTED verification passes 87 graph, 54 S4 core, 52 S4 security, 132 Phase 3 product, 60 localhost, 26 UI, 37 core regression, 47 S3 core, 11 S3 adapter and 52 S2 assertions: 558 represented assertions. All core and extension sources compile with `--release 21 -Xlint:all -Werror` using OpenJDK 26.0.1. Exact JDK 21 execution remains UNVERIFIED and Maven remains BLOCKED.
-
-## Current gate status
-
-| Gate | State |
-|---|---|
-| Sprint 1 regression | PASS, 37 |
-| Sprint 2 regression | PASS, 52 |
-| Sprint 3 core assertions | PASS, 47 |
-| Sprint 3 adapter assertions | PASS, 11 |
-| Sprint 1–3 baseline executable assertions | PASS, 147 |
-| Security gate | PASS |
-| Architecture boundary | PASS |
-| JDK/local contract build | PASS |
-| POM XML validation | PASS |
-| Sprint 3 local 10-operation ACRA-Lab experiment | PASS |
-| Sprint 3 controlled metric experiment | PASS within fixture scope |
-| Sprint 3 performance baseline | EXECUTED / OBSERVATIONAL |
-| Sprint 4 Java 21 target main/test compile | PASS, `--release 21 -Xlint:all -Werror` using OpenJDK 26.0.1; exact JDK 21 runtime UNVERIFIED |
-| Sprint 4 focused core verification | PASS, 54 assertions |
-| Sprint 4 engine-security verification | PASS, 52 assertions |
-| Sprint 4 focused verification total | PASS, 106 assertions |
-| Core regression rerun | PASS, 37 assertions |
-| Sprint 3 core regression rerun | PASS, 47 assertions |
-| Sprint 4 localhost transport | PASS, loopback-only `LocalhostHttpTransport` |
-| Sprint 4 active ACRA-Lab execution | PASS, secure + vulnerable synthetic fixtures |
-| Sprint 4 secure expected-ALLOW control | PASS, live localhost |
-| Sprint 4 secure expected-DENY control | PASS, live localhost |
-| Sprint 4 controlled resource mutation | PASS, DENY observed / EXPECTED_CHANGE |
-| Sprint 4 vulnerable fixture mismatch | PASS as observation-only pipeline check; classification UNEXPECTED_CHANGE |
-| Sprint 4 minimum FP-preparation semantics | PASS for HTTP-200 denial + dynamic/order fixture |
-| Sprint 4 localhost integration suite | PASS, 60 assertions |
-| Sprint 4 mutation dispatch safety | PASS: valid mutation dispatch=1; invalid=0; contaminated=0 |
-| Sprint 4 Observation/Evidence → existing graph integration | PASS, 87 assertions plus live normal-pipeline hydration |
-| Sprint 4 graph atomicity/conflict handling | PASS: inserted, equivalent reuse and blocked conflict; exact prior graph serialization retained on conflict |
-| Sprint 4 Phase 3 product verification | PASS, 132 assertions including configured workspace execution |
-| Sprint 4 active UI source/binding verification | PASS, 26 assertions; real Burp UI remains DEFERRED |
-| Current represented verification assertions | PASS, 558 assertions (87 graph + 54 S4 core + 52 S4 security + 132 S4 product + 60 localhost + 26 UI + 37 core + 47 S3 core + 11 S3 adapter + 52 S2) |
-| Sprint 4 final software audit | S4 SOFTWARE COMPLETE: 52 requirements classified; validation-only exclusions remain explicit |
-| Sprint 4 FP/FN and research metrics | NOT MEASURED |
-| Official Montoya Maven dependency build | BLOCKED / UNVERIFIED: Maven absent and outbound dependency resolution blocked |
-| Historical Sprint 2 Burp runtime validation | BLOCKED / UNVERIFIED |
-| Historical Sprint 3 Burp reconnaissance/UI validation | BLOCKED / UNVERIFIED |
-| Research evidence level for Burp integration/recon | Level 2 |
-| Release decision | HOLD |
-
-The version **must remain `0.3.0-rc1`** until Sprint 3's mandatory live Burp validation gates have real evidence. Sprint 2 also remains unpromoted historically; Sprint 3 proceeded from its canonical RC1 under a recorded governance exception rather than pretending the S2 runtime gate passed.
-
-## Implemented through Sprint 3
-
-### Sprint 1 foundation
-
-- standalone Java 21 deterministic domain engine.
-- HTTP/URI, principal/session/role/tenant/resource/action/workflow/authorization models.
-- evidence provenance, deterministic serialization, redaction/fingerprints.
-- Security Context Graph, entity resolution, plugin/test/ground-truth contracts.
-
-### Sprint 2 passive adapter
-
-- Montoya adapter source targeting accepted API baseline.
-- HTTP observation, scope control, transaction IDs and passive context extraction.
-- endpoint-family inventory, observation/evidence timeline and graph hydration.
-- passive response normalization/differential primitives.
-- Swing Overview/Traffic/Contexts/Endpoints/Configuration source.
-- active executor abstraction disabled by default with zero request/mutation budgets and kill switch.
-- basic ACRA-Lab integration fixture.
-
-### Sprint 3 reconnaissance expansion
-
-- semantic identifier classification.
-- security-relevant query/body parameter classification.
-- security/proxy/routing header classification.
-- API version signal discovery.
-- resource relationship intelligence.
-- deterministic route grammar, template model and equivalence engine.
-- OpenAPI 3.x / Swagger 2.0 JSON ingestion and conservative common YAML subset.
-- declared-vs-observed endpoint correlation and schema-drift observations.
-- response semantic fingerprints for resource/owner/tenant IDs, fields, error-like semantics and volatile fields.
-- collection and pagination intelligence.
-- resource semantic matching tolerant of selected dynamic/reordered differences.
-- AuthorizationMatrix, SecurityContextFingerprint, DifferentialTest and FindingFingerprint foundations.
-- hybrid identity confirmation and manual-context registries.
-- context coverage model.
-- endpoint test-priority scoring explicitly separated from vulnerability severity.
-- reconnaissance-to-test dry-run planning with zero dispatch.
-- per-transaction reconnaissance storage integrated into passive traffic pipeline.
-- Burp UI source extended with Parameters, Identities, Tenants, Resources, Routes and Context Graph views.
-- expanded 10-operation lab and OpenAPI ground truth.
-
-## Controlled Sprint 3 measurements
-
-These are valid only for the deliberately small local fixture dataset:
-
-| Metric | Measured result |
-|---|---:|
-| Endpoint discovery precision | 1.0000 |
-| Endpoint discovery recall | 1.0000 |
-| Semantic identifier precision | 1.0000 |
-| Semantic identifier recall | 1.0000 |
-| Tenant detection accuracy | 1.0000 |
-| Owner extraction accuracy | 1.0000 |
-| Route-equivalence accuracy | 1.0000 |
-| Mean context coverage | 0.8111 |
-| Evidence completeness for measured inferred fields | 1.0000 |
-
-These values are not real-world scanner accuracy claims.
-
-## Partial / deliberately limited
-
-- OpenAPI importer is not a complete OpenAPI/YAML standards implementation; advanced `$ref`, external references, composition, callbacks/links and full YAML semantics are deferred.
-- semantic identifier/resource inference remains deterministic and conservative.
-- response semantics remain reconnaissance evidence, not an authorization verdict engine.
-- route equivalence does not prove runtime proxy/router/authorization-boundary equivalence.
-- context coverage intentionally leaves policy UNKNOWN unless explicit policy evidence exists.
-- hybrid identity confirmation exists as a registry contract; full persistent/user-managed identity workflows remain future UI/workspace work.
-- endpoint priority is a test-ordering signal only.
-- dry-run plan remains zero-dispatch; the separate Sprint 4 executor can now dispatch only through the configured loopback LAB transport.
-- persistence/database remains OPEN.
-- the concrete Sprint 4 transport is HTTP/loopback-only and is not a general external-target transport.
-- vulnerable-lab mismatch yields an observation with `UNEXPECTED_CHANGE` when the independent expected-DENY control remains valid but the controlled mutation is observed as `ALLOW`; no vulnerability finding is created.
-- active observations with complete, project-matching context hydrate the existing in-memory Security Context Graph with verified provenance; incomplete context is `INCONCLUSIVE`, identity collisions are `BLOCKED`, and configured/observed context differences remain explicit conflicts.
-- graph hydration is in-memory and process-local; persistent graph/evidence storage across restarts is not implemented.
-- active UI source projection, backend control binding and explicitly configured workspace execution pass locally; real Burp behavior/provisioning remains deferred.
-
-## Not implemented
-
-- arbitrary/external active authorization testing or unrestricted request mutation dispatch.
-- BOLA/BFLA/RBAC/tenant/routing/workflow vulnerability analyzers.
-- policy-derived ALLOW/DENY verdict engine.
-- confirmed vulnerability findings.
-- full OpenAPI reference-resolution engine.
-- GraphQL/gRPC/WebSocket analyzers.
-- A0-A7 authorization-detection experiments.
-
-## Accepted ADRs
-
-ADR-0001, ADR-0002, ADR-0006, ADR-0007, ADR-0013, ADR-0015, ADR-0026, ADR-0028, ADR-0029, ADR-0031, ADR-0032, ADR-0033, ADR-0034, ADR-0035.
-
-## Important open ADRs
-
-ADR-0003, ADR-0004, ADR-0005, ADR-0008 through ADR-0012, ADR-0014, ADR-0016 through ADR-0025 where applicable, ADR-0027, ADR-0030.
-
-## Known blockers
-
-1. Maven executable is absent.
-2. External DNS/artifact resolution is blocked.
-3. Burp runtime was not exercised in this Phase 3 local product slice.
-4. Historical S2/S3 Burp Level 3/4 evidence remains BLOCKED / UNVERIFIED; real Montoya packaging and current Burp runtime validation remain outside this slice.
-
-## Novelty status
-
-CANDIDATE / UNVERIFIED. API reconnaissance, OpenAPI correlation, route templating, identifier extraction and dry-run planning are engineering capabilities and are not independent novelty claims. The candidate research contribution remains context correlation and must be evaluated by later controlled authorization experiments.
-
-## Next action
-
-Sprint 4 implementation is closed at the verified source checkpoint. Real Burp provisioning/runtime, exact JDK 21, broad research/performance and authorized external validation are separate follow-up validation lanes. Do not begin Sprint 5 without an explicit new directive; no Sprint 5 work was performed here.
-
-Historical S2/S3 Burp Level 3/4 debt remains unchanged and must be validated separately when deliberately scheduled.
-
-
-## Sprint 5-02
-Status: COMPLETE
-Object-level authorization reasoning foundation added. No BOLA findings or exploit generation implemented.
-
-
-S5-03 function-level authorization reasoning foundation added.
-
-
-S5-04: Evidence correlation aggregation foundation added.

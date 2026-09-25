@@ -1,0 +1,61 @@
+{
+  "id": "GT-S10-BATCH-INDIRECT-AUTHORIZATION",
+  "scope": "controlled localhost ACRA-Lab only",
+  "version": "1",
+  "notes": [
+    "Ground truth is declared independently of observed HTTP responses.",
+    "Batch authorization is defined per item; HTTP 200 for the aggregate request does not imply ALLOW for every item.",
+    "Indirect-reference authorization is defined against the resolved target resource.",
+    "Only fixed synthetic aliases and resource identifiers are used; no identifier guessing or enumeration is performed.",
+    "A mismatch remains a review signal and is not automatically a confirmed vulnerability."
+  ],
+  "cases": [
+    {
+      "id": "S10-GT-001",
+      "family": "BATCH",
+      "actor": "user-a",
+      "role": "viewer",
+      "request": ["resource-a", "resource-b"],
+      "aggregate_http_status": 200,
+      "expected_items": [
+        {"resource_id": "resource-a", "action": "READ", "expected": "ALLOW"},
+        {"resource_id": "resource-b", "action": "READ", "expected": "DENY"}
+      ],
+      "label": "MIXED_BATCH_ITEM_AUTHORIZATION"
+    },
+    {
+      "id": "S10-GT-002",
+      "family": "BATCH",
+      "actor": "user-a",
+      "role": "viewer",
+      "request": ["resource-a"],
+      "aggregate_http_status": 200,
+      "expected_items": [
+        {"resource_id": "resource-a", "action": "READ", "expected": "ALLOW"}
+      ],
+      "label": "OWNED_BATCH_ALLOW_CONTROL"
+    },
+    {
+      "id": "S10-GT-003",
+      "family": "INDIRECT_REFERENCE",
+      "actor": "user-a",
+      "role": "viewer",
+      "alias": "share-a",
+      "resolved_resource_id": "resource-a",
+      "action": "READ",
+      "expected": "ALLOW",
+      "label": "OWNED_INDIRECT_ALLOW_CONTROL"
+    },
+    {
+      "id": "S10-GT-004",
+      "family": "INDIRECT_REFERENCE",
+      "actor": "user-a",
+      "role": "viewer",
+      "alias": "share-b",
+      "resolved_resource_id": "resource-b",
+      "action": "READ",
+      "expected": "DENY",
+      "label": "FOREIGN_INDIRECT_DENY"
+    }
+  ]
+}

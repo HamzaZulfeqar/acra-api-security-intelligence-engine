@@ -1,0 +1,54 @@
+name: Sprint 6 Final Closure
+
+on:
+  push:
+    branches:
+      - s6-tenant-rbac
+    paths:
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'lab/**'
+      - 'tests/**'
+      - 'scripts/verify-sprint6-final.sh'
+      - 'scripts/package-sprint6.sh'
+      - '.github/workflows/sprint6-final.yml'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - 'docs/sprints/sprint-06-requirements-traceability.md'
+      - 'docs/sprints/sprint-06-final-software-audit.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Normalize scripts
+        run: chmod +x ./scripts/*.sh
+      - name: Run Sprint 6 final verification
+        run: bash ./scripts/verify-sprint6-final.sh
+      - name: Upload Sprint 6 final checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-06-final-checkpoint
+          path: |
+            build/s6-final-package/acra-sprint-06-final.zip
+            build/s6-final-package/acra-sprint-06-final.zip.sha256
+            build/s6-final-package/sprint6-package-manifest.txt
+            build/s6-final-package/sprint6-package-verification.json
+            build/s6-foundation-ci/EXP-S6-TENANT-RBAC-001.json
+            build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.json
+            build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.json.sha256
+            build/s6-foundation-ci/reporting/S6-AUTHORIZATION-REPORT.md
+            build/s6-foundation-ci/performance/performance-s6.csv
+          if-no-files-found: warn

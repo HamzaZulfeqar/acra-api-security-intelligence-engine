@@ -15,18 +15,37 @@ import java.util.TreeMap;
 
 public final class RequestBuilder {
     private final UriMutationAdapter uriAdapter = new UriMutationAdapter();
+    private final AuthenticatedContextSubstitutionResolver contextResolver =
+            new AuthenticatedContextSubstitutionResolver();
 
     public RequestSet build(SecurityTest test) {
         if (test == null) throw new IllegalArgumentException("test required");
         BuiltRequest baseline = from(RequestVariantKind.BASELINE, test.baselineDefinition());
         BuiltRequest positive = from(RequestVariantKind.POSITIVE_CONTROL, test.positiveControl());
         BuiltRequest negative = from(RequestVariantKind.NEGATIVE_CONTROL, test.negativeControl());
-        HttpRequest mutated = mutate(test.baselineDefinition().request(), test.mutation());
+        HttpRequest mutated;
+        String mutationContextRef;
+        String mutationResourceRef;
+        if (test.mutation().type() == io.acra.core.active.model.MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION) {
+            if (test.mutation().targetLocation() != MutationLocation.CONTEXT) {
+                throw new IllegalArgumentException("authenticated context substitution requires CONTEXT location");
+            }
+            if (!test.baselineDefinition().contextRef().equals(test.mutation().sourceContext())) {
+                throw new IllegalArgumentException("authenticated context substitution source must reference baseline context");
+            }
+            RequestDefinition target = contextResolver.resolve(test, test.mutation().targetContext());
+            mutated = target.request();
+            mutationContextRef = target.contextRef();
+            mutationResourceRef = target.resourceRef();
+        } else {
+            mutated = mutate(test.baselineDefinition().request(), test.mutation());
+            mutationContextRef = test.mutation().targetContext();
+            mutationResourceRef = test.targetResource() == null ? test.baselineDefinition().resourceRef()
+                    : test.targetResource().resourceType() + ':' + test.targetResource().resourceId();
+        }
         BuiltRequest mutation = new BuiltRequest(RequestVariantKind.MUTATION,
                 test.baselineDefinition().definitionId() + ":" + test.mutation().mutationId(),
-                mutated, test.mutation().targetContext(),
-                test.targetResource() == null ? test.baselineDefinition().resourceRef()
-                        : test.targetResource().resourceType() + ':' + test.targetResource().resourceId());
+                mutated, mutationContextRef, mutationResourceRef);
         return new RequestSet(baseline, positive, negative, mutation);
     }
 
@@ -45,6 +64,7 @@ public final class RequestBuilder {
         switch (mutation.targetLocation()) {
             case PATH, QUERY, URI_REPRESENTATION -> target = uriAdapter.apply(target, mutation);
             case HEADER, IDENTITY, ROLE -> headers = replaceHeaderExactlyOnce(headers, mutation.originalValue(), mutation.mutatedValue());
+            case CONTEXT -> throw new IllegalArgumentException("authenticated CONTEXT substitution requires SecurityTest controls");
             case COOKIE -> cookies = replaceMapValueExactlyOnce(cookies, mutation.originalValue(), mutation.mutatedValue());
             case BODY -> body = replaceBody(body, mutation);
             case RESOURCE, TENANT -> {

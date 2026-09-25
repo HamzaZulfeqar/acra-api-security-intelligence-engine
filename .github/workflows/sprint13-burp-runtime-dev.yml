@@ -1,0 +1,45 @@
+name: Sprint 13 Real Burp Montoya Runtime Development
+
+on:
+  push:
+    branches:
+      - s13-burp-montoya-runtime
+    paths:
+      - 'extension/burp-extension/src/main/java/io/acra/burp/runtime/**'
+      - 'extension/burp-extension/src/main/java/io/acra/burp/ACRAExtension.java'
+      - 'extension/burp-extension/src/main/java/io/acra/burp/traffic/AcraHttpHandler.java'
+      - 'scripts/verify-sprint13-burp-runtime-dev.py'
+      - 'scripts/verify-sprint13-burp-runtime-dev.sh'
+      - '.github/workflows/sprint13-burp-runtime-dev.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  burp-runtime-development:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Execute real Burp Desktop / Montoya development gate
+        run: bash scripts/verify-sprint13-burp-runtime-dev.sh
+      - name: Upload Burp runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint13-burp-runtime-dev
+          path: |
+            build/s13-burp-runtime-dev.jsonl
+            build/s13-burp-runtime-dev.jsonl.sha256
+          if-no-files-found: warn

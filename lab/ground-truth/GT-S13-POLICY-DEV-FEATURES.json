@@ -1,0 +1,614 @@
+{
+  "schemaVersion": "s13-policy-features-v1",
+  "datasetId": "GT-S13-POLICY-DEV-FEATURES",
+  "purpose": "Phase 3 development/tuning corpus only; not final evaluation",
+  "labelSeparated": true,
+  "policyRegistryId": "POL-S13-DEV-001",
+  "caseCount": 24,
+  "cases": [
+    {
+      "caseId": "DEV-OBJ-POS-001",
+      "method": "GET",
+      "path": "/dev/v1/assets/asset-west",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-west",
+          "owner_id": "blair",
+          "tenant_id": "west",
+          "name": "West asset"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-OBJ-NEG-OWNER",
+      "method": "GET",
+      "path": "/dev/v1/assets/asset-east",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-east",
+          "owner_id": "alex",
+          "tenant_id": "east",
+          "name": "East asset"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-OBJ-NEG-ADMIN",
+      "method": "GET",
+      "path": "/dev/v1/assets/asset-west",
+      "actor": {
+        "sub": "ops",
+        "tenant_id": "east",
+        "role": "asset-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "asset-west",
+          "owner_id": "blair",
+          "tenant_id": "west",
+          "name": "West asset"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-TEN-POS-001",
+      "method": "GET",
+      "path": "/dev/v1/organizations/west/reports/report-west",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-west",
+          "tenant_id": "west",
+          "owner_id": "blair"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-TEN-NEG-SAME",
+      "method": "GET",
+      "path": "/dev/v1/organizations/east/reports/report-east",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-east",
+          "tenant_id": "east",
+          "owner_id": "manager-east"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-TEN-NEG-GLOBAL",
+      "method": "GET",
+      "path": "/dev/v1/organizations/west/reports/report-west",
+      "actor": {
+        "sub": "federator",
+        "tenant_id": "global",
+        "role": "federation-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "report-west",
+          "tenant_id": "west",
+          "owner_id": "blair"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-RBAC-POS-001",
+      "method": "GET",
+      "path": "/dev/v1/admin-console/audit",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "member",
+          "required_role": "audit-lead"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-RBAC-NEG-LEAD",
+      "method": "GET",
+      "path": "/dev/v1/admin-console/audit",
+      "actor": {
+        "sub": "audrey",
+        "tenant_id": "east",
+        "role": "audit-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "audit-lead",
+          "required_role": "audit-lead"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-RBAC-NEG-ROOT",
+      "method": "GET",
+      "path": "/dev/v1/admin-console/audit",
+      "actor": {
+        "sub": "root",
+        "tenant_id": "global",
+        "role": "platform-root"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "platform-root",
+          "required_role": "audit-lead"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-WF-POS-SELFAPPROVE",
+      "method": "POST",
+      "path": "/dev/v1/workflows/change-request/resources/change-1/transition",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "requester"
+      },
+      "requestBody": {
+        "action": "APPROVE",
+        "from_state": "REVIEW",
+        "to_state": "APPROVED",
+        "approval": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "APPROVE",
+          "from_state": "REVIEW",
+          "to_state": "APPROVED",
+          "state": "APPROVED",
+          "role": "requester"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-WF-NEG-SUBMIT",
+      "method": "POST",
+      "path": "/dev/v1/workflows/change-request/resources/change-2/transition",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "requester"
+      },
+      "requestBody": {
+        "action": "SUBMIT",
+        "from_state": "DRAFT",
+        "to_state": "REVIEW",
+        "approval": false
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "SUBMIT",
+          "from_state": "DRAFT",
+          "to_state": "REVIEW",
+          "state": "REVIEW",
+          "role": "requester"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-WF-NEG-APPROVE",
+      "method": "POST",
+      "path": "/dev/v1/workflows/change-request/resources/change-3/transition",
+      "actor": {
+        "sub": "rhea",
+        "tenant_id": "east",
+        "role": "reviewer"
+      },
+      "requestBody": {
+        "action": "APPROVE",
+        "from_state": "REVIEW",
+        "to_state": "APPROVED",
+        "approval": true
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "action": "APPROVE",
+          "from_state": "REVIEW",
+          "to_state": "APPROVED",
+          "state": "APPROVED",
+          "role": "reviewer"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-PROP-POS-SEC",
+      "method": "PATCH",
+      "path": "/dev/v1/members/alex/settings",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "requestBody": {
+        "security_clearance": "high"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "alex",
+          "applied_properties": [
+            "security_clearance"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "DEV-PROP-NEG-ALIAS",
+      "method": "PATCH",
+      "path": "/dev/v1/members/alex/settings",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "requestBody": {
+        "display_alias": "Alex D"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "alex",
+          "applied_properties": [
+            "display_alias"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "DEV-PROP-NEG-ADMIN",
+      "method": "PATCH",
+      "path": "/dev/v1/members/blair/settings",
+      "actor": {
+        "sub": "padmin",
+        "tenant_id": "west",
+        "role": "profile-admin"
+      },
+      "requestBody": {
+        "security_clearance": "high"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "id": "blair",
+          "applied_properties": [
+            "security_clearance"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "DEV-ROUTE-POS-001",
+      "method": "GET",
+      "path": "/dev//v1/admin-console/audit",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "member",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-ROUTE-NEG-LEAD",
+      "method": "GET",
+      "path": "/dev//v1/admin-console/audit",
+      "actor": {
+        "sub": "audrey",
+        "tenant_id": "east",
+        "role": "audit-lead"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "audit-lead",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-ROUTE-NEG-ROOT",
+      "method": "GET",
+      "path": "/dev//v1/admin-console/audit",
+      "actor": {
+        "sub": "root",
+        "tenant_id": "global",
+        "role": "platform-root"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "area": "audit",
+          "role": "platform-root",
+          "route_form": "duplicate-separator"
+        }
+      }
+    },
+    {
+      "caseId": "DEV-BATCH-POS-001",
+      "method": "POST",
+      "path": "/dev/v1/assets/bulk-read",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-east",
+          "asset-west"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-west",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-east",
+              "decision": "ALLOW",
+              "owner_id": "alex",
+              "tenant_id": "east"
+            },
+            {
+              "resource_id": "asset-west",
+              "decision": "ALLOW",
+              "owner_id": "blair",
+              "tenant_id": "west"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "DEV-BATCH-NEG-OWNER",
+      "method": "POST",
+      "path": "/dev/v1/assets/bulk-read",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-east"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-east",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-east",
+              "decision": "ALLOW",
+              "owner_id": "alex",
+              "tenant_id": "east"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "DEV-BATCH-NEG-ADMIN",
+      "method": "POST",
+      "path": "/dev/v1/assets/bulk-read",
+      "actor": {
+        "sub": "ops",
+        "tenant_id": "east",
+        "role": "asset-admin"
+      },
+      "requestBody": {
+        "resource_ids": [
+          "asset-west"
+        ]
+      },
+      "oracle": {
+        "type": "JSON_LIST_DECISION",
+        "listField": "items",
+        "matchField": "resource_id",
+        "matchValue": "asset-west",
+        "decisionField": "decision"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "items": [
+            {
+              "resource_id": "asset-west",
+              "decision": "ALLOW",
+              "owner_id": "blair",
+              "tenant_id": "west"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "DEV-IND-POS-001",
+      "method": "GET",
+      "path": "/dev/v1/links/link-west",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "link-west",
+          "resolved_resource_id": "asset-west",
+          "resource": {
+            "id": "asset-west",
+            "owner_id": "blair",
+            "tenant_id": "west"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "DEV-IND-NEG-OWNER",
+      "method": "GET",
+      "path": "/dev/v1/links/link-east",
+      "actor": {
+        "sub": "alex",
+        "tenant_id": "east",
+        "role": "member"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "link-east",
+          "resolved_resource_id": "asset-east",
+          "resource": {
+            "id": "asset-east",
+            "owner_id": "alex",
+            "tenant_id": "east"
+          }
+        }
+      }
+    },
+    {
+      "caseId": "DEV-IND-NEG-ADMIN",
+      "method": "GET",
+      "path": "/dev/v1/links/link-west",
+      "actor": {
+        "sub": "ops",
+        "tenant_id": "east",
+        "role": "asset-admin"
+      },
+      "oracle": {
+        "type": "HTTP_STATUS_AUTHZ"
+      },
+      "observation": {
+        "status": 200,
+        "body": {
+          "alias": "link-west",
+          "resolved_resource_id": "asset-west",
+          "resource": {
+            "id": "asset-west",
+            "owner_id": "blair",
+            "tenant_id": "west"
+          }
+        }
+      }
+    }
+  ]
+}

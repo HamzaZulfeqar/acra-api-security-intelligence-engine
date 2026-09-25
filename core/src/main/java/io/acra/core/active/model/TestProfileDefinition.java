@@ -45,6 +45,7 @@ public record TestProfileDefinition(
                     EnumSet.of(TestContract.CROSS_USER, TestContract.CROSS_RESOURCE, TestContract.CROSS_TENANT,
                             TestContract.ROLE_COMPARISON, TestContract.ANONYMOUS_VS_AUTHENTICATED),
                     EnumSet.of(MutationType.IDENTITY_SUBSTITUTION, MutationType.ROLE_SUBSTITUTION,
+                            MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION,
                             MutationType.TENANT_SUBSTITUTION, MutationType.RESOURCE_SUBSTITUTION),
                     40, 10, 1, 2, ComparisonModel.STATUS_AND_SEMANTIC, ConfirmationPolicy.ALWAYS, 0.80,
                     EvidenceDetail.STANDARD, SafetyClass.SAFE_READ_ONLY, true);
@@ -52,6 +53,7 @@ public record TestProfileDefinition(
                     EnumSet.of(TestContract.CROSS_USER, TestContract.CROSS_RESOURCE, TestContract.CROSS_TENANT,
                             TestContract.ROLE_COMPARISON, TestContract.ANONYMOUS_VS_AUTHENTICATED),
                     EnumSet.of(MutationType.IDENTITY_SUBSTITUTION, MutationType.ROLE_SUBSTITUTION,
+                            MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION,
                             MutationType.TENANT_SUBSTITUTION, MutationType.RESOURCE_SUBSTITUTION),
                     100, 25, 2, 3, ComparisonModel.SEMANTIC_RESOURCE, ConfirmationPolicy.ALWAYS, 0.80,
                     EvidenceDetail.DETAILED, SafetyClass.SAFE_READ_ONLY, true);
@@ -67,6 +69,7 @@ public record TestProfileDefinition(
                     EnumSet.of(TestContract.IDENTITY, TestContract.ROLE, TestContract.TENANT,
                             TestContract.RESOURCE, TestContract.TOKEN_CONTEXT),
                     EnumSet.of(MutationType.IDENTITY_SUBSTITUTION, MutationType.ROLE_SUBSTITUTION,
+                            MutationType.AUTHENTICATED_CONTEXT_SUBSTITUTION,
                             MutationType.TENANT_SUBSTITUTION, MutationType.RESOURCE_SUBSTITUTION),
                     80, 20, 1, 2, ComparisonModel.STATUS_AND_SEMANTIC, ConfirmationPolicy.ALWAYS, 0.85,
                     EvidenceDetail.DETAILED, SafetyClass.SAFE_READ_ONLY, true);
