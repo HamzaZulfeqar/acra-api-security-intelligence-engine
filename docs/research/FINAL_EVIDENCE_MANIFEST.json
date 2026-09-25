@@ -2,7 +2,7 @@
   "schemaVersion": "acra-final-research-freeze-v1",
   "freezeId": "ACRA-S13-FINAL-FREEZE-2026-09-26",
   "project": "ACRA API Security Intelligence Engine",
-  "freezeState": "FINAL_CANDIDATE",
+  "freezeState": "FROZEN_COMPLETE",
   "preFreezeBase": "7786097a4ea94bba7f7285218ed1c91d5d4062cd",
   "branch": "s13-final-research-freeze",
   "evidenceModel": "canonical measured commits + workflow runs + frozen protocols + machine-verifiable repository hashes",
@@ -95,5 +95,18 @@
   ],
   "finalClaimBoundaryFile": "docs/research/FINAL_CLAIM_BOUNDARY.md",
   "reproducibilityFile": "docs/research/FINAL_REPRODUCIBILITY.md",
-  "finalFreezeFile": "docs/research/FINAL_RESEARCH_FREEZE.md"
+  "finalFreezeFile": "docs/research/FINAL_RESEARCH_FREEZE.md",
+  "closure": {
+    "status": "PASS",
+    "validationRunId": 36183344395,
+    "validatedCommit": "3bc7df2f19d8b208f4586dfd4469d9b045e275f8",
+    "validatedAt": "2026-09-26",
+    "completedCanonicalExperiments": 8,
+    "trackedEvidenceFilesHashed": 158,
+    "sprint13ResearchJsonParsed": 33,
+    "mavenBuild": "SUCCESS",
+    "repeatability": "PASS",
+    "phase7ImplementationLock": "PASS",
+    "phase8Boundary": "NOT_PERFORMED"
+  }
 }
