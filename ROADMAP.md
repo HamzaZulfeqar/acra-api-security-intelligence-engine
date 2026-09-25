@@ -2,34 +2,24 @@
 
 ## Current gate — 2026-09-25
 
-Sprint 12 — **Reproduction & Standards Export** is SOFTWARE COMPLETE on
-`s12-reproduction-standards-export`.
+Sprint 13 — **Finding Lifecycle Governance** is IN PROGRESS on
+`s13-finding-lifecycle-governance`.
 
-Phases 1–5 plus dedicated final closure are VERIFIED COMPLETE. Closure run: `36076016842`.
+Phase 1 is VERIFIED COMPLETE by GitHub Actions run `36077162629`.
 
 Current evidence boundary:
 
-- deterministic review-only reproduction package;
-- JSON export: VERIFIED;
-- SARIF 2.1.0 export: VERIFIED;
-- SARIF review/informational semantics: VERIFIED;
-- Burp Issue-neutral projection: VERIFIED, `publishable=false`;
-- Montoya 2026.7 AuditIssue adapter with explicit approval gate: VERIFIED;
-- explicit headless publication service + SiteMap sink wrapper: VERIFIED;
-- synchronized read-only Reproduction workspace/UI: VERIFIED;
-- no publish/import/add-issue UI control: VERIFIED;
-- endpoint/query/fragment and secret-bearing metadata hardening: VERIFIED;
-- publication approval/receipt URL and integrity hardening: VERIFIED;
-- candidate-package drift protection: VERIFIED;
-- retained Core/Sprint 2/Sprint 3 regressions: VERIFIED;
-- service remains unregistered from ACRAExtension bootstrap;
-- raw principal/rationale/secret-bearing material excluded;
-- deterministic final source package: VERIFIED — 1026 entries;
-- closure-candidate ZIP SHA-256: `b451ee8c6a5c1cac2fc0177d24e3fd46fb3c2cb52c16ab856a21c3d6f8efbe9b`;
-- real Burp issue publication and desktop runtime remain UNVERIFIED / DEFERRED.
+- governed lifecycle is explicitly defined;
+- entry state is REVIEW_REQUIRED;
+- only explicit human-review transitions can produce CONFIRMED;
+- severity and confidence remain independent from lifecycle state;
+- CRITICAL prioritization cannot auto-confirm;
+- lifecycle history is deterministic and append-only;
+- invalid/stale/tampered transitions fail closed;
+- next dependency is governance workspace / review-queue integration.
 
-Sprint 11 remains the frozen SOFTWARE COMPLETE release base at
-`61441818179fed4aa1c1a143960bef53b6df9a11`.
+Sprint 12 remains the frozen SOFTWARE COMPLETE release base at
+`9ced79ba0986ce90884b745342769e88c38a68c2`.
 
 Canonical roadmap: [`docs/sprints/ROADMAP.md`](docs/sprints/ROADMAP.md).
 

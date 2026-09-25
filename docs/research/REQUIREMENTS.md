@@ -160,3 +160,16 @@ RB-0 remains authoritative. Sprint 1 adds stable implementation requirements wit
 - **SAFE-011** Reproduction export shall perform no active network replay by default.
 - **SEC-014** Reproduction/SARIF/Burp projections shall exclude raw credentials, raw principal identifiers and candidate rationale unless a later explicitly authorized local-only artifact policy is defined.
 - **RES-016** Standards-format interoperability evidence shall not be represented as vulnerability-detection accuracy evidence.
+
+## Sprint 13 finding lifecycle governance requirements
+
+- **FR-068** A governed finding shall enter lifecycle only from an evidence-backed `FindingCandidateState.CANDIDATE`.
+- **FR-069** New governed findings shall begin in `REVIEW_REQUIRED`; severity, confidence and internal risk score shall not automatically confirm a vulnerability.
+- **FR-070** Finding lifecycle transitions shall require explicit reviewer, decision and evidence references and shall be retained as append-only deterministic events.
+- **FR-071** Supported lifecycle dispositions shall cover confirmation, false-positive review, accepted risk, remediation, retest, resolution and closure with fail-closed transitions.
+- **FR-072** A failed retest shall return a previously confirmed finding to `CONFIRMED`; a passed retest may progress to `RESOLVED`.
+- **NFR-014** Governed finding, lifecycle-event and transition identities/fingerprints shall be deterministic and history validation shall reject stale or contradictory state.
+- **SAFE-012** Finding lifecycle transitions shall perform no network action, active replay or automatic Burp publication.
+- **SEC-015** Reviewer references, decision references and lifecycle evidence references shall reject recognized secret-bearing material.
+- **RES-017** Finding lifecycle state shall not be used as research ground truth unless separately registered by an independent research protocol.
+

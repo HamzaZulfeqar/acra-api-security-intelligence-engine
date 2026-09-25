@@ -2,9 +2,14 @@
 
 ## Current state — 2026-09-25
 
-**Current release boundary:** Sprint 12 — Reproduction & Standards Export — SOFTWARE COMPLETE.  
-**Decision:** S12 SOFTWARE COMPLETE — Phases 1–5 plus dedicated final closure VERIFIED.  
-**Working branch:** `s12-reproduction-standards-export`.  
+**Current sprint:** Sprint 13 — Finding Lifecycle Governance (in progress).  
+**Decision:** S13 PHASE 1 VERIFIED COMPLETE; explicit human-reviewed finding lifecycle defined.  
+**Working branch:** `s13-finding-lifecycle-governance`.  
+**Immutable Sprint 12 base:** `9ced79ba0986ce90884b745342769e88c38a68c2`.  
+**Sprint 12:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
+**Sprint 12 post-documentation final closure:** GitHub Actions run `36076372089` — SUCCESS.  
+**Sprint 12 final-status ZIP SHA-256:** `5787e12f42f368f40017a15d5b22fd6653cf20ad7463d4f690c844d7c5538c21`.  
+**Sprint 13 Phase 1 verification:** GitHub Actions run `36077162629` — SUCCESS at source commit `e2f4019f85270bab3498521a080b8e9ea59cf347`.  
 **Immutable Sprint 11 base:** `61441818179fed4aa1c1a143960bef53b6df9a11`.  
 **Sprint 11:** SOFTWARE COMPLETE and frozen as the previous release boundary.  
 **Sprint 11 post-documentation final revalidation:** GitHub Actions run `36067012832` — SUCCESS.  
@@ -47,6 +52,24 @@
 **Sprint 10 Phase 8 verification:** GitHub Actions run `36055037223` — SUCCESS at source commit `751c45eca818031e4e73fb23b8c30a2712469fcb`.  
 **Sprint 10 final closure:** GitHub Actions run `36055604554` — SUCCESS at closure-candidate source commit `a0c6ae56db84fdd9f79c56aaf8770261ac4fd529`.  
 **Closure-candidate ZIP SHA-256:** `dbd67307bf56d3333f77d44ca72bb1b1062322cbff9b3f1c0bde58d5b01931e0` — 931 entries, 0 unsafe paths, 0 duplicate entries, clean extraction PASS, per-file SHA-256 equality PASS.
+
+### Sprint 13 verified progress
+
+Phase 1 finding-lifecycle foundation is **VERIFIED COMPLETE**:
+
+- explicit REVIEW_REQUIRED → human-reviewed disposition lifecycle;
+- only CANDIDATE records can enter governance;
+- candidate and risk assessment must identity-match;
+- CRITICAL severity cannot auto-confirm;
+- severity/confidence remain independent from lifecycle state;
+- deterministic append-only lifecycle events;
+- explicit reviewer/decision/evidence required for every transition;
+- invalid transitions, stale history, identity/fingerprint tampering and secret-bearing refs fail closed;
+- no automatic-confirm API exists;
+- full retained Sprint 12 verifier remains green.
+
+The next dependency is a deterministic governance workspace/review queue. Real Burp desktop publication remains
+UNVERIFIED / DEFERRED and is unrelated to lifecycle confirmation.
 
 ### Sprint 12 verified progress
 

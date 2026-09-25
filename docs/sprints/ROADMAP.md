@@ -2,6 +2,29 @@
 
 ## Current gate — 2026-09-25
 
+**Sprint 13 IN PROGRESS — Phase 1 VERIFIED COMPLETE.**
+
+Canonical Sprint 13 evidence:
+- branch: `s13-finding-lifecycle-governance`;
+- immutable Sprint 12 base: `9ced79ba0986ce90884b745342769e88c38a68c2`;
+- Sprint 12 post-documentation final closure: `36076372089` — SUCCESS;
+- Sprint 12 final-status ZIP SHA-256: `5787e12f42f368f40017a15d5b22fd6653cf20ad7463d4f690c844d7c5538c21`;
+- Phase 1 verification: `36077162629` — SUCCESS at `e2f4019f85270bab3498521a080b8e9ea59cf347`;
+- finding lifecycle foundation: PASS, 41 assertions;
+- automatic confirmation: FORBIDDEN;
+- initial state: REVIEW_REQUIRED;
+- human-reviewed confirmation/event evidence: REQUIRED.
+
+Next dependency-ordered milestone:
+1. implement synchronized finding-governance workspace;
+2. enforce one governed finding per source candidate;
+3. expose deterministic review/state queues and counts;
+4. apply transitions only through the lifecycle service;
+5. reject stale snapshots and identity drift;
+6. keep publication/network actions outside lifecycle core.
+
+## Previous release boundary — Sprint 12
+
 **Sprint 12 SOFTWARE COMPLETE — final closure verified.**
 
 Canonical Sprint 12 evidence:
