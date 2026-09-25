@@ -1,5 +1,18 @@
 # Known Issues and Technical Debt
 
+## Sprint 13 Phase 6B actual local framework runtime limitations — 2026-09-25
+
+- Phase 6B launched real localhost FastAPI/Uvicorn, Flask, Express/Node.js and Spring Boot/Java 21 applications in CI.
+- Untouched runtime evaluation measured 64/64 successful HTTP responses, 64/64 dimensions and 64/64 governed dispositions.
+- The perfect controlled result applies only to the exact runtime/dependency versions, endpoints and authorization semantics exercised by this CI experiment.
+- The evaluation does not establish arbitrary framework-version compatibility, middleware compatibility, reverse-proxy behavior or production deployment compatibility.
+- The first development runtime pass exposed a routing/RBAC fixture ambiguity; this was corrected before the development freeze and before untouched evaluation.
+- The Phase 6A normalizer remains an explicit finite alias map; unseen serialization conventions remain a compatibility risk.
+- Real Burp Suite desktop/Montoya initialization, proxy capture and extension UI/runtime behavior remain unverified.
+- External authorized-target validation remains unperformed.
+- Phase 6B development/evaluation servers, corpora, policies and runners are frozen evidence and must not be reused as later tuning targets.
+- Phase 7 should validate Burp only against controlled localhost targets before any external-target work.
+
 ## Sprint 13 Phase 6A cross-framework-shaped limitations — 2026-09-25
 
 - Phase 6A measured framework-shaped snapshots, not actual FastAPI, Flask, Express or Spring runtime traffic.
