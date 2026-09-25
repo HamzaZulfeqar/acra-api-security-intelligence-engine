@@ -1,0 +1,114 @@
+name: Publish ACRA v0.3.0
+
+on:
+  push:
+    branches:
+      - release/v0.3.0-publish
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-acra-v0.3.0
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      EXPECTED_MAIN_SHA: 1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71
+      RELEASE_TAG: v0.3.0
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout exact stable main source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Verify exact publication source
+        shell: bash
+        run: |
+          set -euo pipefail
+          ACTUAL="$(git rev-parse HEAD)"
+          echo "main=$ACTUAL"
+          test "$ACTUAL" = "$EXPECTED_MAIN_SHA"
+          test "$(cat VERSION)" = "0.3.0"
+          grep -q "Apache License" LICENSE
+          test -f NOTICE
+          git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_TAG" >/dev/null 2>&1 && {
+            echo "Tag already exists; refusing duplicate publication."
+            exit 1
+          } || true
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 && {
+            echo "Release already exists; refusing duplicate publication."
+            exit 1
+          } || true
+          echo "SPRINT15_PUBLICATION_SOURCE PASS sha=$ACTUAL"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Revalidate stable release from merged main
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x ./scripts/*.sh
+          bash scripts/verify-sprint15-release-promotion.sh
+          echo "SPRINT15_MAIN_PUBLICATION_REVALIDATION PASS"
+
+      - name: Create v0.3.0 GitHub Release
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release create "$RELEASE_TAG"             "build/release/acra-0.3.0/acra-burp-extension-0.3.0.jar"             "build/release/acra-0.3.0.zip"             "build/release/release-manifest.json"             "build/release/SHA256SUMS"             --repo "$GITHUB_REPOSITORY"             --target "$EXPECTED_MAIN_SHA"             --title "ACRA v0.3.0"             --notes-file "docs/release/RELEASE_0.3.0.md"             --latest
+          echo "SPRINT15_GITHUB_RELEASE_CREATED tag=$RELEASE_TAG"
+
+      - name: Verify published release and assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release view "$RELEASE_TAG"             --repo "$GITHUB_REPOSITORY"             --json tagName,name,isDraft,isPrerelease,isLatest,url,targetCommitish             > build/release/published-release.json
+          gh release view "$RELEASE_TAG"             --repo "$GITHUB_REPOSITORY"             --json assets             > build/release/published-assets.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          release=json.loads(Path("build/release/published-release.json").read_text())
+          assets=json.loads(Path("build/release/published-assets.json").read_text())["assets"]
+          assert release["tagName"]=="v0.3.0"
+          assert release["name"]=="ACRA v0.3.0"
+          assert release["isDraft"] is False
+          assert release["isPrerelease"] is False
+          names={a["name"] for a in assets}
+          expected={
+              "acra-burp-extension-0.3.0.jar",
+              "acra-0.3.0.zip",
+              "release-manifest.json",
+              "SHA256SUMS",
+          }
+          missing=expected-names
+          assert not missing, f"missing release assets: {sorted(missing)}"
+          print("SPRINT15_PUBLISHED_RELEASE_VERIFY PASS")
+          print("release_url="+release["url"])
+          PY
+
+      - name: Upload publication evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-v0.3.0-publication-evidence
+          path: |
+            build/release/published-release.json
+            build/release/published-assets.json
+            build/release/release-manifest.json
+            build/release/SHA256SUMS
+          if-no-files-found: warn
