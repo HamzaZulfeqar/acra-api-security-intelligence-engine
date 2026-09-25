@@ -2,16 +2,20 @@
 
 This file tracks repository-admin settings required for the professional public-repository posture.
 
-## Current automated status at Sprint 16 start
+## Current automated status after repository-side Sprint 16 implementation
 
 - repository visibility: public;
 - default branch: `main`;
 - stable release: `v0.3.0`;
-- `main` branch protection: **not enabled**;
+- `main` branch protection: **pending owner admin setting**;
 - CodeQL: configured;
 - Gitleaks: configured;
 - Dependency Review workflow: configured;
-- GitHub Dependency Graph: requires repository-admin enablement before native Dependency Review is meaningful.
+- GitHub Dependency Graph: **pending owner admin setting** before native Dependency Review is meaningful.
+
+Repository-side onboarding validation is complete at GitHub Actions run `36202814898`.
+
+Tracking issue: #6.
 
 The connected GitHub automation used by Sprint 16 does not have repository-administration mutation access, so the two
 settings below must be enabled by the repository owner in GitHub Settings.
