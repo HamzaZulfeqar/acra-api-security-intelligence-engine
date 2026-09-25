@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 POLICY RELIABILITY & UNCERTAINTY GOVERNANCE COMPLETE.
+**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 COMPLETE; PHASE 4 COMPLETE; PHASE 5 COMPLETE; PHASE 6A CROSS-FRAMEWORK-SHAPED NORMALIZATION COMPLETE.
 
 ## Objective
 
@@ -350,3 +350,75 @@ production workload estimate and must not be represented as one.
 
 The next research dependency is cross-framework generalization while preserving the same governance semantics and
 finding-state boundaries.
+
+
+## Phase 6A — Cross-framework-shaped normalization
+
+**Development workflow:** `36173526384` — SUCCESS.  
+**Normalization freeze:** `4011b9c05b99b14da66733aea47de43256060990`.  
+**Untouched evaluation workflow:** `36173838561` — SUCCESS at `f3180a1877aaffd224a6d3a2734ddc25bf28c24b`.
+
+Phase 6A tests serialization/transport representations shaped like FastAPI, Flask, Express and Spring APIs without
+claiming that those framework runtimes were actually launched.
+
+A framework-neutral normalization layer canonicalizes common aliases such as:
+- `ownerId -> owner_id`;
+- `tenantId -> tenant_id`;
+- `requiredRole -> required_role`;
+- `fromState/toState -> from_state/to_state`;
+- `appliedProperties -> applied_properties`;
+- `resolvedResourceId -> resolved_resource_id`;
+- `resourceId/resourceIds -> resource_id/resource_ids`;
+- `userId/principalId -> sub`;
+- `routeForm -> route_form`.
+
+The normalizer does not consume framework labels, registered dimensions or vulnerability labels.
+
+### Development result
+
+64 framework-shaped cases:
+- raw dimension: 60/64;
+- raw governed disposition: 32/64;
+- normalized dimension: 64/64;
+- normalized governed disposition: 64/64.
+
+Per framework:
+- FastAPI: raw 16/16 dimension + 16/16 disposition; normalized 16/16 + 16/16;
+- Flask: raw 16/16 + 16/16; normalized 16/16 + 16/16;
+- Express: raw 14/16 + 0/16; normalized 16/16 + 16/16;
+- Spring: raw 14/16 + 0/16; normalized 16/16 + 16/16.
+
+### Untouched evaluation result
+
+A new 64-case corpus with different resource, organization, role, workflow, property and identity vocabulary was created
+after the normalization freeze.
+
+Measured:
+- raw dimension: 60/64;
+- raw disposition: 32/64;
+- normalized dimension: 64/64;
+- normalized disposition: 64/64.
+
+The per-framework pattern reproduced exactly:
+- FastAPI: raw and normalized 16/16 dimension + disposition;
+- Flask: raw and normalized 16/16 dimension + disposition;
+- Express: raw 14/16 dimension + 0/16 disposition; normalized 16/16 + 16/16;
+- Spring: raw 14/16 dimension + 0/16 disposition; normalized 16/16 + 16/16.
+
+Integrity:
+- Phase 5 evidence lock: PASS;
+- normalization/upstream reasoning freeze: PASS;
+- label absence during both prediction passes: PASS;
+- repeated predictions/evaluations byte-identical: PASS;
+- Maven package: BUILD SUCCESS.
+
+### Phase 6A interpretation
+
+The tested camelCase transport representations break the canonical policy/governance path even when most dimensions can
+still be inferred. A neutral normalization boundary restores the frozen reasoning contract on both development and
+untouched snapshot corpora.
+
+This is **not** actual FastAPI/Flask/Express/Spring runtime evidence.
+
+**Next dependency:** Phase 6B — launch real local framework fixtures in CI, capture live HTTP behavior and feed that
+evidence through the frozen Phase 6A normalizer + Phase 5 reasoning/governance stack.
