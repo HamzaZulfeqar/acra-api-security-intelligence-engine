@@ -1,5 +1,27 @@
 # Test Matrix
 
+## Sprint 13 finding lifecycle governance — 2026-09-25
+
+Authoritative pre-final verification through Phase 5 is GitHub Actions run `36080369571`.
+
+| Test / Gate | Coverage | Result |
+|---|---|---|
+| Sprint13FindingLifecycleFoundationTestSuite | lifecycle policy, human review, deterministic events/history, no auto-confirm | PASS — 41 assertions |
+| Sprint13FindingGovernanceWorkspaceTestSuite | one finding per candidate, stale/drift rejection, deterministic queues | PASS — 25 assertions |
+| Sprint13FindingGovernanceUiTestSuite | read-only queues/history/report views, severity != confirmation, no action controls | PASS — 66 assertions |
+| Sprint13GovernanceReportingExportTestSuite | snapshot-derived JSON/Markdown/SHA-256/Reporter, no mutation | PASS — 37 assertions |
+| Sprint13GovernanceSecurityHardeningTestSuite | secret refs, invalid transitions, stale/drift, false-positive closure, report minimization | PASS — 25 assertions |
+| Sprint13GovernancePerformanceObservationTestSuite | 100 / 1,000 / 10,000 bounded workspace/snapshot/report observations | PASS — 19 assertions |
+| Core / Sprint 2 / Sprint 3 exact Phase 5 regressions | retained compile/contracts | PASS |
+| Real Burp desktop runtime/publication | separate runtime lane | UNVERIFIED / DEFERRED |
+
+Phase 5 performance values are environment-specific engineering observations only, not benchmarks, SLOs,
+scanner-accuracy evidence or production-capacity claims.
+
+### Sprint 13 final closure
+
+Pending dedicated `Sprint 13 Final Closure` workflow verification.
+
 ## Sprint 10 batch & indirect authorization — 2026-09-25
 
 Authoritative pre-final verification through Phase 8 is GitHub Actions run `36055037223`.
