@@ -5,7 +5,7 @@
 **Base:** Sprint 12 head `bd944e83a6edefafba56caebaa35e89fc107c282`  
 **Phase 1 measured head:** `e515a31d91d775d5f0f35c32a48507455f84992d`  
 **Successful workflow:** `36143281129`  
-**Status:** PHASE 1 COMPLETE; PHASE 2 DIMENSION DISCOVERY COMPLETE.
+**Status:** PHASE 1 COMPLETE; PHASE 2 COMPLETE; PHASE 3 POLICY GENERALIZATION COMPLETE.
 
 ## Objective
 
@@ -141,3 +141,45 @@ Integrity gates:
 - repeatability: PASS;
 - Sprint 12 / Phase 1 immutable-history gates: PASS;
 - Maven product package: BUILD SUCCESS.
+
+
+## Phase 3 — Configurable policy generalization
+
+**Algorithm freeze:** `c7c66336daf050753aa0ac4fb3a1f293c5d1e2dd`  
+**Development workflow:** `36148740338` — SUCCESS.  
+**Untouched evaluation workflow:** `36149071484` — SUCCESS at `82ae165b702d18b0eae872d51f8f695f723fec13`.
+
+Phase 3 replaces fixture-specific authorization assumptions with an explicit configured policy registry layered after
+automatic dimension inference.
+
+Decision integration:
+- explicit policy ALLOW → suppress candidate;
+- explicit policy DENY + observed ALLOW → positive authorization mismatch;
+- UNKNOWN → fall back to locked A7.
+
+Development corpus:
+- 24 cases: 8 positive / 16 legitimate controls;
+- dimension inference: 24/24;
+- configured policy decisions: 24/24;
+- locked A7: TP=8/TN=4/FP=12/FN=0, P=.4/R=1/F1=.571429;
+- G1: TP=8/TN=16/FP=0/FN=0, P=1/R=1/F1=1.
+
+Untouched evaluation corpus was created only after the algorithm freeze and uses different resource names, actor names,
+tenant/workspace names, roles, transitions, properties, routing paths, batch identifiers and indirect references.
+
+Untouched evaluation:
+- dimension inference: 24/24;
+- configured policy decisions: 24/24;
+- UNKNOWN policy decisions: 0;
+- locked A7: TP=8/TN=4/FP=12/FN=0, P=.4/R=1/F1=.571429;
+- G1: TP=8/TN=16/FP=0/FN=0, P=1/R=1/F1=1;
+- repeatability: PASS;
+- label-absence gate: PASS;
+- frozen-algorithm gate: PASS;
+- Maven package: BUILD SUCCESS.
+
+The 1.0 G1 fixture result is valid only for this synthetic internal configured-policy evaluation. It does not establish
+automatic policy extraction, production scanner accuracy, or external validity.
+
+**Next:** Phase 4 — larger, less-balanced and adversarial negative populations using frozen Phase 3 results as evidence,
+not as a tuning target.
