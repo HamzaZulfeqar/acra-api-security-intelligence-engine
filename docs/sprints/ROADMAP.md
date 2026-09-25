@@ -1,5 +1,26 @@
 # ROADMAP
 
+## Current release state — ACRA v0.3.0 — 2026-09-26
+
+**STABLE RELEASE PUBLISHED.**
+
+Canonical publication:
+- license: Apache-2.0;
+- version: `0.3.0`;
+- tag: `v0.3.0`;
+- tag target / stable source: `1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71`;
+- GitHub Release: https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine/releases/tag/v0.3.0;
+- four release assets published with GitHub SHA-256 digests;
+- main Build/Test: PASS;
+- main CodeQL/Gitleaks: PASS.
+
+Sprint 15 release promotion is complete.
+
+Future software development should begin as a new post-`v0.3.0` version/sprint. Any future external-target research
+must remain a new post-freeze experiment and must not rewrite Sprint 13 evidence.
+
+## Previous gate — Sprint 15 release promotion
+
 ## Current gate — Sprint 15 Release Promotion — 2026-09-26
 
 **PROMOTION PREPARED / PUBLICATION BLOCKED.**

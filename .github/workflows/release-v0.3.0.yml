@@ -49,7 +49,7 @@ jobs:
           import json
           from pathlib import Path
           d=json.loads(Path("release/promotion-decision.json").read_text())
-          assert d["state"] == "READY_FOR_PROMOTION"
+          assert d["state"] in {"READY_FOR_PROMOTION", "PUBLISHED"}
           assert d["publicReleaseAuthorized"] is True
           assert d["licenseDecision"]["spdxIdentifier"] == "Apache-2.0"
           assert d["versionDecision"]["targetVersion"] == "0.3.0"
@@ -73,18 +73,29 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          EXPECTED_TAG_TARGET="$(python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("release/promotion-decision.json").read_text())
+          print(d.get("publication",{}).get("targetCommit") or "")
+          PY
+          )"
+          if [ -z "$EXPECTED_TAG_TARGET" ]; then
+            EXPECTED_TAG_TARGET="$GITHUB_SHA"
+          fi
+
           if git ls-remote --exit-code --tags origin refs/tags/v0.3.0 >/dev/null 2>&1; then
             git fetch --force origin refs/tags/v0.3.0:refs/tags/v0.3.0
             TAG_TARGET="$(git rev-list -n 1 v0.3.0)"
-            if [ "$TAG_TARGET" != "$GITHUB_SHA" ]; then
-              echo "Existing v0.3.0 tag points to $TAG_TARGET, expected $GITHUB_SHA" >&2
+            if [ "$TAG_TARGET" != "$EXPECTED_TAG_TARGET" ]; then
+              echo "Existing v0.3.0 tag points to $TAG_TARGET, expected $EXPECTED_TAG_TARGET" >&2
               exit 1
             fi
             echo "RELEASE_V030_TAG already-present target=$TAG_TARGET"
           else
-            git tag -a v0.3.0 "$GITHUB_SHA" -m "ACRA v0.3.0"
+            git tag -a v0.3.0 "$EXPECTED_TAG_TARGET" -m "ACRA v0.3.0"
             git push origin refs/tags/v0.3.0
-            echo "RELEASE_V030_TAG created target=$GITHUB_SHA"
+            echo "RELEASE_V030_TAG created target=$EXPECTED_TAG_TARGET"
           fi
 
       - name: Publish GitHub Release if absent
@@ -114,24 +125,31 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gh release view v0.3.0 --json tagName,isDraft,isPrerelease,url,assets > build/release/published-release.json
+          gh api "repos/${GITHUB_REPOSITORY}/releases/tags/v0.3.0" > build/release/published-release.json
           python3 - <<'PY'
           import json
           from pathlib import Path
-          d=json.loads(Path("build/release/published-release.json").read_text())
-          assert d["tagName"] == "v0.3.0"
-          assert d["isDraft"] is False
-          assert d["isPrerelease"] is False
-          names={a["name"] for a in d["assets"]}
+          release=json.loads(Path("build/release/published-release.json").read_text())
+          decision=json.loads(Path("release/promotion-decision.json").read_text())
+          assert release["tag_name"] == "v0.3.0"
+          assert release["draft"] is False
+          assert release["prerelease"] is False
+          assets={a["name"]:a for a in release["assets"]}
           required={
               "acra-burp-extension-0.3.0.jar",
               "acra-0.3.0.zip",
               "SHA256SUMS",
               "release-manifest.json",
           }
-          assert required <= names, (required, names)
+          assert required <= set(assets), (required, set(assets))
+          expected=decision.get("publication",{}).get("assets",{})
+          for name,meta in expected.items():
+              actual=assets[name]
+              expected_digest="sha256:"+meta["sha256"]
+              assert actual.get("digest")==expected_digest, (name,actual.get("digest"),expected_digest)
+              assert actual.get("size")==meta["size"], (name,actual.get("size"),meta["size"])
           print("RELEASE_V030_PUBLICATION_VERIFY PASS")
-          print("RELEASE_V030_URL", d["url"])
+          print("RELEASE_V030_URL", release["html_url"])
           PY
 
       - name: Upload publication evidence

@@ -7,7 +7,7 @@
     "releaseHardeningRunId": 36185936876,
     "securityRunId": 36185936941
   },
-  "state": "READY_FOR_PROMOTION",
+  "state": "PUBLISHED",
   "publicReleaseAuthorized": true,
   "ownerApproval": {
     "approvedAt": "2026-09-26",
@@ -32,8 +32,29 @@
   },
   "publication": {
     "gitTag": "v0.3.0",
-    "githubRelease": null,
-    "releaseType": "stable"
+    "targetCommit": "1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71",
+    "githubRelease": "https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine/releases/tag/v0.3.0",
+    "releaseId": 396973117,
+    "releaseType": "stable",
+    "publishedAt": "2026-09-25T23:01:26Z",
+    "assets": {
+      "acra-0.3.0.zip": {
+        "sha256": "d0f407e3fa824d160836d992d952bf780cd856dd9b5fee415c2bfd145b76b4ff",
+        "size": 1111371
+      },
+      "acra-burp-extension-0.3.0.jar": {
+        "sha256": "95e3271328a77fe76e8c66728b4045a5f83ed782cc797382173ce87cc842f22e",
+        "size": 1189286
+      },
+      "release-manifest.json": {
+        "sha256": "e50bf5bfbcc288e15677ecfe1d7c777ddf553458653820eefb09aca2ed608159",
+        "size": 1944
+      },
+      "SHA256SUMS": {
+        "sha256": "402ef1c6ceff690ad2abb1ea71544aa30ef3a5a44ff612a4c81b4e38b46eeb77",
+        "size": 265
+      }
+    }
   },
   "blockers": [],
   "immutableBoundaries": {
@@ -44,25 +65,33 @@
   "securityChecks": {
     "codeql": {
       "status": "PASS",
-      "workflowRunId": 36196539717
+      "workflowRunId": 36201453188
     },
     "gitleaks": {
       "status": "PASS",
-      "workflowRunId": 36196539717
+      "workflowRunId": 36201453188
     },
     "githubDependencyReview": {
       "status": "UNAVAILABLE",
-      "workflowRunId": 36196539717,
-      "reason": "GitHub Dependency Graph is not enabled for the repository; no vulnerability result was produced."
+      "workflowRunId": 36198463198,
+      "reason": "GitHub Dependency Graph is not enabled; the workflow records this as unavailable rather than a vulnerability result."
     },
     "localDependencyContract": {
       "status": "PASS",
-      "workflowRunId": 36196536069,
+      "workflowRunId": 36198459428,
       "coreDirectDependencies": 0,
       "extensionDirectDependencies": 2,
       "customRepositories": 0,
       "systemScopedDependencies": 0,
       "snapshotDependencies": 0
     }
+  },
+  "publicationEvidence": {
+    "stableSourceMergeCommit": "1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71",
+    "publicationWorkflowMergeCommit": "882a253c6f17d8fab161381d697f52e3e26127fc",
+    "mainBuildRunId": 36201453112,
+    "mainSecurityRunId": 36201453188,
+    "initialPublicationWorkflowRunId": 36201453170,
+    "initialPublicationWorkflowNote": "Stable promotion gate passed; idempotency check was later reconciled because the already-correct v0.3.0 tag points to the stable source merge commit rather than the workflow-only merge commit."
   }
 }

@@ -24,8 +24,8 @@ def main() -> None:
         raise AssertionError(f"stable verification requires 0.3.0, got {VERSION}")
 
     decision=json.loads((ROOT/"release/promotion-decision.json").read_text(encoding="utf-8"))
-    if decision["state"]!="READY_FOR_PROMOTION":
-        raise AssertionError("promotion decision not READY_FOR_PROMOTION")
+    if decision["state"] not in {"READY_FOR_PROMOTION","PUBLISHED"}:
+        raise AssertionError("promotion decision is neither READY_FOR_PROMOTION nor PUBLISHED")
     if decision["licenseDecision"]["spdxIdentifier"]!="Apache-2.0":
         raise AssertionError("unexpected license")
     if decision["versionDecision"]["targetVersion"]!="0.3.0":

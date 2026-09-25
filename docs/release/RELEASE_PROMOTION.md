@@ -1,67 +1,50 @@
 # ACRA Release Promotion
 
-**Stage:** Sprint 15 — Release Promotion  
-**Branch:** `s15-release-promotion`  
-**Source RC:** `0.3.0-rc1`  
-**Target:** `0.3.0` stable  
-**License:** Apache-2.0
+**Final state:** PUBLISHED  
+**Version:** `0.3.0`  
+**License:** Apache-2.0  
+**Tag:** `v0.3.0`  
+**Canonical stable source:** `1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71`
 
-## Current state
+## Published release
 
-**READY_FOR_PROMOTION — owner-approved stable target and license selected.**
+GitHub Release:
 
-The project owner explicitly approved:
-- Apache License, Version 2.0;
-- stable promotion from `0.3.0-rc1` to `0.3.0`;
-- public release promotion after all stable gates pass.
+https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine/releases/tag/v0.3.0
 
-## Promotion contract
+The release is stable, non-draft and non-prerelease.
 
-Before publication:
-- Sprint 13 frozen research must remain unchanged;
-- Sprint 14 hardened source must remain in ancestry;
-- `VERSION` and all Maven versions must equal `0.3.0`;
-- `LICENSE` must contain Apache-2.0;
-- `NOTICE` must be present;
-- direct dependency contract must pass;
-- retained executable regressions must pass;
-- Maven clean verify must pass;
-- stable package/checksum verification must pass;
-- CodeQL and Gitleaks must pass;
-- external-target/production claim boundaries must remain unchanged.
+Published assets:
+- `acra-burp-extension-0.3.0.jar`;
+- `acra-0.3.0.zip`;
+- `SHA256SUMS`;
+- `release-manifest.json`.
 
-## Dependency-review status
+Canonical digests are recorded in `release/promotion-decision.json`.
 
-GitHub native Dependency Review is unavailable because the repository Dependency Graph is disabled. This is a platform
-configuration limitation, not a vulnerability result.
+## Publication integrity
 
-Sprint 15 separately enforces:
-- zero direct dependencies in `acra-core`;
-- only `acra-core` and the provided Montoya API as direct extension dependencies;
+The `v0.3.0` tag points to the stable source merge commit `1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71`.
+
+A later merge added only the one-time publication workflow. The publication workflow is therefore intentionally
+idempotent against the canonical stable source tag target instead of requiring the tag to point at a workflow-only
+commit.
+
+## Dependency review
+
+GitHub native Dependency Review is unavailable while the repository Dependency Graph is disabled. This is treated as a
+platform-feature limitation, not as a vulnerability result.
+
+Blocking supply-chain checks retained by Sprint 15:
+- direct dependency allowlist;
+- Maven dependency inventory;
 - no custom Maven repositories;
 - no system-scoped dependencies;
 - no SNAPSHOT dependencies;
-- Maven dependency-tree generation.
+- CodeQL;
+- Gitleaks.
 
-## Stable publication assets
+## Research/claim boundary
 
-Expected:
-- `acra-burp-extension-0.3.0.jar`;
-- `acra-0.3.0.zip`;
-- `release-manifest.json`;
-- `SHA256SUMS`.
-
-## Claim boundary
-
-Stable publication does not create new research evidence.
-
-Phase 8 external-target validation remained **NOT PERFORMED** before the Sprint 13 freeze. Production accuracy, production
-safety, arbitrary framework/Burp compatibility and external-target effectiveness remain unsupported claims.
-
-## State transition
-
-`PREPARED_BLOCKED → READY_FOR_PROMOTION`
-
-After all current-head CI/security gates pass, publication may proceed to:
-
-`READY_FOR_PROMOTION → PUBLISHED`
+The public software release does not expand Sprint 13 research claims. External-target validation remained NOT PERFORMED,
+and production accuracy/safety claims remain unsupported.

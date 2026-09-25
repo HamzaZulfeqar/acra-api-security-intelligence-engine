@@ -1,50 +1,43 @@
 # Release Promotion Checklist
 
 ## Source candidate
-
 - [x] Sprint 13 research freeze complete.
 - [x] Sprint 14 technical RC hardening complete.
 - [x] Release-hardening workflow passed.
 - [x] CodeQL passed.
 - [x] Gitleaks passed.
-- [x] RC package and checksums generated.
-- [x] No release tag exists from the completed Sprint 14 work.
+- [x] RC package/checksums generated.
 
-## Explicit owner decisions
-
-- [ ] Select software license.
-- [ ] Replace unresolved `LICENSE` notice with selected license text.
-- [ ] Select publication path:
-  - [ ] publish `v0.3.0-rc1` as pre-release; or
-  - [ ] promote to `v0.3.0`.
-- [ ] Approve release notes.
+## Owner decisions
+- [x] Select Apache-2.0.
+- [x] Replace unresolved license notice with Apache-2.0 LICENSE.
+- [x] Add NOTICE.
+- [x] Promote `0.3.0-rc1` to `0.3.0`.
+- [x] Approve stable release notes.
 
 ## Promotion verification
-
-- [ ] Update `release/promotion-decision.json`.
-- [ ] Run full retained executable regression chain.
-- [ ] Run Maven clean verify.
-- [ ] Verify version contract.
-- [ ] Verify frozen Sprint 13 research lock.
-- [ ] Generate final release bundle + SHA-256 checksums.
-- [ ] Run CodeQL.
-- [ ] Run Gitleaks.
-- [ ] Confirm claim boundary unchanged.
+- [x] Promotion decision READY/PUBLISHED.
+- [x] Full retained executable regression chain.
+- [x] Maven clean verify.
+- [x] Version contract.
+- [x] Frozen Sprint 13 research lock.
+- [x] Stable bundle/checksums.
+- [x] CodeQL.
+- [x] Gitleaks.
+- [x] Claim boundary unchanged.
+- [x] Sprint 5 redaction regression fixed and revalidated.
 
 ## Publication
+- [x] Stable source merged to main.
+- [x] Tag `v0.3.0` created.
+- [x] GitHub Release created.
+- [x] Release is non-draft.
+- [x] Release is non-prerelease.
+- [x] Extension JAR attached.
+- [x] Stable ZIP attached.
+- [x] `SHA256SUMS` attached.
+- [x] Release manifest attached.
+- [x] GitHub SHA-256 asset digests recorded.
 
-- [ ] Create immutable Git tag.
-- [ ] Create GitHub Release.
-- [ ] Mark prerelease/stable according to selected version path.
-- [ ] Attach extension JAR.
-- [ ] Attach release ZIP.
-- [ ] Attach `SHA256SUMS`.
-- [ ] Attach release manifest.
-- [ ] Record final tag/release identifiers in promotion decision.
-- [ ] Verify release assets after publication.
-
-## Post-release
-
-- [ ] Update project state to PUBLISHED.
-- [ ] Record published artifact hashes.
-- [ ] Preserve Sprint 13/Sprint 14 historical evidence.
+## Final state
+**PUBLISHED**

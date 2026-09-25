@@ -1,5 +1,28 @@
 # ACRA Project State
 
+## Current state — 2026-09-26 — ACRA v0.3.0 Published
+
+**Decision:** ACRA `v0.3.0` STABLE RELEASE PUBLISHED.  
+**License:** Apache-2.0.  
+**Stable source merge:** `1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71`.  
+**Tag:** `v0.3.0` → `1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71`.  
+**GitHub Release:** https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine/releases/tag/v0.3.0  
+**Release type:** stable; not draft; not prerelease.  
+**Main Build/Test:** `36201453112` — SUCCESS.  
+**Main Security Checks:** `36201453188` — SUCCESS.  
+**External-target validation:** NOT PERFORMED.  
+**Production accuracy/safety claim:** NOT SUPPORTED.
+
+Published assets:
+- `acra-burp-extension-0.3.0.jar` — SHA-256 `95e3271328a77fe76e8c66728b4045a5f83ed782cc797382173ce87cc842f22e`;
+- `acra-0.3.0.zip` — SHA-256 `d0f407e3fa824d160836d992d952bf780cd856dd9b5fee415c2bfd145b76b4ff`;
+- `release-manifest.json` — SHA-256 `e50bf5bfbcc288e15677ecfe1d7c777ddf553458653820eefb09aca2ed608159`;
+- `SHA256SUMS` — SHA-256 `402ef1c6ceff690ad2abb1ea71544aa30ef3a5a44ff612a4c81b4e38b46eeb77`.
+
+The stable publication does not expand the frozen Sprint 13 research claim boundary.
+
+## Previous state — Sprint 15 promotion preparation
+
 ## Current state — 2026-09-26 — Sprint 15 Release Promotion
 
 **Decision:** RELEASE PROMOTION PREPARED; PUBLICATION BLOCKED PENDING OWNER DECISIONS.  

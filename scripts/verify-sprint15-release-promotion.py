@@ -70,15 +70,15 @@ def main() -> None:
         print("SPRINT15_PROMOTION_STATE PASS state=PREPARED_BLOCKED")
         print("SPRINT15_LICENSE_GATE BLOCKED_EXPECTED status=UNRESOLVED")
         print("SPRINT15_VERSION_DECISION_GATE BLOCKED_EXPECTED status=UNRESOLVED")
-    elif state=="READY_FOR_PROMOTION":
+    elif state in {"READY_FOR_PROMOTION","PUBLISHED"}:
         if d["publicReleaseAuthorized"] is not True:
-            raise AssertionError("READY_FOR_PROMOTION requires explicit authorization")
+            raise AssertionError("selected/published state requires explicit authorization")
         if license_state!="SELECTED" or not d["licenseDecision"].get("spdxIdentifier"):
-            raise AssertionError("READY_FOR_PROMOTION requires selected SPDX license")
+            raise AssertionError("selected/published state requires selected SPDX license")
         if "No license has been selected yet" in license_text:
             raise AssertionError("unresolved LICENSE notice still present")
         if version_state!="SELECTED":
-            raise AssertionError("READY_FOR_PROMOTION requires version selection")
+            raise AssertionError("selected/published state requires version selection")
         target=d["versionDecision"].get("targetVersion")
         if target not in {"0.3.0-rc1","0.3.0"}:
             raise AssertionError(f"unsupported target version: {target}")
@@ -91,8 +91,22 @@ def main() -> None:
         if len(set(versions))!=1 or versions[0]!=target:
             raise AssertionError(f"promotion version contract mismatch: {versions}, target={target}")
         if d.get("blockers"):
-            raise AssertionError("READY_FOR_PROMOTION must have no blockers")
-        print(f"SPRINT15_PROMOTION_STATE PASS state=READY_FOR_PROMOTION target={target}")
+            raise AssertionError("selected/published state must have no blockers")
+        if state=="PUBLISHED":
+            publication=d.get("publication",{})
+            if publication.get("gitTag")!="v0.3.0":
+                raise AssertionError("published state requires v0.3.0 tag")
+            if publication.get("targetCommit")!="1bc21b6b28bc1c71f23fb9d22cd9ac663a179c71":
+                raise AssertionError("published state tag target drift")
+            if publication.get("releaseType")!="stable":
+                raise AssertionError("published state must remain stable")
+            if not publication.get("githubRelease"):
+                raise AssertionError("published state requires GitHub Release URL")
+            assets=publication.get("assets",{})
+            required={"acra-burp-extension-0.3.0.jar","acra-0.3.0.zip","SHA256SUMS","release-manifest.json"}
+            if set(assets)!=required:
+                raise AssertionError(f"published asset inventory mismatch: {set(assets)}")
+        print(f"SPRINT15_PROMOTION_STATE PASS state={state} target={target}")
         print(f"SPRINT15_LICENSE_GATE PASS spdx={d['licenseDecision']['spdxIdentifier']}")
         print("SPRINT15_VERSION_DECISION_GATE PASS")
     else:
