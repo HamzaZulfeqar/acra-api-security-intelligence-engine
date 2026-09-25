@@ -1,0 +1,784 @@
+{
+  "schemaVersion": "s13-policy-registry-v1",
+  "registryId": "POL-S13-XRUNTIME-EVAL-001",
+  "purpose": "Untouched Phase 6B actual localhost runtime evaluation registry",
+  "createdAfterDevelopmentFreeze": "683933836d2c2fa5ec155bc8e224be87e6958e95",
+  "policies": [
+    {
+      "policyId": "RTEVAL-FASTAPI-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/documents/doc-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FASTAPI-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FASTAPI-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/admin/security-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FASTAPI-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/workflows/deploy/resources/deploy-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FASTAPI-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/routing/equivalent$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FASTAPI-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/profiles/(?:robin|casey)/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "RTEVAL-FASTAPI-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FASTAPI-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/fastapi/links/link-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "fastapi-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/flask/documents/doc-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/flask/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/flask/admin/security-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/flask/workflows/deploy/resources/deploy-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/flask/routing/equivalent$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/runtime-eval/flask/profiles/(?:robin|casey)/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/flask/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-FLASK-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/flask/links/link-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "flask-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/express/documents/doc-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/express/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/express/admin/security-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/express/workflows/deploy/resources/deploy-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/express/routing/equivalent$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/runtime-eval/express/profiles/(?:robin|casey)/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/express/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-EXPRESS-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/express/links/link-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "express-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-OBJECT_AUTHORIZATION",
+      "dimension": "OBJECT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/spring/documents/doc-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-TENANT_AUTHORIZATION",
+      "dimension": "TENANT_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/spring/organizations/(?P<tenant>alpha|beta)/reports/report-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "tenantField": "tenant_id",
+        "targetTenantPathGroup": "tenant",
+        "crossTenantRoles": [
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-RBAC_AUTHORIZATION",
+      "dimension": "RBAC_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/spring/admin/security-log$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "deniedRoles": [
+          "disabled"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-WORKFLOW_AUTHORIZATION",
+      "dimension": "WORKFLOW_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/spring/workflows/deploy/resources/deploy-[0-9]+/transition$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "transitions": [
+          {
+            "action": "DEPLOY",
+            "from": "STAGED",
+            "to": "LIVE",
+            "roles": [
+              "deploy-manager"
+            ],
+            "requiredTrueFields": [
+              "approved"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-ROUTING_AUTHORIZATION",
+      "dimension": "ROUTING_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/spring/routing/equivalent$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedRoles": [
+          "audit-admin",
+          "org-admin"
+        ],
+        "canonicalRoles": [
+          "audit-admin",
+          "org-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-PROPERTY_AUTHORIZATION",
+      "dimension": "PROPERTY_AUTHORIZATION",
+      "methods": [
+        "PATCH"
+      ],
+      "pathRegex": "^/runtime-eval/spring/profiles/(?:robin|casey)/settings$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "allowedFieldsByRole": {
+          "member": [
+            "locale",
+            "nickname"
+          ],
+          "profile-admin": [
+            "locale",
+            "nickname",
+            "risk_level"
+          ],
+          "*": []
+        }
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-BATCH_AUTHORIZATION",
+      "dimension": "BATCH_AUTHORIZATION",
+      "methods": [
+        "POST"
+      ],
+      "pathRegex": "^/runtime-eval/spring/documents/bulk-fetch$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    },
+    {
+      "policyId": "RTEVAL-SPRING-INDIRECT_REFERENCE_AUTHORIZATION",
+      "dimension": "INDIRECT_REFERENCE_AUTHORIZATION",
+      "methods": [
+        "GET"
+      ],
+      "pathRegex": "^/runtime-eval/spring/links/link-(?:alpha|beta)$",
+      "priority": 100,
+      "health": {
+        "status": "CURRENT",
+        "policyVersion": "6B-eval-1",
+        "sourceRevision": "spring-runtime-eval-r2",
+        "lastValidatedAt": "2026-09-25"
+      },
+      "rules": {
+        "resourceField": "resource",
+        "ownerField": "owner_id",
+        "privilegedRoles": [
+          "document-admin"
+        ]
+      }
+    }
+  ]
+}
