@@ -106,7 +106,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/runtime/fastapi/routing/audit$",
+      "pathRegex": "^/runtime/fastapi/routing/equivalent$",
       "priority": 100,
       "health": {
         "status": "CURRENT",
@@ -300,7 +300,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/runtime/flask/routing/audit$",
+      "pathRegex": "^/runtime/flask/routing/equivalent$",
       "priority": 100,
       "health": {
         "status": "CURRENT",
@@ -494,7 +494,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/runtime/express/routing/audit$",
+      "pathRegex": "^/runtime/express/routing/equivalent$",
       "priority": 100,
       "health": {
         "status": "CURRENT",
@@ -688,7 +688,7 @@
       "methods": [
         "GET"
       ],
-      "pathRegex": "^/runtime/spring/routing/audit$",
+      "pathRegex": "^/runtime/spring/routing/equivalent$",
       "priority": 100,
       "health": {
         "status": "CURRENT",
