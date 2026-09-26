@@ -16,6 +16,7 @@
         <button class="nav-item" data-view="inventory">API Inventory</button>
         <button class="nav-item" data-view="context">Security Context</button>
         <button class="nav-item" data-view="authorization">Authorization</button>
+        <button class="nav-item" data-view="active">Active Validation</button>
         <button class="nav-item" data-view="object-access">Object Access</button>
         <button class="nav-item" data-view="function-access">Function Access</button>
         <button class="nav-item" data-view="property-access">Property Access</button>
@@ -276,6 +277,65 @@
               <tbody id="authorization-table-body"></tbody>
             </table>
             <div id="authorization-empty" class="empty-state">Define expected authorization in Security Context to project it through ACRA Core.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="active-view" class="view">
+        <div class="grid two active-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">CONTROLLED EXECUTION</span><h3>Route-equivalence validation</h3></div>
+              <span id="active-kill-status" class="status-badge">Kill switch: checking</span>
+            </div>
+            <form id="active-form">
+              <label>Controlled LAB target
+                <select id="active-target" name="targetId" required></select>
+              </label>
+              <label>READ authorization expectation
+                <select id="active-expectation" name="expectationId" required></select>
+              </label>
+              <label>Concrete request path
+                <input id="active-path" name="concretePath" required maxlength="2048" placeholder="/api/v1/users/42">
+              </label>
+              <label>Tested authorization value
+                <input id="active-tested-auth" name="testedAuthorizationValue" type="password" required maxlength="4096" autocomplete="off" placeholder="Bearer …">
+              </label>
+              <label>Known-ALLOW positive-control authorization value
+                <input id="active-positive-auth" name="positiveControlAuthorizationValue" type="password" required maxlength="4096" autocomplete="off" placeholder="Bearer …">
+              </label>
+              <label class="confirmation-row"><input name="confirmed" type="checkbox" value="true" required> I confirm this is an explicitly authorized local LAB target and I want ACRA to send the controlled four-request differential.</label>
+              <p class="form-note">Phase 7 permits loopback targets only, requires LAB + CONTROLLED_LAB, and supports GET/HEAD/OPTIONS READ validation. ACRA generates only a trailing-slash route representation. Both authorization values are transient and are not persisted or returned by the API.</p>
+              <button class="button" type="submit">Run Controlled Differential</button>
+            </form>
+            <div id="active-message" class="message" hidden></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">EMERGENCY CONTROL</span><h3>Kill switch</h3></div></div>
+            <p>Engaging the kill switch blocks controlled active execution before dispatch. Resetting it requires an explicit operator confirmation.</p>
+            <div class="active-control-actions">
+              <button id="active-kill-button" class="button secondary" type="button">Engage Kill Switch</button>
+              <button id="active-reset-button" class="button secondary" type="button">Reset Kill Switch</button>
+            </div>
+            <div class="boundary">
+              <strong>Safety path</strong>
+              <span>Every request still passes ACRA Core environment, consent, equivalence, hard-scope, budget, concurrency, rate-limit and kill-switch controls. This page does not provide an unrestricted HTTP sender.</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel context-matrix-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">EXECUTION HISTORY</span><h3>Controlled validation results</h3></div>
+            <span id="active-execution-count" class="counter">0</span>
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Endpoint</th><th>Baseline path</th><th>Variant</th><th>Expected</th><th>Observed</th><th>Differential</th><th>State</th><th>Core evidence</th><th>Created</th></tr></thead>
+              <tbody id="active-table-body"></tbody>
+            </table>
+            <div id="active-empty" class="empty-state">No controlled active executions have been recorded for this project.</div>
           </div>
         </article>
       </section>
