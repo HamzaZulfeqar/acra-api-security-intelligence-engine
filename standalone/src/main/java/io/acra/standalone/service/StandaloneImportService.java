@@ -1,6 +1,10 @@
 package io.acra.standalone.service;
 
 import io.acra.core.domain.http.HttpMethod;
+import io.acra.core.domain.http.HttpProtocol;
+import io.acra.core.domain.http.HttpRequest;
+import io.acra.core.domain.http.HttpTransaction;
+import io.acra.core.extraction.defaults.DefaultUriExtractor;
 import io.acra.core.imports.HarEndpointImporter;
 import io.acra.core.imports.ImportedEndpointObservation;
 import io.acra.core.imports.RawHttpRequestImporter;
@@ -30,6 +34,7 @@ public final class StandaloneImportService {
     private final HarEndpointImporter harImporter = new HarEndpointImporter();
     private final RawHttpRequestImporter rawHttpImporter = new RawHttpRequestImporter();
     private final RouteTemplateEngine routeTemplateEngine = new RouteTemplateEngine();
+    private final DefaultUriExtractor uriExtractor = new DefaultUriExtractor();
 
     public StandaloneImportService(LocalWorkspaceStore store) {
         this.store = java.util.Objects.requireNonNull(store);
@@ -111,7 +116,7 @@ public final class StandaloneImportService {
     private InventoryRecord toRecord(UUID projectId, UUID targetId, Seed seed) {
         String rawPath = seed.uri().getRawPath();
         if (rawPath == null || rawPath.isBlank()) rawPath = "/";
-        String canonical = routeTemplateEngine.parse(rawPath).canonical();
+        String canonical = canonicalPath(seed, rawPath);
         int port = effectivePort(seed.uri());
         String material = seed.method() + "|" + seed.uri().getScheme().toLowerCase(Locale.ROOT) + "|"
                 + seed.uri().getHost().toLowerCase(Locale.ROOT) + "|" + port + "|" + canonical;
@@ -135,6 +140,36 @@ public final class StandaloneImportService {
                 now,
                 now
         );
+    }
+
+    private String canonicalPath(Seed seed, String rawPath) {
+        if (seed.documented()) {
+            return routeTemplateEngine.parse(rawPath).canonical();
+        }
+
+        String rawTarget = rawPath;
+        String query = seed.uri().getRawQuery();
+        if (query != null && !query.isBlank()) rawTarget += "?" + query;
+
+        HttpRequest request = HttpRequest.of(
+                seed.method(),
+                seed.uri().getScheme(),
+                seed.uri().getHost(),
+                effectivePort(seed.uri()),
+                rawTarget,
+                List.of(),
+                new byte[0],
+                HttpProtocol.HTTP_1_1
+        );
+        HttpTransaction transaction = new HttpTransaction(
+                request,
+                null,
+                Instant.now(),
+                "import-canonicalization",
+                seed.sourceType(),
+                java.util.Map.of()
+        );
+        return uriExtractor.extract(transaction).canonicalPath();
     }
 
     private static URI uriForOpenApiPath(URI targetBase, String operationPath) {
