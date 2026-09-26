@@ -1,5 +1,37 @@
 # ROADMAP
 
+## Current gate — 2026-09-26
+
+**Sprint 10 Phase 1 — STANDALONE LOCALHOST WORKBENCH: VERIFIED.**
+
+Canonical Phase 1 evidence:
+- branch: `s10-standalone-workbench`
+- verified code-bearing head: `bbebeda5e7bc4e929b5c5c9b776504d0db059784`
+- standalone workflow run: `36207695944` — SUCCESS
+- retained Sprint 2 workflow run: `36207695914` — SUCCESS
+- retained Sprint 3 workflow run: `36207695811` — SUCCESS
+- Core + standalone Maven build: PASS
+- whole-repository Maven package with official Montoya dependency: PASS
+- standalone foundation suite: PASS
+- packaged `acra-standalone.jar` localhost startup: PASS
+- `/api/health` standalone/Core/Burp-independence contract: PASS
+- browser workbench resource serving: PASS
+- persistent project/target model: PASS
+- authorization-reference and HTTP(S)-target validation: PASS
+- CSRF localhost API protection: PASS
+
+Phase 1 changes the product dependency model: Burp is now an optional adapter for ACRA, not a prerequisite for
+standalone project and target onboarding.
+
+**Sprint 10 is NOT software-complete.** Next dependency-ordered work is import/API inventory, security-context
+management, projection of existing Core analysis workspaces, evidence review, candidate/coverage/reporting, and
+finally controlled active execution through the existing safety gates.
+
+The repaired Sprint 9 baseline remains closed and verified. Final repaired-baseline closure run:
+`36207092874` — SUCCESS at `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** validation lane.
+
 ## Current gate — 2026-09-24
 
 **Sprint 9 SOFTWARE COMPLETE.**
