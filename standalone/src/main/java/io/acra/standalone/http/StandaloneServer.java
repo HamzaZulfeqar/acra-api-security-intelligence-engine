@@ -12,6 +12,11 @@ import io.acra.standalone.model.HttpEvidenceSampleRecord;
 import io.acra.standalone.model.ImportSummary;
 import io.acra.standalone.model.InventoryRecord;
 import io.acra.standalone.model.ProjectRecord;
+import io.acra.standalone.model.CandidateReviewRecord;
+import io.acra.standalone.model.StandaloneCandidateRecord;
+import io.acra.standalone.model.StandaloneCoverageRecord;
+import io.acra.standalone.model.StandaloneCoverageSummary;
+import io.acra.standalone.model.StandaloneReportArtifact;
 import io.acra.standalone.model.AuthorizationExpectationRecord;
 import io.acra.standalone.model.PrincipalContextRecord;
 import io.acra.standalone.model.ResourceContextRecord;
@@ -22,6 +27,7 @@ import io.acra.standalone.service.SecurityContextService;
 import io.acra.standalone.service.StandaloneCoreProjectionService;
 import io.acra.standalone.service.StandaloneEvidenceService;
 import io.acra.standalone.service.StandaloneImportService;
+import io.acra.standalone.service.StandaloneReviewReportingService;
 import io.acra.standalone.store.LocalWorkspaceStore;
 
 import java.io.IOException;
@@ -45,6 +51,7 @@ public final class StandaloneServer implements AutoCloseable {
     private final SecurityContextService contextService;
     private final StandaloneCoreProjectionService projectionService;
     private final StandaloneEvidenceService evidenceService;
+    private final StandaloneReviewReportingService reviewReportingService;
     private final HttpServer server;
     private final String csrfToken;
 
@@ -54,6 +61,7 @@ public final class StandaloneServer implements AutoCloseable {
         this.contextService = new SecurityContextService(store);
         this.projectionService = new StandaloneCoreProjectionService(store);
         this.evidenceService = new StandaloneEvidenceService(store);
+        this.reviewReportingService = new StandaloneReviewReportingService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -92,6 +100,9 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/projection", this::handleProjection);
         server.createContext("/api/evidence", this::handleEvidence);
         server.createContext("/api/differential", this::handleDifferential);
+        server.createContext("/api/candidates", this::handleCandidates);
+        server.createContext("/api/coverage", this::handleCoverage);
+        server.createContext("/api/report", this::handleReport);
         server.createContext("/", this::handleStatic);
     }
 
@@ -339,6 +350,70 @@ public final class StandaloneServer implements AutoCloseable {
         }
     }
 
+    private void handleCandidates(HttpExchange exchange) throws IOException {
+        if ("GET".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "GET", false)) return;
+            try {
+                Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+                UUID projectId = UUID.fromString(required(query, "projectId"));
+                String json = reviewReportingService.candidates(projectId).stream()
+                        .map(StandaloneServer::candidateJson)
+                        .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+                HttpSupport.sendJson(exchange, 200, json);
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            }
+            return;
+        }
+
+        if ("POST".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "POST", true)) return;
+            try {
+                Map<String, String> form = HttpSupport.parseForm(HttpSupport.readBody(exchange, MAX_BODY_BYTES));
+                UUID projectId = UUID.fromString(required(form, "projectId"));
+                CandidateReviewRecord review = reviewReportingService.updateReview(
+                        projectId,
+                        required(form, "candidateId"),
+                        required(form, "state"),
+                        form.getOrDefault("note", ""));
+                HttpSupport.sendJson(exchange, 200, candidateReviewJson(review));
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            }
+            return;
+        }
+        methodNotAllowed(exchange);
+    }
+
+    private void handleCoverage(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "GET", false)) return;
+        try {
+            Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+            UUID projectId = UUID.fromString(required(query, "projectId"));
+            List<StandaloneCoverageRecord> rows = reviewReportingService.coverage(projectId);
+            StandaloneCoverageSummary summary = StandaloneCoverageSummary.from(rows);
+            String entries = rows.stream().map(StandaloneServer::coverageJson)
+                    .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+            HttpSupport.sendJson(exchange, 200,
+                    "{\"summary\":" + coverageSummaryJson(summary) + ",\"entries\":" + entries + "}");
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
+    }
+
+    private void handleReport(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "GET", false)) return;
+        try {
+            Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+            UUID projectId = UUID.fromString(required(query, "projectId"));
+            StandaloneReportArtifact artifact = reviewReportingService.report(
+                    projectId, query.getOrDefault("format", "JSON"));
+            HttpSupport.sendJson(exchange, 200, reportArtifactJson(artifact));
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
+    }
+
     private void handleStatic(HttpExchange exchange) throws IOException {
         if (!allowRequest(exchange, "GET", false)) return;
         String path = exchange.getRequestURI().getPath();
@@ -482,6 +557,54 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"expectedDecision\":" + HttpSupport.jsonString(record.expectedDecision().name()) +
                 ",\"rationale\":" + HttpSupport.jsonString(record.rationale()) +
                 ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String candidateJson(StandaloneCandidateRecord record) {
+        var candidate = record.candidate();
+        return "{\"candidateId\":" + HttpSupport.jsonString(candidate.candidateId()) +
+                ",\"coreState\":" + HttpSupport.jsonString(candidate.state().name()) +
+                ",\"reviewState\":" + HttpSupport.jsonString(record.review().state().name()) +
+                ",\"endpoint\":" + HttpSupport.jsonString(candidate.endpoint()) +
+                ",\"principalId\":" + HttpSupport.jsonString(candidate.principalId()) +
+                ",\"resourceId\":" + HttpSupport.jsonString(candidate.resourceId()) +
+                ",\"expectedDecision\":" + HttpSupport.jsonString(candidate.expectedDecision().name()) +
+                ",\"observedDecision\":" + HttpSupport.jsonString(candidate.observedDecision().name()) +
+                ",\"confidence\":" + HttpSupport.jsonString(candidate.confidence()) +
+                ",\"rationale\":" + HttpSupport.jsonString(candidate.rationale()) +
+                ",\"reviewNote\":" + HttpSupport.jsonString(record.review().note()) + "}";
+    }
+
+    private static String candidateReviewJson(CandidateReviewRecord record) {
+        return "{\"candidateId\":" + HttpSupport.jsonString(record.candidateId()) +
+                ",\"state\":" + HttpSupport.jsonString(record.state().name()) +
+                ",\"note\":" + HttpSupport.jsonString(record.note()) +
+                ",\"updatedAt\":" + HttpSupport.jsonString(record.updatedAt().toString()) + "}";
+    }
+
+    private static String coverageJson(StandaloneCoverageRecord record) {
+        return "{\"coverageId\":" + HttpSupport.jsonString(record.coverageId()) +
+                ",\"targetId\":" + HttpSupport.jsonString(record.targetId().toString()) +
+                ",\"method\":" + HttpSupport.jsonString(record.method()) +
+                ",\"endpoint\":" + HttpSupport.jsonString(record.endpoint()) +
+                ",\"disposition\":" + HttpSupport.jsonString(record.disposition().name()) +
+                ",\"expectationCount\":" + record.expectationCount() +
+                ",\"passiveObservationCount\":" + record.passiveObservationCount() +
+                ",\"reason\":" + HttpSupport.jsonString(record.reason()) + "}";
+    }
+
+    private static String coverageSummaryJson(StandaloneCoverageSummary record) {
+        return "{\"total\":" + record.total() +
+                ",\"tested\":" + record.tested() +
+                ",\"untested\":" + record.untested() +
+                ",\"partial\":" + record.partial() +
+                ",\"inconclusive\":" + record.inconclusive() +
+                ",\"notApplicable\":" + record.notApplicable() + "}";
+    }
+
+    private static String reportArtifactJson(StandaloneReportArtifact artifact) {
+        return "{\"format\":" + HttpSupport.jsonString(artifact.format()) +
+                ",\"sha256\":" + HttpSupport.jsonString(artifact.sha256()) +
+                ",\"content\":" + HttpSupport.jsonString(artifact.content()) + "}";
     }
 
     private static String evidenceArtifactJson(EvidenceArtifactRecord record) {
