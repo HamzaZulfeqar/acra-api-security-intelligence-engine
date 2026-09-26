@@ -2,13 +2,29 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 4 verified; Phase 5 active.  
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 5 verified; Phase 6 active.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `642601902941ff857dd26919d329c1c6bfc58c07`.  
-**Sprint 10 Phase 4 verification:** GitHub Actions run `36209482608` — SUCCESS.  
+**Verified code-bearing head:** `8a340bf38fdaa58934d252abf6cdb2b8a30f14c3`.  
+**Sprint 10 Phase 5 verification:** GitHub Actions run `36209983492` — SUCCESS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 5 verified capability
+
+- persistent project-isolated evidence archive after target-scope validation;
+- original SHA-256 + redacted local representation;
+- HAR HTTP samples and raw HTTP request sample lineage;
+- existing Core PassiveDifferentialComparator reused;
+- HTTP and authorization-context differential APIs/UI;
+- secret-bearing content withheld from localhost API/browser;
+- out-of-scope content never archived;
+- Phase 5 run `36209983492`: SUCCESS.
+
+### Sprint 10 Phase 5 explicit boundary
+
+Evidence review is passive/offline. It does not itself establish an authenticated active execution chain or a
+confirmed vulnerability. Phase 6 is active for review-only candidate triage, coverage and deterministic reporting.
 
 ### Sprint 10 Phase 4 verified capability
 
