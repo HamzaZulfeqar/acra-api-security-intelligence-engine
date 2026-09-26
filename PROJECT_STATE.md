@@ -8,7 +8,29 @@
 **Sprint 11 Phase 1:** VERIFIED, run `36214703722` — SUCCESS.  
 **Sprint 11 Phase 2:** VERIFIED, code-bearing head `d0213af7d9f7002ffe44f43a516f0f4d9e2f0bcc`, run `36215309359` — SUCCESS.  
 **Sprint 11 Phase 3:** VERIFIED, run `36215524311` — SUCCESS.  
-**Active dependency:** Phase 4 — SARIF 2.1.0 + optional Burp Issue Draft.
+**Sprint 11 Phase 4:** VERIFIED, head `9344b37dfab2c9404539041811bf51356dcb531a`, run `36247738000` — SUCCESS.  
+**Active dependency:** Phase 5 — Standalone Review & Reproduction Product Surface.
+
+### Sprint 11 Phase 4 verified capability
+
+- SARIF 2.1.0 export from persisted reproduction state;
+- deterministic SARIF rule IDs, fingerprints and SHA-256;
+- lifecycle-aware SARIF review/fail/pass semantics;
+- accepted-risk suppression and false-positive non-confirmation semantics;
+- Core Burp Issue Draft projection with separate severity/confidence mapping;
+- optional Montoya materialization adapter;
+- no automatic SiteMap/publication behavior;
+- canonical value serialization exposed through the existing Core serializer;
+- full retained Phase 1–3 stack + browser JS + packaged standalone startup: PASS.
+
+### Sprint 11 Phase 4 verification
+
+Run `36247738000` — SUCCESS at `9344b37dfab2c9404539041811bf51356dcb531a`.
+
+### Sprint 11 Phase 4 boundary
+
+Burp output remains a draft/materialization contract only. Real Burp desktop publication remains UNVERIFIED / DEFERRED.
+Phase 5 is active for the standalone review/reproduction product surface.
 
 ### Sprint 11 Phase 3 verified capability
 
