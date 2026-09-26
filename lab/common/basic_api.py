@@ -49,6 +49,12 @@ S9_PROFILES={
  'user-a':{'id':'user-a','display_name':'User A','tenant_id':'tenant-a','is_admin':False,'salary_band':'L2'},
  'user-b':{'id':'user-b','display_name':'User B','tenant_id':'tenant-b','is_admin':False,'salary_band':'L3'},
 }
+S10_DOCUMENTS={
+ 'resource-a':{'id':'resource-a','tenant_id':'tenant-a','owner_id':'user-a','title':'S10 owned by A'},
+ 'resource-b':{'id':'resource-b','tenant_id':'tenant-b','owner_id':'user-b','title':'S10 owned by B'},
+}
+S10_SHARE_LINKS={'share-a':'resource-a','share-b':'resource-b'}
+S10_SHARE_RE=re.compile(r'^/api/v1/s10/share/(?P<alias>share-[ab])$')
 def claim(token,name):
     try:
         part=token.split('.')[1]
@@ -142,6 +148,21 @@ class Handler(BaseHTTPRequestHandler):
             return self._json(200,{'area':'s8-admin','role':ident.get('role'),
                                    'route_form':'duplicate-separator' if equivalent else 'canonical',
                                    'authorization_mode':MODE})
+        m=S10_SHARE_RE.match(path)
+        if m:
+            ident=self._require_identity()
+            if not ident:return
+            alias=m.group('alias')
+            resource_id=S10_SHARE_LINKS.get(alias)
+            doc=S10_DOCUMENTS.get(resource_id)
+            if doc is None:return self._json(404,{'error':'reference_not_found'})
+            authorized=(ident.get('sub')==doc['owner_id'] or ident.get('role')=='admin')
+            if MODE=='secure' and not authorized:
+                return self._json(403,{'error':'access_denied','resolved_resource_id':resource_id,
+                                       'authorization_mode':MODE})
+            return self._json(200,{'alias':alias,'resolved_resource_id':resource_id,'resource':doc,
+                                   'authorization_mode':MODE})
+
         m=S9_PROFILE_RE.match(path)
         if m:
             ident=self._require_identity()
@@ -271,6 +292,32 @@ class Handler(BaseHTTPRequestHandler):
         return self._json(200,doc)
     def do_POST(self):
         parsed=urlparse(self.path)
+        if parsed.path=='/api/v1/s10/documents/batch-read':
+            ident=self._require_identity()
+            if not ident:return
+            length=min(int(self.headers.get('Content-Length','0') or '0'),65536)
+            raw=self.rfile.read(length) if length else b'{}'
+            try: body=json.loads(raw.decode())
+            except Exception:return self._json(400,{'error':'malformed_json'})
+            resource_ids=body.get('resource_ids') if isinstance(body,dict) else None
+            if not isinstance(resource_ids,list) or not resource_ids or len(resource_ids)>10:
+                return self._json(400,{'error':'invalid_batch'})
+            if any(not isinstance(value,str) or value not in S10_DOCUMENTS for value in resource_ids):
+                return self._json(400,{'error':'unknown_batch_resource'})
+            first=S10_DOCUMENTS[resource_ids[0]]
+            vulnerable_batch_allow=(ident.get('sub')==first['owner_id'] or ident.get('role')=='admin')
+            items=[]
+            for resource_id in resource_ids:
+                doc=S10_DOCUMENTS[resource_id]
+                per_item_allow=(ident.get('sub')==doc['owner_id'] or ident.get('role')=='admin')
+                allowed=vulnerable_batch_allow if MODE=='vulnerable' else per_item_allow
+                items.append({'resource_id':resource_id,
+                              'decision':'ALLOW' if allowed else 'DENY',
+                              'owner_id':doc['owner_id'] if allowed else None,
+                              'tenant_id':doc['tenant_id'] if allowed else None})
+            return self._json(200,{'batch_id':'s10-batch-read','items':items,
+                                   'authorization_mode':MODE,'persisted':False})
+
         if parsed.path=='/api/v1/s4/echo':
             ident=self._require_identity()
             if not ident:return
