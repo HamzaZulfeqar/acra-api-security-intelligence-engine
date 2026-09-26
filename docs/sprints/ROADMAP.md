@@ -2,9 +2,20 @@
 
 ## Current gate — 2026-09-26
 
-**Sprint 10 Phase 2 — IMPORT + CANONICAL API INVENTORY: VERIFIED.**
+**Sprint 10 Phase 3 — SECURITY CONTEXT MANAGER: VERIFIED; PHASE 4 ACTIVE.**
 
-Canonical Phase 2 evidence:
+Canonical Phase 3 evidence:
+- branch: `s10-standalone-workbench`
+- verified code-bearing head: `1db56953725c358d6c60a3bb7abcb1e78c02ba8a`
+- standalone workflow run: `36209126454` — SUCCESS
+- typed context persistence: PASS
+- referential validation: PASS
+- secret-bearing metadata rejection: PASS
+- expected-authorization matrix: PASS
+- localhost context API: PASS
+- packaged localhost application: PASS
+
+Historical Phase 2 evidence:
 - branch: `s10-standalone-workbench`
 - verified code-bearing head: `32ed3b6843e653c4bf3e3d46a9b427e34fe32832`
 - standalone workflow run: `36208517465` — SUCCESS
@@ -37,9 +48,7 @@ Historical Phase 1 evidence:
 Phase 1 changes the product dependency model: Burp is now an optional adapter for ACRA, not a prerequisite for
 standalone project and target onboarding.
 
-**Sprint 10 is NOT software-complete.** Next dependency-ordered work is security-context management, projection
-of existing Core authorization/workflow/routing/property workspaces, evidence review, candidate/coverage/reporting,
-and finally controlled active execution through the existing safety gates.
+**Sprint 10 is NOT software-complete.** Phase 4 is active: project the existing Core authorization/workflow/routing/property workspaces into standalone APIs without duplicating analyzer logic.
 
 The repaired Sprint 9 baseline remains closed and verified. Final repaired-baseline closure run:
 `36207092874` — SUCCESS at `8f031571dd63cf83ee46d439d40edafd83afea38`.
