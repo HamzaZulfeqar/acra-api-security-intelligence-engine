@@ -30,6 +30,7 @@ public final class StandaloneImportService {
     private static final int MAX_IMPORT_CHARS = 2 * 1024 * 1024;
 
     private final LocalWorkspaceStore store;
+    private final StandaloneEvidenceService evidenceService;
     private final OpenApiImporter openApiImporter = new OpenApiImporter();
     private final HarEndpointImporter harImporter = new HarEndpointImporter();
     private final RawHttpRequestImporter rawHttpImporter = new RawHttpRequestImporter();
@@ -38,6 +39,7 @@ public final class StandaloneImportService {
 
     public StandaloneImportService(LocalWorkspaceStore store) {
         this.store = java.util.Objects.requireNonNull(store);
+        this.evidenceService = new StandaloneEvidenceService(store);
     }
 
     public ImportSummary importText(
@@ -58,6 +60,9 @@ public final class StandaloneImportService {
             case "RAW_HTTP" -> importRawHttp(target, content, sourceReference);
             default -> throw new IllegalArgumentException("unsupported import type");
         };
+
+        // Scope parsing/validation above must succeed before evidence is archived.
+        evidenceService.captureImport(projectId, targetId, type, sourceReference, content);
 
         Set<String> uniqueIds = new HashSet<>();
         for (Seed seed : seeds) {
