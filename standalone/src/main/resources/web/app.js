@@ -7,6 +7,7 @@ const state={
   projection:null,
   evidence:{artifacts:[],samples:[]},
   candidates:[],
+  findings:{eligibleExecutions:[],findings:[]},
   coverage:{summary:{total:0,tested:0,untested:0,partial:0,inconclusive:0,notApplicable:0},entries:[]},
   active:{killSwitchEngaged:false,executions:[]},
   activeProjectId:""
@@ -26,6 +27,7 @@ const viewMeta={
   routing:["Routing","URI representation and authorization-boundary analysis."],
   evidence:["Evidence","Traceable requests, responses, observations and provenance."],
   candidates:["Candidates","Review-only security candidates and analyst decisions."],
+  findings:["Reviewed Findings","Human-reviewed findings admitted only from evidence-backed controlled executions."],
   coverage:["Coverage","Tested, untested and inconclusive assessment coverage."],
   reports:["Reports","Deterministic evidence-backed security reporting."]
 };
@@ -76,6 +78,7 @@ async function loadProjects(preferId){
     state.projection=null;
     state.evidence={artifacts:[],samples:[]};
     state.candidates=[];
+    state.findings={eligibleExecutions:[],findings:[]};
     state.coverage={summary:{total:0,tested:0,untested:0,partial:0,inconclusive:0,notApplicable:0},entries:[]};
     state.active={killSwitchEngaged:false,executions:[]};
     renderTargets();
@@ -85,6 +88,7 @@ async function loadProjects(preferId){
     renderProjection();
     renderEvidence();
     renderCandidates();
+    renderFindings();
     renderCoverage();
     renderActive();
     syncActiveSelectors();
@@ -109,6 +113,7 @@ async function loadProjects(preferId){
   await loadEvidence();
   await loadReviewProduct();
   await loadActive();
+  await loadFindings();
 }
 
 async function loadTargets(){
@@ -179,6 +184,16 @@ async function loadActive(){
   syncActiveSelectors();
 }
 
+async function loadFindings(){
+  if(!state.activeProjectId){
+    state.findings={eligibleExecutions:[],findings:[]};
+    renderFindings();
+    return;
+  }
+  state.findings=await api("/api/findings?projectId="+encodeURIComponent(state.activeProjectId));
+  renderFindings(document.querySelector("#finding-search")?document.querySelector("#finding-search").value:"");
+}
+
 async function loadEvidence(){
   if(!state.activeProjectId){
     state.evidence={artifacts:[],samples:[]};
@@ -199,6 +214,231 @@ async function loadContext(){
   renderContext(document.querySelector("#context-search")?document.querySelector("#context-search").value:"");
   syncContextSelectors();
   syncActiveSelectors();
+}
+
+function findingTransitionOptions(stateName){
+  if(stateName==="NEEDS_REVIEW") return ["VALIDATED","FALSE_POSITIVE"];
+  if(stateName==="VALIDATED") return ["CONFIRMED","FALSE_POSITIVE"];
+  if(stateName==="CONFIRMED") return ["ACCEPTED_RISK","FALSE_POSITIVE"];
+  return [];
+}
+
+function renderFindings(filterText){
+  const data=state.findings||{eligibleExecutions:[],findings:[]};
+  const eligibleHost=document.querySelector("#finding-eligible-list");
+  const findingHost=document.querySelector("#finding-list");
+  const empty=document.querySelector("#finding-empty");
+  if(!eligibleHost||!findingHost||!empty) return;
+
+  const openedRuns=new Set((data.findings||[]).map(function(item){return item.sourceRunId;}));
+  const eligible=(data.eligibleExecutions||[]).filter(function(item){return !openedRuns.has(item.runId);});
+
+  document.querySelector("#finding-eligible-count").textContent=eligible.length;
+  document.querySelector("#finding-needs-review-count").textContent=(data.findings||[]).filter(function(item){return item.state==="NEEDS_REVIEW";}).length;
+  document.querySelector("#finding-validated-count").textContent=(data.findings||[]).filter(function(item){return item.state==="VALIDATED";}).length;
+  document.querySelector("#finding-confirmed-count").textContent=(data.findings||[]).filter(function(item){return item.state==="CONFIRMED";}).length;
+  document.querySelector("#finding-terminal-count").textContent=(data.findings||[]).filter(function(item){return Boolean(item.terminal);}).length;
+
+  eligibleHost.innerHTML="";
+  if(!eligible.length){
+    const none=document.createElement("div");
+    none.className="empty-state";
+    none.textContent="No unopened evidence-backed DENY→ALLOW controlled executions are eligible.";
+    eligibleHost.append(none);
+  }else{
+    eligible.forEach(function(run){
+      const card=document.createElement("div");
+      card.className="candidate-card finding-eligible-card";
+      const top=document.createElement("div");
+      top.className="candidate-card-top";
+      const title=document.createElement("strong");
+      title.textContent=run.endpoint;
+      const badge=document.createElement("span");
+      badge.className="status-badge";
+      badge.textContent=run.differentialClassification;
+      top.append(title,badge);
+
+      const meta=document.createElement("div");
+      meta.className="candidate-meta";
+      [
+        "Run: "+run.runId,
+        "Expected: "+run.expectedDecision,
+        "Observed: "+run.observedDecision,
+        "Core evidence objects: "+run.coreEvidenceObjectCount
+      ].forEach(function(value){
+        const span=document.createElement("span");
+        span.textContent=value;
+        meta.append(span);
+      });
+
+      const button=document.createElement("button");
+      button.className="button";
+      button.type="button";
+      button.textContent="Open Finding Review";
+      button.addEventListener("click",function(){openFindingFromExecution(run.runId);});
+      card.append(top,meta,button);
+      eligibleHost.append(card);
+    });
+  }
+
+  const filter=(filterText||"").trim().toLowerCase();
+  const findings=(data.findings||[]).filter(function(item){
+    if(!filter) return true;
+    return [
+      item.findingId,item.candidateId,item.endpoint,item.principalId,item.resourceId,
+      item.state,item.severity,item.confidence,item.expectedDecision,item.observedDecision
+    ].join(" ").toLowerCase().includes(filter);
+  });
+
+  findingHost.innerHTML="";
+  findings.forEach(function(item){
+    const card=document.createElement("article");
+    card.className="finding-card";
+
+    const header=document.createElement("div");
+    header.className="finding-card-header";
+    const titleWrap=document.createElement("div");
+    const eyebrow=document.createElement("span");
+    eyebrow.className="eyebrow";
+    eyebrow.textContent=item.findingId;
+    const title=document.createElement("h3");
+    title.textContent=item.endpoint;
+    titleWrap.append(eyebrow,title);
+    const stateBadge=document.createElement("span");
+    stateBadge.className="status-badge";
+    stateBadge.textContent=item.state;
+    header.append(titleWrap,stateBadge);
+
+    const meta=document.createElement("div");
+    meta.className="finding-meta";
+    [
+      ["Principal",item.principalId||"—"],
+      ["Resource",item.resourceId||"—"],
+      ["Severity",item.severity],
+      ["Confidence",item.confidence],
+      ["Decision",item.expectedDecision+" → "+item.observedDecision],
+      ["Source run",item.sourceRunId]
+    ].forEach(function(pair){
+      const box=document.createElement("div");
+      const label=document.createElement("span");
+      label.textContent=pair[0];
+      const value=document.createElement("strong");
+      value.textContent=pair[1];
+      box.append(label,value);
+      meta.append(box);
+    });
+
+    const evidence=document.createElement("div");
+    evidence.className="finding-evidence";
+    const evidenceTitle=document.createElement("strong");
+    evidenceTitle.textContent="Supporting evidence";
+    const evidenceText=document.createElement("code");
+    evidenceText.textContent=(item.supportingEvidenceIds||[]).join(", ")||"—";
+    evidence.append(evidenceTitle,evidenceText);
+
+    const history=document.createElement("div");
+    history.className="finding-history";
+    const historyTitle=document.createElement("strong");
+    historyTitle.textContent="Review history";
+    history.append(historyTitle);
+    if(!(item.history||[]).length){
+      const noHistory=document.createElement("span");
+      noHistory.textContent="No review transitions yet.";
+      history.append(noHistory);
+    }else{
+      (item.history||[]).forEach(function(entry){
+        const row=document.createElement("div");
+        row.className="finding-history-row";
+        const transition=document.createElement("strong");
+        transition.textContent=entry.fromState+" → "+entry.toState;
+        const detail=document.createElement("span");
+        detail.textContent=entry.reviewerReference+" · "+entry.reason+" · "+entry.occurredAt;
+        row.append(transition,detail);
+        history.append(row);
+      });
+    }
+
+    card.append(header,meta,evidence,history);
+
+    const options=findingTransitionOptions(item.state);
+    if(options.length){
+      const form=document.createElement("form");
+      form.className="finding-transition-form";
+      form.dataset.findingId=item.findingId;
+
+      const stateLabel=document.createElement("label");
+      stateLabel.textContent="Next state";
+      const stateSelect=document.createElement("select");
+      stateSelect.name="targetState";
+      options.forEach(function(value){
+        const option=document.createElement("option");
+        option.value=value;
+        option.textContent=value;
+        stateSelect.append(option);
+      });
+      stateLabel.append(stateSelect);
+
+      const reviewerLabel=document.createElement("label");
+      reviewerLabel.textContent="Reviewer reference";
+      const reviewer=document.createElement("input");
+      reviewer.name="reviewerReference";
+      reviewer.required=true;
+      reviewer.maxLength=180;
+      reviewer.placeholder="reviewer-a / ticket reference";
+      reviewerLabel.append(reviewer);
+
+      const evidenceLabel=document.createElement("label");
+      evidenceLabel.textContent="New review evidence";
+      const evidenceSelect=document.createElement("select");
+      evidenceSelect.name="evidenceId";
+      evidenceSelect.required=true;
+      const sourceRun=(state.active.executions||[]).find(function(run){return run.runId===item.sourceRunId;});
+      const sourceTarget=sourceRun?sourceRun.targetId:"";
+      const artifacts=(state.evidence.artifacts||[]).filter(function(artifact){
+        return !sourceTarget||artifact.targetId===sourceTarget;
+      });
+      if(!artifacts.length){
+        const option=document.createElement("option");
+        option.value="";
+        option.textContent="No same-target evidence available";
+        evidenceSelect.append(option);
+        evidenceSelect.disabled=true;
+      }else{
+        artifacts.forEach(function(artifact){
+          const option=document.createElement("option");
+          option.value=artifact.evidenceId;
+          option.textContent=artifact.evidenceType+" · "+(artifact.sourceReference||artifact.evidenceId);
+          evidenceSelect.append(option);
+        });
+      }
+      evidenceLabel.append(evidenceSelect);
+
+      const reasonLabel=document.createElement("label");
+      reasonLabel.className="finding-reason";
+      reasonLabel.textContent="Review reason";
+      const reason=document.createElement("textarea");
+      reason.name="reason";
+      reason.required=true;
+      reason.maxLength=1000;
+      reason.rows=3;
+      reason.placeholder="Record the evidence-based reason for this lifecycle transition.";
+      reasonLabel.append(reason);
+
+      const submit=document.createElement("button");
+      submit.className="button";
+      submit.type="submit";
+      submit.textContent="Apply Review Transition";
+      if(!artifacts.length) submit.disabled=true;
+
+      form.append(stateLabel,reviewerLabel,evidenceLabel,reasonLabel,submit);
+      form.addEventListener("submit",transitionReviewedFinding);
+      card.append(form);
+    }
+
+    findingHost.append(card);
+  });
+
+  empty.hidden=findings.length>0;
 }
 
 function renderTargets(){
@@ -835,6 +1075,7 @@ function wireEvents(){
     await loadEvidence();
     await loadReviewProduct();
     await loadActive();
+    await loadFindings();
   });
 
   document.querySelector("#project-form").addEventListener("submit",createProject);
@@ -860,6 +1101,9 @@ function wireEvents(){
   });
   document.querySelector("#candidate-search").addEventListener("input",function(event){
     renderCandidates(event.target.value);
+  });
+  document.querySelector("#finding-search").addEventListener("input",function(event){
+    renderFindings(event.target.value);
   });
   document.querySelector("#report-form").addEventListener("submit",generateReport);
   document.querySelector("#http-diff-form").addEventListener("submit",compareHttpEvidence);
@@ -892,7 +1136,7 @@ function openView(name){
   document.querySelector("#view-title").textContent=meta[0];
   document.querySelector("#view-subtitle").textContent=meta[1];
 
-  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"||name==="authorization"||name==="active"||name==="evidence"||name==="candidates"||name==="coverage"||name==="reports"){
+  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"||name==="authorization"||name==="active"||name==="evidence"||name==="candidates"||name==="findings"||name==="coverage"||name==="reports"){
     document.querySelector("#"+name+"-view").classList.add("active");
   }else{
     document.querySelector("#placeholder-title").textContent=meta[0];
@@ -949,6 +1193,7 @@ async function importEvidence(event){
     await loadInventory();
     await loadEvidence();
     await loadReviewProduct();
+    await loadFindings();
   }catch(error){
     showMessage("#import-message",error.message,false);
   }
@@ -1041,6 +1286,45 @@ async function saveCandidateReview(event){
   }
 }
 
+async function openFindingFromExecution(runId){
+  if(!state.activeProjectId) return;
+  const body=new URLSearchParams();
+  body.set("projectId",state.activeProjectId);
+  body.set("action","OPEN");
+  body.set("runId",runId);
+  try{
+    await api("/api/findings",{
+      method:"POST",
+      headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body:body
+    });
+    await loadFindings();
+    openView("findings");
+  }catch(error){
+    window.alert("Finding intake failed: "+error.message);
+  }
+}
+
+async function transitionReviewedFinding(event){
+  event.preventDefault();
+  const form=event.currentTarget;
+  const body=new URLSearchParams(new FormData(form));
+  body.set("projectId",state.activeProjectId);
+  body.set("action","TRANSITION");
+  body.set("findingId",form.dataset.findingId);
+  try{
+    await api("/api/findings",{
+      method:"POST",
+      headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body:body
+    });
+    form.reset();
+    await loadFindings();
+  }catch(error){
+    window.alert("Finding review transition failed: "+error.message);
+  }
+}
+
 async function generateReport(event){
   event.preventDefault();
   const form=new FormData(event.currentTarget);
@@ -1082,6 +1366,7 @@ async function runActiveValidation(event){
     await loadActive();
     await loadEvidence();
     await loadReviewProduct();
+    await loadFindings();
   }catch(error){
     form.elements.testedAuthorizationValue.value="";
     form.elements.positiveControlAuthorizationValue.value="";
