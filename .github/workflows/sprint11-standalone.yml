@@ -1,0 +1,73 @@
+name: Sprint 11 Standalone Finding Lifecycle
+
+on:
+  push:
+    branches:
+      - s11-standalone-finding-lifecycle
+    paths:
+      - 'core/**'
+      - 'standalone/**'
+      - 'extension/**'
+      - 'pom.xml'
+      - '.github/workflows/sprint11-standalone.yml'
+      - 'docs/sprints/sprint-11.md'
+      - 'docs/sprints/sprint-11-standalone-execution-schedule.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sprint11:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build full ACRA reactor
+        run: mvn --batch-mode --no-transfer-progress clean package
+
+      - name: Run Sprint 11 finding lifecycle foundation
+        run: |
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint11.Sprint11FindingLifecycleFoundationTestSuite
+
+      - name: Validate standalone browser JavaScript
+        run: node --check standalone/src/main/resources/web/app.js
+
+      - name: Verify packaged standalone still starts
+        run: |
+          HOME_DIR="$RUNNER_TEMP/acra-s11-standalone-home"
+          java -jar standalone/target/acra-standalone.jar \
+            --port=18811 \
+            --home="$HOME_DIR" \
+            --no-browser > "$RUNNER_TEMP/acra-s11-standalone.log" 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl --fail --silent http://127.0.0.1:18811/api/health > "$RUNNER_TEMP/acra-s11-health.json"; then
+              break
+            fi
+            sleep 0.2
+          done
+          grep -q '"status":"UP"' "$RUNNER_TEMP/acra-s11-health.json"
+          grep -q '"burpRequired":false' "$RUNNER_TEMP/acra-s11-health.json"
+          kill "$PID"
+          wait "$PID" 2>/dev/null || true
+          trap - EXIT
+
+      - name: Upload Sprint 11 verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-s11-finding-lifecycle
+          path: |
+            ${{ runner.temp }}/acra-s11-standalone.log
+            ${{ runner.temp }}/acra-s11-health.json
+          if-no-files-found: warn
