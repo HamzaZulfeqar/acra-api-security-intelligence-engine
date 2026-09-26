@@ -2,13 +2,30 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 6 verified; Phase 7 active.  
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 7 verified; Phase 8 active.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `84c09f2e60c94093fc653d8a5a17873c45a25d5d`.  
-**Sprint 10 Phase 6 verification:** GitHub Actions run `36210452986` — SUCCESS.  
+**Verified code-bearing head:** `3125f71922e5c617bff62f35ac0b11d9f535fca7`.  
+**Sprint 10 Phase 7 verification:** GitHub Actions run `36212999470` — SUCCESS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 7 verified capability
+
+- loopback-only LAB + CONTROLLED_LAB active execution;
+- safe READ route-equivalence differential through the existing ACRA Core active engine;
+- explicit user confirmation and independent known-ALLOW positive control;
+- hard scope / environment / consent / equivalence / budget / concurrency / rate / kill-switch gates retained;
+- transient credentials excluded from persistence/API responses;
+- Core four-way differential + evidence chain;
+- redacted active-execution summary archive;
+- functional Active Validation GUI/API;
+- Phase 7 workflow `36212999470`: SUCCESS.
+
+### Sprint 10 Phase 7 explicit boundary
+
+This does not create a general network scanner. Phase 7 standalone execution remains loopback-only and read-only.
+Phase 8 is active for the optional Burp bridge and packaging/startup hardening.
 
 ### Sprint 10 Phase 6 verified capability
 
