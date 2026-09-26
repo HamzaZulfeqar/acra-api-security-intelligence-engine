@@ -229,7 +229,13 @@ function renderTargets(){
     const meta=document.createElement("div");
     meta.className="target-meta";
 
-    [target.environment,target.testingMode,target.authorizationReference].forEach(function(value){
+    [
+      "Project ID: "+state.activeProjectId,
+      "Target ID: "+target.id,
+      target.environment,
+      target.testingMode,
+      target.authorizationReference
+    ].forEach(function(value){
       const badge=document.createElement("span");
       badge.textContent=value;
       meta.append(badge);
