@@ -32,7 +32,7 @@ public record TenantContextRecord(
 
     private static String normalize(String value, int max) {
         String normalized = value == null ? "" : value.strip();
-        if (normalized.length() > max) throw new IllegalArgumentException(field + " exceeds " + max + " characters");
+        if (normalized.length() > max) throw new IllegalArgumentException("value exceeds " + max + " characters");
         return normalized;
     }
 }
