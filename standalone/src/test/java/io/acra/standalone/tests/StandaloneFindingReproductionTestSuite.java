@@ -118,6 +118,19 @@ public final class StandaloneFindingReproductionTestSuite {
             check(initialPackage.reviewTrail().isEmpty(),
                     "package does not invent review history");
 
+            var initialSarif = reproduction.sarif(project.id(), opened.finding().findingId());
+            var initialDraft = reproduction.burpDraft(project.id(), opened.finding().findingId());
+            check(initialSarif.content().contains("\"version\":\"2.1.0\""),
+                    "SARIF 2.1.0 version is emitted");
+            check(initialSarif.content().contains("\"acraLifecycleState\":\"NEEDS_REVIEW\""),
+                    "SARIF preserves needs-review lifecycle state");
+            check(initialSarif.content().contains("\"kind\":\"review\""),
+                    "needs-review SARIF result is a review result");
+            check(!initialDraft.publicationEligible(),
+                    "needs-review Burp draft is not publication eligible");
+            check(initialDraft.confidence().name().equals("TENTATIVE"),
+                    "unconfirmed Burp draft remains tentative");
+
             var validationEvidence = evidence.captureExecutionSummary(
                     project.id(), target.id(), "review-validation-repro", "Validation artifact");
             var validated = lifecycle.transition(
@@ -192,11 +205,54 @@ public final class StandaloneFindingReproductionTestSuite {
                             && !confirmedJson.content().contains("admin-s11"),
                     "canonical JSON contains no transient fixture credential material");
 
+            var confirmedSarifA = reproduction.sarif(project.id(), confirmed.finding().findingId());
+            var confirmedSarifB = reproduction.sarif(project.id(), confirmed.finding().findingId());
+            var confirmedDraftA = reproduction.burpDraft(project.id(), confirmed.finding().findingId());
+            var confirmedDraftB = reproduction.burpDraft(project.id(), confirmed.finding().findingId());
+
+            check(confirmedSarifA.content().contains("\"acraLifecycleState\":\"CONFIRMED\""),
+                    "confirmed SARIF preserves lifecycle state");
+            check(confirmedSarifA.content().contains("\"confirmedFinding\":true"),
+                    "confirmed SARIF preserves explicit confirmation");
+            check(confirmedSarifA.content().contains("\"kind\":\"fail\""),
+                    "confirmed SARIF result is a fail result");
+            check(confirmedSarifA.content().equals(confirmedSarifB.content())
+                            && confirmedSarifA.sha256().equals(confirmedSarifB.sha256()),
+                    "unchanged confirmed state yields deterministic SARIF");
+            check(!confirmedSarifA.content().contains("reviewer-alpha-hidden")
+                            && !confirmedSarifA.content().contains("reviewer-beta-hidden")
+                            && !confirmedSarifA.content().contains("Unique validation reason")
+                            && !confirmedSarifA.content().contains("Independent confirmation reason"),
+                    "SARIF excludes reviewer identity and review reasons");
+
+            check(confirmedDraftA.publicationEligible(),
+                    "explicit confirmed state makes Burp draft publication eligible");
+            check(confirmedDraftA.severity().name().equals("LOW"),
+                    "standalone LOW severity maps to Burp LOW draft severity");
+            check(confirmedDraftA.confidence().name().equals("CERTAIN"),
+                    "confirmed HIGH confidence maps to CERTAIN draft confidence");
+            check(confirmedDraftA.draftId().equals(confirmedDraftB.draftId()),
+                    "Burp draft identity is deterministic");
+            check(confirmedDraftA.limitations().stream()
+                            .anyMatch(value -> value.contains("does not publish")),
+                    "Burp draft explicitly states non-publication boundary");
+            String draftMaterial = new io.acra.core.serialization.DomainSerializer().serialize(confirmedDraftA);
+            check(!draftMaterial.contains("reviewer-alpha-hidden")
+                            && !draftMaterial.contains("reviewer-beta-hidden")
+                            && !draftMaterial.contains("Authorization:")
+                            && !draftMaterial.contains("Bearer "),
+                    "Burp draft excludes reviewer and credential material");
+
             var reopened = new StandaloneFindingReproductionService(new LocalWorkspaceStore(temp))
                     .json(project.id(), confirmed.finding().findingId());
             check(reopened.content().equals(confirmedJson.content())
                             && reopened.sha256().equals(confirmedJson.sha256()),
                     "restart produces identical deterministic reproduction JSON");
+            var reopenedSarif = new StandaloneFindingReproductionService(new LocalWorkspaceStore(temp))
+                    .sarif(project.id(), confirmed.finding().findingId());
+            check(reopenedSarif.content().equals(confirmedSarifA.content())
+                            && reopenedSarif.sha256().equals(confirmedSarifA.sha256()),
+                    "restart produces identical deterministic SARIF");
 
             System.out.println("SPRINT11_STANDALONE_FINDING_REPRODUCTION PASS assertions=" + assertions);
         } finally {
