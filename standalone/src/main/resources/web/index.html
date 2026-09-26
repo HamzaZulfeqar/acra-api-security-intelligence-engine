@@ -24,6 +24,7 @@
         <button class="nav-item" data-view="routing">Routing</button>
         <button class="nav-item" data-view="evidence">Evidence</button>
         <button class="nav-item" data-view="candidates">Candidates</button>
+        <button class="nav-item" data-view="findings">Reviewed Findings</button>
         <button class="nav-item" data-view="coverage">Coverage</button>
         <button class="nav-item" data-view="reports">Reports</button>
       </nav>
@@ -406,6 +407,53 @@
           </div>
           <div class="boundary"><strong>No automatic confirmation</strong><span>Until authenticated execution provenance exists, Core candidate state remains INCONCLUSIVE. Analyst review state never overrides that Core evidence boundary.</span></div>
           <div id="candidate-list" class="candidate-list"></div>
+        </article>
+      </section>
+
+      <section id="findings-view" class="view">
+        <div class="context-summary">
+          <article><span>Eligible executions</span><strong id="finding-eligible-count">0</strong></article>
+          <article><span>Needs review</span><strong id="finding-needs-review-count">0</strong></article>
+          <article><span>Validated</span><strong id="finding-validated-count">0</strong></article>
+          <article><span>Confirmed</span><strong id="finding-confirmed-count">0</strong></article>
+          <article><span>Terminal</span><strong id="finding-terminal-count">0</strong></article>
+        </div>
+
+        <div class="grid two finding-intake-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">SPRINT 11 INTAKE</span><h3>Evidence-backed executions</h3></div>
+              <span class="status-badge">Human review required</span>
+            </div>
+            <div class="boundary">
+              <strong>Strict admission rule</strong>
+              <span>Only completed controlled executions with expected DENY, observed ALLOW, UNEXPECTED_CHANGE and persisted ACTIVE_EXECUTION evidence can enter the finding lifecycle.</span>
+            </div>
+            <div id="finding-eligible-list" class="candidate-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">LIFECYCLE CONTRACT</span><h3>Review states</h3></div></div>
+            <div class="readiness-grid">
+              <div><strong>NEEDS_REVIEW → VALIDATED</strong><span>Reviewer validates execution lineage, policy context and supporting evidence.</span></div>
+              <div><strong>VALIDATED → CONFIRMED</strong><span>Independent confirmation requires new evidence. Direct candidate-to-confirmed promotion is rejected.</span></div>
+              <div><strong>FALSE_POSITIVE</strong><span>Explicit terminal disposition when reviewed evidence disproves the candidate.</span></div>
+              <div><strong>ACCEPTED_RISK</strong><span>Terminal risk disposition available only after CONFIRMED.</span></div>
+            </div>
+            <div class="boundary">
+              <strong>Independent prioritization</strong>
+              <span>Severity and confidence are preserved independently of lifecycle state. Review actions do not rewrite source evidence or automatically increase severity.</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel finding-review-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">REVIEWED FINDINGS</span><h3>Finding lifecycle workspace</h3></div>
+            <input id="finding-search" class="search-input" placeholder="Filter finding, endpoint, principal, state, severity or confidence">
+          </div>
+          <div id="finding-list" class="finding-list"></div>
+          <div id="finding-empty" class="empty-state">No reviewed finding records exist. Run an eligible controlled validation and explicitly open it for review.</div>
         </article>
       </section>
 
