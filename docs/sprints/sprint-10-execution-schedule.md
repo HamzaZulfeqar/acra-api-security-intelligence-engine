@@ -115,9 +115,7 @@ Deliverables:
 Gate:
 - secure/vulnerable localhost fixtures + kill-switch/scope regressions.
 
-## Active
-
-### Phase 8 — Burp Bridge + Packaging Hardening
+### Phase 8 — Burp Bridge + Packaging Hardening — VERIFIED
 Dependencies:
 - standalone workflows proven independently.
 
@@ -131,6 +129,8 @@ Deliverables:
 Gate:
 - headless adapter regressions; real Burp desktop remains separately labeled unless actually validated.
 
+## Active
+
 ### Final Sprint 10 Closure
 Required:
 - full dependency-ordered regression;
@@ -141,4 +141,4 @@ Required:
 
 ## Current next action
 
-Execute **Phase 8 — Burp Bridge + Packaging Hardening** only. Final Sprint 10 closure does not open until the Phase 8 verification gate is green.
+Execute **Final Sprint 10 Closure** only. No Sprint 11 work opens until the closure checkpoint and full regression are green.
