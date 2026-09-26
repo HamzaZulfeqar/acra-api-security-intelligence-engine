@@ -92,6 +92,11 @@ jobs:
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneFindingProductSurfaceTestSuite
 
+      - name: Verify Sprint 11 authorization research ground truth
+        run: |
+          python3 -m json.tool lab/ground-truth/GT-S11-AUTHORIZATION-RESEARCH.json >/dev/null
+          python3 scripts/verify-sprint11-ground-truth.py
+
       - name: Validate standalone browser JavaScript
         run: node --check standalone/src/main/resources/web/app.js
 
@@ -124,4 +129,5 @@ jobs:
           path: |
             ${{ runner.temp }}/acra-s11-standalone.log
             ${{ runner.temp }}/acra-s11-health.json
+            build/s11-ground-truth/verification.json
           if-no-files-found: warn
