@@ -91,27 +91,50 @@ Canonical Phase 3 verification:
 - retained import/inventory and standalone foundation suites — PASS;
 - packaged localhost application verification — PASS.
 
+## Phase 4 — Existing Core Authorization Engines → Standalone — VERIFIED
+
+Verified capability:
+- standalone context matrix projected into existing Core `AuthorizationPolicySnapshot`;
+- existing `EffectiveAuthorizationResolver` used for policy resolution;
+- configured binary ALLOW / DENY expectations resolve through Core policy rules;
+- CONDITIONAL / UNKNOWN expectations remain non-binary and are not silently converted to grants;
+- existing BOLA and BFLA evaluators invoked from the standalone projection;
+- BOLA/BFLA correctly remain INCONCLUSIVE without authenticated observation/execution/evidence provenance;
+- existing S6 authorization workspace receives the projected policy;
+- existing S7 workflow, S8 routing and S9 property workspaces are projected into localhost readiness state;
+- functional localhost Authorization workspace;
+- effective roles, configured/resolved decision, policy-resolution state and reasons exposed;
+- projection API and browser JavaScript syntax verified.
+
+Canonical Phase 4 verification:
+- verified code-bearing head: `642601902941ff857dd26919d329c1c6bfc58c07`;
+- Sprint 10 workflow run `36209482608` — SUCCESS;
+- `StandaloneCoreProjectionTestSuite` — PASS;
+- `StandaloneCoreProjectionApiTestSuite` — PASS;
+- browser JavaScript `node --check` — PASS;
+- all retained Phase 1–3 standalone suites — PASS;
+- packaged localhost application verification — PASS.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
 
 Current standalone work does not yet claim:
 - persisted raw import files as formal Evidence objects;
-- standalone projection of the existing authorization/workflow/routing/property assessment workspaces;
+- populated workflow/routing/property assessments without corresponding runtime observations;
 - candidate triage or final report generation from standalone mode;
 - automatic endpoint crawling or network discovery;
 - active vulnerability testing merely because a target or import exists.
 
-Security Context is now functional. Authorization, Object Access, Function Access, Property Access, Workflow, Routing, Evidence, Candidates, Coverage and Reports remain product-shell placeholders until their existing Core services are projected through standalone APIs.
+Security Context and Authorization are now functional. Workflow, Routing and Property use real Core workspace readiness but remain unpopulated until evidence exists. Evidence, Candidates, Coverage and Reports are the next standalone product layers.
 
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane and is no longer a prerequisite for standalone product startup.
 
 ## Next dependency-ordered slices
-1. Projection of existing authorization/workflow/routing/property Core workspaces into standalone APIs.
-2. Evidence and differential-comparison viewer with raw-import provenance.
-3. Candidate triage, coverage and deterministic reporting.
-4. Controlled active execution through existing ACRA safety gates.
-5. Burp-to-standalone bridge and packaging hardening.
+1. Evidence and differential-comparison viewer with raw-import provenance.
+2. Candidate triage, coverage and deterministic reporting.
+3. Controlled active execution through existing ACRA safety gates.
+4. Burp-to-standalone bridge and packaging hardening.
 
 ## Definition of Done for Phase 2
 Phase 2 is verified only because CI proved:
