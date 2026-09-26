@@ -1,5 +1,31 @@
 # ROADMAP
 
+## Current gate — 2026-09-27
+
+**Sprint 12 Phase 1 — CONTROLLED A0-A7 RESEARCH HARNESS: ACTIVE.**
+
+Base:
+- branch: `s12-standalone-a0-a7-research-evaluation`
+- verified Sprint 11 head: `2e86b17afa5e06b08f3b9ad580a1b02fdc7d815d`
+- Sprint 11 final closure: `36251784191` — SUCCESS
+
+Current research state:
+- frozen dataset: `GT-S11-AUTHORIZATION-RESEARCH`
+- cases: 16
+- positives: 8
+- negatives: 8
+- dimensions: 8
+- A0-A7: NOT_RUN on this branch
+- TP/TN/FP/FN: NOT_MEASURED
+- precision/recall/F1: NOT_MEASURED
+
+Next gate:
+- run the dedicated deterministic A0-A7 campaign;
+- independently recompute metrics from 128 per-case rows;
+- verify byte-repeatable JSON/CSV/JSONL artifacts and SHA-256 sidecars;
+- retain the product Maven build;
+- only then update the experiment registry with measured results.
+
 ## Current gate — 2026-09-26 — standalone Sprint 11
 
 **Sprint 11 Phase 6 — RESEARCH GROUND-TRUTH READINESS: VERIFIED; PHASE 7 ACTIVE.**
