@@ -3,8 +3,11 @@ package io.acra.standalone.http;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import io.acra.core.domain.http.HttpMethod;
+import io.acra.standalone.model.ImportSummary;
+import io.acra.standalone.model.InventoryRecord;
 import io.acra.standalone.model.ProjectRecord;
 import io.acra.standalone.model.TargetRecord;
+import io.acra.standalone.service.StandaloneImportService;
 import io.acra.standalone.store.LocalWorkspaceStore;
 
 import java.io.IOException;
@@ -21,13 +24,16 @@ import java.util.concurrent.Executors;
 
 public final class StandaloneServer implements AutoCloseable {
     private static final int MAX_BODY_BYTES = 32 * 1024;
+    private static final int MAX_IMPORT_BODY_BYTES = 6 * 1024 * 1024;
 
     private final LocalWorkspaceStore store;
+    private final StandaloneImportService importService;
     private final HttpServer server;
     private final String csrfToken;
 
     public StandaloneServer(LocalWorkspaceStore store, int port) throws IOException {
         this.store = store;
+        this.importService = new StandaloneImportService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -60,6 +66,8 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/capabilities", this::handleCapabilities);
         server.createContext("/api/projects", this::handleProjects);
         server.createContext("/api/targets", this::handleTargets);
+        server.createContext("/api/import", this::handleImport);
+        server.createContext("/api/inventory", this::handleInventory);
         server.createContext("/", this::handleStatic);
     }
 
@@ -68,6 +76,7 @@ public final class StandaloneServer implements AutoCloseable {
         HttpSupport.sendJson(exchange, 200,
                 "{\"status\":\"UP\",\"product\":\"ACRA\",\"mode\":\"STANDALONE\"," +
                 "\"bind\":\"127.0.0.1\",\"burpRequired\":false,\"coreLinked\":true," +
+                "\"imports\":[\"OPENAPI\",\"HAR\",\"RAW_HTTP\"]," +
                 "\"csrfToken\":" + HttpSupport.jsonString(csrfToken) + "}");
     }
 
@@ -78,6 +87,7 @@ public final class StandaloneServer implements AutoCloseable {
                 .collect(java.util.stream.Collectors.joining(","));
         HttpSupport.sendJson(exchange, 200,
                 "{\"core\":\"ACRA Core\",\"httpMethods\":[" + methods + "]," +
+                "\"imports\":[\"OPENAPI\",\"HAR\",\"RAW_HTTP\"]," +
                 "\"workspaces\":[\"Targets\",\"API Inventory\",\"Authorization\",\"Object Access\"," +
                 "\"Function Access\",\"Property Access\",\"Workflow\",\"Routing\",\"Evidence\"," +
                 "\"Candidates\",\"Coverage\",\"Reports\"]}");
@@ -134,6 +144,36 @@ public final class StandaloneServer implements AutoCloseable {
             return;
         }
         methodNotAllowed(exchange);
+    }
+
+    private void handleImport(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "POST", true)) return;
+        try {
+            Map<String, String> form = HttpSupport.parseForm(HttpSupport.readBody(exchange, MAX_IMPORT_BODY_BYTES));
+            UUID projectId = UUID.fromString(required(form, "projectId"));
+            UUID targetId = UUID.fromString(required(form, "targetId"));
+            ImportSummary summary = importService.importText(
+                    projectId,
+                    targetId,
+                    required(form, "importType"),
+                    form.getOrDefault("sourceReference", ""),
+                    required(form, "content")
+            );
+            HttpSupport.sendJson(exchange, 201, importSummaryJson(summary));
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
+    }
+
+    private void handleInventory(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "GET", false)) return;
+        try {
+            Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+            UUID projectId = UUID.fromString(required(query, "projectId"));
+            sendInventory(exchange, store.listInventory(projectId));
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
     }
 
     private void handleStatic(HttpExchange exchange) throws IOException {
@@ -205,6 +245,12 @@ public final class StandaloneServer implements AutoCloseable {
         HttpSupport.sendJson(exchange, 200, json);
     }
 
+    private static void sendInventory(HttpExchange exchange, List<InventoryRecord> inventory) throws IOException {
+        String json = inventory.stream().map(StandaloneServer::inventoryJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        HttpSupport.sendJson(exchange, 200, json);
+    }
+
     private static String projectJson(ProjectRecord p) {
         return "{\"id\":" + HttpSupport.jsonString(p.id().toString()) +
                 ",\"name\":" + HttpSupport.jsonString(p.name()) +
@@ -221,6 +267,37 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"authorizationReference\":" + HttpSupport.jsonString(t.authorizationReference()) +
                 ",\"testingMode\":" + HttpSupport.jsonString(t.testingMode()) +
                 ",\"createdAt\":" + HttpSupport.jsonString(t.createdAt().toString()) + "}";
+    }
+
+    private static String inventoryJson(InventoryRecord record) {
+        String sources = record.sourceTypes().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String statuses = record.responseStatuses().stream()
+                .sorted()
+                .map(String::valueOf)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        return "{\"id\":" + HttpSupport.jsonString(record.id()) +
+                ",\"targetId\":" + HttpSupport.jsonString(record.targetId().toString()) +
+                ",\"method\":" + HttpSupport.jsonString(record.method().name()) +
+                ",\"scheme\":" + HttpSupport.jsonString(record.scheme()) +
+                ",\"host\":" + HttpSupport.jsonString(record.host()) +
+                ",\"port\":" + record.port() +
+                ",\"rawPath\":" + HttpSupport.jsonString(record.rawPath()) +
+                ",\"canonicalPath\":" + HttpSupport.jsonString(record.canonicalPath()) +
+                ",\"sourceTypes\":" + sources +
+                ",\"observationCount\":" + record.observationCount() +
+                ",\"documented\":" + record.documented() +
+                ",\"responseStatuses\":" + statuses +
+                ",\"firstSeen\":" + HttpSupport.jsonString(record.firstSeen().toString()) +
+                ",\"lastSeen\":" + HttpSupport.jsonString(record.lastSeen().toString()) + "}";
+    }
+
+    private static String importSummaryJson(ImportSummary summary) {
+        return "{\"importType\":" + HttpSupport.jsonString(summary.importType()) +
+                ",\"observations\":" + summary.observations() +
+                ",\"uniqueEndpoints\":" + summary.uniqueEndpoints() +
+                ",\"inventorySize\":" + summary.inventorySize() + "}";
     }
 
     private static void sendBadRequest(HttpExchange exchange, IllegalArgumentException ex) throws IOException {
