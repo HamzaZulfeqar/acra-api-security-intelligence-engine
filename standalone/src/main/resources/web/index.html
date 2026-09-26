@@ -237,6 +237,49 @@
         </article>
       </section>
 
+      <section id="authorization-view" class="view">
+        <div class="context-summary">
+          <article><span>Memberships</span><strong id="auth-membership-count">0</strong></article>
+          <article><span>Role assignments</span><strong id="auth-role-assignment-count">0</strong></article>
+          <article><span>Permissions</span><strong id="auth-permission-count">0</strong></article>
+          <article><span>Policy rules</span><strong id="auth-rule-count">0</strong></article>
+          <article><span>Resolved contexts</span><strong id="auth-resolution-count">0</strong></article>
+        </div>
+
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">ACRA CORE S6</span><h3>Authorization policy projection</h3></div><span class="status-badge">Core engine</span></div>
+            <div class="projection-meta"><span>Policy fingerprint</span><code id="auth-policy-fingerprint">—</code></div>
+            <div class="boundary">
+              <strong>Current evidence boundary</strong>
+              <span>Configured policy can resolve ALLOW/DENY now. BOLA/BFLA stay INCONCLUSIVE until an authenticated observation, execution and evidence lineage exists.</span>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">CORE WORKSPACES</span><h3>Analysis readiness</h3></div></div>
+            <div class="readiness-grid">
+              <div><strong>Workflow</strong><span id="workflow-readiness">Projected · awaiting observations</span></div>
+              <div><strong>Routing</strong><span id="routing-readiness">Projected · awaiting observations</span></div>
+              <div><strong>Property</strong><span id="property-readiness">Projected · awaiting observations</span></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel context-matrix-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">EFFECTIVE AUTHORIZATION</span><h3>Core resolution matrix</h3></div>
+            <input id="authorization-search" class="search-input" placeholder="Filter endpoint, principal, decision, state or role">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Endpoint</th><th>Action</th><th>Principal</th><th>Configured</th><th>Resolved</th><th>State</th><th>Effective roles</th><th>BOLA</th><th>BFLA</th><th>Reasons</th></tr></thead>
+              <tbody id="authorization-table-body"></tbody>
+            </table>
+            <div id="authorization-empty" class="empty-state">Define expected authorization in Security Context to project it through ACRA Core.</div>
+          </div>
+        </article>
+      </section>
+
       <section id="placeholder-view" class="view">
         <article class="panel placeholder-panel"><span class="eyebrow">ACRA CORE WORKSPACE</span><h2 id="placeholder-title">Workspace</h2><p id="placeholder-copy">This product area is preserved in the standalone information architecture and will be wired to the existing ACRA Core engine incrementally.</p><div class="boundary"><strong>Current implementation boundary</strong><span>Standalone launcher, local projects and safe target onboarding are active. This screen does not claim analysis functionality that has not yet been wired into the standalone host.</span></div></article>
       </section>
