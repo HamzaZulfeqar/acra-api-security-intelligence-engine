@@ -83,6 +83,31 @@ public final class StandaloneEvidenceService {
         return artifact;
     }
 
+    public EvidenceArtifactRecord captureExecutionSummary(
+            UUID projectId,
+            UUID targetId,
+            String sourceReference,
+            String summary
+    ) throws IOException {
+        workspace.findTarget(projectId, targetId);
+        if (summary == null || summary.isBlank()) throw new IllegalArgumentException("execution summary is required");
+        String redacted = redactor.redactText(summary);
+        EvidenceArtifactRecord artifact = new EvidenceArtifactRecord(
+                UUID.randomUUID(),
+                projectId,
+                targetId,
+                "ACTIVE_EXECUTION",
+                sourceReference,
+                TokenFingerprint.sha256(summary),
+                !redacted.equals(summary),
+                summary.length(),
+                redacted.length(),
+                0,
+                Instant.now());
+        store.save(artifact, redacted, List.of());
+        return artifact;
+    }
+
     public List<EvidenceArtifactRecord> artifacts(UUID projectId) throws IOException {
         return store.listArtifacts(projectId);
     }
