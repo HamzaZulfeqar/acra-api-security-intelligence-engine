@@ -67,7 +67,7 @@ Deliverables:
 - canonical JSON + SHA-256;
 - no fabricated raw HTTP.
 
-## Phase 4 — SARIF + Optional Burp Issue Draft — ACTIVE
+## Phase 4 — SARIF + Optional Burp Issue Draft — VERIFIED
 
 Deliverables:
 - SARIF 2.1.0 projection;
@@ -77,7 +77,7 @@ Deliverables:
 - optional Montoya materialization adapter;
 - no automatic Burp publication.
 
-## Phase 5 — Standalone Review & Reproduction Product Surface
+## Phase 5 — Standalone Review & Reproduction Product Surface — ACTIVE
 
 Deliverables:
 - Findings;
