@@ -7,7 +7,31 @@
 **Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`, run `36213547092` — SUCCESS.  
 **Sprint 11 Phase 1:** VERIFIED, run `36214703722` — SUCCESS.  
 **Sprint 11 Phase 2:** VERIFIED, code-bearing head `d0213af7d9f7002ffe44f43a516f0f4d9e2f0bcc`, run `36215309359` — SUCCESS.  
-**Active dependency:** Phase 3 — minimized reproduction package + deterministic JSON.
+**Sprint 11 Phase 3:** VERIFIED, run `36215524311` — SUCCESS.  
+**Active dependency:** Phase 4 — SARIF 2.1.0 + optional Burp Issue Draft.
+
+### Sprint 11 Phase 3 verified capability
+
+- minimized reproduction package generated only from persisted reviewed-finding state;
+- finding/candidate/test/execution/observation/assessment/evidence/policy lineage retained;
+- reviewer identity and review reasons structurally excluded from reproduction schema;
+- review trail limited to states, timestamps and evidence references;
+- confirmedFinding=true only for CONFIRMED / ACCEPTED_RISK lifecycle states;
+- raw credentials and fabricated raw HTTP structurally excluded;
+- standalone render timestamp bound to finding updatedAt for unchanged-state determinism;
+- canonical JSON exporter + Reporter adapter;
+- repeated unchanged exports produce identical content and SHA-256;
+- restart determinism verified.
+
+### Sprint 11 Phase 3 verification
+
+Run `36215524311` — SUCCESS:
+- full Maven reactor;
+- reproduction package foundation;
+- canonical JSON export;
+- standalone deterministic reproduction;
+- retained Phase 1–2 tests;
+- packaged standalone startup.
 
 ### Sprint 11 Phase 2 verified capability
 
