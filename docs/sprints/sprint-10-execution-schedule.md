@@ -87,9 +87,7 @@ Deliverables:
 Gate:
 - provenance integrity + redaction + project-isolation tests.
 
-## Active
-
-### Phase 6 — Candidates + Coverage + Reports
+### Phase 6 — Candidates + Coverage + Reports — VERIFIED
 Dependencies:
 - Phases 4–5.
 
@@ -102,6 +100,8 @@ Deliverables:
 
 Gate:
 - deterministic export hashes + candidate/coverage regressions.
+
+## Active
 
 ### Phase 7 — Controlled Active Execution
 Dependencies:
@@ -141,4 +141,4 @@ Required:
 
 ## Current next action
 
-Execute **Phase 6 — Candidates + Coverage + Reports** only. Phase 7 does not open until the Phase 6 verification gate is green.
+Execute **Phase 7 — Controlled Active Execution** only. Phase 8 does not open until the Phase 7 verification gate is green.
