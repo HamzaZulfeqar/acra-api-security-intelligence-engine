@@ -92,6 +92,12 @@ jobs:
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneReviewReportingTestSuite
 
+      - name: Run standalone review and reporting API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneReviewReportingApiTestSuite
+
       - name: Validate standalone browser JavaScript
         run: node --check standalone/src/main/resources/web/app.js
 
