@@ -6,7 +6,13 @@ import io.acra.core.domain.http.HttpMethod;
 import io.acra.standalone.model.ImportSummary;
 import io.acra.standalone.model.InventoryRecord;
 import io.acra.standalone.model.ProjectRecord;
+import io.acra.standalone.model.AuthorizationExpectationRecord;
+import io.acra.standalone.model.PrincipalContextRecord;
+import io.acra.standalone.model.ResourceContextRecord;
+import io.acra.standalone.model.RoleContextRecord;
 import io.acra.standalone.model.TargetRecord;
+import io.acra.standalone.model.TenantContextRecord;
+import io.acra.standalone.service.SecurityContextService;
 import io.acra.standalone.service.StandaloneImportService;
 import io.acra.standalone.store.LocalWorkspaceStore;
 
@@ -28,12 +34,14 @@ public final class StandaloneServer implements AutoCloseable {
 
     private final LocalWorkspaceStore store;
     private final StandaloneImportService importService;
+    private final SecurityContextService contextService;
     private final HttpServer server;
     private final String csrfToken;
 
     public StandaloneServer(LocalWorkspaceStore store, int port) throws IOException {
         this.store = store;
         this.importService = new StandaloneImportService(store);
+        this.contextService = new SecurityContextService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -68,6 +76,7 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/targets", this::handleTargets);
         server.createContext("/api/import", this::handleImport);
         server.createContext("/api/inventory", this::handleInventory);
+        server.createContext("/api/context", this::handleContext);
         server.createContext("/", this::handleStatic);
     }
 
@@ -176,6 +185,70 @@ public final class StandaloneServer implements AutoCloseable {
         }
     }
 
+    private void handleContext(HttpExchange exchange) throws IOException {
+        if ("GET".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "GET", false)) return;
+            try {
+                Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+                UUID projectId = UUID.fromString(required(query, "projectId"));
+                sendContext(exchange, projectId);
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            }
+            return;
+        }
+
+        if ("POST".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "POST", true)) return;
+            try {
+                Map<String, String> form = HttpSupport.parseForm(HttpSupport.readBody(exchange, MAX_BODY_BYTES));
+                UUID projectId = UUID.fromString(required(form, "projectId"));
+                String kind = required(form, "kind").strip().toUpperCase(java.util.Locale.ROOT);
+
+                String json = switch (kind) {
+                    case "PRINCIPAL" -> principalJson(contextService.addPrincipal(
+                            projectId,
+                            required(form, "principalId"),
+                            form.getOrDefault("displayName", ""),
+                            required(form, "authenticationType")));
+                    case "ROLE" -> roleJson(contextService.addRole(
+                            projectId,
+                            required(form, "roleId"),
+                            required(form, "name")));
+                    case "TENANT" -> tenantJson(contextService.addTenant(
+                            projectId,
+                            required(form, "tenantId"),
+                            form.getOrDefault("name", "")));
+                    case "RESOURCE" -> resourceJson(contextService.addResource(
+                            projectId,
+                            required(form, "resourceId"),
+                            required(form, "resourceType"),
+                            form.getOrDefault("ownerPrincipalId", ""),
+                            form.getOrDefault("tenantId", ""),
+                            form.getOrDefault("state", "")));
+                    case "EXPECTATION" -> expectationJson(contextService.addExpectation(
+                            projectId,
+                            UUID.fromString(required(form, "targetId")),
+                            required(form, "endpoint"),
+                            required(form, "action"),
+                            required(form, "principalId"),
+                            form.getOrDefault("roleId", ""),
+                            form.getOrDefault("tenantId", ""),
+                            form.getOrDefault("resourceId", ""),
+                            required(form, "expectedDecision"),
+                            form.getOrDefault("rationale", "")));
+                    default -> throw new IllegalArgumentException("unsupported context kind");
+                };
+                HttpSupport.sendJson(exchange, 201, json);
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            }
+            return;
+        }
+
+        methodNotAllowed(exchange);
+    }
+
     private void handleStatic(HttpExchange exchange) throws IOException {
         if (!allowRequest(exchange, "GET", false)) return;
         String path = exchange.getRequestURI().getPath();
@@ -249,6 +322,76 @@ public final class StandaloneServer implements AutoCloseable {
         String json = inventory.stream().map(StandaloneServer::inventoryJson)
                 .collect(java.util.stream.Collectors.joining(",", "[", "]"));
         HttpSupport.sendJson(exchange, 200, json);
+    }
+
+    private void sendContext(HttpExchange exchange, UUID projectId) throws IOException {
+        String principals = contextService.principals(projectId).stream()
+                .map(StandaloneServer::principalJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String roles = contextService.roles(projectId).stream()
+                .map(StandaloneServer::roleJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String tenants = contextService.tenants(projectId).stream()
+                .map(StandaloneServer::tenantJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String resources = contextService.resources(projectId).stream()
+                .map(StandaloneServer::resourceJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String expectations = contextService.expectations(projectId).stream()
+                .map(StandaloneServer::expectationJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        HttpSupport.sendJson(exchange, 200,
+                "{\"principals\":" + principals +
+                ",\"roles\":" + roles +
+                ",\"tenants\":" + tenants +
+                ",\"resources\":" + resources +
+                ",\"expectations\":" + expectations + "}");
+    }
+
+    private static String principalJson(PrincipalContextRecord record) {
+        return "{\"id\":" + HttpSupport.jsonString(record.id().toString()) +
+                ",\"principalId\":" + HttpSupport.jsonString(record.principalId()) +
+                ",\"displayName\":" + HttpSupport.jsonString(record.displayName()) +
+                ",\"authenticationType\":" + HttpSupport.jsonString(record.authenticationType().name()) +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String roleJson(RoleContextRecord record) {
+        return "{\"id\":" + HttpSupport.jsonString(record.id().toString()) +
+                ",\"roleId\":" + HttpSupport.jsonString(record.roleId()) +
+                ",\"name\":" + HttpSupport.jsonString(record.name()) +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String tenantJson(TenantContextRecord record) {
+        return "{\"id\":" + HttpSupport.jsonString(record.id().toString()) +
+                ",\"tenantId\":" + HttpSupport.jsonString(record.tenantId()) +
+                ",\"name\":" + HttpSupport.jsonString(record.name()) +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String resourceJson(ResourceContextRecord record) {
+        return "{\"id\":" + HttpSupport.jsonString(record.id().toString()) +
+                ",\"resourceId\":" + HttpSupport.jsonString(record.resourceId()) +
+                ",\"resourceType\":" + HttpSupport.jsonString(record.resourceType()) +
+                ",\"ownerPrincipalId\":" + HttpSupport.jsonString(record.ownerPrincipalId()) +
+                ",\"tenantId\":" + HttpSupport.jsonString(record.tenantId()) +
+                ",\"state\":" + HttpSupport.jsonString(record.state()) +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String expectationJson(AuthorizationExpectationRecord record) {
+        return "{\"id\":" + HttpSupport.jsonString(record.id().toString()) +
+                ",\"targetId\":" + HttpSupport.jsonString(record.targetId().toString()) +
+                ",\"endpoint\":" + HttpSupport.jsonString(record.endpoint()) +
+                ",\"action\":" + HttpSupport.jsonString(record.action().name()) +
+                ",\"principalId\":" + HttpSupport.jsonString(record.principalId()) +
+                ",\"roleId\":" + HttpSupport.jsonString(record.roleId()) +
+                ",\"tenantId\":" + HttpSupport.jsonString(record.tenantId()) +
+                ",\"resourceId\":" + HttpSupport.jsonString(record.resourceId()) +
+                ",\"expectedDecision\":" + HttpSupport.jsonString(record.expectedDecision().name()) +
+                ",\"rationale\":" + HttpSupport.jsonString(record.rationale()) +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
     }
 
     private static String projectJson(ProjectRecord p) {
