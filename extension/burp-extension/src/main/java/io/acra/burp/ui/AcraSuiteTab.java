@@ -34,6 +34,7 @@ public final class AcraSuiteTab {
     private final S7WorkflowPanel workflowPanel;
     private final S8RoutingPanel routingPanel;
     private final S9PropertyPanel propertyPanel;
+    private final StandaloneBridgePanel bridgePanel;
     private final Timer refresh;
 
     public AcraSuiteTab(TrafficIntelligencePipeline pipeline,ScopeController scope){
@@ -92,8 +93,10 @@ public final class AcraSuiteTab {
         routingPanel.install(tabs);
         propertyPanel=new S9PropertyPanel(propertyWorkspace);
         propertyPanel.install(tabs);
+        bridgePanel=new StandaloneBridgePanel(pipeline);
+        tabs.addTab("Standalone Bridge",bridgePanel);
         tabs.addTab("Configuration",configPanel(scope)); root.add(tabs,BorderLayout.CENTER);
-        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();authorizationPanel.refresh();workflowPanel.refresh();routingPanel.refresh();propertyPanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
+        refresh=new Timer(1000,e->{trafficModel.refresh();contextModel.refresh();endpointModel.refresh();refreshReconViews(pipeline);activeTestingPanel.refresh();authorizationPanel.refresh();workflowPanel.refresh();routingPanel.refresh();propertyPanel.refresh();bridgePanel.refresh();overview.setText(" Observations: "+pipeline.store().size()+" | Endpoints: "+pipeline.inventory().size()+" | Sessions: "+pipeline.sessions().size()+" | Recon: "+pipeline.reconnaissanceStore().size()+" | Findings: not assessed");});
         refresh.start();
     }
 
