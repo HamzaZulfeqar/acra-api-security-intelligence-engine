@@ -1,5 +1,26 @@
 # ROADMAP
 
+## Current gate — 2026-09-26 — standalone Sprint 11
+
+**Sprint 11 Phase 2 — PERSISTENT FINDING REVIEW WORKSPACE: VERIFIED; PHASE 3 ACTIVE.**
+
+Canonical evidence:
+- branch: `s11-standalone-finding-lifecycle`
+- immutable Sprint 10 closure: `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`
+- Phase 1 workflow: `36214703722` — SUCCESS
+- Phase 2 verified head: `d0213af7d9f7002ffe44f43a516f0f4d9e2f0bcc`
+- Phase 2 workflow: `36215309359` — SUCCESS
+- FindingLifecycle foundation: PASS
+- FindingReviewWorkspace: PASS
+- active-execution-only finding admission: PASS
+- restart persistence / project isolation: PASS
+- direct confirmation rejection: PASS
+- CSRF finding API: PASS
+- secret-bearing review rejection: PASS
+- packaged Reviewed Findings UI: PASS
+
+**Sprint 11 is NOT software-complete.** Phase 3 is active: minimized reproduction package + deterministic JSON.
+
 ## Current gate — 2026-09-26
 
 **Sprint 10 SOFTWARE COMPLETE.**
