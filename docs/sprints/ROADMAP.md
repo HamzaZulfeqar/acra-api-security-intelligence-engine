@@ -2,9 +2,20 @@
 
 ## Current gate — 2026-09-26
 
-**Sprint 10 Phase 3 — SECURITY CONTEXT MANAGER: VERIFIED; PHASE 4 ACTIVE.**
+**Sprint 10 Phase 4 — CORE AUTHORIZATION PROJECTION: VERIFIED; PHASE 5 ACTIVE.**
 
-Canonical Phase 3 evidence:
+Canonical Phase 4 evidence:
+- branch: `s10-standalone-workbench`
+- verified code-bearing head: `642601902941ff857dd26919d329c1c6bfc58c07`
+- standalone workflow run: `36209482608` — SUCCESS
+- Core policy projection: PASS
+- EffectiveAuthorizationResolver: PASS
+- BOLA/BFLA evidence-boundary projection: PASS
+- localhost projection API: PASS
+- Authorization GUI / JavaScript syntax: PASS
+- packaged localhost application: PASS
+
+Historical Phase 3 evidence:
 - branch: `s10-standalone-workbench`
 - verified code-bearing head: `1db56953725c358d6c60a3bb7abcb1e78c02ba8a`
 - standalone workflow run: `36209126454` — SUCCESS
@@ -48,7 +59,7 @@ Historical Phase 1 evidence:
 Phase 1 changes the product dependency model: Burp is now an optional adapter for ACRA, not a prerequisite for
 standalone project and target onboarding.
 
-**Sprint 10 is NOT software-complete.** Phase 4 is active: project the existing Core authorization/workflow/routing/property workspaces into standalone APIs without duplicating analyzer logic.
+**Sprint 10 is NOT software-complete.** Phase 5 is active: persistent secret-safe evidence, provenance and differential comparison.
 
 The repaired Sprint 9 baseline remains closed and verified. Final repaired-baseline closure run:
 `36207092874` — SUCCESS at `8f031571dd63cf83ee46d439d40edafd83afea38`.
