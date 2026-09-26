@@ -2,11 +2,16 @@
 
 ## Current state — 2026-09-27 — Sprint 12 standalone research line
 
-**Current sprint:** Sprint 12 — Controlled A0-A7 Authorization Ablation Evaluation (active).  
+**Current sprint:** Sprint 12 — Controlled A0-A7 Authorization Ablation Evaluation (closed).  
 **Working branch:** `s12-standalone-a0-a7-research-evaluation`.  
 **Verified Sprint 11 base:** `2e86b17afa5e06b08f3b9ad580a1b02fdc7d815d`; final closure run `36251784191` — SUCCESS.  
+**Decision:** S12 CONTROLLED RESEARCH COMPLETE.  
 **Phases 1–3:** VERIFIED from workflow `36265834848` — SUCCESS.  
-**Phase 4:** ACTIVE — deterministic final research closure.  
+**Phase 4 final closure:** run `36266044578` — SUCCESS at `29ce5317921b23ab3d33fee8e742079cc6a8252a`.  
+**Source checkpoint SHA-256:** `e089f93287f01201f9682701ca3523e12312bfe084138984b71670e94f98c572`; entries 1012; unsafe 0; duplicates 0; clean extraction/per-file equality PASS.  
+**Distribution SHA-256:** `cc847d2a4b172041ca8d622f4e6f6ac86afb2cd691b74170ba51204f61ddbca6`.  
+**Canonical closure research JSON SHA-256:** `aa9187baaa4dd81ef380749e72498a0355d795d249447081844069b0ca7b6aea`.  
+**Sprint 13:** NOT STARTED.  
 **A0-A7 metrics:** MEASURED for the controlled 16-case fixture.  
 **Dataset:** `GT-S11-AUTHORIZATION-RESEARCH` remains frozen and unchanged.
 
@@ -21,6 +26,8 @@ Measured standalone result:
 - A7: TP=8 TN=8 FP=0 FN=0, P=1 R=1 F1=1.
 
 These metrics describe only the registered synthetic localhost fixture; dimension discovery and external validity remain unmeasured.
+
+Sprint 12 final closure retained the full product regression and extracted standalone startup. No production accuracy, external-target, or real Burp desktop claim is made.
 
 ## Current state — 2026-09-26 — Sprint 11 standalone line
 
