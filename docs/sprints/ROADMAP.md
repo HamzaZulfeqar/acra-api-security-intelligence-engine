@@ -2,9 +2,27 @@
 
 ## Current gate — 2026-09-26
 
-**Sprint 10 Phase 8 — OPTIONAL BURP BRIDGE + PACKAGING: VERIFIED; FINAL CLOSURE ACTIVE.**
+**Sprint 10 SOFTWARE COMPLETE.**
 
-Canonical Phase 8 evidence:
+Canonical Sprint 10 closure evidence:
+- final closure run: `36213547092` — SUCCESS
+- closure source commit: `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`
+- checkpoint: `S10-FINAL-SOFTWARE`
+- source ZIP SHA-256: `296fcf420919c172c338988e320a06007aaa4640b90d2077a341759690fd5c0f`
+- source entries: 951
+- unsafe paths: 0
+- duplicate entries: 0
+- clean extraction equality: PASS
+- per-file SHA-256 equality: PASS
+- distribution bundle SHA-256: `0c6929384eb3110f018a57b45fb09729957e6b1f90e4ac8d9b3352bd12920f15`
+- retained Sprint 9 final stack: PASS
+- full current Maven reactor: PASS
+- all Sprint 10 standalone / active / bridge suites: PASS
+- extracted distribution startup: PASS
+- Sprint 11: NOT STARTED
+- real Burp desktop runtime: UNVERIFIED / DEFERRED
+
+Historical Phase 8 evidence:
 - branch: `s10-standalone-workbench`
 - verified head: `ffca14dd80b22d44a03c084311e69695f01112c1`
 - workflow run: `36213386173` — SUCCESS
