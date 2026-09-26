@@ -3,7 +3,7 @@
 **Branch:** `s11-standalone-finding-lifecycle`  
 **Base:** verified standalone Sprint 10 head `9ff4bab2e3f6dc11eef54b0e1877245b45060dfe`  
 **Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`  
-**Status:** PHASE 3 VERIFIED — PHASE 4 ACTIVE
+**Status:** PHASE 4 VERIFIED — PHASE 5 ACTIVE
 
 ## Product gap being closed
 
@@ -60,16 +60,31 @@ Verified:
 
 Canonical run: `36215524311` — SUCCESS.
 
-## Phase 4 — SARIF + Optional Burp Issue Draft — ACTIVE
+## Phase 4 — SARIF + Optional Burp Issue Draft — VERIFIED
+
+Verified:
+- SARIF 2.1.0 projection from the persisted reproduction package;
+- deterministic rule IDs, finding fingerprints and SHA-256;
+- lifecycle-aware review / fail / pass semantics;
+- accepted-risk suppression semantics;
+- false-positive non-confirmation semantics;
+- Core Burp Issue Draft projection with independent severity/confidence mapping;
+- optional Montoya materialization adapter;
+- no automatic Burp publication;
+- canonical serializer passthrough retained in Core so SARIF uses the same deterministic/redaction primitive.
+
+Canonical head: `9344b37dfab2c9404539041811bf51356dcb531a`.  
+Canonical run: `36247738000` — SUCCESS.
+
+## Phase 5 — Standalone Review & Reproduction Product Surface — ACTIVE
 
 Next implementation must:
-- generate a minimized reproduction model only from persisted reviewed finding state;
-- retain finding/candidate/source-run/evidence references;
-- retain expected and observed authorization decisions;
-- include review lifecycle state/history without exporting reviewer identity;
-- exclude raw credentials and fabricated raw HTTP;
-- provide deterministic canonical JSON + SHA-256;
-- preserve confirmation state without creating it.
+- expose Findings and Review History clearly in standalone mode;
+- expose deterministic JSON reproduction;
+- expose SARIF reproduction;
+- expose Burp Issue Draft as a review-only artifact;
+- keep review actions evidence-gated and CSRF-protected;
+- preserve the no-automatic-confirmation boundary.
 
 ## Current non-claims
 
