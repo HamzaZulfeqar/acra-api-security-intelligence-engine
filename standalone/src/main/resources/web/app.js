@@ -1,9 +1,9 @@
-const state={csrf:"",projects:[],targets:[],activeProjectId:""};
+const state={csrf:"",projects:[],targets:[],inventory:[],activeProjectId:""};
 
 const viewMeta={
   overview:["Overview","Local-first API authorization security analysis."],
   targets:["Targets","Register explicitly authorized HTTP(S) assessment targets."],
-  inventory:["API Inventory","Canonical endpoint and request surface intelligence."],
+  inventory:["API Inventory","Import and normalize OpenAPI, HAR and raw HTTP evidence."],
   authorization:["Authorization","Identity, role, tenant and policy intelligence."],
   "object-access":["Object Access","Object-level authorization reasoning and evidence."],
   "function-access":["Function Access","Function-level authorization reasoning and evidence."],
@@ -56,7 +56,10 @@ async function loadProjects(preferId){
     selector.append(option);
     state.activeProjectId="";
     state.targets=[];
+    state.inventory=[];
     renderTargets();
+    syncImportTargets();
+    renderInventory();
     return;
   }
   state.projects.forEach(function(project){
@@ -69,16 +72,29 @@ async function loadProjects(preferId){
   state.activeProjectId=validPreferred?preferId:state.projects[0].id;
   selector.value=state.activeProjectId;
   await loadTargets();
+  await loadInventory();
 }
 
 async function loadTargets(){
   if(!state.activeProjectId){
     state.targets=[];
     renderTargets();
+    syncImportTargets();
     return;
   }
   state.targets=await api("/api/targets?projectId="+encodeURIComponent(state.activeProjectId));
   renderTargets();
+  syncImportTargets();
+}
+
+async function loadInventory(){
+  if(!state.activeProjectId){
+    state.inventory=[];
+    renderInventory();
+    return;
+  }
+  state.inventory=await api("/api/inventory?projectId="+encodeURIComponent(state.activeProjectId));
+  renderInventory(document.querySelector("#inventory-search")?document.querySelector("#inventory-search").value:"");
 }
 
 function renderTargets(){
@@ -116,6 +132,76 @@ function renderTargets(){
   });
 }
 
+function syncImportTargets(){
+  const selector=document.querySelector("#import-target");
+  if(!selector) return;
+  const previous=selector.value;
+  selector.innerHTML="";
+  if(!state.targets.length){
+    const option=document.createElement("option");
+    option.value="";
+    option.textContent="No registered target";
+    selector.append(option);
+    selector.disabled=true;
+    return;
+  }
+  selector.disabled=false;
+  state.targets.forEach(function(target){
+    const option=document.createElement("option");
+    option.value=target.id;
+    option.textContent=target.displayName+" — "+target.baseUrl;
+    selector.append(option);
+  });
+  if(state.targets.some(function(target){return target.id===previous;})) selector.value=previous;
+}
+
+function renderInventory(filterText){
+  const body=document.querySelector("#inventory-table-body");
+  const empty=document.querySelector("#inventory-empty");
+  if(!body||!empty) return;
+
+  const filter=(filterText||"").trim().toLowerCase();
+  const rows=state.inventory.filter(function(item){
+    if(!filter) return true;
+    const material=[
+      item.method,item.scheme,item.host,String(item.port),item.rawPath,item.canonicalPath,
+      (item.sourceTypes||[]).join(" "),(item.responseStatuses||[]).join(" "),
+      item.documented?"documented":"observed"
+    ].join(" ").toLowerCase();
+    return material.includes(filter);
+  });
+
+  body.innerHTML="";
+  rows.forEach(function(item){
+    const row=document.createElement("tr");
+    const values=[
+      item.method,
+      item.canonicalPath,
+      item.scheme+"://"+item.host+":"+item.port,
+      (item.sourceTypes||[]).join(", "),
+      (item.responseStatuses||[]).length?(item.responseStatuses||[]).join(", "):"—",
+      String(item.observationCount),
+      item.documented?"Yes":"No"
+    ];
+    values.forEach(function(value,index){
+      const cell=document.createElement("td");
+      cell.textContent=value;
+      if(index===0) cell.className="method-cell";
+      if(index===1) cell.className="route-cell";
+      row.append(cell);
+    });
+    body.append(row);
+  });
+
+  empty.hidden=rows.length>0;
+  document.querySelector("#inventory-count").textContent=state.inventory.length;
+  document.querySelector("#inventory-summary-endpoints").textContent=state.inventory.length;
+  document.querySelector("#inventory-summary-documented").textContent=state.inventory.filter(function(item){return item.documented;}).length;
+  document.querySelector("#inventory-summary-observed").textContent=state.inventory.filter(function(item){
+    return (item.sourceTypes||[]).some(function(source){return source==="HAR"||source==="RAW_HTTP";});
+  }).length;
+}
+
 function wireEvents(){
   document.querySelectorAll(".nav-item").forEach(function(button){
     button.addEventListener("click",function(){openView(button.dataset.view);});
@@ -130,9 +216,26 @@ function wireEvents(){
   document.querySelector("#project-selector").addEventListener("change",async function(event){
     state.activeProjectId=event.target.value;
     await loadTargets();
+    await loadInventory();
   });
   document.querySelector("#project-form").addEventListener("submit",createProject);
   document.querySelector("#target-form").addEventListener("submit",addTarget);
+  document.querySelector("#import-form").addEventListener("submit",importEvidence);
+  document.querySelector("#inventory-search").addEventListener("input",function(event){
+    renderInventory(event.target.value);
+  });
+  document.querySelector("#import-file").addEventListener("change",async function(event){
+    const file=event.target.files&&event.target.files[0];
+    if(!file) return;
+    if(file.size>2*1024*1024){
+      showMessage("#import-message","File exceeds the 2 MiB import content limit.",false);
+      event.target.value="";
+      return;
+    }
+    document.querySelector("#import-content").value=await file.text();
+    const source=document.querySelector("#import-form input[name='sourceReference']");
+    if(!source.value) source.value=file.name;
+  });
 }
 
 function openView(name){
@@ -141,7 +244,7 @@ function openView(name){
   const meta=viewMeta[name]||[name,""];
   document.querySelector("#view-title").textContent=meta[0];
   document.querySelector("#view-subtitle").textContent=meta[1];
-  if(name==="overview"||name==="targets"){
+  if(name==="overview"||name==="targets"||name==="inventory"){
     document.querySelector("#"+name+"-view").classList.add("active");
   }else{
     document.querySelector("#placeholder-title").textContent=meta[0];
@@ -178,6 +281,27 @@ async function addTarget(event){
     showMessage("#target-form-message","Authorized target registered. No scan was started.",true);
     await loadTargets();
   }catch(error){showMessage("#target-form-message",error.message,false);}
+}
+
+async function importEvidence(event){
+  event.preventDefault();
+  if(!state.activeProjectId){
+    showMessage("#import-message","Create a project before importing evidence.",false);
+    return;
+  }
+  const form=event.currentTarget;
+  const body=new URLSearchParams(new FormData(form));
+  body.set("projectId",state.activeProjectId);
+  body.set("content",document.querySelector("#import-content").value);
+  try{
+    const summary=await api("/api/import",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body});
+    showMessage("#import-message",
+      summary.importType+" import complete: "+summary.observations+" observation(s), "+
+      summary.uniqueEndpoints+" unique endpoint(s), "+summary.inventorySize+" total inventory endpoint(s).",true);
+    await loadInventory();
+  }catch(error){
+    showMessage("#import-message",error.message,false);
+  }
 }
 
 function showMessage(selector,text,success){
