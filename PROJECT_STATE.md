@@ -2,13 +2,29 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 3 verified; Phase 4 active.  
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 4 verified; Phase 5 active.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `1db56953725c358d6c60a3bb7abcb1e78c02ba8a`.  
-**Sprint 10 Phase 3 verification:** GitHub Actions run `36209126454` — SUCCESS.  
+**Verified code-bearing head:** `642601902941ff857dd26919d329c1c6bfc58c07`.  
+**Sprint 10 Phase 4 verification:** GitHub Actions run `36209482608` — SUCCESS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 4 verified capability
+
+- Phase 3 context projected into existing Core authorization policy structures;
+- `EffectiveAuthorizationResolver` reused directly;
+- binary policy expectations resolve through Core;
+- existing BOLA/BFLA evaluators exposed with provenance-safe INCONCLUSIVE state;
+- S6/S7/S8/S9 product workspaces projected into localhost readiness;
+- functional Authorization GUI + projection API;
+- browser JavaScript syntax gate;
+- Phase 4 run `36209482608`: SUCCESS.
+
+### Sprint 10 Phase 4 explicit boundary
+
+Policy resolution is available, but authenticated execution evidence is not. BOLA/BFLA and downstream
+workflow/routing/property assessments must not advance beyond their evidence-supported state. Phase 5 is active.
 
 ### Sprint 10 Phase 3 verified capability
 
