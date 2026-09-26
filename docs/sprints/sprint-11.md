@@ -3,7 +3,7 @@
 **Branch:** `s11-standalone-finding-lifecycle`  
 **Base:** verified standalone Sprint 10 head `9ff4bab2e3f6dc11eef54b0e1877245b45060dfe`  
 **Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`  
-**Status:** PHASE 6 VERIFIED — PHASE 7 ACTIVE
+**Status:** S11 SOFTWARE COMPLETE — FINAL CLOSURE VERIFIED
 
 ## Product gap being closed
 
@@ -107,15 +107,40 @@ Verified:
 
 Canonical run: `36248296847` — SUCCESS.
 
-## Phase 7 — Security / Performance / Final Closure — ACTIVE
+## Phase 7 — Security / Performance / Final Closure — VERIFIED
 
-Next implementation must:
-- execute secret-hardening and deterministic export regressions;
-- record only bounded CI engineering observations, not performance guarantees;
-- retain the complete Sprint 10 standalone regression boundary;
-- produce a deterministic source checkpoint with safe-path, duplicate and clean-extraction verification;
-- record exact deferred boundaries;
-- close Sprint 11 only after a dedicated final workflow succeeds.
+Verified:
+- finding security-hardening regression: PASS, 37 assertions;
+- bounded CI engineering observation: 1,000 cases / 2,000 export iterations;
+- complete Sprint 10 standalone regression boundary retained;
+- full Maven reactor: PASS;
+- Sprint 2 local compatibility: PASS;
+- Sprint 3 local compatibility: PASS;
+- deterministic source checkpoint: PASS;
+- safe-path / duplicate / clean extraction / per-file equality checks: PASS;
+- Sprint 11 distribution bundle: PASS;
+- missing local Montoya contract stub repaired without adding a Core runtime dependency;
+- Core/adapter architecture guard restored to green without weakening the guard.
+
+Canonical final closure:
+- source commit: `1384b86e5e4d33f5ff3c0c97fdc0db667d0b9322`;
+- final closure run: `36251613644` — SUCCESS;
+- checkpoint: `S11-FINAL-SOFTWARE`;
+- source ZIP SHA-256: `9aa4cb3301f0ae75a6d335e538fab20351bbc7dc6f5e8a63cfec2df07982762a`;
+- source entries: 1002;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- distribution bundle SHA-256: `472dfbb7c1abfd3c5e46bb16c75d8b272c53e263cf9f55b4150963174263229a`.
+
+Independent workflows on the same closure head:
+- ACRA Core CI: SUCCESS;
+- Sprint 2 CI: SUCCESS;
+- Sprint 3 CI: SUCCESS;
+- Sprint 11 focused lifecycle workflow: SUCCESS.
+
+Sprint 12 is **NOT STARTED** by this closure.
 
 ## Current non-claims
 
