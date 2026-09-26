@@ -14,6 +14,7 @@
         <button class="nav-item active" data-view="overview">Overview</button>
         <button class="nav-item" data-view="targets">Targets</button>
         <button class="nav-item" data-view="inventory">API Inventory</button>
+        <button class="nav-item" data-view="context">Security Context</button>
         <button class="nav-item" data-view="authorization">Authorization</button>
         <button class="nav-item" data-view="object-access">Object Access</button>
         <button class="nav-item" data-view="function-access">Function Access</button>
@@ -126,6 +127,112 @@
               <tbody id="inventory-table-body"></tbody>
             </table>
             <div id="inventory-empty" class="empty-state">Import OpenAPI, HAR, or raw HTTP evidence to build the API inventory.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="context-view" class="view">
+        <div class="context-summary">
+          <article><span>Principals</span><strong id="context-principal-count">0</strong></article>
+          <article><span>Roles</span><strong id="context-role-count">0</strong></article>
+          <article><span>Tenants</span><strong id="context-tenant-count">0</strong></article>
+          <article><span>Resources</span><strong id="context-resource-count">0</strong></article>
+          <article><span>Expectations</span><strong id="context-expectation-count">0</strong></article>
+        </div>
+
+        <div class="grid two context-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">IDENTITY</span><h3>Principals</h3></div></div>
+            <form id="principal-form">
+              <div class="field-row">
+                <label>Principal ID<input name="principalId" required maxlength="160" placeholder="user-a"></label>
+                <label>Display name<input name="displayName" maxlength="240" placeholder="User A"></label>
+              </div>
+              <label>Authentication type
+                <select name="authenticationType">
+                  <option>UNKNOWN</option><option>BEARER</option><option>JWT</option><option>SESSION_COOKIE</option>
+                  <option>API_KEY</option><option>BASIC</option><option>OAUTH</option><option>OIDC</option><option>MUTUAL_TLS</option>
+                </select>
+              </label>
+              <button class="button" type="submit">Add Principal</button>
+            </form>
+            <div id="principal-message" class="message" hidden></div>
+            <div id="principal-list" class="mini-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">ACCESS MODEL</span><h3>Roles & Tenants</h3></div></div>
+            <form id="role-form">
+              <div class="field-row">
+                <label>Role ID<input name="roleId" required maxlength="160" placeholder="standard-user"></label>
+                <label>Role name<input name="name" required maxlength="240" placeholder="Standard User"></label>
+              </div>
+              <button class="button secondary" type="submit">Add Role</button>
+            </form>
+            <form id="tenant-form" class="separated-form">
+              <div class="field-row">
+                <label>Tenant ID<input name="tenantId" required maxlength="160" placeholder="tenant-a"></label>
+                <label>Tenant name<input name="name" maxlength="240" placeholder="Tenant A"></label>
+              </div>
+              <button class="button secondary" type="submit">Add Tenant</button>
+            </form>
+            <div id="role-tenant-message" class="message" hidden></div>
+            <div class="mini-columns"><div><h4>Roles</h4><div id="role-list" class="mini-list"></div></div><div><h4>Tenants</h4><div id="tenant-list" class="mini-list"></div></div></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">RESOURCE MODEL</span><h3>Resources & Ownership</h3></div></div>
+            <form id="resource-form">
+              <div class="field-row">
+                <label>Resource ID<input name="resourceId" required maxlength="180" placeholder="user-42"></label>
+                <label>Resource type<input name="resourceType" required maxlength="120" placeholder="user"></label>
+              </div>
+              <div class="field-row">
+                <label>Owner principal<select name="ownerPrincipalId" id="resource-owner"><option value="">Unspecified</option></select></label>
+                <label>Tenant<select name="tenantId" id="resource-tenant"><option value="">Unspecified</option></select></label>
+              </div>
+              <label>Workflow/state<input name="state" maxlength="120" placeholder="ACTIVE"></label>
+              <button class="button" type="submit">Add Resource</button>
+            </form>
+            <div id="resource-message" class="message" hidden></div>
+            <div id="resource-list" class="mini-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">POLICY CONTEXT</span><h3>Expected authorization</h3></div></div>
+            <form id="expectation-form">
+              <label>Target<select name="targetId" id="expectation-target" required></select></label>
+              <label>Endpoint<select name="endpoint" id="expectation-endpoint" required></select></label>
+              <div class="field-row">
+                <label>Action<select name="action"><option>READ</option><option>CREATE</option><option>UPDATE</option><option>DELETE</option><option>EXECUTE</option><option>APPROVE</option><option>SHARE</option><option>EXPORT</option></select></label>
+                <label>Expected decision<select name="expectedDecision"><option>DENY</option><option>ALLOW</option><option>CONDITIONAL</option><option>UNKNOWN</option></select></label>
+              </div>
+              <div class="field-row">
+                <label>Principal<select name="principalId" id="expectation-principal" required></select></label>
+                <label>Role<select name="roleId" id="expectation-role"><option value="">Unspecified</option></select></label>
+              </div>
+              <div class="field-row">
+                <label>Tenant<select name="tenantId" id="expectation-tenant"><option value="">Unspecified</option></select></label>
+                <label>Resource<select name="resourceId" id="expectation-resource"><option value="">Unspecified</option></select></label>
+              </div>
+              <label>Rationale<textarea name="rationale" rows="3" maxlength="1000" placeholder="Why should this context be allowed or denied?"></textarea></label>
+              <button class="button" type="submit">Add Expected Decision</button>
+            </form>
+            <div id="expectation-message" class="message" hidden></div>
+          </article>
+        </div>
+
+        <article class="panel context-matrix-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">CONTEXT MATRIX</span><h3>Expected authorization matrix</h3></div>
+            <input id="context-search" class="search-input" placeholder="Filter endpoint, principal, role, tenant, resource or decision">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Endpoint</th><th>Action</th><th>Principal</th><th>Role</th><th>Tenant</th><th>Resource</th><th>Expected</th><th>Rationale</th></tr></thead>
+              <tbody id="context-table-body"></tbody>
+            </table>
+            <div id="context-empty" class="empty-state">Define principals, resources and expected decisions to build the authorization context matrix.</div>
           </div>
         </article>
       </section>
