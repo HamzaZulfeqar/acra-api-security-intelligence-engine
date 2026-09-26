@@ -2,9 +2,21 @@
 
 ## Current gate — 2026-09-26
 
-**Sprint 10 Phase 4 — CORE AUTHORIZATION PROJECTION: VERIFIED; PHASE 5 ACTIVE.**
+**Sprint 10 Phase 5 — EVIDENCE + DIFFERENTIAL: VERIFIED; PHASE 6 ACTIVE.**
 
-Canonical Phase 4 evidence:
+Canonical Phase 5 evidence:
+- branch: `s10-standalone-workbench`
+- verified code-bearing head: `8a340bf38fdaa58934d252abf6cdb2b8a30f14c3`
+- standalone workflow run: `36209983492` — SUCCESS
+- redacted evidence persistence: PASS
+- original digest provenance: PASS
+- out-of-scope non-archival: PASS
+- Core passive response differential: PASS
+- authorization context differential: PASS
+- localhost evidence/differential APIs: PASS
+- Evidence GUI / JavaScript syntax: PASS
+
+Historical Phase 4 evidence:
 - branch: `s10-standalone-workbench`
 - verified code-bearing head: `642601902941ff857dd26919d329c1c6bfc58c07`
 - standalone workflow run: `36209482608` — SUCCESS
@@ -59,7 +71,7 @@ Historical Phase 1 evidence:
 Phase 1 changes the product dependency model: Burp is now an optional adapter for ACRA, not a prerequisite for
 standalone project and target onboarding.
 
-**Sprint 10 is NOT software-complete.** Phase 5 is active: persistent secret-safe evidence, provenance and differential comparison.
+**Sprint 10 is NOT software-complete.** Phase 6 is active: review-only candidates, coverage and deterministic reports.
 
 The repaired Sprint 9 baseline remains closed and verified. Final repaired-baseline closure run:
 `36207092874` — SUCCESS at `8f031571dd63cf83ee46d439d40edafd83afea38`.
