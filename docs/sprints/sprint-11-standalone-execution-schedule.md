@@ -57,7 +57,7 @@ Gate:
 - direct candidate→confirmed rejection;
 - CSRF API verification.
 
-## Phase 3 — Reproduction Package + Deterministic JSON — ACTIVE
+## Phase 3 — Reproduction Package + Deterministic JSON — VERIFIED
 
 Deliverables:
 - minimized reproduction model;
@@ -67,7 +67,7 @@ Deliverables:
 - canonical JSON + SHA-256;
 - no fabricated raw HTTP.
 
-## Phase 4 — SARIF + Optional Burp Issue Draft
+## Phase 4 — SARIF + Optional Burp Issue Draft — ACTIVE
 
 Deliverables:
 - SARIF 2.1.0 projection;
