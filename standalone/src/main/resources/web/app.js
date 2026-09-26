@@ -188,6 +188,7 @@ async function loadFindings(){
   if(!state.activeProjectId){
     state.findings={eligibleExecutions:[],findings:[]};
     renderFindings();
+    clearFindingReproduction();
     return;
   }
   state.findings=await api("/api/findings?projectId="+encodeURIComponent(state.activeProjectId));
@@ -358,7 +359,24 @@ function renderFindings(filterText){
       });
     }
 
-    card.append(header,meta,evidence,history);
+    const exportActions=document.createElement("div");
+    exportActions.className="finding-export-actions";
+    [
+      ["View JSON","JSON"],
+      ["View SARIF","SARIF"],
+      ["View Burp Draft","BURP_DRAFT"]
+    ].forEach(function(entry){
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="button secondary";
+      button.textContent=entry[0];
+      button.addEventListener("click",function(){
+        loadFindingReproduction(item.findingId,entry[1]);
+      });
+      exportActions.append(button);
+    });
+
+    card.append(header,meta,evidence,history,exportActions);
 
     const options=findingTransitionOptions(item.state);
     if(options.length){
@@ -1302,6 +1320,51 @@ async function openFindingFromExecution(runId){
     openView("findings");
   }catch(error){
     window.alert("Finding intake failed: "+error.message);
+  }
+}
+
+function clearFindingReproduction(){
+  const name=document.querySelector("#finding-reproduction-name");
+  const digest=document.querySelector("#finding-reproduction-digest");
+  const preview=document.querySelector("#finding-reproduction-preview");
+  const status=document.querySelector("#finding-reproduction-status");
+  if(name) name.textContent="—";
+  if(digest) digest.textContent="—";
+  if(preview) preview.textContent="Choose JSON, SARIF, or Burp Draft from a reviewed finding.";
+  if(status) status.textContent="Read only";
+}
+
+async function loadFindingReproduction(findingId,format){
+  if(!state.activeProjectId||!findingId) return;
+  const name=document.querySelector("#finding-reproduction-name");
+  const digest=document.querySelector("#finding-reproduction-digest");
+  const preview=document.querySelector("#finding-reproduction-preview");
+  const status=document.querySelector("#finding-reproduction-status");
+  try{
+    const artifact=await api(
+      "/api/finding-reproduction?projectId="+encodeURIComponent(state.activeProjectId)
+      +"&findingId="+encodeURIComponent(findingId)
+      +"&format="+encodeURIComponent(format)
+    );
+
+    if(format==="BURP_DRAFT"){
+      name.textContent=(artifact.name||"Burp Issue Draft")+" · "+(artifact.draftId||"");
+      digest.textContent=artifact.draftId||"—";
+      status.textContent=artifact.publicationEligible
+        ?"Draft eligible after explicit confirmation"
+        :"Draft only · not publication eligible";
+      preview.textContent=JSON.stringify(artifact,null,2);
+    }else{
+      name.textContent=(artifact.fileName||format)+" · "+(artifact.mediaType||"");
+      digest.textContent=artifact.sha256||"—";
+      status.textContent=format+" · deterministic";
+      preview.textContent=artifact.content||"";
+    }
+  }catch(error){
+    if(name) name.textContent=format;
+    if(digest) digest.textContent="—";
+    if(status) status.textContent="Preview failed";
+    if(preview) preview.textContent="Finding reproduction failed: "+error.message;
   }
 }
 
