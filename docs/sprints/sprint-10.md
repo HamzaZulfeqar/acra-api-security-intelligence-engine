@@ -163,6 +163,30 @@ Canonical Phase 6 verification:
 - browser JavaScript syntax — PASS;
 - packaged localhost application — PASS.
 
+## Phase 4 — Existing Core Authorization Engines → Standalone — VERIFIED
+
+Verified capability:
+- standalone Security Context projected into the existing ACRA `AuthorizationPolicySnapshot`;
+- existing `EffectiveAuthorizationResolver` reused for configured ALLOW / DENY policy resolution;
+- existing BOLA and BFLA evaluators reused without bypass logic;
+- configured authorization resolves while BOLA/BFLA remain INCONCLUSIVE without execution provenance;
+- existing S6 authorization workspace projected;
+- existing S7 workflow workspace projected with zero runtime resolutions until observations exist;
+- existing S8 routing workspace projected with zero runtime assessments until observations exist;
+- existing S9 property workspace projected with zero runtime assessments until observations exist;
+- functional localhost Authorization workspace;
+- localhost Core projection API;
+- browser JavaScript syntax verification in CI.
+
+Canonical Phase 4 verification:
+- verified code-bearing head: `642601902941ff857dd26919d329c1c6bfc58c07`;
+- Sprint 10 workflow run `36209482608` — SUCCESS;
+- `StandaloneCoreProjectionTestSuite` — PASS;
+- `StandaloneCoreProjectionApiTestSuite` — PASS;
+- browser `node --check` — PASS;
+- packaged localhost application — PASS;
+- all Phase 1–3 focused regressions retained — PASS.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
