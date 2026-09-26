@@ -228,7 +228,7 @@ public final class AcraStandaloneApplication {
                 requestId,
                 target.toString(),
                 response.statusCode(),
-                snapshot.endpoint().method(),
+                snapshot.endpoint().method().name(),
                 snapshot.endpoint().host(),
                 snapshot.endpoint().routeTemplate(),
                 context.principal() == null ? "" : context.principal().principalId(),
