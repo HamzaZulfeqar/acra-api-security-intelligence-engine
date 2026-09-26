@@ -10,7 +10,27 @@
 **Sprint 11 Phase 3:** VERIFIED, run `36215524311` — SUCCESS.  
 **Sprint 11 Phase 4:** VERIFIED, head `9344b37dfab2c9404539041811bf51356dcb531a`, run `36247738000` — SUCCESS.  
 **Sprint 11 Phase 5:** VERIFIED, head `6e0b090b037f037982d61bd3f62a2a3bcc54d521`, run `36248083390` — SUCCESS.  
-**Active dependency:** Phase 6 — Research Ground-Truth Readiness.
+**Sprint 11 Phase 6:** VERIFIED, run `36248296847` — SUCCESS.  
+**Active dependency:** Phase 7 — Security / Performance / Final Closure.
+
+### Sprint 11 Phase 6 verified capability
+
+- balanced 16-case authorization research ground truth;
+- eight dimensions: object, tenant, RBAC, workflow, routing, property, batch and indirect reference;
+- one positive and one negative control per dimension;
+- secure/vulnerable ACRA-Lab oracle verified on ephemeral loopback ports;
+- canonical lab/server copies synchronized;
+- A0-A7 marked SOFTWARE_READY / RESEARCH_NOT_RUN;
+- all research metrics remain NOT_MEASURED.
+
+### Sprint 11 Phase 6 verification
+
+Run `36248296847` — SUCCESS.
+
+### Sprint 11 Phase 6 boundary
+
+Phase 6 validates the dataset/oracle only. It does not execute A0-A7 and does not establish real-world scanner accuracy.
+Phase 7 is active for hardening and final software closure.
 
 ### Sprint 11 Phase 5 verified capability
 
