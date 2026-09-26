@@ -66,29 +66,52 @@ Canonical Phase 2 verification:
 - retained Sprint 2 at that Core head: run `36208244892` — SUCCESS;
 - retained Sprint 3 at that Core head: run `36208244785` — SUCCESS.
 
+## Phase 3 — Security Context Manager — VERIFIED
+
+Verified capability:
+- typed principal records with authentication-type metadata and no credential field;
+- typed role and tenant records;
+- typed resource records with owner-principal, tenant and state references;
+- expected-authorization matrix bound to registered target + canonical inventory endpoint;
+- explicit action and expected decision using ACRA Core enums;
+- referential validation for principal / role / tenant / resource;
+- duplicate logical IDs fail closed;
+- unknown endpoint references fail closed;
+- secret-bearing metadata rejected by the existing UniversalRedactor boundary;
+- project-isolated persistent context store;
+- functional localhost Security Context GUI;
+- filtering of expected-authorization matrix;
+- localhost context API for create/read workflows.
+
+Canonical Phase 3 verification:
+- verified code-bearing head: `1db56953725c358d6c60a3bb7abcb1e78c02ba8a`;
+- Sprint 10 workflow run `36209126454` — SUCCESS;
+- `StandaloneSecurityContextTestSuite` — PASS;
+- `StandaloneSecurityContextApiTestSuite` — PASS;
+- retained import/inventory and standalone foundation suites — PASS;
+- packaged localhost application verification — PASS.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
 
-Phase 2 does not yet claim:
+Current standalone work does not yet claim:
 - persisted raw import files as formal Evidence objects;
-- principal/role/tenant/resource-owner configuration in the standalone host;
 - standalone projection of the existing authorization/workflow/routing/property assessment workspaces;
 - candidate triage or final report generation from standalone mode;
 - automatic endpoint crawling or network discovery;
 - active vulnerability testing merely because a target or import exists.
 
-The Authorization, Object Access, Function Access, Property Access, Workflow, Routing, Evidence, Candidates, Coverage and Reports navigation entries remain product-shell placeholders until their existing Core services are projected through standalone APIs.
+Security Context is now functional. Authorization, Object Access, Function Access, Property Access, Workflow, Routing, Evidence, Candidates, Coverage and Reports remain product-shell placeholders until their existing Core services are projected through standalone APIs.
 
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane and is no longer a prerequisite for standalone product startup.
 
 ## Next dependency-ordered slices
-1. Security-context management: principals, roles, tenants, resource ownership and policies.
-2. Projection of existing authorization/workflow/routing/property Core workspaces into standalone APIs.
-3. Evidence and differential-comparison viewer with raw-import provenance.
-4. Candidate triage, coverage and deterministic reporting.
-5. Controlled active execution through existing ACRA safety gates.
-6. Burp-to-standalone bridge and packaging hardening.
+1. Projection of existing authorization/workflow/routing/property Core workspaces into standalone APIs.
+2. Evidence and differential-comparison viewer with raw-import provenance.
+3. Candidate triage, coverage and deterministic reporting.
+4. Controlled active execution through existing ACRA safety gates.
+5. Burp-to-standalone bridge and packaging hardening.
 
 ## Definition of Done for Phase 2
 Phase 2 is verified only because CI proved:
