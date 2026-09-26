@@ -3,6 +3,7 @@ package io.acra.standalone.service;
 import io.acra.core.domain.authorization.ActionType;
 import io.acra.core.domain.authorization.AuthorizationDecision;
 import io.acra.core.domain.identity.AuthenticationType;
+import io.acra.core.security.UniversalRedactor;
 import io.acra.standalone.model.AuthorizationExpectationRecord;
 import io.acra.standalone.model.PrincipalContextRecord;
 import io.acra.standalone.model.ResourceContextRecord;
@@ -18,6 +19,8 @@ import java.util.Locale;
 import java.util.UUID;
 
 public final class SecurityContextService {
+    private static final UniversalRedactor REDACTOR = new UniversalRedactor();
+
     private final LocalWorkspaceStore workspace;
     private final SecurityContextStore contextStore;
 
@@ -32,6 +35,8 @@ public final class SecurityContextService {
             String displayName,
             String authenticationType
     ) throws IOException {
+        rejectSecretBearing(principalId, "principalId");
+        rejectSecretBearing(displayName, "displayName");
         ensureUniquePrincipal(projectId, principalId);
         AuthenticationType auth = parse(AuthenticationType.class, authenticationType, "authenticationType");
         return contextStore.savePrincipal(new PrincipalContextRecord(
@@ -39,12 +44,16 @@ public final class SecurityContextService {
     }
 
     public RoleContextRecord addRole(UUID projectId, String roleId, String name) throws IOException {
+        rejectSecretBearing(roleId, "roleId");
+        rejectSecretBearing(name, "name");
         ensureUniqueRole(projectId, roleId);
         return contextStore.saveRole(new RoleContextRecord(
                 UUID.randomUUID(), projectId, roleId, name, Instant.now()));
     }
 
     public TenantContextRecord addTenant(UUID projectId, String tenantId, String name) throws IOException {
+        rejectSecretBearing(tenantId, "tenantId");
+        rejectSecretBearing(name, "name");
         ensureUniqueTenant(projectId, tenantId);
         return contextStore.saveTenant(new TenantContextRecord(
                 UUID.randomUUID(), projectId, tenantId, name, Instant.now()));
@@ -58,6 +67,11 @@ public final class SecurityContextService {
             String tenantId,
             String state
     ) throws IOException {
+        rejectSecretBearing(resourceId, "resourceId");
+        rejectSecretBearing(resourceType, "resourceType");
+        rejectSecretBearing(ownerPrincipalId, "ownerPrincipalId");
+        rejectSecretBearing(tenantId, "tenantId");
+        rejectSecretBearing(state, "state");
         ensureUniqueResource(projectId, resourceId);
         if (present(ownerPrincipalId) && findPrincipal(projectId, ownerPrincipalId) == null) {
             throw new IllegalArgumentException("ownerPrincipalId references an unknown project principal");
@@ -82,6 +96,12 @@ public final class SecurityContextService {
             String expectedDecision,
             String rationale
     ) throws IOException {
+        rejectSecretBearing(endpoint, "endpoint");
+        rejectSecretBearing(principalId, "principalId");
+        rejectSecretBearing(roleId, "roleId");
+        rejectSecretBearing(tenantId, "tenantId");
+        rejectSecretBearing(resourceId, "resourceId");
+        rejectSecretBearing(rationale, "rationale");
         workspace.findTarget(projectId, targetId);
         if (findPrincipal(projectId, principalId) == null) {
             throw new IllegalArgumentException("principalId references an unknown project principal");
@@ -166,6 +186,14 @@ public final class SecurityContextService {
 
     private void ensureUniqueResource(UUID projectId, String id) throws IOException {
         if (findResource(projectId, id) != null) throw new IllegalArgumentException("resourceId already exists");
+    }
+
+    private static void rejectSecretBearing(String value, String field) {
+        if (value == null || value.isBlank()) return;
+        String redacted = REDACTOR.redactText(value);
+        if (!redacted.equals(value)) {
+            throw new IllegalArgumentException(field + " must not contain credential or secret material");
+        }
     }
 
     private static boolean present(String value) {
