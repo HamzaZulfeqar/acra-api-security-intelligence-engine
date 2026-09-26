@@ -3,7 +3,7 @@
 **Branch:** `s11-standalone-finding-lifecycle`  
 **Base:** verified standalone Sprint 10 head `9ff4bab2e3f6dc11eef54b0e1877245b45060dfe`  
 **Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`  
-**Status:** PHASE 4 VERIFIED — PHASE 5 ACTIVE
+**Status:** PHASE 5 VERIFIED — PHASE 6 ACTIVE
 
 ## Product gap being closed
 
@@ -76,15 +76,31 @@ Verified:
 Canonical head: `9344b37dfab2c9404539041811bf51356dcb531a`.  
 Canonical run: `36247738000` — SUCCESS.
 
-## Phase 5 — Standalone Review & Reproduction Product Surface — ACTIVE
+## Phase 5 — Standalone Review & Reproduction Product Surface — VERIFIED
+
+Verified:
+- existing Reviewed Findings workspace retains evidence-backed intake and lifecycle transitions;
+- review history remains visible per finding;
+- read-only JSON reproduction preview;
+- read-only SARIF preview;
+- read-only Burp Issue Draft preview;
+- deterministic digest / draft identity surfaced to the user;
+- reviewer identity and review reason remain excluded from reproduction exports;
+- no Burp publication action exists in the standalone browser;
+- lifecycle transitions remain evidence-gated and CSRF-protected.
+
+Canonical head: `6e0b090b037f037982d61bd3f62a2a3bcc54d521`.  
+Canonical run: `36248083390` — SUCCESS.
+
+## Phase 6 — Research Ground-Truth Readiness — ACTIVE
 
 Next implementation must:
-- expose Findings and Review History clearly in standalone mode;
-- expose deterministic JSON reproduction;
-- expose SARIF reproduction;
-- expose Burp Issue Draft as a review-only artifact;
-- keep review actions evidence-gated and CSRF-protected;
-- preserve the no-automatic-confirmation boundary.
+- register a balanced local authorization ground-truth dataset;
+- preserve an oracle independent of ACRA output;
+- cover object, tenant, RBAC, workflow, routing, property, batch and indirect-reference dimensions where the current product supports them;
+- verify secure and deliberately vulnerable localhost expectations;
+- mark A0-A7 as SOFTWARE_READY / RESEARCH_NOT_RUN;
+- report no precision/recall/F1 until a later research sprint actually executes the comparison.
 
 ## Current non-claims
 
