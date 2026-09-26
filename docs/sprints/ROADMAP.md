@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-27
 
-**Sprint 12 Phase 1 — CONTROLLED A0-A7 RESEARCH HARNESS: ACTIVE.**
+**Sprint 12 Phases 1–3 — CONTROLLED A0-A7 RESEARCH: VERIFIED; PHASE 4 CLOSURE ACTIVE.**
 
 Base:
 - branch: `s12-standalone-a0-a7-research-evaluation`
@@ -15,16 +15,22 @@ Current research state:
 - positives: 8
 - negatives: 8
 - dimensions: 8
-- A0-A7: NOT_RUN on this branch
-- TP/TN/FP/FN: NOT_MEASURED
-- precision/recall/F1: NOT_MEASURED
+- A0-A7: COMPLETED_CONTROLLED_LOCAL
+- prediction rows: 128
+- A0/A1 FP=7; A2 FP=4; A3 FP=3; A4 FP=2; A5 FP=1; A6/A7 FP=0
+- FN=0 for A0-A7
+- first measured workflow: `36265834848` — SUCCESS
+- dataset SHA-256: `f42783717bdd38e8d04b7f59cef98a41441005de426ec78ca1fba58098154d4b`
+- first measured JSON SHA-256: `528b79b29a764a157e7b402e4202d84f6585c692ebc353cfae0ffd1c1ff364e7`
+- repeatability: PASS
 
 Next gate:
-- run the dedicated deterministic A0-A7 campaign;
-- independently recompute metrics from 128 per-case rows;
-- verify byte-repeatable JSON/CSV/JSONL artifacts and SHA-256 sidecars;
-- retain the product Maven build;
-- only then update the experiment registry with measured results.
+- final deterministic research closure;
+- rerun frozen ground-truth verification + A0-A7 campaign;
+- retain full product packaging;
+- generate deterministic source checkpoint;
+- verify safe paths, duplicate absence, clean extraction and per-file equality;
+- freeze Sprint 12 with explicit synthetic-fixture limitations.
 
 ## Current gate — 2026-09-26 — standalone Sprint 11
 
