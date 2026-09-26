@@ -114,7 +114,7 @@ public final class StandaloneImportService {
     }
 
     private InventoryRecord toRecord(UUID projectId, UUID targetId, Seed seed) {
-        String rawPath = seed.uri().getRawPath();
+        String rawPath = seed.documented() ? seed.uri().getPath() : seed.uri().getRawPath();
         if (rawPath == null || rawPath.isBlank()) rawPath = "/";
         String canonical = canonicalPath(seed, rawPath);
         int port = effectivePort(seed.uri());
@@ -185,7 +185,8 @@ public final class StandaloneImportService {
         }
 
         String authority = targetBase.getHost() + (targetBase.getPort() > 0 ? ":" + targetBase.getPort() : "");
-        return URI.create(targetBase.getScheme() + "://" + authority + finalPath);
+        String uriSafePath = finalPath.replace("{", "%7B").replace("}", "%7D");
+        return URI.create(targetBase.getScheme() + "://" + authority + uriSafePath);
     }
 
     private static void requireWithinTarget(TargetRecord target, URI candidate) {
