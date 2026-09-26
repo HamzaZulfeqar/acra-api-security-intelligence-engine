@@ -59,9 +59,7 @@ Definition of Done:
 - GUI can create/review/filter context rows;
 - packaged localhost application remains green.
 
-## Active
-
-### Phase 4 — Existing Core Authorization Engines → Standalone
+### Phase 4 — Existing Core Authorization Engines → Standalone — VERIFIED
 Dependencies:
 - verified Phase 3 context records;
 - verified Phase 2 inventory.
@@ -74,6 +72,8 @@ Deliverables:
 
 Gate:
 - focused Core-to-standalone projection tests + retained regression.
+
+## Active
 
 ### Phase 5 — Evidence + Differential Comparison
 Dependencies:
@@ -141,4 +141,4 @@ Required:
 
 ## Current next action
 
-Execute **Phase 4 — Existing Core Authorization Engines → Standalone** only. Phase 5 does not open until the Phase 4 verification gate is green.
+Execute **Phase 5 — Evidence + Differential Comparison** only. Phase 6 does not open until the Phase 5 verification gate is green.
