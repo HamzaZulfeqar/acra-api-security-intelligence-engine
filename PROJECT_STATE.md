@@ -2,13 +2,30 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 2 verified.  
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 3 verified; Phase 4 active.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `32ed3b6843e653c4bf3e3d46a9b427e34fe32832`.  
-**Sprint 10 Phase 2 verification:** GitHub Actions run `36208517465` — SUCCESS.  
+**Verified code-bearing head:** `1db56953725c358d6c60a3bb7abcb1e78c02ba8a`.  
+**Sprint 10 Phase 3 verification:** GitHub Actions run `36209126454` — SUCCESS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 3 verified capability
+
+- typed principals / roles / tenants / resources and ownership context;
+- authentication-type metadata without credential storage fields;
+- expected-authorization matrix bound to target + canonical endpoint;
+- Core ActionType / AuthorizationDecision reuse;
+- referential and duplicate-ID fail-closed validation;
+- secret-bearing metadata rejection;
+- persistent project-isolated context state;
+- functional Security Context localhost GUI and API;
+- focused persistence/API suites and packaged app: PASS.
+
+### Sprint 10 Phase 3 explicit boundary
+
+Context is now explicit and persisted, but existing object/function/tenant/property/workflow/routing analyzers are not
+yet projected into the standalone host. Phase 4 is the active dependency.
 
 ### Sprint 10 Phase 2 verified capability
 
