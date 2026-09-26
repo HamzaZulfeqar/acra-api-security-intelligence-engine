@@ -2,9 +2,22 @@
 
 ## Current gate — 2026-09-26
 
-**Sprint 10 Phase 7 — CONTROLLED ACTIVE EXECUTION: VERIFIED; PHASE 8 ACTIVE.**
+**Sprint 10 Phase 8 — OPTIONAL BURP BRIDGE + PACKAGING: VERIFIED; FINAL CLOSURE ACTIVE.**
 
-Canonical Phase 7 evidence:
+Canonical Phase 8 evidence:
+- branch: `s10-standalone-workbench`
+- verified head: `ffca14dd80b22d44a03c084311e69695f01112c1`
+- workflow run: `36213386173` — SUCCESS
+- official Montoya Burp adapter build: PASS
+- headless standalone bridge contract: PASS
+- loopback-only bridge management URL: PASS
+- distribution bundle build: PASS
+- JAR SHA-256 manifest verification: PASS
+- clean distribution extraction: PASS
+- extracted standalone startup: PASS
+- real Burp desktop runtime remains UNVERIFIED / DEFERRED
+
+Historical Phase 7 evidence:
 - branch: `s10-standalone-workbench`
 - verified code-bearing head: `3125f71922e5c617bff62f35ac0b11d9f535fca7`
 - standalone workflow run: `36212999470` — SUCCESS
