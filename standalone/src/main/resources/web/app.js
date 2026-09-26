@@ -8,6 +8,7 @@ const state={
   evidence:{artifacts:[],samples:[]},
   candidates:[],
   coverage:{summary:{total:0,tested:0,untested:0,partial:0,inconclusive:0,notApplicable:0},entries:[]},
+  active:{killSwitchEngaged:false,executions:[]},
   activeProjectId:""
 };
 
@@ -17,6 +18,7 @@ const viewMeta={
   inventory:["API Inventory","Import and normalize OpenAPI, HAR and raw HTTP evidence."],
   context:["Security Context","Define principals, roles, tenants, resources, ownership and expected authorization."],
   authorization:["Authorization","Identity, role, tenant and policy intelligence."],
+  active:["Active Validation","Controlled loopback LAB execution through ACRA Core safety gates."],
   "object-access":["Object Access","Object-level authorization reasoning and evidence."],
   "function-access":["Function Access","Function-level authorization reasoning and evidence."],
   "property-access":["Property Access","Property-level READ/UPDATE authorization intelligence."],
@@ -75,6 +77,7 @@ async function loadProjects(preferId){
     state.evidence={artifacts:[],samples:[]};
     state.candidates=[];
     state.coverage={summary:{total:0,tested:0,untested:0,partial:0,inconclusive:0,notApplicable:0},entries:[]};
+    state.active={killSwitchEngaged:false,executions:[]};
     renderTargets();
     syncImportTargets();
     renderInventory();
@@ -83,6 +86,8 @@ async function loadProjects(preferId){
     renderEvidence();
     renderCandidates();
     renderCoverage();
+    renderActive();
+    syncActiveSelectors();
     return;
   }
 
@@ -103,6 +108,7 @@ async function loadProjects(preferId){
   await loadProjection();
   await loadEvidence();
   await loadReviewProduct();
+  await loadActive();
 }
 
 async function loadTargets(){
@@ -117,6 +123,7 @@ async function loadTargets(){
   renderTargets();
   syncImportTargets();
   syncContextSelectors();
+  syncActiveSelectors();
 }
 
 async function loadInventory(){
@@ -129,6 +136,7 @@ async function loadInventory(){
   state.inventory=await api("/api/inventory?projectId="+encodeURIComponent(state.activeProjectId));
   renderInventory(document.querySelector("#inventory-search")?document.querySelector("#inventory-search").value:"");
   syncContextSelectors();
+  syncActiveSelectors();
 }
 
 async function loadProjection(){
@@ -159,6 +167,18 @@ async function loadReviewProduct(){
   renderCoverage();
 }
 
+async function loadActive(){
+  if(!state.activeProjectId){
+    state.active={killSwitchEngaged:false,executions:[]};
+    renderActive();
+    syncActiveSelectors();
+    return;
+  }
+  state.active=await api("/api/active?projectId="+encodeURIComponent(state.activeProjectId));
+  renderActive();
+  syncActiveSelectors();
+}
+
 async function loadEvidence(){
   if(!state.activeProjectId){
     state.evidence={artifacts:[],samples:[]};
@@ -178,6 +198,7 @@ async function loadContext(){
   state.context=await api("/api/context?projectId="+encodeURIComponent(state.activeProjectId));
   renderContext(document.querySelector("#context-search")?document.querySelector("#context-search").value:"");
   syncContextSelectors();
+  syncActiveSelectors();
 }
 
 function renderTargets(){
@@ -595,6 +616,117 @@ function renderCoverage(){
   document.querySelector("#coverage-empty").hidden=(data.entries||[]).length>0;
 }
 
+function renderActive(){
+  const data=state.active||{killSwitchEngaged:false,executions:[]};
+  const status=document.querySelector("#active-kill-status");
+  const submit=document.querySelector("#active-form button[type='submit']");
+  if(status){
+    status.textContent=data.killSwitchEngaged?"Kill switch: ENGAGED":"Kill switch: ready";
+    status.classList.toggle("active-kill-engaged",Boolean(data.killSwitchEngaged));
+  }
+  if(submit) submit.disabled=Boolean(data.killSwitchEngaged);
+
+  const executions=data.executions||[];
+  const count=document.querySelector("#active-execution-count");
+  if(count) count.textContent=executions.length;
+  const body=document.querySelector("#active-table-body");
+  const empty=document.querySelector("#active-empty");
+  if(!body||!empty) return;
+  body.innerHTML="";
+  executions.slice().reverse().forEach(function(item){
+    const row=document.createElement("tr");
+    [
+      item.endpoint,
+      item.requestPath,
+      item.mutatedPath,
+      item.expectedDecision,
+      item.observedDecision,
+      item.differentialClassification,
+      item.state,
+      String(item.coreEvidenceObjectCount),
+      item.createdAt
+    ].forEach(function(value,index){
+      const cell=document.createElement("td");
+      cell.textContent=value;
+      if(index===0||index===1||index===2) cell.className="route-cell";
+      if(index===3||index===4) cell.classList.add("decision-cell");
+      row.append(cell);
+    });
+    body.append(row);
+  });
+  empty.hidden=executions.length>0;
+}
+
+function isLoopbackControlledTarget(target){
+  if(!target||target.environment!=="LAB"||target.testingMode!=="CONTROLLED_LAB") return false;
+  try{
+    const host=new URL(target.baseUrl).hostname.toLowerCase();
+    return host==="localhost"||host==="127.0.0.1"||host==="::1"||host==="[::1]";
+  }catch(_){
+    return false;
+  }
+}
+
+function syncActiveSelectors(){
+  const targetSelect=document.querySelector("#active-target");
+  const expectationSelect=document.querySelector("#active-expectation");
+  if(!targetSelect||!expectationSelect) return;
+
+  const previousTarget=targetSelect.value;
+  const targets=state.targets.filter(isLoopbackControlledTarget);
+  setOptions("#active-target",targets,function(item){return item.id;},
+    function(item){return item.displayName+" — "+item.baseUrl;},false);
+  if(targets.some(function(item){return item.id===previousTarget;})) targetSelect.value=previousTarget;
+  targetSelect.disabled=targets.length===0;
+
+  syncActiveExpectations();
+}
+
+function syncActiveExpectations(){
+  const targetSelect=document.querySelector("#active-target");
+  const expectationSelect=document.querySelector("#active-expectation");
+  if(!targetSelect||!expectationSelect) return;
+  const targetId=targetSelect.value;
+  const safeEndpointKeys=new Set(
+    state.inventory
+      .filter(function(item){
+        return item.targetId===targetId&&["GET","HEAD","OPTIONS"].includes(item.method);
+      })
+      .map(function(item){return item.canonicalPath;})
+  );
+  const rows=(state.context.expectations||[]).filter(function(item){
+    return item.targetId===targetId
+      && item.action==="READ"
+      && (item.expectedDecision==="ALLOW"||item.expectedDecision==="DENY")
+      && safeEndpointKeys.has(item.endpoint);
+  });
+  setOptions("#active-expectation",rows,function(item){return item.id;},
+    function(item){
+      return item.principalId+" · "+item.expectedDecision+" · "+item.endpoint;
+    },false);
+  expectationSelect.disabled=rows.length===0;
+  syncActivePath();
+}
+
+function syncActivePath(){
+  const targetId=document.querySelector("#active-target")?.value||"";
+  const expectationId=document.querySelector("#active-expectation")?.value||"";
+  const input=document.querySelector("#active-path");
+  if(!input) return;
+  const expectation=(state.context.expectations||[]).find(function(item){return item.id===expectationId;});
+  if(!expectation){input.value="";return;}
+  const candidates=state.inventory.filter(function(item){
+    return item.targetId===targetId
+      && item.canonicalPath===expectation.endpoint
+      && ["GET","HEAD","OPTIONS"].includes(item.method)
+      && !item.rawPath.includes("{")
+      && !item.rawPath.includes("}");
+  });
+  if(candidates.length) input.value=candidates[0].rawPath;
+  else if(!input.value||input.dataset.autoFilled==="true") input.value="";
+  input.dataset.autoFilled=candidates.length?"true":"false";
+}
+
 function renderMiniList(selector,items,formatter){
   const host=document.querySelector(selector);
   if(!host) return;
@@ -696,6 +828,7 @@ function wireEvents(){
     await loadProjection();
     await loadEvidence();
     await loadReviewProduct();
+    await loadActive();
   });
 
   document.querySelector("#project-form").addEventListener("submit",createProject);
@@ -726,6 +859,11 @@ function wireEvents(){
   document.querySelector("#http-diff-form").addEventListener("submit",compareHttpEvidence);
   document.querySelector("#auth-diff-form").addEventListener("submit",compareAuthorizationEvidence);
   document.querySelector("#expectation-target").addEventListener("change",syncExpectationEndpoints);
+  document.querySelector("#active-target").addEventListener("change",syncActiveExpectations);
+  document.querySelector("#active-expectation").addEventListener("change",syncActivePath);
+  document.querySelector("#active-form").addEventListener("submit",runActiveValidation);
+  document.querySelector("#active-kill-button").addEventListener("click",engageActiveKillSwitch);
+  document.querySelector("#active-reset-button").addEventListener("click",resetActiveKillSwitch);
 
   document.querySelector("#import-file").addEventListener("change",async function(event){
     const file=event.target.files&&event.target.files[0];
@@ -748,7 +886,7 @@ function openView(name){
   document.querySelector("#view-title").textContent=meta[0];
   document.querySelector("#view-subtitle").textContent=meta[1];
 
-  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"||name==="authorization"||name==="evidence"||name==="candidates"||name==="coverage"||name==="reports"){
+  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"||name==="authorization"||name==="active"||name==="evidence"||name==="candidates"||name==="coverage"||name==="reports"){
     document.querySelector("#"+name+"-view").classList.add("active");
   }else{
     document.querySelector("#placeholder-title").textContent=meta[0];
@@ -908,6 +1046,72 @@ async function generateReport(event){
   }catch(error){
     document.querySelector("#report-preview").textContent="Report generation failed: "+error.message;
     document.querySelector("#report-sha").textContent="—";
+  }
+}
+
+async function runActiveValidation(event){
+  event.preventDefault();
+  if(!state.activeProjectId){
+    showMessage("#active-message","Create or select a project first.",false);
+    return;
+  }
+  const form=event.currentTarget;
+  const body=new URLSearchParams(new FormData(form));
+  body.set("projectId",state.activeProjectId);
+  body.set("action","EXECUTE_ROUTE_EQUIVALENCE");
+  body.set("confirmed",form.elements.confirmed.checked?"true":"false");
+  try{
+    const result=await api("/api/active",{
+      method:"POST",
+      headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body:body
+    });
+    form.elements.testedAuthorizationValue.value="";
+    form.elements.positiveControlAuthorizationValue.value="";
+    form.elements.confirmed.checked=false;
+    showMessage("#active-message",
+      "Controlled execution complete: expected "+result.expectedDecision+
+      ", observed "+result.observedDecision+
+      ", differential "+result.differentialClassification+".",true);
+    await loadActive();
+    await loadEvidence();
+    await loadReviewProduct();
+  }catch(error){
+    form.elements.testedAuthorizationValue.value="";
+    form.elements.positiveControlAuthorizationValue.value="";
+    form.elements.confirmed.checked=false;
+    showMessage("#active-message",error.message,false);
+    await loadActive();
+  }
+}
+
+async function engageActiveKillSwitch(){
+  if(!state.activeProjectId) return;
+  try{
+    const body=new URLSearchParams();
+    body.set("action","KILL");
+    body.set("reason","standalone operator stop");
+    await api("/api/active",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body});
+    showMessage("#active-message","Kill switch engaged. Controlled active execution is blocked.",true);
+    await loadActive();
+  }catch(error){
+    showMessage("#active-message",error.message,false);
+  }
+}
+
+async function resetActiveKillSwitch(){
+  if(!state.activeProjectId) return;
+  if(!window.confirm("Reset the ACRA kill switch and re-enable controlled localhost execution?")) return;
+  try{
+    const body=new URLSearchParams();
+    body.set("action","RESET_KILL");
+    body.set("confirmed","true");
+    body.set("reason","standalone operator reset");
+    await api("/api/active",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body});
+    showMessage("#active-message","Kill switch reset. Guarded controlled execution is available.",true);
+    await loadActive();
+  }catch(error){
+    showMessage("#active-message",error.message,false);
   }
 }
 
