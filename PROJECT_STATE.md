@@ -2,13 +2,30 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 7 verified; Phase 8 active.  
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 8 verified; final closure active.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `3125f71922e5c617bff62f35ac0b11d9f535fca7`.  
-**Sprint 10 Phase 7 verification:** GitHub Actions run `36212999470` — SUCCESS.  
+**Verified code-bearing head:** `ffca14dd80b22d44a03c084311e69695f01112c1`.  
+**Sprint 10 Phase 8 verification:** GitHub Actions run `36213386173` — SUCCESS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 8 verified capability
+
+- explicit optional Burp → standalone handoff over loopback;
+- health/CSRF bridge handshake and standalone scope/redaction authority retained;
+- bounded in-memory Burp transaction buffer; no automatic forwarding;
+- official Montoya extension build + headless bridge contract: PASS;
+- prebuilt standalone + optional Burp adapter distribution bundle;
+- platform launchers + startup diagnostics;
+- SHA-256 manifest + bundle digest;
+- clean extraction and extracted-JAR startup: PASS;
+- Phase 8 workflow `36213386173`: SUCCESS.
+
+### Sprint 10 Phase 8 explicit boundary
+
+The bridge is optional and does not make Burp a prerequisite. Real Burp desktop loading, menu behavior and visual UI
+remain **UNVERIFIED / DEFERRED**; Phase 8 evidence is compilation + headless contract verification.
 
 ### Sprint 10 Phase 7 verified capability
 
