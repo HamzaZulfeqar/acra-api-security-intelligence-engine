@@ -9,7 +9,28 @@
 **Sprint 11 Phase 2:** VERIFIED, code-bearing head `d0213af7d9f7002ffe44f43a516f0f4d9e2f0bcc`, run `36215309359` — SUCCESS.  
 **Sprint 11 Phase 3:** VERIFIED, run `36215524311` — SUCCESS.  
 **Sprint 11 Phase 4:** VERIFIED, head `9344b37dfab2c9404539041811bf51356dcb531a`, run `36247738000` — SUCCESS.  
-**Active dependency:** Phase 5 — Standalone Review & Reproduction Product Surface.
+**Sprint 11 Phase 5:** VERIFIED, head `6e0b090b037f037982d61bd3f62a2a3bcc54d521`, run `36248083390` — SUCCESS.  
+**Active dependency:** Phase 6 — Research Ground-Truth Readiness.
+
+### Sprint 11 Phase 5 verified capability
+
+- Reviewed Findings + Review History retained as the primary human-review surface;
+- JSON and SARIF reproduction previews exposed read-only;
+- Burp Issue Draft exposed read-only with publication eligibility visible;
+- no automatic Burp publication operation in standalone APIs/UI;
+- deterministic SHA-256/draft identity surfaced;
+- reviewer/reason exclusion preserved by the product-surface API;
+- dedicated localhost product-surface suite: PASS;
+- browser JavaScript and packaged standalone startup: PASS.
+
+### Sprint 11 Phase 5 verification
+
+Run `36248083390` — SUCCESS at `6e0b090b037f037982d61bd3f62a2a3bcc54d521`.
+
+### Sprint 11 Phase 5 boundary
+
+Product review/reproduction is complete for the standalone line, but research accuracy metrics remain unmeasured.
+Phase 6 is active only for controlled ground-truth readiness, not research result fabrication.
 
 ### Sprint 11 Phase 4 verified capability
 
