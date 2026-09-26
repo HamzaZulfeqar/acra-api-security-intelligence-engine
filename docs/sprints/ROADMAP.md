@@ -2,9 +2,21 @@
 
 ## Current gate — 2026-09-26 — standalone Sprint 11
 
-**Sprint 11 Phase 4 — SARIF + OPTIONAL BURP ISSUE DRAFT: VERIFIED; PHASE 5 ACTIVE.**
+**Sprint 11 Phase 5 — STANDALONE REVIEW & REPRODUCTION SURFACE: VERIFIED; PHASE 6 ACTIVE.**
 
-Canonical Phase 4 evidence:
+Canonical Phase 5 evidence:
+- branch: `s11-standalone-finding-lifecycle`
+- verified head: `6e0b090b037f037982d61bd3f62a2a3bcc54d521`
+- workflow run: `36248083390` — SUCCESS
+- finding lifecycle/review surface: PASS
+- read-only JSON reproduction preview: PASS
+- read-only SARIF preview: PASS
+- read-only Burp Issue Draft preview: PASS
+- no automatic Burp publication action: PASS
+- browser JavaScript: PASS
+- packaged standalone startup: PASS
+
+Historical Phase 4 evidence:
 - branch: `s11-standalone-finding-lifecycle`
 - verified head: `9344b37dfab2c9404539041811bf51356dcb531a`
 - workflow run: `36247738000` — SUCCESS
@@ -39,7 +51,7 @@ Historical Phase 1–2 evidence:
 - secret-bearing review rejection: PASS
 - packaged Reviewed Findings UI: PASS
 
-**Sprint 11 is NOT software-complete.** Phase 5 is active: standalone review/reproduction product surface over the verified lifecycle and export services.
+**Sprint 11 is NOT software-complete.** Phase 6 is active: controlled research ground-truth readiness with metrics explicitly NOT MEASURED.
 
 ## Current gate — 2026-09-26
 
