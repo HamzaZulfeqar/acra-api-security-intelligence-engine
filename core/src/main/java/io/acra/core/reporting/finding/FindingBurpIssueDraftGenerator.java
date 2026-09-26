@@ -72,9 +72,9 @@ public final class FindingBurpIssueDraftGenerator {
                 reproduction.evidenceIds(),
                 java.util.List.of(
                         "This draft does not publish an issue to Burp Suite.",
-                        "A full base URL must be supplied at the Montoya adapter boundary.",
+                        "A full base URL must be supplied at the external issue-adapter boundary.",
                         "Verified HttpRequestResponse objects are optional and are not fabricated.",
-                        "Real Burp desktop publication remains a separate runtime validation gate."));
+                        "Desktop issue publication remains a separate adapter runtime validation gate."));
     }
 
     private static FindingBurpIssueSeverity severity(
