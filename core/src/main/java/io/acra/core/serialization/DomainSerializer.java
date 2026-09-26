@@ -9,4 +9,5 @@ public final class DomainSerializer {
     public DomainSerializer(){this(new UniversalRedactor());}
     public DomainSerializer(UniversalRedactor redactor){this.writer=new CanonicalJsonWriter(redactor);}
     public String serialize(Object value){ return writer.write(Map.of("schemaVersion",SCHEMA_VERSION,"type",value==null?"null":value.getClass().getSimpleName(),"data",value)); }
+    public String serializeCanonicalValue(Object value){ return writer.write(value); }
 }
