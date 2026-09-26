@@ -39,7 +39,7 @@ public final class StandaloneEvidenceDifferentialTestSuite {
                         },
                         "response":{
                           "status":200,
-                          "content":{"mimeType":"application/json","text":"{\"id\":42,\"name\":\"A\"}"}
+                          "content":{"mimeType":"application/json","text":"{\\\"id\\\":42,\\\"name\\\":\\\"A\\\"}"}
                         }
                       }]}
                     }
@@ -50,7 +50,7 @@ public final class StandaloneEvidenceDifferentialTestSuite {
                         "request":{"method":"GET","url":"https://api.example.test/api/v1/users/42"},
                         "response":{
                           "status":403,
-                          "content":{"mimeType":"application/json","text":"{\"error\":\"forbidden\"}"}
+                          "content":{"mimeType":"application/json","text":"{\\\"error\\\":\\\"forbidden\\\"}"}
                         }
                       }]}
                     }
