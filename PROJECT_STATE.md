@@ -2,16 +2,54 @@
 
 ## Current state — 2026-09-26 — Sprint 11 standalone line
 
-**Current sprint:** Sprint 11 — Standalone Finding Lifecycle, Reproduction & Research Readiness.  
+**Current sprint:** Sprint 11 — Standalone Finding Lifecycle, Reproduction & Research Readiness (closed).  
+**Decision:** S11 SOFTWARE COMPLETE.  
 **Working branch:** `s11-standalone-finding-lifecycle`.  
 **Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`, run `36213547092` — SUCCESS.  
+**Canonical Sprint 11 closure source:** `1384b86e5e4d33f5ff3c0c97fdc0db667d0b9322`.  
+**Sprint 11 final closure:** run `36251613644` — SUCCESS.  
+**Sprint 11 source checkpoint SHA-256:** `9aa4cb3301f0ae75a6d335e538fab20351bbc7dc6f5e8a63cfec2df07982762a`.  
+**Sprint 11 distribution SHA-256:** `472dfbb7c1abfd3c5e46bb16c75d8b272c53e263cf9f55b4150963174263229a`.  
+**Sprint 11 checkpoint entries:** 1002; unsafe paths: 0; duplicate entries: 0; clean extraction/per-file equality: PASS.  
 **Sprint 11 Phase 1:** VERIFIED, run `36214703722` — SUCCESS.  
 **Sprint 11 Phase 2:** VERIFIED, code-bearing head `d0213af7d9f7002ffe44f43a516f0f4d9e2f0bcc`, run `36215309359` — SUCCESS.  
 **Sprint 11 Phase 3:** VERIFIED, run `36215524311` — SUCCESS.  
 **Sprint 11 Phase 4:** VERIFIED, head `9344b37dfab2c9404539041811bf51356dcb531a`, run `36247738000` — SUCCESS.  
 **Sprint 11 Phase 5:** VERIFIED, head `6e0b090b037f037982d61bd3f62a2a3bcc54d521`, run `36248083390` — SUCCESS.  
 **Sprint 11 Phase 6:** VERIFIED, run `36248296847` — SUCCESS.  
-**Active dependency:** Phase 7 — Security / Performance / Final Closure.
+**Sprint 11 Phase 7:** VERIFIED, run `36251613644` — SUCCESS.  
+**Sprint 12:** NOT STARTED.
+
+### Sprint 11 final closure
+
+Sprint 11 is **SOFTWARE COMPLETE**.
+
+Canonical final verification:
+- run `36251613644` — SUCCESS;
+- source commit `1384b86e5e4d33f5ff3c0c97fdc0db667d0b9322`;
+- deterministic source archive SHA-256 `9aa4cb3301f0ae75a6d335e538fab20351bbc7dc6f5e8a63cfec2df07982762a`;
+- 1002 source entries;
+- unsafe paths 0;
+- duplicates 0;
+- clean extraction equality PASS;
+- per-file SHA-256 equality PASS;
+- distribution bundle SHA-256 `472dfbb7c1abfd3c5e46bb16c75d8b272c53e263cf9f55b4150963174263229a`;
+- ACRA Core CI / Sprint 2 / Sprint 3 / Sprint 11 focused workflow: SUCCESS on the same source head;
+- A0-A7 remain SOFTWARE_READY / RESEARCH_NOT_RUN;
+- TP/TN/FP/FN, precision, recall and F1 remain NOT_MEASURED;
+- real Burp desktop publication remains UNVERIFIED / DEFERRED.
+
+Sprint 12 is **NOT STARTED**.
+
+### Sprint 11 Phase 7 verified capability
+
+- secret-hardening regressions: PASS;
+- deterministic JSON/SARIF reproduction identity: PASS;
+- bounded CI observation only; no performance guarantee claimed;
+- complete Sprint 10 regression retained;
+- deterministic checkpoint packaging: PASS;
+- local Montoya compatibility stub completed;
+- Core vendor-runtime dependency boundary remains intact.
 
 ### Sprint 11 Phase 6 verified capability
 
