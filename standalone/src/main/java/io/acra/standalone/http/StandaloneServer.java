@@ -30,6 +30,7 @@ import io.acra.standalone.service.StandaloneControlledExecutionService;
 import io.acra.standalone.service.StandaloneCoreProjectionService;
 import io.acra.standalone.service.StandaloneEvidenceService;
 import io.acra.standalone.service.StandaloneFindingLifecycleService;
+import io.acra.standalone.service.StandaloneFindingReproductionService;
 import io.acra.standalone.service.StandaloneImportService;
 import io.acra.standalone.service.StandaloneReviewReportingService;
 import io.acra.standalone.store.LocalWorkspaceStore;
@@ -58,6 +59,7 @@ public final class StandaloneServer implements AutoCloseable {
     private final StandaloneReviewReportingService reviewReportingService;
     private final StandaloneControlledExecutionService controlledExecutionService;
     private final StandaloneFindingLifecycleService findingLifecycleService;
+    private final StandaloneFindingReproductionService findingReproductionService;
     private final HttpServer server;
     private final String csrfToken;
 
@@ -70,6 +72,7 @@ public final class StandaloneServer implements AutoCloseable {
         this.reviewReportingService = new StandaloneReviewReportingService(store);
         this.controlledExecutionService = new StandaloneControlledExecutionService(store);
         this.findingLifecycleService = new StandaloneFindingLifecycleService(store);
+        this.findingReproductionService = new StandaloneFindingReproductionService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -113,6 +116,7 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/report", this::handleReport);
         server.createContext("/api/active", this::handleActive);
         server.createContext("/api/findings", this::handleFindings);
+        server.createContext("/api/finding-reproduction", this::handleFindingReproduction);
         server.createContext("/", this::handleStatic);
     }
 
@@ -547,6 +551,27 @@ public final class StandaloneServer implements AutoCloseable {
         methodNotAllowed(exchange);
     }
 
+    private void handleFindingReproduction(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "GET", false)) return;
+        try {
+            Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+            UUID projectId = UUID.fromString(required(query, "projectId"));
+            String findingId = required(query, "findingId");
+            String format = required(query, "format").strip().toUpperCase(java.util.Locale.ROOT);
+
+            String json = switch (format) {
+                case "JSON" -> findingExportJson(findingReproductionService.json(projectId, findingId));
+                case "SARIF" -> findingExportJson(findingReproductionService.sarif(projectId, findingId));
+                case "BURP_DRAFT" -> findingBurpDraftJson(
+                        findingReproductionService.burpDraft(projectId, findingId));
+                default -> throw new IllegalArgumentException("unsupported reproduction format");
+            };
+            HttpSupport.sendJson(exchange, 200, json);
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
+    }
+
     private void handleStatic(HttpExchange exchange) throws IOException {
         if (!allowRequest(exchange, "GET", false)) return;
         String path = exchange.getRequestURI().getPath();
@@ -757,6 +782,40 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"evidenceArtifactId\":" + HttpSupport.jsonString(record.evidenceArtifactId().toString()) +
                 ",\"coreEvidenceObjectCount\":" + record.coreEvidenceObjectCount() +
                 ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String findingExportJson(
+            io.acra.core.reporting.finding.FindingReproductionExportArtifact artifact) {
+        return "{\"format\":" + HttpSupport.jsonString(artifact.format()) +
+                ",\"mediaType\":" + HttpSupport.jsonString(artifact.mediaType()) +
+                ",\"fileName\":" + HttpSupport.jsonString(artifact.fileName()) +
+                ",\"sha256\":" + HttpSupport.jsonString(artifact.sha256()) +
+                ",\"content\":" + HttpSupport.jsonString(artifact.content()) + "}";
+    }
+
+    private static String findingBurpDraftJson(
+            io.acra.core.reporting.finding.FindingBurpIssueDraft draft) {
+        String evidence = draft.evidenceIds().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String limitations = draft.limitations().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        return "{\"format\":\"BURP_DRAFT\"" +
+                ",\"draftId\":" + HttpSupport.jsonString(draft.draftId()) +
+                ",\"reproductionId\":" + HttpSupport.jsonString(draft.reproductionId()) +
+                ",\"findingId\":" + HttpSupport.jsonString(draft.findingId()) +
+                ",\"lifecycleState\":" + HttpSupport.jsonString(draft.lifecycleState().name()) +
+                ",\"name\":" + HttpSupport.jsonString(draft.name()) +
+                ",\"detail\":" + HttpSupport.jsonString(draft.detail()) +
+                ",\"remediation\":" + HttpSupport.jsonString(draft.remediation()) +
+                ",\"targetEndpoint\":" + HttpSupport.jsonString(draft.targetEndpoint()) +
+                ",\"severity\":" + HttpSupport.jsonString(draft.severity().name()) +
+                ",\"confidence\":" + HttpSupport.jsonString(draft.confidence().name()) +
+                ",\"typicalSeverity\":" + HttpSupport.jsonString(draft.typicalSeverity().name()) +
+                ",\"publicationEligible\":" + draft.publicationEligible() +
+                ",\"evidenceIds\":" + evidence +
+                ",\"limitations\":" + limitations + "}";
     }
 
     private static String reviewedFindingJson(StandaloneFindingReviewRecord record) {
