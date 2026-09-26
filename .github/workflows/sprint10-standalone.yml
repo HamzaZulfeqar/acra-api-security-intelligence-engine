@@ -50,6 +50,12 @@ jobs:
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneImportInventoryTestSuite
 
+      - name: Run standalone security context suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneSecurityContextTestSuite
+
       - name: Verify packaged localhost application
         run: |
           HOME_DIR="$RUNNER_TEMP/acra-standalone-home"
