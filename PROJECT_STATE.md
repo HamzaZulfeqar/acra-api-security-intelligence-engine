@@ -1,5 +1,48 @@
 # ACRA Project State
 
+## Current state — 2026-09-26 — Sprint 11 standalone line
+
+**Current sprint:** Sprint 11 — Standalone Finding Lifecycle, Reproduction & Research Readiness.  
+**Working branch:** `s11-standalone-finding-lifecycle`.  
+**Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`, run `36213547092` — SUCCESS.  
+**Sprint 11 Phase 1:** VERIFIED, run `36214703722` — SUCCESS.  
+**Sprint 11 Phase 2:** VERIFIED, code-bearing head `d0213af7d9f7002ffe44f43a516f0f4d9e2f0bcc`, run `36215309359` — SUCCESS.  
+**Active dependency:** Phase 3 — minimized reproduction package + deterministic JSON.
+
+### Sprint 11 Phase 2 verified capability
+
+- only evidence-backed completed controlled DENY→ALLOW / UNEXPECTED_CHANGE executions may enter finding review;
+- persisted ACTIVE_EXECUTION evidence and Core evidence-chain count required;
+- deterministic `FindingCandidateState.CANDIDATE` projection from source execution;
+- independent Core `AuthorizationSeverityEvaluator` reused;
+- human lifecycle begins at NEEDS_REVIEW;
+- mandatory NEEDS_REVIEW → VALIDATED → CONFIRMED path;
+- explicit FALSE_POSITIVE and post-CONFIRMED ACCEPTED_RISK dispositions;
+- project-isolated persistent reviewed-finding state and transition history;
+- source execution/candidate/risk/fingerprint drift checks;
+- review evidence must exist in the same project and target;
+- secret-bearing reviewer/reason metadata rejected;
+- CSRF-protected `/api/findings` API;
+- functional Reviewed Findings browser workspace with eligible intake, lifecycle counts, transitions and history;
+- direct candidate/execution to CONFIRMED promotion: rejected.
+
+### Sprint 11 Phase 2 verification
+
+Run `36215309359` passed:
+- full Maven reactor;
+- Sprint 11 lifecycle foundation;
+- Core finding-review workspace;
+- standalone execution→finding integration;
+- localhost finding lifecycle API contract;
+- packaged Reviewed Findings UI assertions;
+- browser JavaScript syntax;
+- packaged standalone startup.
+
+### Sprint 11 boundary
+
+No finding is confirmed automatically. Phase 3 may package/reproduce reviewed findings, but must not fabricate raw
+HTTP, reviewer identity, missing provenance, or external-target evidence.
+
 ## Current state — 2026-09-26
 
 **Current sprint:** Sprint 10 — Standalone Localhost Security Workbench (closed).  
