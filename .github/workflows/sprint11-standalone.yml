@@ -97,6 +97,22 @@ jobs:
           python3 -m json.tool lab/ground-truth/GT-S11-AUTHORIZATION-RESEARCH.json >/dev/null
           python3 scripts/verify-sprint11-ground-truth.py
 
+      - name: Run Sprint 11 finding security hardening
+        run: |
+          mkdir -p build/s11-final
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint11.Sprint11FindingSecurityHardeningTestSuite \
+            | tee build/s11-final/security-hardening.txt
+
+      - name: Run Sprint 11 bounded engineering observation
+        run: |
+          mkdir -p build/s11-final
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint11.Sprint11FindingPerformanceObservationTestSuite \
+            | tee build/s11-final/performance-observation.txt
+
       - name: Validate standalone browser JavaScript
         run: node --check standalone/src/main/resources/web/app.js
 
@@ -130,4 +146,6 @@ jobs:
             ${{ runner.temp }}/acra-s11-standalone.log
             ${{ runner.temp }}/acra-s11-health.json
             build/s11-ground-truth/verification.json
+            build/s11-final/security-hardening.txt
+            build/s11-final/performance-observation.txt
           if-no-files-found: warn
