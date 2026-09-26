@@ -129,9 +129,7 @@ Deliverables:
 Gate:
 - headless adapter regressions; real Burp desktop remains separately labeled unless actually validated.
 
-## Active
-
-### Final Sprint 10 Closure
+### Final Sprint 10 Closure — VERIFIED
 Required:
 - full dependency-ordered regression;
 - deterministic source checkpoint/package;
@@ -141,4 +139,4 @@ Required:
 
 ## Current next action
 
-Execute **Final Sprint 10 Closure** only. No Sprint 11 work opens until the closure checkpoint and full regression are green.
+Sprint 10 is **closed**. Sprint 11 is **NOT STARTED**. Any further implementation requires a new sprint boundary or an explicitly scoped maintenance patch.
