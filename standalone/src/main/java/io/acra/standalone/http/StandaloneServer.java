@@ -3,6 +3,8 @@ package io.acra.standalone.http;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import io.acra.core.domain.http.HttpMethod;
+import io.acra.standalone.model.CoreAuthorizationProjectionRecord;
+import io.acra.standalone.model.CoreProjectionSnapshot;
 import io.acra.standalone.model.ImportSummary;
 import io.acra.standalone.model.InventoryRecord;
 import io.acra.standalone.model.ProjectRecord;
@@ -13,6 +15,7 @@ import io.acra.standalone.model.RoleContextRecord;
 import io.acra.standalone.model.TargetRecord;
 import io.acra.standalone.model.TenantContextRecord;
 import io.acra.standalone.service.SecurityContextService;
+import io.acra.standalone.service.StandaloneCoreProjectionService;
 import io.acra.standalone.service.StandaloneImportService;
 import io.acra.standalone.store.LocalWorkspaceStore;
 
@@ -35,6 +38,7 @@ public final class StandaloneServer implements AutoCloseable {
     private final LocalWorkspaceStore store;
     private final StandaloneImportService importService;
     private final SecurityContextService contextService;
+    private final StandaloneCoreProjectionService projectionService;
     private final HttpServer server;
     private final String csrfToken;
 
@@ -42,6 +46,7 @@ public final class StandaloneServer implements AutoCloseable {
         this.store = store;
         this.importService = new StandaloneImportService(store);
         this.contextService = new SecurityContextService(store);
+        this.projectionService = new StandaloneCoreProjectionService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -77,6 +82,7 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/import", this::handleImport);
         server.createContext("/api/inventory", this::handleInventory);
         server.createContext("/api/context", this::handleContext);
+        server.createContext("/api/projection", this::handleProjection);
         server.createContext("/", this::handleStatic);
     }
 
@@ -249,6 +255,17 @@ public final class StandaloneServer implements AutoCloseable {
         methodNotAllowed(exchange);
     }
 
+    private void handleProjection(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "GET", false)) return;
+        try {
+            Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+            UUID projectId = UUID.fromString(required(query, "projectId"));
+            HttpSupport.sendJson(exchange, 200, projectionJson(projectionService.project(projectId)));
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
+    }
+
     private void handleStatic(HttpExchange exchange) throws IOException {
         if (!allowRequest(exchange, "GET", false)) return;
         String path = exchange.getRequestURI().getPath();
@@ -392,6 +409,45 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"expectedDecision\":" + HttpSupport.jsonString(record.expectedDecision().name()) +
                 ",\"rationale\":" + HttpSupport.jsonString(record.rationale()) +
                 ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String projectionJson(CoreProjectionSnapshot snapshot) {
+        String authorization = snapshot.authorization().stream()
+                .map(StandaloneServer::projectionRowJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        return "{\"projectId\":" + HttpSupport.jsonString(snapshot.projectId().toString()) +
+                ",\"policyFingerprint\":" + HttpSupport.jsonString(snapshot.policyFingerprint()) +
+                ",\"membershipCount\":" + snapshot.membershipCount() +
+                ",\"roleAssignmentCount\":" + snapshot.roleAssignmentCount() +
+                ",\"permissionCount\":" + snapshot.permissionCount() +
+                ",\"ruleCount\":" + snapshot.ruleCount() +
+                ",\"authorization\":" + authorization +
+                ",\"workflowWorkspaceProjected\":" + snapshot.workflowWorkspaceProjected() +
+                ",\"workflowResolutionCount\":" + snapshot.workflowResolutionCount() +
+                ",\"routingWorkspaceProjected\":" + snapshot.routingWorkspaceProjected() +
+                ",\"routingAssessmentCount\":" + snapshot.routingAssessmentCount() +
+                ",\"propertyWorkspaceProjected\":" + snapshot.propertyWorkspaceProjected() +
+                ",\"propertyAssessmentCount\":" + snapshot.propertyAssessmentCount() + "}";
+    }
+
+    private static String projectionRowJson(CoreAuthorizationProjectionRecord record) {
+        String roles = record.effectiveRoleIds().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String reasons = record.resolutionReasons().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        return "{\"expectationId\":" + HttpSupport.jsonString(record.expectationId().toString()) +
+                ",\"endpoint\":" + HttpSupport.jsonString(record.endpoint()) +
+                ",\"action\":" + HttpSupport.jsonString(record.action()) +
+                ",\"principalId\":" + HttpSupport.jsonString(record.principalId()) +
+                ",\"configuredDecision\":" + HttpSupport.jsonString(record.configuredDecision().name()) +
+                ",\"resolvedDecision\":" + HttpSupport.jsonString(record.resolvedDecision().name()) +
+                ",\"resolutionState\":" + HttpSupport.jsonString(record.resolutionState().name()) +
+                ",\"effectiveRoleIds\":" + roles +
+                ",\"resolutionReasons\":" + reasons +
+                ",\"bolaStatus\":" + HttpSupport.jsonString(record.bolaStatus().name()) +
+                ",\"bflaStatus\":" + HttpSupport.jsonString(record.bflaStatus().name()) + "}";
     }
 
     private static String projectJson(ProjectRecord p) {
