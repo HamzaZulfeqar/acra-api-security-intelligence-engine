@@ -2,13 +2,28 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 5 verified; Phase 6 active.  
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 6 verified; Phase 7 active.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `8a340bf38fdaa58934d252abf6cdb2b8a30f14c3`.  
-**Sprint 10 Phase 5 verification:** GitHub Actions run `36209983492` — SUCCESS.  
+**Verified code-bearing head:** `84c09f2e60c94093fc653d8a5a17873c45a25d5d`.  
+**Sprint 10 Phase 6 verification:** GitHub Actions run `36210452986` — SUCCESS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 6 verified capability
+
+- Core FindingCandidate review layer preserving INCONCLUSIVE evidence state;
+- independent analyst review-state persistence;
+- explicit endpoint coverage gaps without false TESTED claims;
+- deterministic JSON / Markdown reports and SHA-256;
+- confirmedFindingCount fixed at zero;
+- functional Candidates / Coverage / Reports GUI/APIs;
+- Phase 6 run `36210452986`: SUCCESS.
+
+### Sprint 10 Phase 6 explicit boundary
+
+No active requests are emitted by Phase 6. Candidate review never substitutes for authenticated execution evidence.
+Phase 7 is active and must route all requests through existing ACRA safety controls.
 
 ### Sprint 10 Phase 5 verified capability
 
