@@ -217,6 +217,35 @@ Canonical Phase 7 verification:
 - all retained Phase 1–6 standalone suites — PASS;
 - packaged localhost application — PASS.
 
+## Phase 8 — Optional Burp Bridge + Packaging Hardening — VERIFIED
+
+Verified capability:
+- optional Burp-to-standalone bridge client with loopback-only standalone management URL enforcement;
+- health / CSRF handshake before explicit handoff;
+- explicit RAW_HTTP transaction import into an already-selected standalone project/target;
+- no automatic forwarding;
+- bounded in-memory passive transaction retention in the Burp adapter;
+- request serializer preserving Montoya raw request bytes when available;
+- dedicated Burp `Standalone Bridge` tab with Probe / Open / Send Selected controls;
+- official Montoya dependency build remains green;
+- headless bridge contract verifies loopback enforcement, handshake, one-shot handoff, serialization and bounded retention;
+- source startup launchers provide missing-tool diagnostics and `--no-build` mode;
+- standalone startup reports Java runtime, loopback management bind, port fallback, optional Burp bridge and active-validation boundary;
+- prebuilt distribution contains standalone JAR, optional Burp adapter JAR, Windows/Linux launchers, README and SHA-256 manifest;
+- distribution ZIP checksum emitted;
+- clean extraction verifies included JAR hashes;
+- extracted standalone JAR starts successfully and reports healthy loopback service.
+
+Canonical Phase 8 verification:
+- verified head: `ffca14dd80b22d44a03c084311e69695f01112c1`;
+- Sprint 10 workflow run `36213386173` — SUCCESS;
+- official Montoya Burp adapter build — PASS;
+- `Sprint10StandaloneBridgeTestSuite` — PASS;
+- all retained standalone Phase 1–7 suites — PASS;
+- distribution build — PASS;
+- clean extraction / SHA-256 verification — PASS;
+- extracted distribution startup — PASS.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
@@ -232,9 +261,8 @@ Security Context and Authorization are now functional. Workflow, Routing and Pro
 
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane and is no longer a prerequisite for standalone product startup.
 
-## Next dependency-ordered slices
-1. Burp-to-standalone bridge and packaging hardening.
-2. Final Sprint 10 regression and closure checkpoint.
+## Next dependency-ordered slice
+1. Final Sprint 10 regression and deterministic closure checkpoint.
 
 ## Definition of Done for Phase 2
 Phase 2 is verified only because CI proved:
