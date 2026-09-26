@@ -4,7 +4,11 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import io.acra.core.domain.http.HttpMethod;
 import io.acra.standalone.model.CoreAuthorizationProjectionRecord;
+import io.acra.standalone.model.AuthorizationContextDifferentialRecord;
 import io.acra.standalone.model.CoreProjectionSnapshot;
+import io.acra.standalone.model.EvidenceArtifactRecord;
+import io.acra.standalone.model.EvidenceDifferentialRecord;
+import io.acra.standalone.model.HttpEvidenceSampleRecord;
 import io.acra.standalone.model.ImportSummary;
 import io.acra.standalone.model.InventoryRecord;
 import io.acra.standalone.model.ProjectRecord;
@@ -16,6 +20,7 @@ import io.acra.standalone.model.TargetRecord;
 import io.acra.standalone.model.TenantContextRecord;
 import io.acra.standalone.service.SecurityContextService;
 import io.acra.standalone.service.StandaloneCoreProjectionService;
+import io.acra.standalone.service.StandaloneEvidenceService;
 import io.acra.standalone.service.StandaloneImportService;
 import io.acra.standalone.store.LocalWorkspaceStore;
 
@@ -39,6 +44,7 @@ public final class StandaloneServer implements AutoCloseable {
     private final StandaloneImportService importService;
     private final SecurityContextService contextService;
     private final StandaloneCoreProjectionService projectionService;
+    private final StandaloneEvidenceService evidenceService;
     private final HttpServer server;
     private final String csrfToken;
 
@@ -47,6 +53,7 @@ public final class StandaloneServer implements AutoCloseable {
         this.importService = new StandaloneImportService(store);
         this.contextService = new SecurityContextService(store);
         this.projectionService = new StandaloneCoreProjectionService(store);
+        this.evidenceService = new StandaloneEvidenceService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -83,6 +90,8 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/inventory", this::handleInventory);
         server.createContext("/api/context", this::handleContext);
         server.createContext("/api/projection", this::handleProjection);
+        server.createContext("/api/evidence", this::handleEvidence);
+        server.createContext("/api/differential", this::handleDifferential);
         server.createContext("/", this::handleStatic);
     }
 
@@ -266,6 +275,70 @@ public final class StandaloneServer implements AutoCloseable {
         }
     }
 
+    private void handleEvidence(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "GET", false)) return;
+        try {
+            Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+            UUID projectId = UUID.fromString(required(query, "projectId"));
+            String evidenceId = query.getOrDefault("evidenceId", "");
+            if (!evidenceId.isBlank()) {
+                UUID id = UUID.fromString(evidenceId);
+                EvidenceArtifactRecord artifact = evidenceService.artifacts(projectId).stream()
+                        .filter(value -> value.evidenceId().equals(id))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException("unknown evidence artifact"));
+                String content = evidenceService.redactedContent(projectId, id);
+                HttpSupport.sendJson(exchange, 200,
+                        "{\"artifact\":" + evidenceArtifactJson(artifact) +
+                        ",\"redactedContent\":" + HttpSupport.jsonString(content) + "}");
+                return;
+            }
+
+            String artifacts = evidenceService.artifacts(projectId).stream()
+                    .map(StandaloneServer::evidenceArtifactJson)
+                    .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+            String samples = evidenceService.samples(projectId).stream()
+                    .map(StandaloneServer::httpEvidenceSampleJson)
+                    .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+            HttpSupport.sendJson(exchange, 200,
+                    "{\"artifacts\":" + artifacts + ",\"samples\":" + samples + "}");
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
+    }
+
+    private void handleDifferential(HttpExchange exchange) throws IOException {
+        if (!allowRequest(exchange, "GET", false)) return;
+        try {
+            Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+            UUID projectId = UUID.fromString(required(query, "projectId"));
+            String type = required(query, "type").strip().toUpperCase(java.util.Locale.ROOT);
+
+            if ("HTTP".equals(type)) {
+                EvidenceDifferentialRecord diff = evidenceService.compareHttp(
+                        projectId,
+                        UUID.fromString(required(query, "leftId")),
+                        UUID.fromString(required(query, "rightId")),
+                        query.getOrDefault("mode", "NORMALIZED"));
+                HttpSupport.sendJson(exchange, 200, evidenceDifferentialJson(diff));
+                return;
+            }
+
+            if ("AUTHORIZATION".equals(type)) {
+                AuthorizationContextDifferentialRecord diff = evidenceService.compareAuthorization(
+                        projectId,
+                        UUID.fromString(required(query, "leftId")),
+                        UUID.fromString(required(query, "rightId")));
+                HttpSupport.sendJson(exchange, 200, authorizationDifferentialJson(diff));
+                return;
+            }
+
+            throw new IllegalArgumentException("unsupported differential type");
+        } catch (IllegalArgumentException ex) {
+            sendBadRequest(exchange, ex);
+        }
+    }
+
     private void handleStatic(HttpExchange exchange) throws IOException {
         if (!allowRequest(exchange, "GET", false)) return;
         String path = exchange.getRequestURI().getPath();
@@ -409,6 +482,56 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"expectedDecision\":" + HttpSupport.jsonString(record.expectedDecision().name()) +
                 ",\"rationale\":" + HttpSupport.jsonString(record.rationale()) +
                 ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String evidenceArtifactJson(EvidenceArtifactRecord record) {
+        return "{\"evidenceId\":" + HttpSupport.jsonString(record.evidenceId().toString()) +
+                ",\"targetId\":" + HttpSupport.jsonString(record.targetId().toString()) +
+                ",\"evidenceType\":" + HttpSupport.jsonString(record.evidenceType()) +
+                ",\"sourceReference\":" + HttpSupport.jsonString(record.sourceReference()) +
+                ",\"originalSha256\":" + HttpSupport.jsonString(record.originalSha256()) +
+                ",\"redactionApplied\":" + record.redactionApplied() +
+                ",\"originalLength\":" + record.originalLength() +
+                ",\"storedLength\":" + record.storedLength() +
+                ",\"httpSampleCount\":" + record.httpSampleCount() +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String httpEvidenceSampleJson(HttpEvidenceSampleRecord record) {
+        return "{\"sampleId\":" + HttpSupport.jsonString(record.sampleId().toString()) +
+                ",\"evidenceId\":" + HttpSupport.jsonString(record.evidenceId().toString()) +
+                ",\"targetId\":" + HttpSupport.jsonString(record.targetId().toString()) +
+                ",\"method\":" + HttpSupport.jsonString(record.method()) +
+                ",\"requestUrl\":" + HttpSupport.jsonString(record.requestUrl()) +
+                ",\"responseStatus\":" + record.responseStatus() +
+                ",\"responseContentType\":" + HttpSupport.jsonString(record.responseContentType()) +
+                ",\"hasResponse\":" + record.hasResponse() +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String evidenceDifferentialJson(EvidenceDifferentialRecord record) {
+        String changes = record.changedSignals().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        return "{\"leftSampleId\":" + HttpSupport.jsonString(record.leftSampleId().toString()) +
+                ",\"rightSampleId\":" + HttpSupport.jsonString(record.rightSampleId().toString()) +
+                ",\"mode\":" + HttpSupport.jsonString(record.mode().name()) +
+                ",\"equivalent\":" + record.equivalent() +
+                ",\"changedSignals\":" + changes +
+                ",\"requestMethodEqual\":" + record.requestMethodEqual() +
+                ",\"requestUrlEqual\":" + record.requestUrlEqual() +
+                ",\"leftStatus\":" + record.leftStatus() +
+                ",\"rightStatus\":" + record.rightStatus() + "}";
+    }
+
+    private static String authorizationDifferentialJson(AuthorizationContextDifferentialRecord record) {
+        String changes = record.changedFields().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        return "{\"leftExpectationId\":" + HttpSupport.jsonString(record.leftExpectationId().toString()) +
+                ",\"rightExpectationId\":" + HttpSupport.jsonString(record.rightExpectationId().toString()) +
+                ",\"equivalent\":" + record.equivalent() +
+                ",\"changedFields\":" + changes + "}";
     }
 
     private static String projectionJson(CoreProjectionSnapshot snapshot) {
