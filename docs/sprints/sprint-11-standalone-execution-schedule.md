@@ -77,7 +77,7 @@ Deliverables:
 - optional Montoya materialization adapter;
 - no automatic Burp publication.
 
-## Phase 5 — Standalone Review & Reproduction Product Surface — ACTIVE
+## Phase 5 — Standalone Review & Reproduction Product Surface — VERIFIED
 
 Deliverables:
 - Findings;
@@ -88,7 +88,7 @@ Deliverables:
 - explicit review actions gated by evidence and CSRF;
 - no automatic confirmation.
 
-## Phase 6 — Research Ground-Truth Readiness
+## Phase 6 — Research Ground-Truth Readiness — ACTIVE
 
 Deliverables:
 - balanced controlled local authorization dataset;
