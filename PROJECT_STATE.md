@@ -57,6 +57,22 @@ confirmed vulnerability. Phase 6 is active for review-only candidate triage, cov
 Policy resolution is available, but authenticated execution evidence is not. BOLA/BFLA and downstream
 workflow/routing/property assessments must not advance beyond their evidence-supported state. Phase 5 is active.
 
+### Sprint 10 Phase 4 verified capability
+
+- standalone context → existing ACRA Core policy snapshot projection;
+- existing EffectiveAuthorizationResolver reused;
+- existing BOLA/BFLA evaluators reused with provenance fail-closed behavior;
+- S6 authorization workspace projected into localhost;
+- S7/S8/S9 workspaces projected and truthfully empty without runtime observations;
+- functional Authorization localhost workspace + projection API;
+- JavaScript syntax gate added;
+- Phase 4 workflow `36209482608`: SUCCESS.
+
+### Sprint 10 Phase 4 explicit boundary
+
+Policy expectations now resolve through ACRA Core, but execution-backed assessments still require evidence provenance.
+Phase 5 is the active dependency.
+
 ### Sprint 10 Phase 3 verified capability
 
 - typed principals / roles / tenants / resources and ownership context;
