@@ -74,6 +74,12 @@ jobs:
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneCoreProjectionApiTestSuite
 
+      - name: Run standalone evidence and differential suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneEvidenceDifferentialTestSuite
+
       - name: Validate standalone browser JavaScript
         run: node --check standalone/src/main/resources/web/app.js
 
