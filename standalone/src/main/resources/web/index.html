@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ACRA — Standalone Security Workbench</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">A</div><div><strong>ACRA</strong><span>Security Workbench</span></div></div>
+      <nav>
+        <button class="nav-item active" data-view="overview">Overview</button>
+        <button class="nav-item" data-view="targets">Targets</button>
+        <button class="nav-item" data-view="inventory">API Inventory</button>
+        <button class="nav-item" data-view="authorization">Authorization</button>
+        <button class="nav-item" data-view="object-access">Object Access</button>
+        <button class="nav-item" data-view="function-access">Function Access</button>
+        <button class="nav-item" data-view="property-access">Property Access</button>
+        <button class="nav-item" data-view="workflow">Workflow</button>
+        <button class="nav-item" data-view="routing">Routing</button>
+        <button class="nav-item" data-view="evidence">Evidence</button>
+        <button class="nav-item" data-view="candidates">Candidates</button>
+        <button class="nav-item" data-view="coverage">Coverage</button>
+        <button class="nav-item" data-view="reports">Reports</button>
+      </nav>
+      <div class="sidebar-footer"><span id="health-dot" class="dot"></span><span id="health-label">Connecting…</span></div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <div><h1 id="view-title">Overview</h1><p id="view-subtitle">Local-first API authorization security analysis.</p></div>
+        <div class="topbar-actions"><select id="project-selector" aria-label="Active project"></select><button id="new-project-button" class="button secondary">New Project</button></div>
+      </header>
+
+      <section id="overview-view" class="view active">
+        <div class="hero">
+          <div><span class="eyebrow">STANDALONE MODE</span><h2>Analyze authorized API targets without requiring Burp Suite.</h2><p>ACRA Core remains the security intelligence engine. This workbench provides local project, target, evidence and review workflows over localhost.</p></div>
+          <div class="hero-status"><span class="status-badge">127.0.0.1 only</span><span class="status-badge">Burp optional</span><span class="status-badge">Core linked</span></div>
+        </div>
+        <div class="metrics">
+          <article><span>Projects</span><strong id="metric-projects">0</strong></article>
+          <article><span>Targets</span><strong id="metric-targets">0</strong></article>
+          <article><span>Core Methods</span><strong id="metric-methods">—</strong></article>
+          <article><span>Mode</span><strong>Local</strong></article>
+        </div>
+        <div class="grid two">
+          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">QUICK START</span><h3>Assessment workflow</h3></div></div><ol class="steps"><li>Create a local assessment project.</li><li>Add an explicitly authorized HTTP(S) target.</li><li>Import traffic/specification evidence in the next analysis slice.</li><li>Review ACRA authorization, workflow, routing and property intelligence.</li></ol></article>
+          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">SAFETY BOUNDARY</span><h3>Target onboarding</h3></div></div><p>Adding a target does not scan it. Active interaction remains gated by ACRA scope, authorization, consent, rate, budget and safety controls.</p><button class="button" data-open-targets>Open Targets</button></article>
+        </div>
+      </section>
+
+      <section id="targets-view" class="view">
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">AUTHORIZED SCOPE</span><h3>Add target</h3></div></div>
+            <form id="target-form">
+              <label>Display name<input name="displayName" required maxlength="120" placeholder="Local Demo API"></label>
+              <label>Base URL<input name="baseUrl" required maxlength="2048" placeholder="http://127.0.0.1:8081/api/"></label>
+              <div class="field-row">
+                <label>Environment<select name="environment"><option>LAB</option><option>DEVELOPMENT</option><option>STAGING</option><option>PRODUCTION</option></select></label>
+                <label>Testing mode<select name="testingMode"><option>PASSIVE</option><option>IMPORT_ONLY</option><option>SAFE_ACTIVE</option><option>CONTROLLED_LAB</option></select></label>
+              </div>
+              <label>Authorization reference<input name="authorizationReference" required maxlength="240" placeholder="ENG-APPSEC-2026-017"></label>
+              <p class="form-note">HTTP(S) URL, hostname/IP and optional port are supported. Credentials embedded in URLs are rejected.</p>
+              <button class="button" type="submit">Add Authorized Target</button>
+            </form>
+            <div id="target-form-message" class="message" hidden></div>
+          </article>
+          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">PROJECT SCOPE</span><h3>Registered targets</h3></div><span id="target-count" class="counter">0</span></div><div id="target-list" class="target-list empty-state">Create or select a project to manage targets.</div></article>
+        </div>
+      </section>
+
+      <section id="placeholder-view" class="view">
+        <article class="panel placeholder-panel"><span class="eyebrow">ACRA CORE WORKSPACE</span><h2 id="placeholder-title">Workspace</h2><p id="placeholder-copy">This product area is preserved in the standalone information architecture and will be wired to the existing ACRA Core engine incrementally.</p><div class="boundary"><strong>Current implementation boundary</strong><span>Standalone launcher, local projects and safe target onboarding are active. This screen does not claim analysis functionality that has not yet been wired into the standalone host.</span></div></article>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="project-dialog">
+    <form id="project-form" method="dialog">
+      <div class="dialog-heading"><div><span class="eyebrow">LOCAL PROJECT</span><h3>Create assessment</h3></div><button type="button" id="close-project-dialog" class="icon-button" aria-label="Close">×</button></div>
+      <label>Project name<input name="name" required maxlength="120" placeholder="API Authorization Review"></label>
+      <label>Description<textarea name="description" maxlength="1000" rows="4" placeholder="Authorized assessment scope and purpose"></textarea></label>
+      <div id="project-form-message" class="message" hidden></div>
+      <div class="dialog-actions"><button type="button" id="cancel-project-dialog" class="button secondary">Cancel</button><button type="submit" class="button">Create Project</button></div>
+    </form>
+  </dialog>
+  <script src="/app.js" defer></script>
+</body>
+</html>
