@@ -1,5 +1,47 @@
 # ACRA Project State
 
+## Current state — 2026-09-26
+
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 1 verified.  
+**Working branch:** `s10-standalone-workbench`.  
+**Verified code-bearing head:** `bbebeda5e7bc4e929b5c5c9b776504d0db059784`.  
+**Sprint 10 standalone verification:** GitHub Actions run `36207695944` — SUCCESS.  
+**Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
+**Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
+**Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 1 verified capability
+
+- standalone `acra-standalone` Maven module over the same `acra-core`;
+- executable shaded JAR and Windows/Linux/macOS launch scripts;
+- loopback-only management server bound to `127.0.0.1`;
+- automatic browser-open attempt with manual localhost URL fallback;
+- persistent local assessment projects;
+- persistent authorized HTTP(S) targets using URL/hostname/IP/port representation;
+- mandatory authorization reference before target registration;
+- environment and testing-mode declarations;
+- embedded-credential and non-HTTP(S) URL rejection;
+- no automatic scan or active request when a target is registered;
+- CSRF validation for state-changing localhost APIs;
+- Host-header validation for DNS-rebinding resistance;
+- Content Security Policy and response hardening;
+- runtime ACRA Core linkage;
+- functional browser GUI for project creation, project switching, target creation and target listing;
+- Burp Suite is not required for standalone startup or target onboarding;
+- retained whole-repository Maven packaging with official Montoya dependency: PASS.
+
+### Sprint 10 Phase 1 explicit boundary
+
+The deeper API Inventory, Authorization, Object Access, Function Access, Property Access, Workflow, Routing,
+Evidence, Candidates, Coverage and Reports areas are present in the standalone information architecture but are
+not yet claimed as wired into the standalone host. Existing Core logic must be reused rather than duplicated.
+
+Registering a target does not perform discovery, scanning or exploitation. Future active execution remains gated by
+the existing ACRA authorization, scope, consent, budget, concurrency, rate and safety controls.
+
+Real Burp desktop runtime/load/handler/UI validation remains **UNVERIFIED / DEFERRED**, but it is no longer a
+prerequisite for standalone application startup.
+
 ## Current state — 2026-09-24
 
 **Current sprint:** Sprint 9 — Property-Level Authorization & Field Policy Intelligence (closed).  
