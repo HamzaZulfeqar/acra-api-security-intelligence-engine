@@ -5,11 +5,22 @@
 **Current sprint:** Sprint 12 — Controlled A0-A7 Authorization Ablation Evaluation (active).  
 **Working branch:** `s12-standalone-a0-a7-research-evaluation`.  
 **Verified Sprint 11 base:** `2e86b17afa5e06b08f3b9ad580a1b02fdc7d815d`; final closure run `36251784191` — SUCCESS.  
-**Phase 1:** ACTIVE — harness and label-isolation verification.  
-**A0-A7 metrics:** NOT_MEASURED until the dedicated Sprint 12 workflow succeeds.  
+**Phases 1–3:** VERIFIED from workflow `36265834848` — SUCCESS.  
+**Phase 4:** ACTIVE — deterministic final research closure.  
+**A0-A7 metrics:** MEASURED for the controlled 16-case fixture.  
 **Dataset:** `GT-S11-AUTHORIZATION-RESEARCH` remains frozen and unchanged.
 
-Sprint 12 must not copy metrics from older divergent branches. Results are recorded only from execution on this standalone line.
+Measured standalone result:
+- A0: TP=8 TN=1 FP=7 FN=0, P=.533333 R=1 F1=.695652;
+- A1: TP=8 TN=1 FP=7 FN=0, P=.533333 R=1 F1=.695652;
+- A2: TP=8 TN=4 FP=4 FN=0, P=.666667 R=1 F1=.800000;
+- A3: TP=8 TN=5 FP=3 FN=0, P=.727273 R=1 F1=.842105;
+- A4: TP=8 TN=6 FP=2 FN=0, P=.800000 R=1 F1=.888889;
+- A5: TP=8 TN=7 FP=1 FN=0, P=.888889 R=1 F1=.941176;
+- A6: TP=8 TN=8 FP=0 FN=0, P=1 R=1 F1=1;
+- A7: TP=8 TN=8 FP=0 FN=0, P=1 R=1 F1=1.
+
+These metrics describe only the registered synthetic localhost fixture; dimension discovery and external validity remain unmeasured.
 
 ## Current state — 2026-09-26 — Sprint 11 standalone line
 
