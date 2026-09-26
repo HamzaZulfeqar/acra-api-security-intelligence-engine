@@ -217,6 +217,25 @@ public final class StandaloneFindingLifecycleApiTestSuite {
                 check(listing.body().contains(findingId),
                         "finding identity remains stable");
 
+                HttpResponse<String> index = client.send(
+                        HttpRequest.newBuilder(server.baseUri()).GET().build(),
+                        HttpResponse.BodyHandlers.ofString());
+                check(index.statusCode() == 200, "packaged workbench index is served");
+                check(index.body().contains("Reviewed Findings"),
+                        "Reviewed Findings navigation/workspace is packaged");
+
+                HttpResponse<String> appJs = client.send(
+                        HttpRequest.newBuilder(server.baseUri().resolve("app.js")).GET().build(),
+                        HttpResponse.BodyHandlers.ofString());
+                check(appJs.statusCode() == 200, "packaged browser JavaScript is served");
+                check(appJs.body().contains("/api/findings")
+                                && appJs.body().contains("openFindingFromExecution")
+                                && appJs.body().contains("transitionReviewedFinding"),
+                        "browser workflow is wired to reviewed-finding API");
+                check(!appJs.body().contains("viewer-s11-api-secret")
+                                && !appJs.body().contains("admin-s11-api-secret"),
+                        "packaged browser resources contain no fixture credentials");
+
                 System.out.println("SPRINT11_STANDALONE_FINDING_LIFECYCLE_API PASS assertions=" + assertions);
             }
         } finally {
