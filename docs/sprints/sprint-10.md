@@ -140,6 +140,29 @@ Canonical Phase 5 verification:
 - all retained Phase 1–4 suites — PASS;
 - packaged localhost application — PASS.
 
+## Phase 6 — Candidates + Coverage + Reports — VERIFIED
+
+Verified capability:
+- Core-backed FindingCandidate records remain INCONCLUSIVE until observed authorization evidence exists;
+- analyst review state stored separately from Core candidate state;
+- review states: NEW / UNDER_REVIEW / NEEDS_MORE_EVIDENCE / REJECTED;
+- secret-bearing review notes rejected;
+- endpoint coverage ledger: TESTED / UNTESTED / PARTIAL / INCONCLUSIVE / NOT_APPLICABLE;
+- Phase 6 does not emit TESTED without authenticated active execution;
+- deterministic standalone JSON and Markdown reports;
+- repeated unchanged-state reports produce identical SHA-256 digests;
+- `confirmedFindingCount = 0` enforced in report output;
+- functional Candidates / Coverage / Reports localhost workspaces and APIs.
+
+Canonical Phase 6 verification:
+- verified code-bearing head: `84c09f2e60c94093fc653d8a5a17873c45a25d5d`;
+- Sprint 10 workflow run `36210452986` — SUCCESS;
+- `StandaloneReviewReportingTestSuite` — PASS;
+- `StandaloneReviewReportingApiTestSuite` — PASS;
+- all retained Phase 1–5 suites — PASS;
+- browser JavaScript syntax — PASS;
+- packaged localhost application — PASS.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
@@ -156,9 +179,8 @@ Security Context and Authorization are now functional. Workflow, Routing and Pro
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane and is no longer a prerequisite for standalone product startup.
 
 ## Next dependency-ordered slices
-1. Candidate triage, coverage and deterministic reporting.
-2. Controlled active execution through existing ACRA safety gates.
-3. Burp-to-standalone bridge and packaging hardening.
+1. Controlled active execution through existing ACRA safety gates.
+2. Burp-to-standalone bridge and packaging hardening.
 
 ## Definition of Done for Phase 2
 Phase 2 is verified only because CI proved:
