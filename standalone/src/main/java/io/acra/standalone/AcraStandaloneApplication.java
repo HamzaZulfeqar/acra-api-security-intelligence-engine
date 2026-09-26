@@ -18,9 +18,17 @@ public final class AcraStandaloneApplication {
         server.start();
 
         System.out.println("ACRA Standalone Security Workbench");
+        System.out.println("Java runtime: " + System.getProperty("java.version"));
+        System.out.println("Management bind: 127.0.0.1");
         System.out.println("Local UI: " + server.baseUri());
+        if (!config.portExplicit() && config.port() != 0 && server.port() != config.port()) {
+            System.out.println("Startup recovery: default port " + config.port()
+                    + " was unavailable; selected loopback port " + server.port() + ".");
+        }
         System.out.println("Workspace: " + store.root());
         System.out.println("Burp required: false");
+        System.out.println("Burp bridge: optional loopback-only handoff");
+        System.out.println("Active validation: loopback LAB + CONTROLLED_LAB only");
         System.out.println("Press Ctrl+C to stop.");
 
         Runtime.getRuntime().addShutdownHook(new Thread(server::close, "acra-standalone-shutdown"));
@@ -44,7 +52,9 @@ public final class AcraStandaloneApplication {
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(server.baseUri());
+                return;
             }
+            System.err.println("Browser auto-open unavailable; open " + server.baseUri() + " manually.");
         } catch (Exception ex) {
             System.err.println("Browser auto-open unavailable; open " + server.baseUri() + " manually.");
         }
