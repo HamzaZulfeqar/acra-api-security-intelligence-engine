@@ -10,15 +10,16 @@ import io.acra.core.openapi.OpenApiDocument;
 import java.util.*;
 public final class TrafficIntelligencePipeline {
     private final SecurityContextEngine engine=new SecurityContextEngine(); private final EndpointInventory inventory=new EndpointInventory();
+    private final LinkedHashMap<String,HttpTransaction> transactions=new LinkedHashMap<>(); private final int maxTransactions;
     private final SessionCorrelationStore sessions=new SessionCorrelationStore(); private final IdentityConfirmationRegistry identityConfirmations=new IdentityConfirmationRegistry(); private final ObservationStore store; private final ReconnaissanceStore reconStore; private final SecurityContextGraph graph=new SecurityContextGraph(); private final ApiReconnaissanceEngine reconnaissance=new ApiReconnaissanceEngine(); private volatile OpenApiDocument openApi;
-    public TrafficIntelligencePipeline(int maxObservations){store=new ObservationStore(maxObservations);reconStore=new ReconnaissanceStore(maxObservations);}
+    public TrafficIntelligencePipeline(int maxObservations){if(maxObservations<1)throw new IllegalArgumentException("maxObservations must be positive");maxTransactions=maxObservations;store=new ObservationStore(maxObservations);reconStore=new ReconnaissanceStore(maxObservations);}
     public TrafficProcessingResult process(HttpTransaction tx){
         SecurityContextSnapshot s=engine.analyze(tx); graph.mergeFrom(s.graph()); inventory.observe(s,tx.timestamp()); String session=sessions.sessionId(s.identity().tokenFingerprint());
         String principal=s.identity().principal().resolved().map(p->p.principalId()).orElse(""); String tenant=s.tenant().resolved().map(t->t.tenantId()).orElse("");
         String resourceType=s.resource().resolved().map(r->r.resourceType()).orElse(""); String resourceId=s.resource().resolved().map(r->r.resourceId()).orElse("");
         ObservationStatus os=s.authorizationContext().status()==io.acra.core.domain.authorization.ContextStatus.RESOLVED?ObservationStatus.OBSERVED:ObservationStatus.PARTIAL;
         int responseStatus=tx.response()==null?0:tx.response().status(); List<String> ids=s.evidence().stream().map(e->e.evidenceId()).toList();
-        TrafficObservation o=new TrafficObservation(tx.requestId(),tx.timestamp(),s.endpoint(),responseStatus,s.identity().authenticationType(),principal,tenant,resourceType,resourceId,s.action().actionType(),s.authorizationContext().status(),os,ids);
+        TrafficObservation o=new TrafficObservation(tx.requestId(),tx.timestamp(),s.endpoint(),responseStatus,s.identity().authenticationType(),principal,tenant,resourceType,resourceId,s.action().actionType(),s.authorizationContext().status(),os,ids); retain(tx);
         List<EvidenceTimelineEntry> timeline=List.of(
             new EvidenceTimelineEntry(tx.requestId(),tx.timestamp(),"TRAFFIC","Transaction observed",List.of()),
             new EvidenceTimelineEntry(tx.requestId(),tx.timestamp(),"CONTEXT","Passive security context assembled",ids));
@@ -38,5 +39,7 @@ public final class TrafficIntelligencePipeline {
         if(s.action().actionType()!=io.acra.core.domain.authorization.ActionType.UNKNOWN) values.add(s.action().confidence().score());
         return values.isEmpty()?0.0:values.stream().mapToDouble(Double::doubleValue).min().orElse(0.0);
     }
+    private synchronized void retain(HttpTransaction tx){transactions.put(tx.requestId(),tx);while(transactions.size()>maxTransactions){var it=transactions.keySet().iterator();if(it.hasNext()){it.next();it.remove();}}}
+    public synchronized Optional<HttpTransaction> transaction(String transactionId){return Optional.ofNullable(transactions.get(transactionId));}
     public void openApi(OpenApiDocument document){this.openApi=document;} public OpenApiDocument openApi(){return openApi;} public IdentityConfirmationRegistry identityConfirmations(){return identityConfirmations;} public EndpointInventory inventory(){return inventory;} public ObservationStore store(){return store;} public ReconnaissanceStore reconnaissanceStore(){return reconStore;} public SessionCorrelationStore sessions(){return sessions;} public SecurityContextGraph graph(){return graph;}
 }
