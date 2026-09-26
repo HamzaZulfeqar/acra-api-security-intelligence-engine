@@ -5,6 +5,7 @@ const state={
   inventory:[],
   context:{principals:[],roles:[],tenants:[],resources:[],expectations:[]},
   projection:null,
+  evidence:{artifacts:[],samples:[]},
   activeProjectId:""
 };
 
@@ -69,11 +70,13 @@ async function loadProjects(preferId){
     state.inventory=[];
     state.context={principals:[],roles:[],tenants:[],resources:[],expectations:[]};
     state.projection=null;
+    state.evidence={artifacts:[],samples:[]};
     renderTargets();
     syncImportTargets();
     renderInventory();
     renderContext();
     renderProjection();
+    renderEvidence();
     return;
   }
 
@@ -92,6 +95,7 @@ async function loadProjects(preferId){
   await loadInventory();
   await loadContext();
   await loadProjection();
+  await loadEvidence();
 }
 
 async function loadTargets(){
@@ -128,6 +132,16 @@ async function loadProjection(){
   }
   state.projection=await api("/api/projection?projectId="+encodeURIComponent(state.activeProjectId));
   renderProjection(document.querySelector("#authorization-search")?document.querySelector("#authorization-search").value:"");
+}
+
+async function loadEvidence(){
+  if(!state.activeProjectId){
+    state.evidence={artifacts:[],samples:[]};
+    renderEvidence();
+    return;
+  }
+  state.evidence=await api("/api/evidence?projectId="+encodeURIComponent(state.activeProjectId));
+  renderEvidence(document.querySelector("#evidence-search")?document.querySelector("#evidence-search").value:"");
 }
 
 async function loadContext(){
@@ -366,6 +380,99 @@ function renderProjection(filterText){
   empty.hidden=rows.length>0;
 }
 
+function renderEvidence(filterText){
+  const evidence=state.evidence||{artifacts:[],samples:[]};
+  const artifacts=evidence.artifacts||[];
+  const samples=evidence.samples||[];
+  document.querySelector("#evidence-artifact-count").textContent=artifacts.length;
+  document.querySelector("#evidence-sample-count").textContent=samples.length;
+  document.querySelector("#evidence-redacted-count").textContent=artifacts.filter(function(item){return item.redactionApplied;}).length;
+  document.querySelector("#evidence-response-count").textContent=samples.filter(function(item){return item.hasResponse;}).length;
+
+  const list=document.querySelector("#evidence-artifact-list");
+  list.innerHTML="";
+  if(!artifacts.length){
+    const empty=document.createElement("div");
+    empty.className="mini-empty";
+    empty.textContent="No evidence archived";
+    list.append(empty);
+  }else{
+    artifacts.forEach(function(item){
+      const row=document.createElement("div");
+      row.className="mini-item evidence-artifact-item";
+      const strong=document.createElement("strong");
+      strong.textContent=item.evidenceType+" · "+(item.sourceReference||item.evidenceId);
+      const digest=document.createElement("span");
+      digest.textContent="sha256 "+item.originalSha256.slice(0,20)+"… · samples "+item.httpSampleCount+(item.redactionApplied?" · redacted":"");
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="button secondary compact-button";
+      button.textContent="View Redacted";
+      button.addEventListener("click",function(){viewEvidenceArtifact(item.evidenceId);});
+      row.append(strong,digest,button);
+      list.append(row);
+    });
+  }
+
+  const filter=(filterText||"").trim().toLowerCase();
+  const artifactById=new Map(artifacts.map(function(item){return [item.evidenceId,item];}));
+  const rows=samples.filter(function(item){
+    if(!filter) return true;
+    const artifact=artifactById.get(item.evidenceId);
+    return [
+      item.method,item.requestUrl,String(item.responseStatus),item.responseContentType,
+      artifact?artifact.evidenceType:"",artifact?artifact.sourceReference:""
+    ].join(" ").toLowerCase().includes(filter);
+  });
+
+  const body=document.querySelector("#evidence-sample-table-body");
+  body.innerHTML="";
+  rows.forEach(function(item){
+    const artifact=artifactById.get(item.evidenceId);
+    const row=document.createElement("tr");
+    [
+      item.method||"—",
+      item.requestUrl||"—",
+      item.hasResponse?String(item.responseStatus):"—",
+      item.responseContentType||"—",
+      artifact?(artifact.evidenceType+" · "+(artifact.sourceReference||artifact.evidenceId)):item.evidenceId,
+      item.createdAt
+    ].forEach(function(value,index){
+      const cell=document.createElement("td");
+      cell.textContent=value;
+      if(index===0) cell.className="method-cell";
+      if(index===1) cell.className="route-cell";
+      row.append(cell);
+    });
+    body.append(row);
+  });
+  document.querySelector("#evidence-empty").hidden=rows.length>0;
+  syncDifferentialSelectors();
+}
+
+function syncDifferentialSelectors(){
+  const responseSamples=(state.evidence.samples||[]).filter(function(item){return item.hasResponse;});
+  setOptions("#http-diff-left",responseSamples,function(item){return item.sampleId;},
+    function(item){return item.method+" "+item.requestUrl+" → "+item.responseStatus;},false);
+  setOptions("#http-diff-right",responseSamples,function(item){return item.sampleId;},
+    function(item){return item.method+" "+item.requestUrl+" → "+item.responseStatus;},false);
+
+  const expectations=(state.context&&state.context.expectations)||[];
+  setOptions("#auth-diff-left",expectations,function(item){return item.id;},
+    function(item){return item.principalId+" · "+item.action+" "+item.endpoint+" → "+item.expectedDecision;},false);
+  setOptions("#auth-diff-right",expectations,function(item){return item.id;},
+    function(item){return item.principalId+" · "+item.action+" "+item.endpoint+" → "+item.expectedDecision;},false);
+}
+
+async function viewEvidenceArtifact(evidenceId){
+  try{
+    const detail=await api("/api/evidence?projectId="+encodeURIComponent(state.activeProjectId)+"&evidenceId="+encodeURIComponent(evidenceId));
+    document.querySelector("#evidence-preview").textContent=detail.redactedContent||"(empty redacted evidence)";
+  }catch(error){
+    document.querySelector("#evidence-preview").textContent="Unable to load evidence: "+error.message;
+  }
+}
+
 function renderMiniList(selector,items,formatter){
   const host=document.querySelector(selector);
   if(!host) return;
@@ -465,6 +572,7 @@ function wireEvents(){
     await loadInventory();
     await loadContext();
     await loadProjection();
+    await loadEvidence();
   });
 
   document.querySelector("#project-form").addEventListener("submit",createProject);
@@ -485,6 +593,11 @@ function wireEvents(){
   document.querySelector("#authorization-search").addEventListener("input",function(event){
     renderProjection(event.target.value);
   });
+  document.querySelector("#evidence-search").addEventListener("input",function(event){
+    renderEvidence(event.target.value);
+  });
+  document.querySelector("#http-diff-form").addEventListener("submit",compareHttpEvidence);
+  document.querySelector("#auth-diff-form").addEventListener("submit",compareAuthorizationEvidence);
   document.querySelector("#expectation-target").addEventListener("change",syncExpectationEndpoints);
 
   document.querySelector("#import-file").addEventListener("change",async function(event){
@@ -508,7 +621,7 @@ function openView(name){
   document.querySelector("#view-title").textContent=meta[0];
   document.querySelector("#view-subtitle").textContent=meta[1];
 
-  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"||name==="authorization"){
+  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"||name==="authorization"||name==="evidence"){
     document.querySelector("#"+name+"-view").classList.add("active");
   }else{
     document.querySelector("#placeholder-title").textContent=meta[0];
@@ -563,6 +676,7 @@ async function importEvidence(event){
       summary.importType+" import complete: "+summary.observations+" observation(s), "+
       summary.uniqueEndpoints+" unique endpoint(s), "+summary.inventorySize+" total inventory endpoint(s).",true);
     await loadInventory();
+    await loadEvidence();
   }catch(error){
     showMessage("#import-message",error.message,false);
   }
@@ -582,6 +696,7 @@ async function postContext(kind,form,messageSelector){
     showMessage(messageSelector,kind.charAt(0)+kind.slice(1).toLowerCase()+" saved.",true);
     await loadContext();
     await loadProjection();
+    renderEvidence(document.querySelector("#evidence-search").value);
     return created;
   }catch(error){
     showMessage(messageSelector,error.message,false);
@@ -594,6 +709,50 @@ async function addRole(event){event.preventDefault();await postContext("ROLE",ev
 async function addTenant(event){event.preventDefault();await postContext("TENANT",event.currentTarget,"#role-tenant-message");}
 async function addResource(event){event.preventDefault();await postContext("RESOURCE",event.currentTarget,"#resource-message");}
 async function addExpectation(event){event.preventDefault();await postContext("EXPECTATION",event.currentTarget,"#expectation-message");}
+
+async function compareHttpEvidence(event){
+  event.preventDefault();
+  const form=new FormData(event.currentTarget);
+  const leftId=form.get("leftId");
+  const rightId=form.get("rightId");
+  if(!leftId||!rightId){
+    document.querySelector("#http-diff-result").textContent="Two response samples are required.";
+    return;
+  }
+  try{
+    const diff=await api("/api/differential?projectId="+encodeURIComponent(state.activeProjectId)
+      +"&type=HTTP&leftId="+encodeURIComponent(leftId)
+      +"&rightId="+encodeURIComponent(rightId)
+      +"&mode="+encodeURIComponent(form.get("mode")||"NORMALIZED"));
+    document.querySelector("#http-diff-result").textContent=
+      (diff.equivalent?"Equivalent":"Different")+" · status "+diff.leftStatus+" → "+diff.rightStatus+
+      " · changed: "+((diff.changedSignals||[]).join(", ")||"none")+
+      " · same method: "+diff.requestMethodEqual+" · same URL: "+diff.requestUrlEqual;
+  }catch(error){
+    document.querySelector("#http-diff-result").textContent="Comparison failed: "+error.message;
+  }
+}
+
+async function compareAuthorizationEvidence(event){
+  event.preventDefault();
+  const form=new FormData(event.currentTarget);
+  const leftId=form.get("leftId");
+  const rightId=form.get("rightId");
+  if(!leftId||!rightId){
+    document.querySelector("#auth-diff-result").textContent="Two authorization contexts are required.";
+    return;
+  }
+  try{
+    const diff=await api("/api/differential?projectId="+encodeURIComponent(state.activeProjectId)
+      +"&type=AUTHORIZATION&leftId="+encodeURIComponent(leftId)
+      +"&rightId="+encodeURIComponent(rightId));
+    document.querySelector("#auth-diff-result").textContent=
+      (diff.equivalent?"Equivalent contexts":"Context differences")+" · changed: "+
+      ((diff.changedFields||[]).join(", ")||"none");
+  }catch(error){
+    document.querySelector("#auth-diff-result").textContent="Comparison failed: "+error.message;
+  }
+}
 
 function showMessage(selector,text,success){
   const element=document.querySelector(selector);
