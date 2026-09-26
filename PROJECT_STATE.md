@@ -2,13 +2,35 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 8 verified; final closure active.  
+**Current sprint:** Sprint 10 — Standalone Localhost Security Workbench (closed).  
+**Decision:** S10 SOFTWARE COMPLETE.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `ffca14dd80b22d44a03c084311e69695f01112c1`.  
-**Sprint 10 Phase 8 verification:** GitHub Actions run `36213386173` — SUCCESS.  
+**Canonical closure source:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`.  
+**Sprint 10 final closure:** GitHub Actions run `36213547092` — SUCCESS.  
+**Sprint 10 source checkpoint SHA-256:** `296fcf420919c172c338988e320a06007aaa4640b90d2077a341759690fd5c0f`.  
+**Sprint 10 distribution SHA-256:** `0c6929384eb3110f018a57b45fb09729957e6b1f90e4ac8d9b3352bd12920f15`.  
+**Sprint 10 checkpoint entries:** 951; unsafe paths: 0; duplicate entries: 0; clean extraction/per-file equality: PASS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 final closure
+
+Sprint 10 is **SOFTWARE COMPLETE**.
+
+Canonical final verification:
+- run `36213547092` — SUCCESS;
+- source commit `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`;
+- deterministic source archive SHA-256 `296fcf420919c172c338988e320a06007aaa4640b90d2077a341759690fd5c0f`;
+- 951 source entries;
+- unsafe paths 0;
+- duplicates 0;
+- clean extraction equality PASS;
+- per-file SHA-256 equality PASS;
+- prebuilt distribution SHA-256 `0c6929384eb3110f018a57b45fb09729957e6b1f90e4ac8d9b3352bd12920f15`;
+- retained Sprint 9 closure stack + full current reactor + all Sprint 10 suites PASS.
+
+Sprint 11 is **NOT STARTED**.
 
 ### Sprint 10 Phase 8 verified capability
 
