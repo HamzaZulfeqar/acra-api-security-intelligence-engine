@@ -2,9 +2,20 @@
 
 ## Current gate — 2026-09-26 — standalone Sprint 11
 
-**Sprint 11 Phase 3 — REPRODUCTION PACKAGE + DETERMINISTIC JSON: VERIFIED; PHASE 4 ACTIVE.**
+**Sprint 11 Phase 4 — SARIF + OPTIONAL BURP ISSUE DRAFT: VERIFIED; PHASE 5 ACTIVE.**
 
-Canonical Phase 3 evidence:
+Canonical Phase 4 evidence:
+- branch: `s11-standalone-finding-lifecycle`
+- verified head: `9344b37dfab2c9404539041811bf51356dcb531a`
+- workflow run: `36247738000` — SUCCESS
+- full Maven reactor: PASS
+- retained finding lifecycle/review/reproduction stack: PASS
+- SARIF 2.1.0 projection: PASS
+- Burp Issue Draft projection: PASS
+- browser JavaScript syntax: PASS
+- packaged standalone startup: PASS
+
+Historical Phase 3 evidence:
 - branch: `s11-standalone-finding-lifecycle`
 - verified head: `7e8243451b740094e16b588425ad48cd9d7a9d29`
 - workflow run: `36215524311` — SUCCESS
@@ -28,7 +39,7 @@ Historical Phase 1–2 evidence:
 - secret-bearing review rejection: PASS
 - packaged Reviewed Findings UI: PASS
 
-**Sprint 11 is NOT software-complete.** Phase 4 is active: SARIF 2.1.0 projection + optional Burp Issue Draft without automatic publication.
+**Sprint 11 is NOT software-complete.** Phase 5 is active: standalone review/reproduction product surface over the verified lifecycle and export services.
 
 ## Current gate — 2026-09-26
 
