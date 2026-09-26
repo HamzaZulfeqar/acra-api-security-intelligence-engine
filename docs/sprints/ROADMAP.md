@@ -2,9 +2,20 @@
 
 ## Current gate — 2026-09-26
 
-**Sprint 10 Phase 5 — EVIDENCE + DIFFERENTIAL: VERIFIED; PHASE 6 ACTIVE.**
+**Sprint 10 Phase 6 — CANDIDATES + COVERAGE + REPORTS: VERIFIED; PHASE 7 ACTIVE.**
 
-Canonical Phase 5 evidence:
+Canonical Phase 6 evidence:
+- branch: `s10-standalone-workbench`
+- verified code-bearing head: `84c09f2e60c94093fc653d8a5a17873c45a25d5d`
+- standalone workflow run: `36210452986` — SUCCESS
+- Core candidate state boundary: PASS
+- analyst review persistence: PASS
+- no false TESTED coverage: PASS
+- deterministic JSON/Markdown + SHA-256: PASS
+- confirmedFindingCount=0: PASS
+- Candidates/Coverage/Reports API + GUI: PASS
+
+Historical Phase 5 evidence:
 - branch: `s10-standalone-workbench`
 - verified code-bearing head: `8a340bf38fdaa58934d252abf6cdb2b8a30f14c3`
 - standalone workflow run: `36209983492` — SUCCESS
@@ -71,7 +82,7 @@ Historical Phase 1 evidence:
 Phase 1 changes the product dependency model: Burp is now an optional adapter for ACRA, not a prerequisite for
 standalone project and target onboarding.
 
-**Sprint 10 is NOT software-complete.** Phase 6 is active: review-only candidates, coverage and deterministic reports.
+**Sprint 10 is NOT software-complete.** Phase 7 is active: controlled active execution through existing ACRA safety gates.
 
 The repaired Sprint 9 baseline remains closed and verified. Final repaired-baseline closure run:
 `36207092874` — SUCCESS at `8f031571dd63cf83ee46d439d40edafd83afea38`.
