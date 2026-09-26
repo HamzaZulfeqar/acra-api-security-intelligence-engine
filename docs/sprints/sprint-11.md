@@ -3,7 +3,7 @@
 **Branch:** `s11-standalone-finding-lifecycle`  
 **Base:** verified standalone Sprint 10 head `9ff4bab2e3f6dc11eef54b0e1877245b45060dfe`  
 **Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`  
-**Status:** PHASE 5 VERIFIED — PHASE 6 ACTIVE
+**Status:** PHASE 6 VERIFIED — PHASE 7 ACTIVE
 
 ## Product gap being closed
 
@@ -92,15 +92,30 @@ Verified:
 Canonical head: `6e0b090b037f037982d61bd3f62a2a3bcc54d521`.  
 Canonical run: `36248083390` — SUCCESS.
 
-## Phase 6 — Research Ground-Truth Readiness — ACTIVE
+## Phase 6 — Research Ground-Truth Readiness — VERIFIED
+
+Verified:
+- registered `GT-S11-AUTHORIZATION-RESEARCH`;
+- 16 controlled localhost cases;
+- 8 authorization dimensions;
+- exactly one positive and one negative control per dimension;
+- object, tenant, RBAC, workflow, routing, property, batch and indirect-reference coverage;
+- independent secure/vulnerable authorization oracle;
+- canonical ACRA-Lab server copies synchronized to one implementation;
+- A0-A7 registry marked SOFTWARE_READY / RESEARCH_NOT_RUN;
+- TP/TN/FP/FN, precision, recall and F1 remain NOT_MEASURED.
+
+Canonical run: `36248296847` — SUCCESS.
+
+## Phase 7 — Security / Performance / Final Closure — ACTIVE
 
 Next implementation must:
-- register a balanced local authorization ground-truth dataset;
-- preserve an oracle independent of ACRA output;
-- cover object, tenant, RBAC, workflow, routing, property, batch and indirect-reference dimensions where the current product supports them;
-- verify secure and deliberately vulnerable localhost expectations;
-- mark A0-A7 as SOFTWARE_READY / RESEARCH_NOT_RUN;
-- report no precision/recall/F1 until a later research sprint actually executes the comparison.
+- execute secret-hardening and deterministic export regressions;
+- record only bounded CI engineering observations, not performance guarantees;
+- retain the complete Sprint 10 standalone regression boundary;
+- produce a deterministic source checkpoint with safe-path, duplicate and clean-extraction verification;
+- record exact deferred boundaries;
+- close Sprint 11 only after a dedicated final workflow succeeds.
 
 ## Current non-claims
 
