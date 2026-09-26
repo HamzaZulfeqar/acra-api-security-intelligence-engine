@@ -34,9 +34,7 @@ Evidence:
 - standalone workflow `36208517465` — SUCCESS;
 - documentation/package head workflow `36208617855` — SUCCESS.
 
-## Active
-
-### Phase 3 — Security Context Manager
+### Phase 3 — Security Context Manager — VERIFIED
 Goal:
 - give the standalone workbench explicit, persisted authorization context instead of inferring everything from raw traffic.
 
@@ -61,7 +59,7 @@ Definition of Done:
 - GUI can create/review/filter context rows;
 - packaged localhost application remains green.
 
-## Scheduled after Phase 3
+## Active
 
 ### Phase 4 — Existing Core Authorization Engines → Standalone
 Dependencies:
@@ -143,4 +141,4 @@ Required:
 
 ## Current next action
 
-Execute **Phase 3 — Security Context Manager** only. Phase 4 does not open until the Phase 3 verification gate is green.
+Execute **Phase 4 — Existing Core Authorization Engines → Standalone** only. Phase 5 does not open until the Phase 4 verification gate is green.
