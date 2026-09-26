@@ -31,9 +31,11 @@ public final class StandaloneControlledExecutionTestSuite {
                 new InetSocketAddress(InetAddress.getByName("127.0.0.1"), 0), 0);
         fixture.createContext("/api/v1/demo", exchange -> {
             requests.incrementAndGet();
-            boolean authenticated = exchange.getRequestHeaders().getFirst("Authorization") != null;
+            String authorization = exchange.getRequestHeaders().getFirst("Authorization");
+            boolean testedContext = "Bearer viewer-phase7-secret".equals(authorization);
+            boolean positiveContext = "Bearer admin-phase7-secret".equals(authorization);
             boolean variant = exchange.getRequestURI().getPath().equals("/api/v1/demo/");
-            int status = variant && authenticated ? 200 : 403;
+            int status = positiveContext || (variant && testedContext) ? 200 : 403;
             byte[] body = (status == 200 ? "{\"ok\":true}" : "{\"error\":\"denied\"}")
                     .getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "application/json");
@@ -82,13 +84,15 @@ public final class StandaloneControlledExecutionTestSuite {
                     "DENY", "Equivalent route must remain denied");
 
             StandaloneControlledExecutionService service = new StandaloneControlledExecutionService(workspace);
-            String ephemeralSecret = "Bearer phase7syntheticsecretvalue";
+            String testedSecret = "Bearer viewer-phase7-secret";
+            String positiveSecret = "Bearer admin-phase7-secret";
             var run = service.executeRouteEquivalence(
                     project.id(),
                     target.id(),
                     expectation.id(),
                     "/api/v1/demo",
-                    ephemeralSecret,
+                    testedSecret,
+                    positiveSecret,
                     true);
 
             check(run.state() == TestState.COMPLETED, "controlled execution completes");
@@ -107,12 +111,13 @@ public final class StandaloneControlledExecutionTestSuite {
                     .filter(value -> value.evidenceType().equals("ACTIVE_EXECUTION"))
                     .findFirst().orElseThrow();
             String preview = evidence.redactedContent(project.id(), activeArtifact.evidenceId());
-            check(!preview.contains(ephemeralSecret), "ephemeral authorization value is not persisted");
+            check(!preview.contains(testedSecret) && !preview.contains(positiveSecret),
+                    "ephemeral authorization values are not persisted");
             check(preview.contains(run.executionId()), "execution evidence summary retains lineage");
 
             int beforeConfirmationBlock = requests.get();
             expectFailure(() -> service.executeRouteEquivalence(
-                    project.id(), target.id(), expectation.id(), "/api/v1/demo", ephemeralSecret, false),
+                    project.id(), target.id(), expectation.id(), "/api/v1/demo", testedSecret, positiveSecret, false),
                     IllegalArgumentException.class,
                     "missing confirmation blocked");
             check(requests.get() == beforeConfirmationBlock, "confirmation block sends no requests");
@@ -120,7 +125,7 @@ public final class StandaloneControlledExecutionTestSuite {
             service.engageKillSwitch("test operator stop");
             int beforeKillBlock = requests.get();
             expectFailure(() -> service.executeRouteEquivalence(
-                    project.id(), target.id(), expectation.id(), "/api/v1/demo", ephemeralSecret, true),
+                    project.id(), target.id(), expectation.id(), "/api/v1/demo", testedSecret, positiveSecret, true),
                     IllegalStateException.class,
                     "kill switch blocks active execution");
             check(requests.get() == beforeKillBlock, "kill switch block sends no requests");
@@ -135,7 +140,7 @@ public final class StandaloneControlledExecutionTestSuite {
                     "AUTH-P7-EXT",
                     "CONTROLLED_LAB");
             expectFailure(() -> service.executeRouteEquivalence(
-                    project.id(), externalTarget.id(), expectation.id(), "/api/v1/demo", ephemeralSecret, true),
+                    project.id(), externalTarget.id(), expectation.id(), "/api/v1/demo", testedSecret, positiveSecret, true),
                     IllegalArgumentException.class,
                     "external target blocked before dispatch");
 
@@ -147,7 +152,7 @@ public final class StandaloneControlledExecutionTestSuite {
                     "AUTH-P7-PASSIVE",
                     "PASSIVE");
             expectFailure(() -> service.executeRouteEquivalence(
-                    project.id(), passiveTarget.id(), expectation.id(), "/api/v1/demo", ephemeralSecret, true),
+                    project.id(), passiveTarget.id(), expectation.id(), "/api/v1/demo", testedSecret, positiveSecret, true),
                     IllegalArgumentException.class,
                     "non-CONTROLLED_LAB target blocked");
 
