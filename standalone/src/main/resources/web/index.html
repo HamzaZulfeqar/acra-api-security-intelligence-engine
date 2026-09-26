@@ -338,6 +338,55 @@
         </article>
       </section>
 
+      <section id="candidates-view" class="view">
+        <article class="panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">REVIEW ONLY</span><h3>Authorization candidates</h3></div>
+            <input id="candidate-search" class="search-input" placeholder="Filter endpoint, principal, state or decision">
+          </div>
+          <div class="boundary"><strong>No automatic confirmation</strong><span>Until authenticated execution provenance exists, Core candidate state remains INCONCLUSIVE. Analyst review state never overrides that Core evidence boundary.</span></div>
+          <div id="candidate-list" class="candidate-list"></div>
+        </article>
+      </section>
+
+      <section id="coverage-view" class="view">
+        <div class="context-summary">
+          <article><span>Total</span><strong id="coverage-total">0</strong></article>
+          <article><span>Tested</span><strong id="coverage-tested">0</strong></article>
+          <article><span>Untested</span><strong id="coverage-untested">0</strong></article>
+          <article><span>Partial</span><strong id="coverage-partial">0</strong></article>
+          <article><span>Inconclusive</span><strong id="coverage-inconclusive">0</strong></article>
+        </div>
+        <article class="panel">
+          <div class="panel-heading"><div><span class="eyebrow">ASSESSMENT COVERAGE</span><h3>Endpoint coverage ledger</h3></div></div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Method</th><th>Endpoint</th><th>Disposition</th><th>Contexts</th><th>Passive observations</th><th>Reason</th></tr></thead>
+              <tbody id="coverage-table-body"></tbody>
+            </table>
+            <div id="coverage-empty" class="empty-state">No API inventory exists yet.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="reports-view" class="view">
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">DETERMINISTIC EXPORT</span><h3>Generate report</h3></div></div>
+            <form id="report-form">
+              <label>Format<select name="format"><option>JSON</option><option>MARKDOWN</option></select></label>
+              <button class="button" type="submit">Generate Report</button>
+            </form>
+            <div class="projection-meta report-digest"><span>SHA-256</span><code id="report-sha">—</code></div>
+            <div class="boundary"><strong>Confirmed finding count remains zero</strong><span>Phase 6 reports preserve review-only candidates and explicitly state the active-execution evidence limitation.</span></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">REPORT PREVIEW</span><h3>Current export</h3></div></div>
+            <pre id="report-preview" class="evidence-preview">Generate a JSON or Markdown report.</pre>
+          </article>
+        </div>
+      </section>
+
       <section id="placeholder-view" class="view">
         <article class="panel placeholder-panel"><span class="eyebrow">ACRA CORE WORKSPACE</span><h2 id="placeholder-title">Workspace</h2><p id="placeholder-copy">This product area is preserved in the standalone information architecture and will be wired to the existing ACRA Core engine incrementally.</p><div class="boundary"><strong>Current implementation boundary</strong><span>Standalone launcher, local projects and safe target onboarding are active. This screen does not claim analysis functionality that has not yet been wired into the standalone host.</span></div></article>
       </section>
