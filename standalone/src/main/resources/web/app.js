@@ -1,9 +1,17 @@
-const state={csrf:"",projects:[],targets:[],inventory:[],activeProjectId:""};
+const state={
+  csrf:"",
+  projects:[],
+  targets:[],
+  inventory:[],
+  context:{principals:[],roles:[],tenants:[],resources:[],expectations:[]},
+  activeProjectId:""
+};
 
 const viewMeta={
   overview:["Overview","Local-first API authorization security analysis."],
   targets:["Targets","Register explicitly authorized HTTP(S) assessment targets."],
   inventory:["API Inventory","Import and normalize OpenAPI, HAR and raw HTTP evidence."],
+  context:["Security Context","Define principals, roles, tenants, resources, ownership and expected authorization."],
   authorization:["Authorization","Identity, role, tenant and policy intelligence."],
   "object-access":["Object Access","Object-level authorization reasoning and evidence."],
   "function-access":["Function Access","Function-level authorization reasoning and evidence."],
@@ -49,6 +57,7 @@ async function loadProjects(preferId){
   document.querySelector("#metric-projects").textContent=state.projects.length;
   const selector=document.querySelector("#project-selector");
   selector.innerHTML="";
+
   if(!state.projects.length){
     const option=document.createElement("option");
     option.value="";
@@ -57,22 +66,28 @@ async function loadProjects(preferId){
     state.activeProjectId="";
     state.targets=[];
     state.inventory=[];
+    state.context={principals:[],roles:[],tenants:[],resources:[],expectations:[]};
     renderTargets();
     syncImportTargets();
     renderInventory();
+    renderContext();
     return;
   }
+
   state.projects.forEach(function(project){
     const option=document.createElement("option");
     option.value=project.id;
     option.textContent=project.name;
     selector.append(option);
   });
+
   const validPreferred=state.projects.some(function(project){return project.id===preferId;});
   state.activeProjectId=validPreferred?preferId:state.projects[0].id;
   selector.value=state.activeProjectId;
+
   await loadTargets();
   await loadInventory();
+  await loadContext();
 }
 
 async function loadTargets(){
@@ -80,27 +95,43 @@ async function loadTargets(){
     state.targets=[];
     renderTargets();
     syncImportTargets();
+    syncContextSelectors();
     return;
   }
   state.targets=await api("/api/targets?projectId="+encodeURIComponent(state.activeProjectId));
   renderTargets();
   syncImportTargets();
+  syncContextSelectors();
 }
 
 async function loadInventory(){
   if(!state.activeProjectId){
     state.inventory=[];
     renderInventory();
+    syncContextSelectors();
     return;
   }
   state.inventory=await api("/api/inventory?projectId="+encodeURIComponent(state.activeProjectId));
   renderInventory(document.querySelector("#inventory-search")?document.querySelector("#inventory-search").value:"");
+  syncContextSelectors();
+}
+
+async function loadContext(){
+  if(!state.activeProjectId){
+    state.context={principals:[],roles:[],tenants:[],resources:[],expectations:[]};
+    renderContext();
+    return;
+  }
+  state.context=await api("/api/context?projectId="+encodeURIComponent(state.activeProjectId));
+  renderContext(document.querySelector("#context-search")?document.querySelector("#context-search").value:"");
+  syncContextSelectors();
 }
 
 function renderTargets(){
   const list=document.querySelector("#target-list");
   document.querySelector("#metric-targets").textContent=state.targets.length;
   document.querySelector("#target-count").textContent=state.targets.length;
+
   if(!state.activeProjectId){
     list.className="target-list empty-state";
     list.textContent="Create or select a project to manage targets.";
@@ -111,6 +142,7 @@ function renderTargets(){
     list.textContent="No targets registered in this project.";
     return;
   }
+
   list.className="target-list";
   list.innerHTML="";
   state.targets.forEach(function(target){
@@ -122,11 +154,13 @@ function renderTargets(){
     url.textContent=target.baseUrl;
     const meta=document.createElement("div");
     meta.className="target-meta";
+
     [target.environment,target.testingMode,target.authorizationReference].forEach(function(value){
       const badge=document.createElement("span");
       badge.textContent=value;
       meta.append(badge);
     });
+
     card.append(title,url,meta);
     list.append(card);
   });
@@ -137,6 +171,7 @@ function syncImportTargets(){
   if(!selector) return;
   const previous=selector.value;
   selector.innerHTML="";
+
   if(!state.targets.length){
     const option=document.createElement("option");
     option.value="";
@@ -145,6 +180,7 @@ function syncImportTargets(){
     selector.disabled=true;
     return;
   }
+
   selector.disabled=false;
   state.targets.forEach(function(target){
     const option=document.createElement("option");
@@ -152,6 +188,7 @@ function syncImportTargets(){
     option.textContent=target.displayName+" — "+target.baseUrl;
     selector.append(option);
   });
+
   if(state.targets.some(function(target){return target.id===previous;})) selector.value=previous;
 }
 
@@ -202,6 +239,135 @@ function renderInventory(filterText){
   }).length;
 }
 
+function renderContext(filterText){
+  const context=state.context||{principals:[],roles:[],tenants:[],resources:[],expectations:[]};
+  document.querySelector("#context-principal-count").textContent=context.principals.length;
+  document.querySelector("#context-role-count").textContent=context.roles.length;
+  document.querySelector("#context-tenant-count").textContent=context.tenants.length;
+  document.querySelector("#context-resource-count").textContent=context.resources.length;
+  document.querySelector("#context-expectation-count").textContent=context.expectations.length;
+
+  renderMiniList("#principal-list",context.principals,function(item){
+    return [item.principalId,item.displayName||"Unnamed",item.authenticationType];
+  });
+  renderMiniList("#role-list",context.roles,function(item){return [item.roleId,item.name];});
+  renderMiniList("#tenant-list",context.tenants,function(item){return [item.tenantId,item.name||item.tenantId];});
+  renderMiniList("#resource-list",context.resources,function(item){
+    return [
+      item.resourceType+":"+item.resourceId,
+      item.ownerPrincipalId?"owner="+item.ownerPrincipalId:"owner=unspecified",
+      item.tenantId?"tenant="+item.tenantId:"tenant=unspecified",
+      item.state||"state=unspecified"
+    ];
+  });
+
+  const filter=(filterText||"").trim().toLowerCase();
+  const rows=context.expectations.filter(function(item){
+    if(!filter) return true;
+    return [
+      item.endpoint,item.action,item.principalId,item.roleId,item.tenantId,
+      item.resourceId,item.expectedDecision,item.rationale
+    ].join(" ").toLowerCase().includes(filter);
+  });
+
+  const body=document.querySelector("#context-table-body");
+  body.innerHTML="";
+  rows.forEach(function(item){
+    const row=document.createElement("tr");
+    [item.endpoint,item.action,item.principalId,item.roleId||"—",item.tenantId||"—",
+      item.resourceId||"—",item.expectedDecision,item.rationale||"—"].forEach(function(value,index){
+        const cell=document.createElement("td");
+        cell.textContent=value;
+        if(index===0) cell.className="route-cell";
+        if(index===6) cell.className="decision-cell";
+        row.append(cell);
+      });
+    body.append(row);
+  });
+
+  document.querySelector("#context-empty").hidden=rows.length>0;
+}
+
+function renderMiniList(selector,items,formatter){
+  const host=document.querySelector(selector);
+  if(!host) return;
+  host.innerHTML="";
+  if(!items.length){
+    const empty=document.createElement("div");
+    empty.className="mini-empty";
+    empty.textContent="None defined";
+    host.append(empty);
+    return;
+  }
+  items.forEach(function(item){
+    const row=document.createElement("div");
+    row.className="mini-item";
+    const values=formatter(item);
+    const strong=document.createElement("strong");
+    strong.textContent=values[0];
+    row.append(strong);
+    values.slice(1).forEach(function(value){
+      const span=document.createElement("span");
+      span.textContent=value;
+      row.append(span);
+    });
+    host.append(row);
+  });
+}
+
+function setOptions(selectorId,items,valueFn,labelFn,allowBlank){
+  const selector=document.querySelector(selectorId);
+  if(!selector) return;
+  const previous=selector.value;
+  selector.innerHTML="";
+  if(allowBlank){
+    const blank=document.createElement("option");
+    blank.value="";
+    blank.textContent="Unspecified";
+    selector.append(blank);
+  }
+  items.forEach(function(item){
+    const option=document.createElement("option");
+    option.value=valueFn(item);
+    option.textContent=labelFn(item);
+    selector.append(option);
+  });
+  if(Array.from(selector.options).some(function(option){return option.value===previous;})) selector.value=previous;
+}
+
+function syncContextSelectors(){
+  const context=state.context||{principals:[],roles:[],tenants:[],resources:[],expectations:[]};
+
+  setOptions("#resource-owner",context.principals,function(item){return item.principalId;},
+    function(item){return item.principalId+" — "+(item.displayName||"Unnamed");},true);
+  setOptions("#resource-tenant",context.tenants,function(item){return item.tenantId;},
+    function(item){return item.tenantId+" — "+(item.name||item.tenantId);},true);
+
+  setOptions("#expectation-principal",context.principals,function(item){return item.principalId;},
+    function(item){return item.principalId+" — "+(item.displayName||"Unnamed");},false);
+  setOptions("#expectation-role",context.roles,function(item){return item.roleId;},
+    function(item){return item.roleId+" — "+item.name;},true);
+  setOptions("#expectation-tenant",context.tenants,function(item){return item.tenantId;},
+    function(item){return item.tenantId+" — "+(item.name||item.tenantId);},true);
+  setOptions("#expectation-resource",context.resources,function(item){return item.resourceId;},
+    function(item){return item.resourceType+":"+item.resourceId;},true);
+
+  setOptions("#expectation-target",state.targets,function(item){return item.id;},
+    function(item){return item.displayName+" — "+item.baseUrl;},false);
+  syncExpectationEndpoints();
+}
+
+function syncExpectationEndpoints(){
+  const targetSelector=document.querySelector("#expectation-target");
+  const endpointSelector=document.querySelector("#expectation-endpoint");
+  if(!targetSelector||!endpointSelector) return;
+
+  const targetId=targetSelector.value;
+  const endpoints=state.inventory.filter(function(item){return !targetId||item.targetId===targetId;});
+  setOptions("#expectation-endpoint",endpoints,function(item){return item.canonicalPath;},
+    function(item){return item.method+" "+item.canonicalPath;},false);
+}
+
 function wireEvents(){
   document.querySelectorAll(".nav-item").forEach(function(button){
     button.addEventListener("click",function(){openView(button.dataset.view);});
@@ -209,21 +375,36 @@ function wireEvents(){
   document.querySelectorAll("[data-open-targets]").forEach(function(button){
     button.addEventListener("click",function(){openView("targets");});
   });
+
   const dialog=document.querySelector("#project-dialog");
   document.querySelector("#new-project-button").addEventListener("click",function(){dialog.showModal();});
   document.querySelector("#close-project-dialog").addEventListener("click",function(){dialog.close();});
   document.querySelector("#cancel-project-dialog").addEventListener("click",function(){dialog.close();});
+
   document.querySelector("#project-selector").addEventListener("change",async function(event){
     state.activeProjectId=event.target.value;
     await loadTargets();
     await loadInventory();
+    await loadContext();
   });
+
   document.querySelector("#project-form").addEventListener("submit",createProject);
   document.querySelector("#target-form").addEventListener("submit",addTarget);
   document.querySelector("#import-form").addEventListener("submit",importEvidence);
+  document.querySelector("#principal-form").addEventListener("submit",addPrincipal);
+  document.querySelector("#role-form").addEventListener("submit",addRole);
+  document.querySelector("#tenant-form").addEventListener("submit",addTenant);
+  document.querySelector("#resource-form").addEventListener("submit",addResource);
+  document.querySelector("#expectation-form").addEventListener("submit",addExpectation);
+
   document.querySelector("#inventory-search").addEventListener("input",function(event){
     renderInventory(event.target.value);
   });
+  document.querySelector("#context-search").addEventListener("input",function(event){
+    renderContext(event.target.value);
+  });
+  document.querySelector("#expectation-target").addEventListener("change",syncExpectationEndpoints);
+
   document.querySelector("#import-file").addEventListener("change",async function(event){
     const file=event.target.files&&event.target.files[0];
     if(!file) return;
@@ -244,7 +425,8 @@ function openView(name){
   const meta=viewMeta[name]||[name,""];
   document.querySelector("#view-title").textContent=meta[0];
   document.querySelector("#view-subtitle").textContent=meta[1];
-  if(name==="overview"||name==="targets"||name==="inventory"){
+
+  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"){
     document.querySelector("#"+name+"-view").classList.add("active");
   }else{
     document.querySelector("#placeholder-title").textContent=meta[0];
@@ -303,6 +485,32 @@ async function importEvidence(event){
     showMessage("#import-message",error.message,false);
   }
 }
+
+async function postContext(kind,form,messageSelector){
+  if(!state.activeProjectId){
+    showMessage(messageSelector,"Create a project first.",false);
+    return null;
+  }
+  const body=new URLSearchParams(new FormData(form));
+  body.set("projectId",state.activeProjectId);
+  body.set("kind",kind);
+  try{
+    const created=await api("/api/context",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body});
+    form.reset();
+    showMessage(messageSelector,kind.charAt(0)+kind.slice(1).toLowerCase()+" saved.",true);
+    await loadContext();
+    return created;
+  }catch(error){
+    showMessage(messageSelector,error.message,false);
+    return null;
+  }
+}
+
+async function addPrincipal(event){event.preventDefault();await postContext("PRINCIPAL",event.currentTarget,"#principal-message");}
+async function addRole(event){event.preventDefault();await postContext("ROLE",event.currentTarget,"#role-tenant-message");}
+async function addTenant(event){event.preventDefault();await postContext("TENANT",event.currentTarget,"#role-tenant-message");}
+async function addResource(event){event.preventDefault();await postContext("RESOURCE",event.currentTarget,"#resource-message");}
+async function addExpectation(event){event.preventDefault();await postContext("EXPECTATION",event.currentTarget,"#expectation-message");}
 
 function showMessage(selector,text,success){
   const element=document.querySelector(selector);
