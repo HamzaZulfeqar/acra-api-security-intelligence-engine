@@ -455,6 +455,28 @@
           <div id="finding-list" class="finding-list"></div>
           <div id="finding-empty" class="empty-state">No reviewed finding records exist. Run an eligible controlled validation and explicitly open it for review.</div>
         </article>
+
+        <article class="panel finding-reproduction-panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">REPRODUCTION & EXPORTS</span><h3>Selected finding artifact</h3></div>
+            <span id="finding-reproduction-status" class="status-badge">Read only</span>
+          </div>
+          <div class="grid two">
+            <div>
+              <div class="projection-meta">
+                <span>Artifact</span><code id="finding-reproduction-name">—</code>
+              </div>
+              <div class="projection-meta">
+                <span>SHA-256 / Draft ID</span><code id="finding-reproduction-digest">—</code>
+              </div>
+              <div class="boundary">
+                <strong>No automatic publication</strong>
+                <span>JSON and SARIF are deterministic reproduction views. Burp Issue Draft is inspection-only here and is never published to Burp automatically.</span>
+              </div>
+            </div>
+            <pre id="finding-reproduction-preview" class="evidence-preview">Choose JSON, SARIF, or Burp Draft from a reviewed finding.</pre>
+          </div>
+        </article>
       </section>
 
       <section id="coverage-view" class="view">
