@@ -13,6 +13,7 @@ import io.acra.standalone.model.ImportSummary;
 import io.acra.standalone.model.InventoryRecord;
 import io.acra.standalone.model.ProjectRecord;
 import io.acra.standalone.model.CandidateReviewRecord;
+import io.acra.standalone.model.ControlledExecutionRecord;
 import io.acra.standalone.model.StandaloneCandidateRecord;
 import io.acra.standalone.model.StandaloneCoverageRecord;
 import io.acra.standalone.model.StandaloneCoverageSummary;
@@ -24,6 +25,7 @@ import io.acra.standalone.model.RoleContextRecord;
 import io.acra.standalone.model.TargetRecord;
 import io.acra.standalone.model.TenantContextRecord;
 import io.acra.standalone.service.SecurityContextService;
+import io.acra.standalone.service.StandaloneControlledExecutionService;
 import io.acra.standalone.service.StandaloneCoreProjectionService;
 import io.acra.standalone.service.StandaloneEvidenceService;
 import io.acra.standalone.service.StandaloneImportService;
@@ -52,6 +54,7 @@ public final class StandaloneServer implements AutoCloseable {
     private final StandaloneCoreProjectionService projectionService;
     private final StandaloneEvidenceService evidenceService;
     private final StandaloneReviewReportingService reviewReportingService;
+    private final StandaloneControlledExecutionService controlledExecutionService;
     private final HttpServer server;
     private final String csrfToken;
 
@@ -62,6 +65,7 @@ public final class StandaloneServer implements AutoCloseable {
         this.projectionService = new StandaloneCoreProjectionService(store);
         this.evidenceService = new StandaloneEvidenceService(store);
         this.reviewReportingService = new StandaloneReviewReportingService(store);
+        this.controlledExecutionService = new StandaloneControlledExecutionService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -103,6 +107,7 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/candidates", this::handleCandidates);
         server.createContext("/api/coverage", this::handleCoverage);
         server.createContext("/api/report", this::handleReport);
+        server.createContext("/api/active", this::handleActive);
         server.createContext("/", this::handleStatic);
     }
 
@@ -414,6 +419,72 @@ public final class StandaloneServer implements AutoCloseable {
         }
     }
 
+    private void handleActive(HttpExchange exchange) throws IOException {
+        if ("GET".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "GET", false)) return;
+            try {
+                Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+                UUID projectId = UUID.fromString(required(query, "projectId"));
+                String executions = controlledExecutionService.executions(projectId).stream()
+                        .map(StandaloneServer::controlledExecutionJson)
+                        .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+                HttpSupport.sendJson(exchange, 200,
+                        "{\"killSwitchEngaged\":" + controlledExecutionService.killSwitchEngaged()
+                        + ",\"executions\":" + executions + "}");
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            }
+            return;
+        }
+
+        if ("POST".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "POST", true)) return;
+            try {
+                Map<String, String> form = HttpSupport.parseForm(HttpSupport.readBody(exchange, MAX_BODY_BYTES));
+                String action = required(form, "action").strip().toUpperCase(java.util.Locale.ROOT);
+
+                if ("EXECUTE_ROUTE_EQUIVALENCE".equals(action)) {
+                    UUID projectId = UUID.fromString(required(form, "projectId"));
+                    ControlledExecutionRecord record = controlledExecutionService.executeRouteEquivalence(
+                            projectId,
+                            UUID.fromString(required(form, "targetId")),
+                            UUID.fromString(required(form, "expectationId")),
+                            required(form, "concretePath"),
+                            required(form, "testedAuthorizationValue"),
+                            required(form, "positiveControlAuthorizationValue"),
+                            Boolean.parseBoolean(form.getOrDefault("confirmed", "false")));
+                    HttpSupport.sendJson(exchange, 201, controlledExecutionJson(record));
+                    return;
+                }
+
+                if ("KILL".equals(action)) {
+                    controlledExecutionService.engageKillSwitch(form.getOrDefault("reason", "standalone operator stop"));
+                    HttpSupport.sendJson(exchange, 200,
+                            "{\"killSwitchEngaged\":true}");
+                    return;
+                }
+
+                if ("RESET_KILL".equals(action)) {
+                    controlledExecutionService.resetKillSwitch(
+                            Boolean.parseBoolean(form.getOrDefault("confirmed", "false")),
+                            form.getOrDefault("reason", "standalone operator reset"));
+                    HttpSupport.sendJson(exchange, 200,
+                            "{\"killSwitchEngaged\":" + controlledExecutionService.killSwitchEngaged() + "}");
+                    return;
+                }
+
+                throw new IllegalArgumentException("unsupported active action");
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            } catch (IllegalStateException ex) {
+                sendConflict(exchange, ex);
+            }
+            return;
+        }
+
+        methodNotAllowed(exchange);
+    }
+
     private void handleStatic(HttpExchange exchange) throws IOException {
         if (!allowRequest(exchange, "GET", false)) return;
         String path = exchange.getRequestURI().getPath();
@@ -607,6 +678,25 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"content\":" + HttpSupport.jsonString(artifact.content()) + "}";
     }
 
+    private static String controlledExecutionJson(ControlledExecutionRecord record) {
+        return "{\"runId\":" + HttpSupport.jsonString(record.runId().toString()) +
+                ",\"targetId\":" + HttpSupport.jsonString(record.targetId().toString()) +
+                ",\"expectationId\":" + HttpSupport.jsonString(record.expectationId().toString()) +
+                ",\"testId\":" + HttpSupport.jsonString(record.testId()) +
+                ",\"executionId\":" + HttpSupport.jsonString(record.executionId()) +
+                ",\"observationId\":" + HttpSupport.jsonString(record.observationId()) +
+                ",\"endpoint\":" + HttpSupport.jsonString(record.endpoint()) +
+                ",\"requestPath\":" + HttpSupport.jsonString(record.requestPath()) +
+                ",\"mutatedPath\":" + HttpSupport.jsonString(record.mutatedPath()) +
+                ",\"expectedDecision\":" + HttpSupport.jsonString(record.expectedDecision().name()) +
+                ",\"observedDecision\":" + HttpSupport.jsonString(record.observedDecision().name()) +
+                ",\"differentialClassification\":" + HttpSupport.jsonString(record.differentialClassification().name()) +
+                ",\"state\":" + HttpSupport.jsonString(record.state().name()) +
+                ",\"evidenceArtifactId\":" + HttpSupport.jsonString(record.evidenceArtifactId().toString()) +
+                ",\"coreEvidenceObjectCount\":" + record.coreEvidenceObjectCount() +
+                ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
     private static String evidenceArtifactJson(EvidenceArtifactRecord record) {
         return "{\"evidenceId\":" + HttpSupport.jsonString(record.evidenceId().toString()) +
                 ",\"targetId\":" + HttpSupport.jsonString(record.targetId().toString()) +
@@ -743,6 +833,10 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"observations\":" + summary.observations() +
                 ",\"uniqueEndpoints\":" + summary.uniqueEndpoints() +
                 ",\"inventorySize\":" + summary.inventorySize() + "}";
+    }
+
+    private static void sendConflict(HttpExchange exchange, IllegalStateException ex) throws IOException {
+        HttpSupport.sendJson(exchange, 409, "{\"error\":" + HttpSupport.jsonString(ex.getMessage()) + "}");
     }
 
     private static void sendBadRequest(HttpExchange exchange, IllegalArgumentException ex) throws IOException {
