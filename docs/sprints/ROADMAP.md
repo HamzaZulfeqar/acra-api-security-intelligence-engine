@@ -2,7 +2,7 @@
 
 ## Current gate — 2026-09-27
 
-**Sprint 12 Phases 1–3 — CONTROLLED A0-A7 RESEARCH: VERIFIED; PHASE 4 CLOSURE ACTIVE.**
+**Sprint 12 — CONTROLLED A0-A7 RESEARCH COMPLETE.**
 
 Base:
 - branch: `s12-standalone-a0-a7-research-evaluation`
@@ -24,13 +24,19 @@ Current research state:
 - first measured JSON SHA-256: `528b79b29a764a157e7b402e4202d84f6585c692ebc353cfae0ffd1c1ff364e7`
 - repeatability: PASS
 
-Next gate:
-- final deterministic research closure;
-- rerun frozen ground-truth verification + A0-A7 campaign;
-- retain full product packaging;
-- generate deterministic source checkpoint;
-- verify safe paths, duplicate absence, clean extraction and per-file equality;
-- freeze Sprint 12 with explicit synthetic-fixture limitations.
+Canonical closure:
+- final run: `36266044578` — SUCCESS
+- source commit: `29ce5317921b23ab3d33fee8e742079cc6a8252a`
+- checkpoint: `S12-FINAL-RESEARCH`
+- source SHA-256: `e089f93287f01201f9682701ca3523e12312bfe084138984b71670e94f98c572`
+- source entries: 1012
+- unsafe paths: 0
+- duplicate entries: 0
+- clean extraction/per-file equality: PASS
+- distribution SHA-256: `cc847d2a4b172041ca8d622f4e6f6ac86afb2cd691b74170ba51204f61ddbca6`
+- research JSON SHA-256: `aa9187baaa4dd81ef380749e72498a0355d795d249447081844069b0ca7b6aea`
+
+**Sprint 13 is NOT STARTED.** A future sprint must address external validity / held-out generalization separately; the controlled Sprint 12 metrics must not be represented as production accuracy.
 
 ## Current gate — 2026-09-26 — standalone Sprint 11
 
