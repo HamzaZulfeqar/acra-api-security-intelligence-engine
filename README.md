@@ -1,219 +1,249 @@
 # ACRA — API Access Control & Routing Auditor
 
-**Current release:** `v0.3.0`  
+**Published stable release:** `v0.3.0`  
+**Current development direction:** standalone localhost GUI  
 **License:** Apache-2.0  
 **Runtime:** Java 21  
-**Burp integration:** Montoya API 2026.7  
-**Research state:** Sprint 13 frozen; stable release published through Sprint 15.
+**Burp integration:** optional adapter
 
-ACRA is a security-research and engineering project for analyzing API authorization behavior from correlated HTTP,
-identity, tenant, ownership, role, workflow, routing, property, batch and indirect-reference evidence.
+ACRA is being developed as a standalone local API-security analysis platform. The primary product path is:
 
-The project is implemented as a Java core plus a Burp Suite extension adapter.
-
-## Quick Start
-
-### 1. Clone the official stable release
-
-Recommended for reproducible use:
-
-```bash
-git clone --branch v0.3.0 --depth 1 https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine.git
-cd acra-api-security-intelligence-engine
+```text
+git clone
+    ↓
+one start command
+    ↓
+http://127.0.0.1:8765
+    ↓
+authorized target / imported API data
+    ↓
+ACRA Core analysis
+    ↓
+contexts + endpoints + evidence + findings/review
 ```
 
-For contributors who intentionally want the latest development state:
+**Burp is not required to start or use the standalone ACRA GUI.**
+
+The published `v0.3.0` tag predates this standalone work and remains the frozen stable Burp-centric release. The
+standalone localhost product path is post-`v0.3.0` development and will require a later release promotion.
+
+## Standalone Quick Start — current development branch
+
+### 1. Clone
 
 ```bash
 git clone https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine.git
 cd acra-api-security-intelligence-engine
 ```
 
-### 2. Verify prerequisites
+Until Sprint 17 merges to `main`, use:
 
 ```bash
-java -version
-mvn -version
-git --version
+git checkout s17-standalone-localhost-gui
 ```
 
-Required:
-- Java 21;
-- Maven;
-- Git.
+### 2. Start ACRA
 
-### 3. Build ACRA
+Windows PowerShell:
+
+```powershell
+.\acra.ps1
+```
+
+Linux/macOS:
+
+```bash
+./acra.sh
+```
+
+The launcher builds the standalone module, starts the local server, and opens the browser when desktop browser launching
+is available.
+
+Default GUI:
+
+```text
+http://127.0.0.1:8765
+```
+
+For headless/manual-browser use:
+
+```bash
+./acra.sh --no-browser
+```
+
+Custom port:
+
+```bash
+./acra.sh --port=9000
+```
+
+### 3. Analyze without Burp
+
+The current Sprint 17 Phase 1 GUI accepts an exact HTTP(S) URL for a system you own or are explicitly authorized to test.
+
+It performs one bounded read-only GET, converts the real request/response exchange into ACRA Core's `HttpTransaction`,
+and automatically runs `SecurityContextEngine`.
+
+The GUI returns structured:
+- endpoint;
+- response status;
+- principal when evidence resolves it;
+- role when evidence resolves it;
+- tenant when evidence resolves it;
+- resource/owner when evidence resolves it;
+- action;
+- context status;
+- evidence count;
+- analysis history.
+
+No Burp runtime, Montoya configuration, or Burp target-scope configuration is involved in this standalone path.
+
+### Current Sprint 17 safety boundary
+
+Phase 1 deliberately does **not** crawl, brute-force, enumerate credentials, mutate state, or automatically confirm
+vulnerabilities.
+
+It performs one explicitly authorized read-only GET per submitted URL.
+
+The next standalone phases add:
+1. OpenAPI/Swagger import;
+2. HAR import;
+3. multi-request/session correlation;
+4. policy/governance/finding workspaces;
+5. evidence and report downloads;
+6. local persistence;
+7. optional Burp connector feeding the same engine/UI;
+8. packaged no-Maven distribution.
+
+## Requirements
+
+- Java 21
+- Maven
+- Git
+
+Build only the standalone application:
+
+```bash
+mvn --batch-mode --no-transfer-progress clean package -pl app/standalone -am
+```
+
+Standalone JAR:
+
+```text
+app/standalone/target/acra-standalone-0.3.0.jar
+```
+
+Run directly:
+
+```bash
+java -jar app/standalone/target/acra-standalone-0.3.0.jar
+```
+
+## What ACRA Core analyzes
+
+ACRA's framework-neutral core includes security-context and authorization-oriented machinery for:
+
+- identity and role evidence;
+- tenant boundaries;
+- resource and ownership context;
+- action semantics;
+- endpoint modeling;
+- object-level authorization;
+- role/function authorization;
+- workflow/state authorization;
+- routing equivalence;
+- property-level authorization;
+- batch authorization;
+- indirect-reference authorization;
+- evidence correlation;
+- governed uncertainty;
+- review-oriented candidate findings and reproduction artifacts.
+
+The standalone application is progressively exposing these capabilities through one local GUI.
+
+## Optional Burp integration
+
+The Burp extension remains available as an **optional traffic/analyst adapter**.
+
+Build it with:
 
 ```bash
 mvn --batch-mode --no-transfer-progress clean verify -pl extension/burp-extension -am
 ```
 
-Expected extension JAR:
+JAR:
 
 ```text
 extension/burp-extension/target/acra-burp-extension-0.3.0.jar
 ```
 
-### 4. Load ACRA in Burp Suite
-
-In Burp:
-
-1. Open **Extensions > Installed**.
-2. Click **Add**.
-3. Select **Java** as the extension type.
-4. Select `acra-burp-extension-0.3.0.jar`.
-5. Click **Next**.
-6. Review the **Output** and **Errors** tabs.
-7. Close the dialog after the extension loads.
-
-The extension should appear as **ACRA**, and an **ACRA** suite tab should be visible.
-
-### 5. Configure authorized scope before expecting traffic
-
-ACRA defaults to Burp's suite scope. Add only systems you are explicitly authorized to test to **Target > Scope**
-(or right-click an authorized target in the Site map and choose **Add to scope**).
-
-ACRA's active request execution remains disabled by default.
-
-### 6. Verify the first run
-
-Expected extension output:
-
-```text
-ACRA v0.3.0 initialized in passive observation mode. Active vulnerability scanning is disabled.
-```
-
-In the ACRA tab, verify:
-- **Overview**, **Traffic**, **Contexts**, **Endpoints**, and **Configuration** are visible;
-- Configuration reports `Scope mode: IN_SCOPE_ONLY`;
-- Configuration reports `Active execution: DISABLED by default`;
-- authorized in-scope Proxy traffic begins appearing in the passive observation views.
-
-Full onboarding:
-- [Quick Start](docs/getting-started/QUICK_START.md)
-- [Burp Installation](docs/getting-started/BURP_INSTALLATION.md)
-- [First-Run Verification](docs/getting-started/FIRST_RUN_VERIFICATION.md)
-- [Troubleshooting](docs/getting-started/TROUBLESHOOTING.md)
-
-## Download instead of building
-
-The stable GitHub Release contains the prebuilt extension JAR, release ZIP, manifest, and SHA-256 checksums:
-
-https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine/releases/tag/v0.3.0
-
-Users should verify downloaded assets against the published `SHA256SUMS`.
-
-## What ACRA does
-
-ACRA passively observes API traffic and builds structured security context for authorization analysis. Its architecture
-supports:
-
-- object-level authorization analysis;
-- tenant-boundary analysis;
-- role/function authorization analysis;
-- workflow/state authorization analysis;
-- routing-equivalence analysis;
-- property-level authorization analysis;
-- batch authorization analysis;
-- indirect-reference analysis;
-- evidence correlation and governed uncertainty;
-- review-oriented finding candidates and reproduction artifacts.
-
-ACRA deliberately distinguishes a **candidate** from a **confirmed vulnerability**. Uncertain policy/context states are
-routed to review rather than silently promoted.
+Burp is useful when you intentionally want Proxy/Montoya traffic ingestion, but it is no longer the target primary
+product interface.
 
 ## Repository layout
 
 ```text
-core/                     Framework-neutral ACRA domain and reasoning code
-extension/burp-extension/ Burp Suite / Montoya adapter and UI
-lab/                      Controlled local research fixtures
-scripts/                  Verification, packaging and research automation
-docs/                      Architecture, testing, research and onboarding
-.github/workflows/         CI, security and research gates
+core/                     Framework-neutral ACRA analysis engine
+app/standalone/           Standalone localhost web GUI/runtime
+extension/burp-extension/ Optional Burp/Montoya adapter
+lab/                      Controlled research fixtures
+scripts/                  Verification and automation
+docs/                      Architecture, research and sprint records
+.github/workflows/         CI/security/research gates
 ```
 
-## Public repository verification
+## Sprint 17 verification
 
-Sprint 16 adds a public-onboarding smoke gate that verifies:
+Dedicated workflow:
 
-- public cloneability;
-- Java 21 / Maven buildability;
-- stable version/license consistency;
-- extension JAR creation;
-- required Burp entry class packaging;
-- stable release asset availability/checksum;
-- onboarding documentation integrity.
+`Sprint 17 Standalone Localhost GUI`
+
+Canonical Phase 1 run:
+
+`36204523161 — SUCCESS`
+
+It verifies:
+- standalone shaded JAR builds;
+- ACRA Core is packaged into the standalone runtime;
+- localhost GUI status endpoint starts;
+- `burpRequired=false`;
+- a synthetic localhost API is queried directly;
+- the response is analyzed by ACRA Core;
+- action/context/evidence output is returned;
+- history is populated;
+- authorization acknowledgement is enforced;
+- Burp independence is explicit.
 
 Run locally:
 
 ```bash
-bash scripts/verify-public-onboarding.sh
+bash scripts/verify-sprint17-standalone.sh
 ```
 
-## Verified runtime boundary
+## Published v0.3.0
 
-Sprint 13 Phase 7 loaded the actual shaded ACRA extension inside real Burp Suite Community Edition 2026.7.3 and observed:
+The existing stable release remains available at:
 
-- real Montoya extension initialization;
-- real Burp Proxy request callbacks;
-- real Burp Proxy response callbacks;
-- ACRA passive-pipeline processing;
-- correct post-freeze context reconstruction on two unseen localhost cases in two independent runs;
-- review/publication eligibility protections;
-- active execution disabled.
+https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine/releases/tag/v0.3.0
 
-Canonical strengthened Phase 7 workflow: `36180569483`.
+That tag is immutable historical release evidence and does not yet include the Sprint 17 standalone GUI.
 
-This evidence is limited to the exact controlled localhost runtime boundary. It does **not** establish production
-accuracy, arbitrary Burp-version compatibility, external-target effectiveness or independent real-world validation.
+## Research / claim boundary
 
-See:
-- `docs/research/FINAL_RESEARCH_FREEZE.md`
-- `docs/research/FINAL_CLAIM_BOUNDARY.md`
-- `docs/research/FINAL_EVIDENCE_MANIFEST.json`
-- `docs/research/FINAL_REPRODUCIBILITY.md`
+Sprint 13 research remains frozen.
 
-## Safety model
-
-ACRA is developed for authorized security research.
-
-- active execution is disabled by default;
-- candidate != confirmed vulnerability;
-- no automatic Burp issue publication;
-- uncertainty is routed to review;
-- research/runtime evidence probes exclude secret-bearing material;
-- external testing requires explicit authorization and scope.
-
-See `SECURITY.md`.
-
-## Research status
-
-Sprint 13 is frozen with eight canonical completed controlled experiments.
-
-Phase 8 external-target validation was **NOT PERFORMED** before the freeze. Therefore this release does not claim:
-
+External-target validation was **NOT PERFORMED** before that freeze. Therefore neither `v0.3.0` nor this standalone
+development branch claims:
 - production scanner accuracy;
 - production safety;
-- external-target effectiveness;
+- arbitrary-target effectiveness;
 - independent real-world validation.
 
-A public software release is a packaging/distribution event, not new validation evidence.
-
-## Repository hardening
-
-The file-based public onboarding controls are versioned in this repository.
-
-Two GitHub administration settings are tracked separately because they cannot be changed by the connected repository
-automation used for this sprint:
-- protect `main` with pull-request/status-check requirements;
-- enable GitHub Dependency Graph so native Dependency Review becomes meaningful.
-
-See `docs/operations/GITHUB_REPOSITORY_HARDENING.md`.
+Candidate evidence remains distinct from a confirmed vulnerability.
 
 ## License
 
-ACRA is licensed under the **Apache License, Version 2.0**.
+Apache License, Version 2.0.
 
 SPDX: `Apache-2.0`
 
@@ -223,9 +253,3 @@ See `LICENSE` and `NOTICE`.
 
 Hamza Zulfiqar  
 GitHub: `HamzaZulfeqar`
-
-## Version
-
-```text
-0.3.0
-```
