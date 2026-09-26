@@ -115,7 +115,7 @@ public final class StandaloneFindingProductSurfaceTestSuite {
                 check(json.statusCode() == 200, "JSON reproduction API returns 200");
                 check(json.body().contains("\"format\":\"JSON\""), "JSON export envelope identifies format");
                 check(json.body().contains("\"sha256\":"), "JSON export exposes SHA-256");
-                check(json.body().contains("\"confirmedFinding\":false"), "validated finding is not confirmed");
+                check(json.body().contains("\\\"confirmedFinding\\\":false"), "validated finding is not confirmed");
                 check(!json.body().contains("reviewer-product-hidden")
                                 && !json.body().contains("Product review reason must not be exported"),
                         "JSON export excludes reviewer identity and reason");
