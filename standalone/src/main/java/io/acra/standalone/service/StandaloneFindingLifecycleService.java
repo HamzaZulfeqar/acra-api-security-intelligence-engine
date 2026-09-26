@@ -205,9 +205,9 @@ public final class StandaloneFindingLifecycleService {
 
         FindingFingerprint fingerprint = FindingFingerprint.of(
                 execution.endpoint(),
-                expectation.resourceId(),
+                explicit(expectation.resourceId()),
                 expectation.principalId(),
-                expectation.tenantId(),
+                explicit(expectation.tenantId()),
                 dimension,
                 "EXPECTED_DENY_OBSERVED_ALLOW");
 
@@ -221,9 +221,9 @@ public final class StandaloneFindingLifecycleService {
                 List.of("controlled-route-equivalence:" + execution.runId()),
                 List.of(dimension),
                 execution.endpoint(),
-                expectation.resourceId(),
+                explicit(expectation.resourceId()),
                 expectation.principalId(),
-                expectation.tenantId(),
+                explicit(expectation.tenantId()),
                 AuthorizationDecision.DENY,
                 AuthorizationDecision.ALLOW,
                 List.of(execution.evidenceArtifactId().toString()),
@@ -285,6 +285,10 @@ public final class StandaloneFindingLifecycleService {
             out.add(evidenceId.toString());
         }
         return out.stream().distinct().sorted().toList();
+    }
+
+    private static String explicit(String value) {
+        return value == null || value.isBlank() ? "UNKNOWN" : value.strip();
     }
 
     private FindingLifecycleState parseState(String value) {
