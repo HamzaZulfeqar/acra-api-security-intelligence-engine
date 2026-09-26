@@ -280,6 +280,64 @@
         </article>
       </section>
 
+      <section id="evidence-view" class="view">
+        <div class="context-summary">
+          <article><span>Artifacts</span><strong id="evidence-artifact-count">0</strong></article>
+          <article><span>HTTP samples</span><strong id="evidence-sample-count">0</strong></article>
+          <article><span>Redacted</span><strong id="evidence-redacted-count">0</strong></article>
+          <article><span>With responses</span><strong id="evidence-response-count">0</strong></article>
+          <article><span>Mode</span><strong>Local</strong></article>
+        </div>
+
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">PROVENANCE ARCHIVE</span><h3>Evidence artifacts</h3></div></div>
+            <div id="evidence-artifact-list" class="mini-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">REDACTED VIEW</span><h3>Evidence preview</h3></div><span class="status-badge">Secrets removed</span></div>
+            <pre id="evidence-preview" class="evidence-preview">Select an evidence artifact to inspect its locally stored redacted representation.</pre>
+          </article>
+        </div>
+
+        <div class="grid two evidence-diff-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">ACRA CORE DIFFERENTIAL</span><h3>HTTP response comparison</h3></div></div>
+            <form id="http-diff-form">
+              <label>Left response sample<select id="http-diff-left" name="leftId" required></select></label>
+              <label>Right response sample<select id="http-diff-right" name="rightId" required></select></label>
+              <label>Comparison mode<select name="mode"><option>NORMALIZED</option><option>STRUCTURAL</option><option>SEMANTIC</option><option>RAW</option></select></label>
+              <button class="button" type="submit">Compare Responses</button>
+            </form>
+            <div id="http-diff-result" class="diff-result">Choose two response samples.</div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">CONTEXT DIFFERENTIAL</span><h3>Authorization comparison</h3></div></div>
+            <form id="auth-diff-form">
+              <label>Left authorization expectation<select id="auth-diff-left" name="leftId" required></select></label>
+              <label>Right authorization expectation<select id="auth-diff-right" name="rightId" required></select></label>
+              <button class="button" type="submit">Compare Contexts</button>
+            </form>
+            <div id="auth-diff-result" class="diff-result">Choose two authorization contexts.</div>
+          </article>
+        </div>
+
+        <article class="panel inventory-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">HTTP EVIDENCE</span><h3>Captured samples</h3></div>
+            <input id="evidence-search" class="search-input" placeholder="Filter method, URL, status, type or source">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Method</th><th>Request URL</th><th>Status</th><th>Content type</th><th>Evidence</th><th>Created</th></tr></thead>
+              <tbody id="evidence-sample-table-body"></tbody>
+            </table>
+            <div id="evidence-empty" class="empty-state">Import HAR or raw HTTP material to populate evidence.</div>
+          </div>
+        </article>
+      </section>
+
       <section id="placeholder-view" class="view">
         <article class="panel placeholder-panel"><span class="eyebrow">ACRA CORE WORKSPACE</span><h2 id="placeholder-title">Workspace</h2><p id="placeholder-copy">This product area is preserved in the standalone information architecture and will be wired to the existing ACRA Core engine incrementally.</p><div class="boundary"><strong>Current implementation boundary</strong><span>Standalone launcher, local projects and safe target onboarding are active. This screen does not claim analysis functionality that has not yet been wired into the standalone host.</span></div></article>
       </section>
