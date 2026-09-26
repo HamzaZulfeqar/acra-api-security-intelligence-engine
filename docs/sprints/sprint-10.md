@@ -187,24 +187,54 @@ Canonical Phase 4 verification:
 - packaged localhost application — PASS;
 - all Phase 1–3 focused regressions retained — PASS.
 
+## Phase 7 — Controlled Active Execution — VERIFIED
+
+Verified capability:
+- guarded standalone route-equivalence active validation over the existing ACRA Core active engine;
+- loopback target restriction: localhost / 127.0.0.1 / ::1 only;
+- registered target must be `LAB` + `CONTROLLED_LAB`;
+- READ expectation with explicit ALLOW / DENY policy required;
+- GET / HEAD / OPTIONS only in this Phase 7 slice;
+- concrete path must remain inside the registered target base path and canonicalize to the selected inventory endpoint;
+- trailing-slash representation is the only generated route mutation in the standalone Phase 7 UI;
+- explicit operator confirmation required before execution;
+- independent transient tested credential and known-ALLOW positive-control credential required;
+- credentials are used in memory only and are not persisted or returned by localhost APIs;
+- existing `MutationValidator`, hard scope, environment, consent, equivalence, budget, concurrency, rate-limit and kill-switch controls reused;
+- existing `LocalhostHttpTransport` reused with redirects disabled;
+- existing `TestExecutor` produces four-way differential evidence;
+- controlled execution summaries persist with redacted ACTIVE_EXECUTION evidence lineage;
+- kill switch blocks before dispatch and explicit reset is required;
+- external/non-controlled targets fail closed;
+- functional Active Validation localhost GUI and API.
+
+Canonical Phase 7 verification:
+- verified code-bearing head: `3125f71922e5c617bff62f35ac0b11d9f535fca7`;
+- Sprint 10 workflow run `36212999470` — SUCCESS;
+- `StandaloneControlledExecutionTestSuite` — PASS;
+- `StandaloneControlledExecutionApiTestSuite` — PASS;
+- browser JavaScript syntax — PASS;
+- all retained Phase 1–6 standalone suites — PASS;
+- packaged localhost application — PASS.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
 
 Current standalone work does not yet claim:
 - original secret-bearing import bytes are retained (only digest + redacted representation are stored);
-- populated workflow/routing/property assessments without corresponding runtime observations;
-- candidate triage or final report generation from standalone mode;
+- broad or unrestricted active scanning;
+- non-loopback active execution from the standalone Phase 7 workbench;
 - automatic endpoint crawling or network discovery;
-- active vulnerability testing merely because a target or import exists.
+- real Burp desktop runtime validation.
 
 Security Context and Authorization are now functional. Workflow, Routing and Property use real Core workspace readiness but remain unpopulated until evidence exists. Evidence, Candidates, Coverage and Reports are the next standalone product layers.
 
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane and is no longer a prerequisite for standalone product startup.
 
 ## Next dependency-ordered slices
-1. Controlled active execution through existing ACRA safety gates.
-2. Burp-to-standalone bridge and packaging hardening.
+1. Burp-to-standalone bridge and packaging hardening.
+2. Final Sprint 10 regression and closure checkpoint.
 
 ## Definition of Done for Phase 2
 Phase 2 is verified only because CI proved:
