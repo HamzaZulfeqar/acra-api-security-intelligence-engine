@@ -3,7 +3,7 @@
 **Branch:** `s11-standalone-finding-lifecycle`  
 **Base:** verified standalone Sprint 10 head `9ff4bab2e3f6dc11eef54b0e1877245b45060dfe`  
 **Immutable Sprint 10 closure:** `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`  
-**Status:** PHASE 2 VERIFIED — PHASE 3 ACTIVE
+**Status:** PHASE 3 VERIFIED — PHASE 4 ACTIVE
 
 ## Product gap being closed
 
@@ -47,7 +47,20 @@ Verified:
 Canonical head: `d0213af7d9f7002ffe44f43a516f0f4d9e2f0bcc`.  
 Canonical run: `36215309359` — SUCCESS.
 
-## Phase 3 — Reproduction Package + Deterministic JSON — ACTIVE
+## Phase 3 — Reproduction Package + Deterministic JSON — VERIFIED
+
+Verified:
+- minimized reproduction package from reviewed finding state;
+- stable source evidence and execution lineage;
+- reviewer identity/reason excluded;
+- deterministic canonical JSON and SHA-256;
+- no fabricated raw HTTP or credentials;
+- confirmedFinding follows explicit lifecycle only;
+- restart determinism.
+
+Canonical run: `36215524311` — SUCCESS.
+
+## Phase 4 — SARIF + Optional Burp Issue Draft — ACTIVE
 
 Next implementation must:
 - generate a minimized reproduction model only from persisted reviewed finding state;
