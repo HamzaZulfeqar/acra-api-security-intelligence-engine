@@ -106,7 +106,7 @@ public final class StandaloneReviewReportingApiTestSuite {
                 HttpResponse<String> report2 = get(client,
                         server.baseUri().resolve("api/report?projectId=" + project.id() + "&format=JSON"));
                 check(report1.statusCode() == 200 && report2.statusCode() == 200, "report endpoint returns 200");
-                check(report1.body().contains("\\"confirmedFindingCount\\":0"),
+                check(report1.body().contains("\\\"confirmedFindingCount\\\":0"),
                         "report content keeps confirmed findings at zero");
                 Matcher sha1 = SHA.matcher(report1.body());
                 Matcher sha2 = SHA.matcher(report2.body());
