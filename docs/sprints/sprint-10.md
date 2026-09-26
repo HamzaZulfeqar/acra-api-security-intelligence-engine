@@ -246,6 +246,32 @@ Canonical Phase 8 verification:
 - clean extraction / SHA-256 verification — PASS;
 - extracted distribution startup — PASS.
 
+## Final Sprint 10 Closure — SOFTWARE COMPLETE
+
+Sprint 10 is **SOFTWARE COMPLETE** at the canonical closure checkpoint below.
+
+Canonical closure evidence:
+- branch: `s10-standalone-workbench`;
+- final closure workflow: `36213547092` — SUCCESS;
+- closure source commit: `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`;
+- checkpoint: `S10-FINAL-SOFTWARE`;
+- source archive: `acra-sprint-10-final.zip`;
+- source archive SHA-256: `296fcf420919c172c338988e320a06007aaa4640b90d2077a341759690fd5c0f`;
+- checkpoint entries: 951;
+- unsafe archive paths: 0;
+- duplicate archive entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- distribution bundle SHA-256: `0c6929384eb3110f018a57b45fb09729957e6b1f90e4ac8d9b3352bd12920f15`;
+- retained Sprint 9 final verification stack: PASS;
+- full current Maven reactor: PASS;
+- all Sprint 10 standalone suites: PASS;
+- optional official-Montoya Burp adapter + bridge contract: PASS;
+- browser JavaScript syntax: PASS;
+- distribution checksum verification + extracted-JAR startup: PASS.
+
+Sprint 11 is **NOT STARTED** by this closure.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
@@ -261,8 +287,8 @@ Security Context and Authorization are now functional. Workflow, Routing and Pro
 
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane and is no longer a prerequisite for standalone product startup.
 
-## Next dependency-ordered slice
-1. Final Sprint 10 regression and deterministic closure checkpoint.
+## Next release boundary
+Sprint 10 is closed. Any new capability belongs to Sprint 11 or a separately approved post-closure maintenance patch.
 
 ## Definition of Done for Phase 2
 Phase 2 is verified only because CI proved:
