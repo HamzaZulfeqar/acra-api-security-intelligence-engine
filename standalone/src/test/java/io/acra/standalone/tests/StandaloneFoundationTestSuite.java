@@ -69,7 +69,6 @@ public final class StandaloneFoundationTestSuite {
 
             HttpResponse<String> health = client.send(
                     HttpRequest.newBuilder(base.resolve("api/health"))
-                            .header("Host", "127.0.0.1:" + server.port())
                             .GET().build(),
                     HttpResponse.BodyHandlers.ofString());
             check(health.statusCode() == 200, "health endpoint");
@@ -79,7 +78,6 @@ public final class StandaloneFoundationTestSuite {
             String projectBody = "name=Local+Assessment&description=Standalone+test";
             HttpResponse<String> created = client.send(
                     HttpRequest.newBuilder(base.resolve("api/projects"))
-                            .header("Host", "127.0.0.1:" + server.port())
                             .header("Content-Type", "application/x-www-form-urlencoded")
                             .header("X-ACRA-CSRF", server.csrfToken())
                             .POST(HttpRequest.BodyPublishers.ofString(projectBody))
@@ -90,7 +88,6 @@ public final class StandaloneFoundationTestSuite {
 
             HttpResponse<String> denied = client.send(
                     HttpRequest.newBuilder(base.resolve("api/projects"))
-                            .header("Host", "127.0.0.1:" + server.port())
                             .header("Content-Type", "application/x-www-form-urlencoded")
                             .POST(HttpRequest.BodyPublishers.ofString(projectBody))
                             .build(),
