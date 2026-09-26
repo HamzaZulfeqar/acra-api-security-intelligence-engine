@@ -1,5 +1,16 @@
 # ACRA Project State
 
+## Current state — 2026-09-27 — Sprint 12 standalone research line
+
+**Current sprint:** Sprint 12 — Controlled A0-A7 Authorization Ablation Evaluation (active).  
+**Working branch:** `s12-standalone-a0-a7-research-evaluation`.  
+**Verified Sprint 11 base:** `2e86b17afa5e06b08f3b9ad580a1b02fdc7d815d`; final closure run `36251784191` — SUCCESS.  
+**Phase 1:** ACTIVE — harness and label-isolation verification.  
+**A0-A7 metrics:** NOT_MEASURED until the dedicated Sprint 12 workflow succeeds.  
+**Dataset:** `GT-S11-AUTHORIZATION-RESEARCH` remains frozen and unchanged.
+
+Sprint 12 must not copy metrics from older divergent branches. Results are recorded only from execution on this standalone line.
+
 ## Current state — 2026-09-26 — Sprint 11 standalone line
 
 **Current sprint:** Sprint 11 — Standalone Finding Lifecycle, Reproduction & Research Readiness (closed).  
