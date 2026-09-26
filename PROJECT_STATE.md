@@ -2,13 +2,34 @@
 
 ## Current state — 2026-09-26
 
-**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 1 verified.  
+**Current development:** Sprint 10 — Standalone Localhost Security Workbench, Phase 2 verified.  
 **Working branch:** `s10-standalone-workbench`.  
-**Verified code-bearing head:** `bbebeda5e7bc4e929b5c5c9b776504d0db059784`.  
-**Sprint 10 standalone verification:** GitHub Actions run `36207695944` — SUCCESS.  
+**Verified code-bearing head:** `32ed3b6843e653c4bf3e3d46a9b427e34fe32832`.  
+**Sprint 10 Phase 2 verification:** GitHub Actions run `36208517465` — SUCCESS.  
 **Retained Sprint 2 verification:** GitHub Actions run `36207695914` — SUCCESS.  
 **Retained Sprint 3 verification:** GitHub Actions run `36207695811` — SUCCESS.  
 **Sprint 9 repaired baseline final closure:** GitHub Actions run `36207092874` — SUCCESS at commit `8f031571dd63cf83ee46d439d40edafd83afea38`.
+
+### Sprint 10 Phase 2 verified capability
+
+- offline OpenAPI / Swagger, HAR and raw HTTP request ingestion;
+- imported evidence bound to a selected registered target;
+- fail-closed scheme / host / port / base-path scope validation;
+- concrete traffic routes canonicalized through existing ACRA URI intelligence;
+- declared OpenAPI routes normalized through existing route-template logic;
+- persistent deduplicated project API inventory;
+- documented / observed source provenance;
+- observed response-status and observation-count accounting;
+- functional localhost Import + API Inventory workspace with file/paste ingestion and filtering;
+- no automatic scan or active request from import;
+- Phase 2 workflow `36208517465`: SUCCESS;
+- retained Core/Sprint2/Sprint3 import-foundation regressions: SUCCESS.
+
+### Sprint 10 Phase 2 explicit boundary
+
+Raw imported files are not yet promoted into the formal Evidence graph; security-context configuration and the
+existing authorization/workflow/routing/property engines are not yet projected into the standalone host.
+Sprint 10 remains **IN PROGRESS**, not software-complete.
 
 ### Sprint 10 Phase 1 verified capability
 
@@ -32,9 +53,9 @@
 
 ### Sprint 10 Phase 1 explicit boundary
 
-The deeper API Inventory, Authorization, Object Access, Function Access, Property Access, Workflow, Routing,
-Evidence, Candidates, Coverage and Reports areas are present in the standalone information architecture but are
-not yet claimed as wired into the standalone host. Existing Core logic must be reused rather than duplicated.
+API Inventory is now wired and verified. Authorization, Object Access, Function Access, Property Access, Workflow,
+Routing, Evidence, Candidates, Coverage and Reports remain in the standalone information architecture but are not
+yet claimed as wired into the standalone host. Existing Core logic must be reused rather than duplicated.
 
 Registering a target does not perform discovery, scanning or exploitation. Future active execution remains gated by
 the existing ACRA authorization, scope, consent, budget, concurrency, rate and safety controls.
