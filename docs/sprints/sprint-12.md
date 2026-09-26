@@ -3,7 +3,7 @@
 **Branch:** `s12-standalone-a0-a7-research-evaluation`  
 **Base:** verified Sprint 11 standalone head `2e86b17afa5e06b08f3b9ad580a1b02fdc7d815d`  
 **Immutable Sprint 11 closure source:** `1384b86e5e4d33f5ff3c0c97fdc0db667d0b9322`  
-**Status:** IN PROGRESS — PHASES 1–3 VERIFIED; FINAL RESEARCH CLOSURE ACTIVE
+**Status:** S12 CONTROLLED RESEARCH COMPLETE — FINAL CLOSURE VERIFIED
 
 ## Objective
 
@@ -102,16 +102,29 @@ demonstrate additional classification value from A7 correlation beyond A6.
 
 This interpretation is limited to the balanced synthetic localhost fixture. Dimension discovery is not measured.
 
-### Phase 4 — Research closure — ACTIVE
+### Phase 4 — Research closure — VERIFIED
 
-Required:
-- repeated deterministic campaign;
-- artifact sidecars verified;
-- no credential leakage;
-- retained Sprint 11 ground-truth verification;
-- retained product build;
-- exact source/research artifact provenance;
-- final state freeze.
+Canonical final closure:
+- source commit: `29ce5317921b23ab3d33fee8e742079cc6a8252a`;
+- final closure run: `36266044578` — SUCCESS;
+- checkpoint: `S12-FINAL-RESEARCH`;
+- source ZIP SHA-256: `e089f93287f01201f9682701ca3523e12312bfe084138984b71670e94f98c572`;
+- source entries: 1012;
+- unsafe paths: 0;
+- duplicate entries: 0;
+- clean extraction equality: PASS;
+- per-file SHA-256 equality: PASS;
+- Sprint 12 distribution SHA-256: `cc847d2a4b172041ca8d622f4e6f6ac86afb2cd691b74170ba51204f61ddbca6`;
+- closure-run research JSON SHA-256: `aa9187baaa4dd81ef380749e72498a0355d795d249447081844069b0ca7b6aea`;
+- CSV SHA-256: `59333c885098c2cdd69eccab0d7ba6273b1d55fbaa2478b7dfaa05c7e51c3486`;
+- case JSONL SHA-256: `7bb7c6780cb9360f63354f533e0ffc54a4d2db28c4b60ae2a858e9b417ba3d20`;
+- full Maven reactor: PASS;
+- retained Sprint 10/11 standalone/finding regression stack: PASS;
+- retained Sprint 2/Sprint 3 local compatibility: PASS;
+- extracted standalone startup: PASS.
+
+The research JSON digest differs from the first measured run because the artifact includes the exact executing source
+commit. The confusion matrices and stable CSV/per-case outputs remained unchanged.
 
 ## Non-claims
 
@@ -121,3 +134,12 @@ Measured metrics are valid only for this controlled fixture. They do not establi
 - no external-target validation;
 - no dimension-discovery result;
 - no comparison/ranking against commercial tools.
+
+## Final decision
+
+Sprint 12 is **CONTROLLED RESEARCH COMPLETE** for the registered synthetic/localhost boundary.
+
+Sprint 13 is **NOT STARTED** by this closure.
+
+The closure does not establish production scanner accuracy, external validity, automatic dimension discovery,
+real Burp desktop behavior, or superiority over another security tool.
