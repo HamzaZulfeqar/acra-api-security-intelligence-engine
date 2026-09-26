@@ -68,6 +68,15 @@ jobs:
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneCoreProjectionTestSuite
 
+      - name: Run standalone Core projection API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneCoreProjectionApiTestSuite
+
+      - name: Validate standalone browser JavaScript
+        run: node --check standalone/src/main/resources/web/app.js
+
       - name: Verify packaged localhost application
         run: |
           HOME_DIR="$RUNNER_TEMP/acra-standalone-home"
