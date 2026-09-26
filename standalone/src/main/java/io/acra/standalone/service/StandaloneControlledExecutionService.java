@@ -96,7 +96,8 @@ public final class StandaloneControlledExecutionService {
             UUID targetId,
             UUID expectationId,
             String concretePath,
-            String authorizationValue,
+            String testedAuthorizationValue,
+            String positiveControlAuthorizationValue,
             boolean userConfirmed
     ) throws IOException {
         if (!userConfirmed) throw new IllegalArgumentException("explicit execution confirmation is required");
@@ -129,8 +130,14 @@ public final class StandaloneControlledExecutionService {
         String mutatedPath = equivalentTrailingSlash(path);
         validateConcretePath(target, mutatedPath);
 
-        String auth = validateEphemeralAuthorization(authorizationValue);
-        SecurityTest test = securityTest(projectId, target, inventory, expectation, path, mutatedPath, auth);
+        String testedAuth = validateEphemeralAuthorization(testedAuthorizationValue, "testedAuthorizationValue");
+        String positiveAuth = validateEphemeralAuthorization(
+                positiveControlAuthorizationValue, "positiveControlAuthorizationValue");
+        if (testedAuth.equals(positiveAuth)) {
+            throw new IllegalArgumentException("tested and positive-control authorization values must be distinct");
+        }
+        SecurityTest test = securityTest(
+                projectId, target, inventory, expectation, path, mutatedPath, testedAuth, positiveAuth);
         Harness harness = harness(projectId.toString(), test.target());
 
         configureGuards(harness, test);
@@ -214,7 +221,8 @@ public final class StandaloneControlledExecutionService {
             AuthorizationExpectationRecord expectation,
             String path,
             String mutatedPath,
-            String authorizationValue
+            String testedAuthorizationValue,
+            String positiveControlAuthorizationValue
     ) throws IOException {
         URI base = target.baseUri();
         int port = effectivePort(base);
@@ -242,19 +250,30 @@ public final class StandaloneControlledExecutionService {
                 "",
                 List.of("standalone controlled route-equivalence execution"));
 
-        List<HttpHeader> authenticatedHeaders = authorizationValue.isBlank()
-                ? List.of(new HttpHeader("Accept", "application/json"))
-                : List.of(
-                        new HttpHeader("Authorization", authorizationValue),
-                        new HttpHeader("Accept", "application/json"));
+        List<HttpHeader> testedHeaders = List.of(
+                new HttpHeader("Authorization", testedAuthorizationValue),
+                new HttpHeader("Accept", "application/json"));
+        List<HttpHeader> positiveHeaders = List.of(
+                new HttpHeader("Authorization", positiveControlAuthorizationValue),
+                new HttpHeader("Accept", "application/json"));
 
-        HttpRequest authenticated = HttpRequest.of(
+        HttpRequest tested = HttpRequest.of(
                 inventory.method(),
                 base.getScheme(),
                 host,
                 port,
                 path,
-                authenticatedHeaders,
+                testedHeaders,
+                new byte[0],
+                HttpProtocol.HTTP_1_1);
+
+        HttpRequest positiveControlRequest = HttpRequest.of(
+                inventory.method(),
+                base.getScheme(),
+                host,
+                port,
+                path,
+                positiveHeaders,
                 new byte[0],
                 HttpProtocol.HTTP_1_1);
 
@@ -274,9 +293,10 @@ public final class StandaloneControlledExecutionService {
                 : "resource:" + expectation.resourceId();
 
         RequestDefinition baseline = new RequestDefinition(
-                "S10-REQ-BASE-" + expectation.id(), authenticated, contextRef, resourceRef);
+                "S10-REQ-BASE-" + expectation.id(), tested, contextRef, resourceRef);
         RequestDefinition positive = new RequestDefinition(
-                "S10-REQ-POS-" + expectation.id(), authenticated, contextRef, resourceRef);
+                "S10-REQ-POS-" + expectation.id(), positiveControlRequest,
+                "standalone-positive-control-" + expectation.id(), resourceRef);
         RequestDefinition negative = new RequestDefinition(
                 "S10-REQ-NEG-" + expectation.id(), anonymous, "anonymous-context", resourceRef);
 
@@ -539,10 +559,11 @@ public final class StandaloneControlledExecutionService {
         return changed + suffix;
     }
 
-    private static String validateEphemeralAuthorization(String value) {
+    private static String validateEphemeralAuthorization(String value, String field) {
         String auth = value == null ? "" : value.strip();
+        if (auth.isBlank()) throw new IllegalArgumentException(field + " is required for controlled differential execution");
         if (auth.length() > 4096 || auth.indexOf('\r') >= 0 || auth.indexOf('\n') >= 0) {
-            throw new IllegalArgumentException("authorization value is invalid");
+            throw new IllegalArgumentException(field + " is invalid");
         }
         return auth;
     }
