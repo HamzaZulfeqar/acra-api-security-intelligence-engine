@@ -4,6 +4,7 @@ const state={
   targets:[],
   inventory:[],
   context:{principals:[],roles:[],tenants:[],resources:[],expectations:[]},
+  projection:null,
   activeProjectId:""
 };
 
@@ -67,10 +68,12 @@ async function loadProjects(preferId){
     state.targets=[];
     state.inventory=[];
     state.context={principals:[],roles:[],tenants:[],resources:[],expectations:[]};
+    state.projection=null;
     renderTargets();
     syncImportTargets();
     renderInventory();
     renderContext();
+    renderProjection();
     return;
   }
 
@@ -88,6 +91,7 @@ async function loadProjects(preferId){
   await loadTargets();
   await loadInventory();
   await loadContext();
+  await loadProjection();
 }
 
 async function loadTargets(){
@@ -114,6 +118,16 @@ async function loadInventory(){
   state.inventory=await api("/api/inventory?projectId="+encodeURIComponent(state.activeProjectId));
   renderInventory(document.querySelector("#inventory-search")?document.querySelector("#inventory-search").value:"");
   syncContextSelectors();
+}
+
+async function loadProjection(){
+  if(!state.activeProjectId){
+    state.projection=null;
+    renderProjection();
+    return;
+  }
+  state.projection=await api("/api/projection?projectId="+encodeURIComponent(state.activeProjectId));
+  renderProjection(document.querySelector("#authorization-search")?document.querySelector("#authorization-search").value:"");
 }
 
 async function loadContext(){
@@ -288,6 +302,70 @@ function renderContext(filterText){
   document.querySelector("#context-empty").hidden=rows.length>0;
 }
 
+function renderProjection(filterText){
+  const projection=state.projection;
+  document.querySelector("#auth-membership-count").textContent=projection?projection.membershipCount:0;
+  document.querySelector("#auth-role-assignment-count").textContent=projection?projection.roleAssignmentCount:0;
+  document.querySelector("#auth-permission-count").textContent=projection?projection.permissionCount:0;
+  document.querySelector("#auth-rule-count").textContent=projection?projection.ruleCount:0;
+  document.querySelector("#auth-resolution-count").textContent=projection?(projection.authorization||[]).length:0;
+  document.querySelector("#auth-policy-fingerprint").textContent=projection&&projection.policyFingerprint?projection.policyFingerprint:"—";
+
+  if(projection){
+    document.querySelector("#workflow-readiness").textContent=projection.workflowResolutionCount>0
+      ? projection.workflowResolutionCount+" resolution(s)"
+      : "Projected · awaiting observations";
+    document.querySelector("#routing-readiness").textContent=projection.routingAssessmentCount>0
+      ? projection.routingAssessmentCount+" assessment(s)"
+      : "Projected · awaiting observations";
+    document.querySelector("#property-readiness").textContent=projection.propertyAssessmentCount>0
+      ? projection.propertyAssessmentCount+" assessment(s)"
+      : "Projected · awaiting observations";
+  }else{
+    document.querySelector("#workflow-readiness").textContent="Not loaded";
+    document.querySelector("#routing-readiness").textContent="Not loaded";
+    document.querySelector("#property-readiness").textContent="Not loaded";
+  }
+
+  const body=document.querySelector("#authorization-table-body");
+  const empty=document.querySelector("#authorization-empty");
+  if(!body||!empty) return;
+  const filter=(filterText||"").trim().toLowerCase();
+  const rows=(projection&&projection.authorization?projection.authorization:[]).filter(function(item){
+    if(!filter) return true;
+    return [
+      item.endpoint,item.action,item.principalId,item.configuredDecision,item.resolvedDecision,
+      item.resolutionState,(item.effectiveRoleIds||[]).join(" "),item.bolaStatus,item.bflaStatus,
+      (item.resolutionReasons||[]).join(" ")
+    ].join(" ").toLowerCase().includes(filter);
+  });
+
+  body.innerHTML="";
+  rows.forEach(function(item){
+    const row=document.createElement("tr");
+    [
+      item.endpoint,
+      item.action,
+      item.principalId,
+      item.configuredDecision,
+      item.resolvedDecision,
+      item.resolutionState,
+      (item.effectiveRoleIds||[]).join(", ")||"—",
+      item.bolaStatus,
+      item.bflaStatus,
+      (item.resolutionReasons||[]).join(", ")||"—"
+    ].forEach(function(value,index){
+      const cell=document.createElement("td");
+      cell.textContent=value;
+      if(index===0) cell.className="route-cell";
+      if(index===3||index===4) cell.className="decision-cell";
+      row.append(cell);
+    });
+    body.append(row);
+  });
+  empty.hidden=rows.length>0;
+}
+
 function renderMiniList(selector,items,formatter){
   const host=document.querySelector(selector);
   if(!host) return;
@@ -386,6 +464,7 @@ function wireEvents(){
     await loadTargets();
     await loadInventory();
     await loadContext();
+    await loadProjection();
   });
 
   document.querySelector("#project-form").addEventListener("submit",createProject);
@@ -402,6 +481,9 @@ function wireEvents(){
   });
   document.querySelector("#context-search").addEventListener("input",function(event){
     renderContext(event.target.value);
+  });
+  document.querySelector("#authorization-search").addEventListener("input",function(event){
+    renderProjection(event.target.value);
   });
   document.querySelector("#expectation-target").addEventListener("change",syncExpectationEndpoints);
 
@@ -426,7 +508,7 @@ function openView(name){
   document.querySelector("#view-title").textContent=meta[0];
   document.querySelector("#view-subtitle").textContent=meta[1];
 
-  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"){
+  if(name==="overview"||name==="targets"||name==="inventory"||name==="context"||name==="authorization"){
     document.querySelector("#"+name+"-view").classList.add("active");
   }else{
     document.querySelector("#placeholder-title").textContent=meta[0];
@@ -499,6 +581,7 @@ async function postContext(kind,form,messageSelector){
     form.reset();
     showMessage(messageSelector,kind.charAt(0)+kind.slice(1).toLowerCase()+" saved.",true);
     await loadContext();
+    await loadProjection();
     return created;
   }catch(error){
     showMessage(messageSelector,error.message,false);
