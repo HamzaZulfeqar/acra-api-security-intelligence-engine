@@ -88,7 +88,7 @@ Deliverables:
 - explicit review actions gated by evidence and CSRF;
 - no automatic confirmation.
 
-## Phase 6 — Research Ground-Truth Readiness — ACTIVE
+## Phase 6 — Research Ground-Truth Readiness — VERIFIED
 
 Deliverables:
 - balanced controlled local authorization dataset;
@@ -96,7 +96,7 @@ Deliverables:
 - object / tenant / RBAC / workflow / routing / property / batch / indirect dimensions where supported;
 - A0-A7 registry marked SOFTWARE_READY / RESEARCH_NOT_RUN.
 
-## Phase 7 — Security / Performance / Final Closure
+## Phase 7 — Security / Performance / Final Closure — ACTIVE
 
 Deliverables:
 - secret-hardening regressions;
