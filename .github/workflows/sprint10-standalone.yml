@@ -32,11 +32,23 @@ jobs:
       - name: Build ACRA Core and standalone workbench
         run: mvn --batch-mode --no-transfer-progress clean package -pl standalone -am
 
+      - name: Run Sprint 10 import foundation suite
+        run: |
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint10.Sprint10ImportFoundationTestSuite
+
       - name: Run standalone foundation suite
         run: |
           java -ea \
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneFoundationTestSuite
+
+      - name: Run standalone import and inventory suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneImportInventoryTestSuite
 
       - name: Verify packaged localhost application
         run: |
