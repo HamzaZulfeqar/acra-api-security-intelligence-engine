@@ -1,0 +1,64 @@
+name: Sprint 11 Standalone Final Closure
+
+on:
+  push:
+    branches:
+      - s11-standalone-finding-lifecycle
+    paths:
+      - 'core/**'
+      - 'standalone/**'
+      - 'extension/burp-extension/**'
+      - 'lab/**'
+      - 'packaging/**'
+      - 'scripts/**'
+      - 'research/**'
+      - 'docs/research/**'
+      - 'docs/sprints/sprint-11.md'
+      - 'docs/sprints/sprint-11-standalone-execution-schedule.md'
+      - 'docs/sprints/ROADMAP.md'
+      - 'PROJECT_STATE.md'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'standalone/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - '.github/workflows/sprint11-standalone-final.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Normalize executable scripts
+        run: chmod +x ./scripts/*.sh ./packaging/*.sh
+
+      - name: Run Sprint 11 standalone final verification
+        run: bash ./scripts/verify-sprint11-standalone-final.sh
+
+      - name: Upload Sprint 11 final closure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-11-standalone-final-closure
+          path: |
+            build/s11-final-package/acra-sprint-11-final.zip
+            build/s11-final-package/acra-sprint-11-final.zip.sha256
+            build/s11-final-package/sprint11-package-manifest.txt
+            build/s11-final-package/sprint11-package-verification.json
+            build/s11-ground-truth/verification.json
+            build/s11-final/security-hardening.txt
+            build/s11-final/performance-observation.txt
+            dist/acra-sprint11-bundle.zip
+            dist/acra-sprint11-bundle.zip.sha256
+            dist/acra-sprint11/SHA256SUMS.txt
+          if-no-files-found: warn
