@@ -101,9 +101,7 @@ Deliverables:
 Gate:
 - deterministic export hashes + candidate/coverage regressions.
 
-## Active
-
-### Phase 7 — Controlled Active Execution
+### Phase 7 — Controlled Active Execution — VERIFIED
 Dependencies:
 - explicit context, evidence and candidate workflows.
 
@@ -116,6 +114,8 @@ Deliverables:
 
 Gate:
 - secure/vulnerable localhost fixtures + kill-switch/scope regressions.
+
+## Active
 
 ### Phase 8 — Burp Bridge + Packaging Hardening
 Dependencies:
@@ -141,4 +141,4 @@ Required:
 
 ## Current next action
 
-Execute **Phase 7 — Controlled Active Execution** only. Phase 8 does not open until the Phase 7 verification gate is green.
+Execute **Phase 8 — Burp Bridge + Packaging Hardening** only. Final Sprint 10 closure does not open until the Phase 8 verification gate is green.
