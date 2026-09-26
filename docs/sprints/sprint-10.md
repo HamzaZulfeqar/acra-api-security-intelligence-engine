@@ -115,12 +115,37 @@ Canonical Phase 4 verification:
 - all retained Phase 1–3 standalone suites — PASS;
 - packaged localhost application verification — PASS.
 
+## Phase 5 — Evidence + Differential Comparison — VERIFIED
+
+Verified capability:
+- validated imports archived as project-isolated evidence only after scope checks pass;
+- original content SHA-256 retained for provenance;
+- only UniversalRedactor-processed content stored for browser inspection;
+- HAR HTTP response samples persisted with lineage to evidence/project/target;
+- raw HTTP imports represented as request samples without inventing responses;
+- existing Core `PassiveDifferentialComparator` used for HTTP response comparison;
+- RAW / NORMALIZED / STRUCTURAL / SEMANTIC comparison modes available;
+- standalone authorization-context differential identifies changed context dimensions;
+- out-of-scope import failure occurs before evidence archive mutation;
+- Evidence workspace provides redacted preview, sample inventory and two differential workbenches;
+- localhost evidence API never returns original secret-bearing bytes.
+
+Canonical Phase 5 verification:
+- verified code-bearing head: `8a340bf38fdaa58934d252abf6cdb2b8a30f14c3`;
+- Sprint 10 workflow run `36209983492` — SUCCESS;
+- `StandaloneEvidenceDifferentialTestSuite` — PASS;
+- `StandaloneEvidenceApiTestSuite` — PASS;
+- secret redaction / restart persistence / out-of-scope non-archival — PASS;
+- browser JavaScript syntax — PASS;
+- all retained Phase 1–4 suites — PASS;
+- packaged localhost application — PASS.
+
 ## Current explicit non-claims
 
 Sprint 10 is **not software-complete**.
 
 Current standalone work does not yet claim:
-- persisted raw import files as formal Evidence objects;
+- original secret-bearing import bytes are retained (only digest + redacted representation are stored);
 - populated workflow/routing/property assessments without corresponding runtime observations;
 - candidate triage or final report generation from standalone mode;
 - automatic endpoint crawling or network discovery;
@@ -131,10 +156,9 @@ Security Context and Authorization are now functional. Workflow, Routing and Pro
 Real Burp desktop runtime remains a separate **UNVERIFIED / DEFERRED** lane and is no longer a prerequisite for standalone product startup.
 
 ## Next dependency-ordered slices
-1. Evidence and differential-comparison viewer with raw-import provenance.
-2. Candidate triage, coverage and deterministic reporting.
-3. Controlled active execution through existing ACRA safety gates.
-4. Burp-to-standalone bridge and packaging hardening.
+1. Candidate triage, coverage and deterministic reporting.
+2. Controlled active execution through existing ACRA safety gates.
+3. Burp-to-standalone bridge and packaging hardening.
 
 ## Definition of Done for Phase 2
 Phase 2 is verified only because CI proved:
