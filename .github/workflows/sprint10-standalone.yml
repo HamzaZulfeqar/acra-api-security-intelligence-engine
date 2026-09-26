@@ -56,6 +56,12 @@ jobs:
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneSecurityContextTestSuite
 
+      - name: Run standalone security context API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneSecurityContextApiTestSuite
+
       - name: Verify packaged localhost application
         run: |
           HOME_DIR="$RUNNER_TEMP/acra-standalone-home"
