@@ -17,6 +17,7 @@ import io.acra.standalone.model.ControlledExecutionRecord;
 import io.acra.standalone.model.StandaloneCandidateRecord;
 import io.acra.standalone.model.StandaloneCoverageRecord;
 import io.acra.standalone.model.StandaloneCoverageSummary;
+import io.acra.standalone.model.StandaloneFindingReviewRecord;
 import io.acra.standalone.model.StandaloneReportArtifact;
 import io.acra.standalone.model.AuthorizationExpectationRecord;
 import io.acra.standalone.model.PrincipalContextRecord;
@@ -28,6 +29,7 @@ import io.acra.standalone.service.SecurityContextService;
 import io.acra.standalone.service.StandaloneControlledExecutionService;
 import io.acra.standalone.service.StandaloneCoreProjectionService;
 import io.acra.standalone.service.StandaloneEvidenceService;
+import io.acra.standalone.service.StandaloneFindingLifecycleService;
 import io.acra.standalone.service.StandaloneImportService;
 import io.acra.standalone.service.StandaloneReviewReportingService;
 import io.acra.standalone.store.LocalWorkspaceStore;
@@ -55,6 +57,7 @@ public final class StandaloneServer implements AutoCloseable {
     private final StandaloneEvidenceService evidenceService;
     private final StandaloneReviewReportingService reviewReportingService;
     private final StandaloneControlledExecutionService controlledExecutionService;
+    private final StandaloneFindingLifecycleService findingLifecycleService;
     private final HttpServer server;
     private final String csrfToken;
 
@@ -66,6 +69,7 @@ public final class StandaloneServer implements AutoCloseable {
         this.evidenceService = new StandaloneEvidenceService(store);
         this.reviewReportingService = new StandaloneReviewReportingService(store);
         this.controlledExecutionService = new StandaloneControlledExecutionService(store);
+        this.findingLifecycleService = new StandaloneFindingLifecycleService(store);
         this.server = HttpServer.create(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 0);
         this.server.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         this.csrfToken = newCsrfToken();
@@ -108,6 +112,7 @@ public final class StandaloneServer implements AutoCloseable {
         server.createContext("/api/coverage", this::handleCoverage);
         server.createContext("/api/report", this::handleReport);
         server.createContext("/api/active", this::handleActive);
+        server.createContext("/api/findings", this::handleFindings);
         server.createContext("/", this::handleStatic);
     }
 
@@ -130,7 +135,7 @@ public final class StandaloneServer implements AutoCloseable {
                 "\"imports\":[\"OPENAPI\",\"HAR\",\"RAW_HTTP\"]," +
                 "\"workspaces\":[\"Targets\",\"API Inventory\",\"Authorization\",\"Object Access\"," +
                 "\"Function Access\",\"Property Access\",\"Workflow\",\"Routing\",\"Evidence\"," +
-                "\"Candidates\",\"Coverage\",\"Reports\"]}");
+                "\"Candidates\",\"Findings\",\"Coverage\",\"Reports\"]}");
     }
 
     private void handleProjects(HttpExchange exchange) throws IOException {
@@ -485,6 +490,63 @@ public final class StandaloneServer implements AutoCloseable {
         methodNotAllowed(exchange);
     }
 
+    private void handleFindings(HttpExchange exchange) throws IOException {
+        if ("GET".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "GET", false)) return;
+            try {
+                Map<String, String> query = HttpSupport.parseQuery(exchange.getRequestURI().getRawQuery());
+                UUID projectId = UUID.fromString(required(query, "projectId"));
+                String eligible = findingLifecycleService.eligibleExecutions(projectId).stream()
+                        .map(StandaloneServer::controlledExecutionJson)
+                        .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+                String findings = findingLifecycleService.findings(projectId).stream()
+                        .map(StandaloneServer::reviewedFindingJson)
+                        .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+                HttpSupport.sendJson(exchange, 200,
+                        "{\"eligibleExecutions\":" + eligible + ",\"findings\":" + findings + "}");
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            }
+            return;
+        }
+
+        if ("POST".equals(exchange.getRequestMethod())) {
+            if (!allowRequest(exchange, "POST", true)) return;
+            try {
+                Map<String, String> form = HttpSupport.parseForm(HttpSupport.readBody(exchange, MAX_BODY_BYTES));
+                UUID projectId = UUID.fromString(required(form, "projectId"));
+                String action = required(form, "action").strip().toUpperCase(java.util.Locale.ROOT);
+
+                if ("OPEN".equals(action)) {
+                    StandaloneFindingReviewRecord record = findingLifecycleService.openFromExecution(
+                            projectId,
+                            UUID.fromString(required(form, "runId")));
+                    HttpSupport.sendJson(exchange, 201, reviewedFindingJson(record));
+                    return;
+                }
+
+                if ("TRANSITION".equals(action)) {
+                    StandaloneFindingReviewRecord record = findingLifecycleService.transition(
+                            projectId,
+                            required(form, "findingId"),
+                            required(form, "targetState"),
+                            required(form, "reviewerReference"),
+                            required(form, "reason"),
+                            List.of(UUID.fromString(required(form, "evidenceId"))));
+                    HttpSupport.sendJson(exchange, 200, reviewedFindingJson(record));
+                    return;
+                }
+
+                throw new IllegalArgumentException("unsupported finding action");
+            } catch (IllegalArgumentException ex) {
+                sendBadRequest(exchange, ex);
+            }
+            return;
+        }
+
+        methodNotAllowed(exchange);
+    }
+
     private void handleStatic(HttpExchange exchange) throws IOException {
         if (!allowRequest(exchange, "GET", false)) return;
         String path = exchange.getRequestURI().getPath();
@@ -695,6 +757,53 @@ public final class StandaloneServer implements AutoCloseable {
                 ",\"evidenceArtifactId\":" + HttpSupport.jsonString(record.evidenceArtifactId().toString()) +
                 ",\"coreEvidenceObjectCount\":" + record.coreEvidenceObjectCount() +
                 ",\"createdAt\":" + HttpSupport.jsonString(record.createdAt().toString()) + "}";
+    }
+
+    private static String reviewedFindingJson(StandaloneFindingReviewRecord record) {
+        var finding = record.finding();
+        var candidate = record.candidate();
+        var risk = record.risk();
+
+        String evidence = finding.supportingEvidenceIds().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        String history = finding.history().stream()
+                .map(StandaloneServer::findingTransitionJson)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+
+        return "{\"sourceRunId\":" + HttpSupport.jsonString(record.sourceRunId().toString()) +
+                ",\"findingId\":" + HttpSupport.jsonString(finding.findingId()) +
+                ",\"candidateId\":" + HttpSupport.jsonString(finding.candidateId()) +
+                ",\"projectId\":" + HttpSupport.jsonString(finding.projectId()) +
+                ",\"state\":" + HttpSupport.jsonString(finding.state().name()) +
+                ",\"severity\":" + HttpSupport.jsonString(finding.severity().name()) +
+                ",\"confidence\":" + HttpSupport.jsonString(finding.confidence().name()) +
+                ",\"endpoint\":" + HttpSupport.jsonString(candidate.endpoint()) +
+                ",\"principalId\":" + HttpSupport.jsonString(candidate.principalId()) +
+                ",\"resourceId\":" + HttpSupport.jsonString(candidate.resourceId()) +
+                ",\"expectedDecision\":" + HttpSupport.jsonString(candidate.expectedDecision().name()) +
+                ",\"observedDecision\":" + HttpSupport.jsonString(candidate.observedDecision().name()) +
+                ",\"candidateRationale\":" + HttpSupport.jsonString(candidate.rationale()) +
+                ",\"internalRiskScore\":" + risk.internalRiskScore() +
+                ",\"riskRationale\":" + HttpSupport.jsonString(risk.rationale()) +
+                ",\"supportingEvidenceIds\":" + evidence +
+                ",\"history\":" + history +
+                ",\"openedAt\":" + HttpSupport.jsonString(finding.openedAt().toString()) +
+                ",\"updatedAt\":" + HttpSupport.jsonString(finding.updatedAt().toString()) +
+                ",\"terminal\":" + finding.terminal() + "}";
+    }
+
+    private static String findingTransitionJson(io.acra.core.domain.finding.FindingReviewTransition transition) {
+        String evidence = transition.evidenceIds().stream()
+                .map(HttpSupport::jsonString)
+                .collect(java.util.stream.Collectors.joining(",", "[", "]"));
+        return "{\"transitionId\":" + HttpSupport.jsonString(transition.transitionId()) +
+                ",\"fromState\":" + HttpSupport.jsonString(transition.fromState().name()) +
+                ",\"toState\":" + HttpSupport.jsonString(transition.toState().name()) +
+                ",\"occurredAt\":" + HttpSupport.jsonString(transition.occurredAt().toString()) +
+                ",\"reviewerReference\":" + HttpSupport.jsonString(transition.reviewerReference()) +
+                ",\"reason\":" + HttpSupport.jsonString(transition.reason()) +
+                ",\"evidenceIds\":" + evidence + "}";
     }
 
     private static String evidenceArtifactJson(EvidenceArtifactRecord record) {
