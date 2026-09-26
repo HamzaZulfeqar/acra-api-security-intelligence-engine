@@ -2,9 +2,18 @@
 
 ## Current gate — 2026-09-26 — standalone Sprint 11
 
-**Sprint 11 Phase 2 — PERSISTENT FINDING REVIEW WORKSPACE: VERIFIED; PHASE 3 ACTIVE.**
+**Sprint 11 Phase 3 — REPRODUCTION PACKAGE + DETERMINISTIC JSON: VERIFIED; PHASE 4 ACTIVE.**
 
-Canonical evidence:
+Canonical Phase 3 evidence:
+- branch: `s11-standalone-finding-lifecycle`
+- verified head: `7e8243451b740094e16b588425ad48cd9d7a9d29`
+- workflow run: `36215524311` — SUCCESS
+- minimized reproduction package: PASS
+- reviewer/reason structural exclusion: PASS
+- deterministic JSON + SHA-256: PASS
+- restart determinism: PASS
+
+Historical Phase 1–2 evidence:
 - branch: `s11-standalone-finding-lifecycle`
 - immutable Sprint 10 closure: `c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2`
 - Phase 1 workflow: `36214703722` — SUCCESS
@@ -19,7 +28,7 @@ Canonical evidence:
 - secret-bearing review rejection: PASS
 - packaged Reviewed Findings UI: PASS
 
-**Sprint 11 is NOT software-complete.** Phase 3 is active: minimized reproduction package + deterministic JSON.
+**Sprint 11 is NOT software-complete.** Phase 4 is active: SARIF 2.1.0 projection + optional Burp Issue Draft without automatic publication.
 
 ## Current gate — 2026-09-26
 
