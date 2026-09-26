@@ -73,9 +73,7 @@ Deliverables:
 Gate:
 - focused Core-to-standalone projection tests + retained regression.
 
-## Active
-
-### Phase 5 — Evidence + Differential Comparison
+### Phase 5 — Evidence + Differential Comparison — VERIFIED
 Dependencies:
 - Phase 4 analysis projection.
 
@@ -88,6 +86,8 @@ Deliverables:
 
 Gate:
 - provenance integrity + redaction + project-isolation tests.
+
+## Active
 
 ### Phase 6 — Candidates + Coverage + Reports
 Dependencies:
@@ -141,4 +141,4 @@ Required:
 
 ## Current next action
 
-Execute **Phase 5 — Evidence + Differential Comparison** only. Phase 6 does not open until the Phase 5 verification gate is green.
+Execute **Phase 6 — Candidates + Coverage + Reports** only. Phase 7 does not open until the Phase 6 verification gate is green.
