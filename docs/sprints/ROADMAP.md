@@ -2,9 +2,21 @@
 
 ## Current gate — 2026-09-26 — standalone Sprint 11
 
-**Sprint 11 Phase 5 — STANDALONE REVIEW & REPRODUCTION SURFACE: VERIFIED; PHASE 6 ACTIVE.**
+**Sprint 11 Phase 6 — RESEARCH GROUND-TRUTH READINESS: VERIFIED; PHASE 7 ACTIVE.**
 
-Canonical Phase 5 evidence:
+Canonical Phase 6 evidence:
+- branch: `s11-standalone-finding-lifecycle`
+- workflow run: `36248296847` — SUCCESS
+- GT-S11-AUTHORIZATION-RESEARCH: PASS
+- cases: 16
+- positive controls: 8
+- negative controls: 8
+- authorization dimensions: 8
+- secure/vulnerable oracle execution: PASS
+- A0-A7 state: SOFTWARE_READY / RESEARCH_NOT_RUN
+- TP/TN/FP/FN/precision/recall/F1: NOT_MEASURED
+
+Historical Phase 5 evidence:
 - branch: `s11-standalone-finding-lifecycle`
 - verified head: `6e0b090b037f037982d61bd3f62a2a3bcc54d521`
 - workflow run: `36248083390` — SUCCESS
@@ -51,7 +63,7 @@ Historical Phase 1–2 evidence:
 - secret-bearing review rejection: PASS
 - packaged Reviewed Findings UI: PASS
 
-**Sprint 11 is NOT software-complete.** Phase 6 is active: controlled research ground-truth readiness with metrics explicitly NOT MEASURED.
+**Sprint 11 is NOT software-complete.** Phase 7 is active: security hardening, bounded engineering observation, retained regression and deterministic final closure.
 
 ## Current gate — 2026-09-26
 
