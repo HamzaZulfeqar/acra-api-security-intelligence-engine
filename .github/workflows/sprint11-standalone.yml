@@ -74,6 +74,18 @@ jobs:
             -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
             io.acra.standalone.tests.StandaloneFindingReproductionTestSuite
 
+      - name: Run Sprint 11 SARIF projection
+        run: |
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint11.Sprint11FindingReproductionSarifExportTestSuite
+
+      - name: Run Sprint 11 Burp issue draft projection
+        run: |
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint11.Sprint11FindingBurpIssueDraftTestSuite
+
       - name: Validate standalone browser JavaScript
         run: node --check standalone/src/main/resources/web/app.js
 
