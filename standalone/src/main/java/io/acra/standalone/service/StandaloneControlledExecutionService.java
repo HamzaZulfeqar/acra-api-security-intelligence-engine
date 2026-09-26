@@ -185,7 +185,7 @@ public final class StandaloneControlledExecutionService {
                 result.observation().differences().classification(),
                 result.state(),
                 evidenceArtifact.evidenceId(),
-                result.evidence().size(),
+                result.evidenceChain().size(),
                 clock.instant());
         return executionStore.save(record);
     }
