@@ -20,7 +20,7 @@ One phase at a time. The next phase opens only after:
 3. packaged localhost application remains healthy;
 4. source-of-truth docs record exact evidence and residual boundaries.
 
-## Phase 1 — Core Finding Lifecycle Foundation — ACTIVE
+## Phase 1 — Core Finding Lifecycle Foundation — VERIFIED
 
 Deliverables:
 - `FindingLifecycleState`;
@@ -41,7 +41,7 @@ Gate:
 - Maven Core compile/test-compile;
 - retained Sprint 10 workflow compatibility.
 
-## Phase 2 — Persistent Standalone Finding Review Workspace
+## Phase 2 — Persistent Standalone Finding Review Workspace — VERIFIED
 
 Deliverables:
 - project-isolated reviewed-finding persistence;
@@ -57,7 +57,7 @@ Gate:
 - direct candidate→confirmed rejection;
 - CSRF API verification.
 
-## Phase 3 — Reproduction Package + Deterministic JSON
+## Phase 3 — Reproduction Package + Deterministic JSON — ACTIVE
 
 Deliverables:
 - minimized reproduction model;
