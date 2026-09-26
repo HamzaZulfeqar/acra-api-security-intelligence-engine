@@ -2,9 +2,21 @@
 
 ## Current gate — 2026-09-26
 
-**Sprint 10 Phase 6 — CANDIDATES + COVERAGE + REPORTS: VERIFIED; PHASE 7 ACTIVE.**
+**Sprint 10 Phase 7 — CONTROLLED ACTIVE EXECUTION: VERIFIED; PHASE 8 ACTIVE.**
 
-Canonical Phase 6 evidence:
+Canonical Phase 7 evidence:
+- branch: `s10-standalone-workbench`
+- verified code-bearing head: `3125f71922e5c617bff62f35ac0b11d9f535fca7`
+- standalone workflow run: `36212999470` — SUCCESS
+- controlled live localhost execution: PASS
+- four-way Core differential: PASS
+- kill-switch no-dispatch behavior: PASS
+- external/non-controlled target rejection: PASS
+- transient credential non-persistence: PASS
+- controlled Active API: PASS
+- Active Validation browser syntax/package: PASS
+
+Historical Phase 6 evidence:
 - branch: `s10-standalone-workbench`
 - verified code-bearing head: `84c09f2e60c94093fc653d8a5a17873c45a25d5d`
 - standalone workflow run: `36210452986` — SUCCESS
