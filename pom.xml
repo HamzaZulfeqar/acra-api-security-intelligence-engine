@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.acra</groupId><artifactId>acra-parent</artifactId><version>0.3.0</version><packaging>pom</packaging>
   <name>ACRA API Access Control &amp; Routing Auditor</name>
-  <description>Evidence-oriented API authorization analysis and Burp Suite integration.</description>
+  <description>Evidence-oriented API authorization analysis with a standalone localhost GUI and optional Burp Suite integration.</description>
   <url>https://github.com/HamzaZulfeqar/acra-api-security-intelligence-engine</url>
   <licenses>
     <license>
@@ -12,6 +12,10 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <modules><module>core</module><module>extension/burp-extension</module></modules>
+  <modules>
+    <module>core</module>
+    <module>app/standalone</module>
+    <module>extension/burp-extension</module>
+  </modules>
   <properties><maven.compiler.release>21</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><montoya.version>2026.7</montoya.version></properties>
 </project>

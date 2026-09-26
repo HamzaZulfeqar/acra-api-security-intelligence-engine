@@ -1,0 +1,37 @@
+name: Sprint 17 Standalone Localhost GUI
+
+on:
+  push:
+    branches:
+      - s17-standalone-localhost-gui
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sprint17-standalone-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  standalone:
+    name: Standalone Localhost GUI
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify standalone localhost vertical slice
+        run: bash scripts/verify-sprint17-standalone.sh
