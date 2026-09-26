@@ -45,7 +45,7 @@
           <article><span>Mode</span><strong>Local</strong></article>
         </div>
         <div class="grid two">
-          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">QUICK START</span><h3>Assessment workflow</h3></div></div><ol class="steps"><li>Create a local assessment project.</li><li>Add an explicitly authorized HTTP(S) target.</li><li>Import traffic/specification evidence in the next analysis slice.</li><li>Review ACRA authorization, workflow, routing and property intelligence.</li></ol></article>
+          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">QUICK START</span><h3>Assessment workflow</h3></div></div><ol class="steps"><li>Create a local assessment project.</li><li>Add an explicitly authorized HTTP(S) target.</li><li>Import OpenAPI, HAR, or raw HTTP evidence into a canonical API inventory.</li><li>Review ACRA authorization, workflow, routing and property intelligence.</li></ol></article>
           <article class="panel"><div class="panel-heading"><div><span class="eyebrow">SAFETY BOUNDARY</span><h3>Target onboarding</h3></div></div><p>Adding a target does not scan it. Active interaction remains gated by ACRA scope, authorization, consent, rate, budget and safety controls.</p><button class="button" data-open-targets>Open Targets</button></article>
         </div>
       </section>
@@ -69,6 +69,65 @@
           </article>
           <article class="panel"><div class="panel-heading"><div><span class="eyebrow">PROJECT SCOPE</span><h3>Registered targets</h3></div><span id="target-count" class="counter">0</span></div><div id="target-list" class="target-list empty-state">Create or select a project to manage targets.</div></article>
         </div>
+      </section>
+
+      <section id="inventory-view" class="view">
+        <div class="grid two inventory-top">
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">EVIDENCE INGESTION</span><h3>Import API surface</h3></div>
+              <span class="status-badge">No active scan</span>
+            </div>
+            <form id="import-form">
+              <label>Authorized target<select id="import-target" name="targetId" required></select></label>
+              <div class="field-row">
+                <label>Import type
+                  <select name="importType" id="import-type">
+                    <option value="OPENAPI">OpenAPI / Swagger</option>
+                    <option value="HAR">HAR</option>
+                    <option value="RAW_HTTP">Raw HTTP Request</option>
+                  </select>
+                </label>
+                <label>Source reference<input name="sourceReference" maxlength="240" placeholder="openapi.json / capture.har / request.txt"></label>
+              </div>
+              <label>Choose local file<input id="import-file" type="file" accept=".json,.yaml,.yml,.har,.txt,application/json,text/plain"></label>
+              <label>Or paste content<textarea id="import-content" name="content" rows="12" required placeholder="Paste OpenAPI, HAR, or raw HTTP request content here"></textarea></label>
+              <p class="form-note">Imports are offline. ACRA rejects endpoints outside the selected registered target's scheme, host, port, or base path.</p>
+              <button class="button" type="submit">Import & Normalize</button>
+            </form>
+            <div id="import-message" class="message" hidden></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">NORMALIZED SURFACE</span><h3>Inventory summary</h3></div>
+              <span id="inventory-count" class="counter">0</span>
+            </div>
+            <div class="inventory-summary">
+              <article><span>Unique endpoints</span><strong id="inventory-summary-endpoints">0</strong></article>
+              <article><span>Documented</span><strong id="inventory-summary-documented">0</strong></article>
+              <article><span>Observed</span><strong id="inventory-summary-observed">0</strong></article>
+            </div>
+            <div class="boundary">
+              <strong>Canonical correlation</strong>
+              <span>Concrete observed resource paths are normalized through ACRA URI intelligence so traffic such as <code>/users/42</code> can correlate with declared route templates.</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel inventory-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">API INVENTORY</span><h3>Canonical endpoints</h3></div>
+            <input id="inventory-search" class="search-input" placeholder="Filter method, host, route, source or status">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Method</th><th>Canonical route</th><th>Host</th><th>Sources</th><th>Responses</th><th>Observations</th><th>Declared</th></tr></thead>
+              <tbody id="inventory-table-body"></tbody>
+            </table>
+            <div id="inventory-empty" class="empty-state">Import OpenAPI, HAR, or raw HTTP evidence to build the API inventory.</div>
+          </div>
+        </article>
       </section>
 
       <section id="placeholder-view" class="view">
