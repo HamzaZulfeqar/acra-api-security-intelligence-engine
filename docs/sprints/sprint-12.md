@@ -3,7 +3,7 @@
 **Branch:** `s12-standalone-a0-a7-research-evaluation`  
 **Base:** verified Sprint 11 standalone head `2e86b17afa5e06b08f3b9ad580a1b02fdc7d815d`  
 **Immutable Sprint 11 closure source:** `1384b86e5e4d33f5ff3c0c97fdc0db667d0b9322`  
-**Status:** IN PROGRESS — RESEARCH EXECUTION NOT YET VERIFIED
+**Status:** IN PROGRESS — PHASES 1–3 VERIFIED; FINAL RESEARCH CLOSURE ACTIVE
 
 ## Objective
 
@@ -41,7 +41,7 @@ Capabilities are cumulative. A later variant may not silently remove an earlier 
 
 ## Execution schedule
 
-### Phase 1 — Harness & label-isolation verification — ACTIVE
+### Phase 1 — Harness & label-isolation verification — VERIFIED
 
 Deliverables:
 - deterministic runner;
@@ -58,25 +58,51 @@ Gate:
 - dedicated Sprint 12 workflow must be green;
 - product Maven packaging must remain green.
 
-### Phase 2 — Measured artifact freeze
+### Phase 2 — Measured artifact freeze — VERIFIED
 
-After Phase 1 succeeds:
-- record exact TP/TN/FP/FN, precision, recall and F1 for A0–A7;
-- record JSON/CSV/JSONL digests;
-- update experiment registry from NOT_RUN only with measured CI evidence;
-- preserve Sprint 11 dataset unchanged.
+First measured standalone workflow: `36265834848` — SUCCESS.
 
-### Phase 3 — Interpretation & limitations
+Measured result:
 
-Document:
-- which cumulative capabilities changed false-positive/false-negative behavior;
-- whether later variants add measurable value on this fixture;
-- synthetic/localhost scope;
-- known-dimension limitation;
-- no external-validity claim;
-- no real Burp-runtime claim.
+| Variant | TP | TN | FP | FN | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| A0 | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A1 | 8 | 1 | 7 | 0 | .533333 | 1.000000 | .695652 |
+| A2 | 8 | 4 | 4 | 0 | .666667 | 1.000000 | .800000 |
+| A3 | 8 | 5 | 3 | 0 | .727273 | 1.000000 | .842105 |
+| A4 | 8 | 6 | 2 | 0 | .800000 | 1.000000 | .888889 |
+| A5 | 8 | 7 | 1 | 0 | .888889 | 1.000000 | .941176 |
+| A6 | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
+| A7 | 8 | 8 | 0 | 0 | 1.000000 | 1.000000 | 1.000000 |
 
-### Phase 4 — Research closure
+First measured-run artifacts:
+- JSON SHA-256: `528b79b29a764a157e7b402e4202d84f6585c692ebc353cfae0ffd1c1ff364e7`;
+- CSV SHA-256: `59333c885098c2cdd69eccab0d7ba6273b1d55fbaa2478b7dfaa05c7e51c3486`;
+- case JSONL SHA-256: `7bb7c6780cb9360f63354f533e0ffc54a4d2db28c4b60ae2a858e9b417ba3d20`;
+- dataset SHA-256: `f42783717bdd38e8d04b7f59cef98a41441005de426ec78ca1fba58098154d4b`;
+- 128 rows independently recomputed and verified;
+- two-run byte repeatability: PASS;
+- product Maven package: PASS.
+
+The frozen Sprint 11 dataset itself remains unchanged.
+
+### Phase 3 — Interpretation & limitations — VERIFIED
+
+Within this fixture:
+- A1 does not improve the A0 confusion matrix;
+- A2 ownership context removes three false positives;
+- A3 tenant context removes one additional false positive;
+- A4 role context removes one additional false positive;
+- A5 workflow context removes one additional false positive;
+- A6 semantic evidence removes the final false positive;
+- A7 retains the A6 confusion matrix.
+
+Therefore this fixture demonstrates cumulative false-positive reduction through A6, but it does **not** independently
+demonstrate additional classification value from A7 correlation beyond A6.
+
+This interpretation is limited to the balanced synthetic localhost fixture. Dimension discovery is not measured.
+
+### Phase 4 — Research closure — ACTIVE
 
 Required:
 - repeated deterministic campaign;
@@ -89,10 +115,9 @@ Required:
 
 ## Non-claims
 
-Until measured and verified:
-- A0–A7 metrics are **NOT_MEASURED**;
-- no production accuracy claim;
-- no real-world precision/recall claim;
+Measured metrics are valid only for this controlled fixture. They do not establish:
+- production or real-world scanner accuracy;
+- real-world precision/recall;
 - no external-target validation;
 - no dimension-discovery result;
 - no comparison/ranking against commercial tools.
