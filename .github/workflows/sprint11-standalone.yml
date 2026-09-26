@@ -38,6 +38,18 @@ jobs:
             -cp "core/target/test-classes:core/target/classes" \
             io.acra.core.tests.sprint11.Sprint11FindingLifecycleFoundationTestSuite
 
+      - name: Run Sprint 11 finding review workspace
+        run: |
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint11.Sprint11FindingReviewWorkspaceTestSuite
+
+      - name: Run standalone Sprint 11 finding lifecycle integration
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneFindingLifecycleTestSuite
+
       - name: Validate standalone browser JavaScript
         run: node --check standalone/src/main/resources/web/app.js
 
