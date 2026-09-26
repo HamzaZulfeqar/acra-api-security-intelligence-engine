@@ -1,44 +1,49 @@
 # ACRA Standalone Security Workbench
 
-Sprint 10 introduces a standalone localhost product host over the existing ACRA Core.
+ACRA Sprint 10 provides a standalone localhost product host over the existing ACRA Core.
+
+Burp Suite is **optional**. A fresh clone can run ACRA, create projects, register authorized targets, import API evidence, configure authorization context, review evidence/candidates/coverage/reports, and run the guarded loopback LAB validation path without loading the Burp extension.
 
 ## Requirements
-- Java 21
+
+Source-clone startup:
+- Java 21+
 - Maven 3.9+
 
-Burp Suite is **not required** to launch the standalone workbench.
+Prebuilt distribution:
+- Java 21+
 
-## Windows
-From a cloned repository:
+## Source clone — Windows
 
 ```bat
 run-acra.bat
 ```
 
-The launcher builds ACRA Core + standalone, starts the local service and opens the default browser when desktop browsing is available.
+After a successful local build, skip Maven on later starts:
 
-## Linux / macOS
+```bat
+run-acra.bat --no-build
+```
+
+## Source clone — Linux/macOS
 
 ```bash
 bash run-acra.sh
 ```
 
-## Direct JAR
+After a successful local build:
 
 ```bash
-mvn --batch-mode --no-transfer-progress -pl standalone -am package
-java -jar standalone/target/acra-standalone.jar
+bash run-acra.sh --no-build
 ```
 
-Default URL:
+Default management URL:
 
 ```text
 http://127.0.0.1:8787/
 ```
 
-If port 8787 is unavailable and no explicit port was requested, ACRA selects an available loopback port and prints the actual URL.
-
-Useful options:
+Useful application arguments:
 
 ```text
 --port=8787
@@ -46,114 +51,203 @@ Useful options:
 --no-browser
 ```
 
-Default local workspace:
+If the default port is occupied and no explicit port was requested, ACRA selects an available loopback port and prints the actual URL.
+
+Default workspace:
 
 ```text
 ~/.acra/
 ```
 
-## Current verified standalone capability
+## Verified standalone workflow
 
-### Phase 1 — Local application + target onboarding
-- standalone executable application;
+```text
+Create Project
+    ↓
+Register Authorized Target
+    ↓
+Import OpenAPI / Swagger / HAR / Raw HTTP
+    ↓
+Canonical API Inventory
+    ↓
+Security Context
+    ├── Principals
+    ├── Roles
+    ├── Tenants
+    ├── Resources / Ownership
+    └── Expected Authorization
+    ↓
+ACRA Core Authorization Projection
+    ↓
+Evidence + Differential Review
+    ↓
+Candidates + Coverage + Reports
+    ↓
+Optional Controlled Localhost Validation
+```
+
+### Phase 1 — Standalone foundation
+Verified:
+- executable standalone JAR;
 - loopback-only management server;
-- automatic browser opening where available;
-- persistent local assessment projects;
-- persistent authorized HTTP(S) targets;
-- URL, hostname/IP and port through a normal HTTP(S) base URL;
-- explicit environment and testing-mode declaration;
-- mandatory authorization reference;
-- rejection of embedded URL credentials;
-- ACRA Core runtime linkage;
-- project/target browser GUI;
-- CSRF and Host-header protections;
-- CSP and response hardening;
-- no Burp dependency for startup or target onboarding.
+- browser workbench;
+- persistent projects and authorized targets;
+- CSRF / Host-header / CSP hardening;
+- Burp-independent startup.
 
 ### Phase 2 — Import + API Inventory
-The **API Inventory** workspace is now functional.
+Verified offline imports:
+- OpenAPI 3.x;
+- Swagger 2.0;
+- conservative existing YAML subset;
+- HAR;
+- raw HTTP request.
 
-Supported offline imports:
-- OpenAPI 3.x JSON;
-- Swagger 2.0 JSON;
-- the existing conservative OpenAPI/Swagger YAML subset;
-- HAR files;
-- one raw HTTP request per raw-request import.
+Imports are bound to the selected registered target. Out-of-scope scheme/host/port/base-path evidence is rejected.
 
-Workflow:
+Concrete traffic paths are canonicalized through ACRA URI intelligence so observed and documented routes can correlate.
+
+### Phase 3 — Security Context
+Verified persistent project context:
+- principals;
+- authentication type metadata without storing credentials;
+- roles;
+- tenants;
+- resources and owners;
+- expected authorization matrix.
+
+Invalid cross-references and secret-bearing context metadata fail closed.
+
+### Phase 4 — ACRA Core projection
+Standalone context is projected into the existing Core authorization policy model.
+
+The standalone host reuses:
+- EffectiveAuthorizationResolver;
+- BOLA/BFLA evaluators;
+- S6 authorization workspace;
+- S7 workflow workspace;
+- S8 routing workspace;
+- S9 property workspace.
+
+Analyzer logic is not duplicated in browser JavaScript.
+
+### Phase 5 — Evidence + Differential Review
+Verified:
+- project-isolated evidence archive;
+- original input digest;
+- persisted redacted representation;
+- HTTP evidence samples;
+- HTTP differential comparison;
+- authorization-context differential comparison;
+- secret-safe evidence viewer.
+
+### Phase 6 — Candidates + Coverage + Reports
+Verified:
+- review-only candidates;
+- separate analyst review state;
+- tested / untested / partial / inconclusive coverage accounting;
+- deterministic JSON and Markdown reports;
+- report SHA-256;
+- confirmed finding count remains zero unless separately established by product logic.
+
+### Phase 7 — Controlled Active Validation
+The Active Validation workspace is deliberately narrow.
+
+Requirements:
+- target host must be loopback;
+- target environment must be `LAB`;
+- testing mode must be `CONTROLLED_LAB`;
+- expectation action must be `READ`;
+- expected decision must be explicit ALLOW or DENY;
+- inventory method must be GET, HEAD, or OPTIONS;
+- operator confirmation is required.
+
+Current active mutation:
+- one trailing-slash route-equivalence representation.
+
+The differential uses:
+- tested authorization context;
+- independent known-ALLOW positive-control context;
+- anonymous negative control;
+- mutated tested context.
+
+Both authorization values are transient. They are not persisted or returned by the standalone API.
+
+Execution continues through the existing ACRA Core:
+- hard scope;
+- environment guard;
+- consent guard;
+- request-equivalence guard;
+- request budgets;
+- concurrency controls;
+- rate limits;
+- kill switch;
+- TestExecutor;
+- Core evidence chain.
+
+This is **not** an unrestricted network scanner.
+
+### Phase 8 — Optional Burp Bridge
+The prebuilt distribution may include the optional:
 
 ```text
-Create/Open Project
-        ↓
-Register Authorized Target
-        ↓
-API Inventory
-        ↓
-Select Target
-        ↓
-Choose OpenAPI / HAR / Raw HTTP
-        ↓
-Upload local file OR paste content
-        ↓
-Import & Normalize
-        ↓
-Canonical Endpoint Inventory
+acra-burp-extension.jar
 ```
 
-The inventory records:
-- HTTP method;
-- scheme / host / port;
-- raw path;
-- canonical route;
-- OPENAPI / HAR / RAW_HTTP provenance;
-- response statuses observed from HAR;
-- observation count;
-- documented-vs-observed state;
-- first/last seen timestamps.
+In Burp's ACRA tab, use **Standalone Bridge** to:
+1. keep the standalone URL on loopback;
+2. enter the project ID and target ID shown on the standalone Targets page;
+3. select a passively observed Burp transaction;
+4. Probe Standalone;
+5. explicitly Send Selected Transaction.
 
-Concrete resource observations are normalized using existing ACRA URI intelligence. For example, a traffic path such as:
+The bridge:
+- never forwards automatically;
+- refuses non-loopback standalone management URLs;
+- performs the health/CSRF handshake;
+- sends one RAW_HTTP import;
+- leaves target-scope validation and evidence redaction to standalone ACRA.
+
+Real Burp desktop load/visual validation remains a separate **UNVERIFIED / DEFERRED** lane. The bridge is verified by official-Montoya compilation and headless contract tests.
+
+## Prebuilt distribution
+
+Sprint 10 packaging produces:
 
 ```text
-/api/v1/users/42
+acra-sprint10-bundle.zip
+└── acra-sprint10/
+    ├── acra-standalone.jar
+    ├── acra-burp-extension.jar
+    ├── acra-standalone.bat
+    ├── acra-standalone.sh
+    ├── README.txt
+    └── SHA256SUMS.txt
 ```
 
-can correlate with a declared route family such as:
+The closure workflow verifies the included JAR hashes after clean extraction and starts the extracted standalone JAR.
+
+## Sprint 10 closure
+
+Sprint 10 is **SOFTWARE COMPLETE** at the canonical source checkpoint:
 
 ```text
-/api/v1/users/{user_id}
+closure run: 36213547092
+source commit: c94ddc6cf32175694bb0fbffe4c4fc7ce24050c2
+source ZIP SHA-256:
+296fcf420919c172c338988e320a06007aaa4640b90d2077a341759690fd5c0f
+
+entries: 951
+unsafe paths: 0
+duplicate entries: 0
+clean extraction: PASS
+per-file SHA-256 equality: PASS
 ```
 
-Imports are bound to the selected registered target. ACRA rejects imported endpoints outside that target's:
-- scheme;
-- host;
-- port;
-- base path.
+Canonical prebuilt distribution SHA-256:
 
-Current import safety limits:
-- decoded import content: 2 MiB maximum;
-- HAR: 10,000 entries maximum;
-- raw HTTP Host header must match the resolved selected target/request URI.
+```text
+0c6929384eb3110f018a57b45fb09729957e6b1f90e4ac8d9b3352bd12920f15
+```
 
-Importing evidence is **offline** and does not start a scan or send requests to the target.
-
-## Current boundary
-
-Registering a target or importing evidence does **not** scan or attack it.
-
-The following standalone workspaces are not yet claimed as fully wired:
-- Authorization;
-- Object Access;
-- Function Access;
-- Property Access;
-- Workflow;
-- Routing;
-- Evidence;
-- Candidates;
-- Coverage;
-- Reports.
-
-They will reuse the existing ACRA Core implementations rather than introducing a second scanner.
-
-Raw imported files are also not yet promoted into the formal ACRA Evidence graph; Phase 2 currently persists the normalized derived inventory.
-
-Active testing, when wired later, must continue through ACRA's existing authorization, scope, consent, request-budget, rate, concurrency and safety gates.
+Sprint 11 is **not started** by this closure.
