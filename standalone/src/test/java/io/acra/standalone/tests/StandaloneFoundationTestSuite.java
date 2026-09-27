@@ -52,10 +52,16 @@ public final class StandaloneFoundationTestSuite {
         check(reopened.listProjects().getFirst().id().equals(project.id()), "project reopens");
         check(reopened.listTargets(project.id()).getFirst().id().equals(target.id()), "target reopens");
 
+        TargetRecord remote = store.addTarget(project.id(), "Authorized staging API",
+                "https://api.example.test:8443/v1/", "STAGING", "AUTH-STAGING-001", "IMPORT_ONLY");
+        check(remote.baseUri().getPort() == 8443, "authorized host and explicit port register for offline import");
+
         expectFailure(() -> store.addTarget(project.id(), "FTP", "ftp://127.0.0.1/file",
                 "LAB", "AUTH", "PASSIVE"), "non-http target rejected");
         expectFailure(() -> store.addTarget(project.id(), "Credential URL", "https://user:pass@example.test/api",
                 "LAB", "AUTH", "PASSIVE"), "embedded credentials rejected");
+        expectFailure(() -> store.addTarget(project.id(), "Query URL", "https://example.test/api?token=secret",
+                "LAB", "AUTH", "PASSIVE"), "query and possible credential rejected");
         expectFailure(() -> store.addTarget(project.id(), "No auth", "https://example.test/api",
                 "STAGING", "", "PASSIVE"), "authorization reference required");
     }

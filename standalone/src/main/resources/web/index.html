@@ -59,13 +59,19 @@
             <div class="panel-heading"><div><span class="eyebrow">AUTHORIZED SCOPE</span><h3>Add target</h3></div></div>
             <form id="target-form">
               <label>Display name<input name="displayName" required maxlength="120" placeholder="Local Demo API"></label>
-              <label>Base URL<input name="baseUrl" required maxlength="2048" placeholder="http://127.0.0.1:8081/api/"></label>
+              <label>Base URL<input name="baseUrl" maxlength="2048" placeholder="http://127.0.0.1:8081/api/"></label>
+              <p class="form-note">Enter the complete base URL above, or build one from the host fields below.</p>
+              <div class="field-row">
+                <label>Protocol<select name="hostScheme"><option value="https">HTTPS</option><option value="http">HTTP</option></select></label>
+                <label>Host or IP<input name="hostInput" maxlength="253" placeholder="api.example.test or 127.0.0.1:8081"></label>
+              </div>
+              <label>Base path<input name="hostBasePath" maxlength="1024" placeholder="/api/"></label>
               <div class="field-row">
                 <label>Environment<select name="environment"><option>LAB</option><option>DEVELOPMENT</option><option>STAGING</option><option>PRODUCTION</option></select></label>
                 <label>Testing mode<select name="testingMode"><option>PASSIVE</option><option>IMPORT_ONLY</option><option>SAFE_ACTIVE</option><option>CONTROLLED_LAB</option></select></label>
               </div>
               <label>Authorization reference<input name="authorizationReference" required maxlength="240" placeholder="ENG-APPSEC-2026-017"></label>
-              <p class="form-note">HTTP(S) URL, hostname/IP and optional port are supported. Credentials embedded in URLs are rejected.</p>
+              <p class="form-note">Hostnames, IP addresses and optional ports are supported. A MAC address cannot identify an HTTP API. Registration and import do not send requests. Active validation is currently limited to the controlled loopback LAB mode.</p>
               <button class="button" type="submit">Add Authorized Target</button>
             </form>
             <div id="target-form-message" class="message" hidden></div>

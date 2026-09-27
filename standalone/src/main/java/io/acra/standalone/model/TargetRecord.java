@@ -72,6 +72,9 @@ public record TargetRecord(
         if (uri.getFragment() != null) {
             throw new IllegalArgumentException("target URL fragments are not supported");
         }
+        if (uri.getRawQuery() != null) {
+            throw new IllegalArgumentException("target base URLs must not contain a query string");
+        }
         return uri.normalize();
     }
 

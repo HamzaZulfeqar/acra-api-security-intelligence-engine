@@ -1186,6 +1186,19 @@ async function addTarget(event){
   const body=new URLSearchParams(new FormData(form));
   body.set("projectId",state.activeProjectId);
   try{
+    if(!body.get("baseUrl")?.trim()){
+      const host=(body.get("hostInput")||"").trim();
+      const path=(body.get("hostBasePath")||"").trim();
+      if(!host || /[\s\/@?#\\]/.test(host) || (path && (!path.startsWith("/") || path.startsWith("//") || /[?#\\]/.test(path)))){
+        throw new Error("Enter a full HTTP(S) base URL, or a host/IP and an optional base path beginning with /.");
+      }
+      const url=new URL(body.get("hostScheme")+"://"+host+(path||"/"));
+      if(!url.hostname || url.username || url.password) throw new Error("Invalid target host or IP.");
+      body.set("baseUrl",url.href);
+    }
+    body.delete("hostInput");
+    body.delete("hostBasePath");
+    body.delete("hostScheme");
     await api("/api/targets",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body});
     form.reset();
     showMessage("#target-form-message","Authorized target registered. No scan was started.",true);

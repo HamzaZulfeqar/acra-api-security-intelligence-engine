@@ -23,3 +23,11 @@ This branch combines the published `v0.3.0` source with the standalone Sprint 10
 - Any extension from guarded loopback LAB execution to authorized non-loopback targets requires a separately reviewed safety and authentication design.
 - Independent unseen API accuracy and timed end-to-end measurements; the 16-case controlled A0–A7 fixture is insufficient.
 - Versioned standalone distribution and release notes; repository administration tracked in issue #6.
+
+## Candidate first run
+
+With Java 21 and Maven 3.9+ installed, check out this integration branch and run `run-acra.bat` on Windows or `bash run-acra.sh` on Linux/macOS. The launcher builds the standalone JAR and opens the loopback browser UI where supported. The management URL is printed if the browser does not open.
+
+Create a project, then register an authorized HTTP(S) base URL, or enter a hostname/IP with protocol and optional base path. This step records the assessment boundary and does not make a network request. Import an OpenAPI specification, HAR, or raw HTTP evidence within that target scope. Add the relevant principals, roles, tenants and authorization expectations before reviewing candidates, coverage and reports.
+
+Authentication values for the controlled loopback LAB validation are entered transiently at execution time and must be scoped to the lab. The application does not persist these values. A registered external host is currently limited to offline import and review; it cannot be actively probed by the standalone executor.
