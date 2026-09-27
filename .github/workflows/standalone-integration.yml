@@ -41,6 +41,10 @@ jobs:
             java -ea -cp "$cp" "io.acra.standalone.tests.$suite"
           done
           node --check standalone/src/main/resources/web/app.js
+      - name: Observe offline import and inventory performance
+        run: |
+          java -ea -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneImportPerformanceObservation | tee import-performance.txt
       - name: Verify packaged application starts on loopback
         run: |
           set -euo pipefail
@@ -67,6 +71,7 @@ jobs:
           path: |
             dist/acra-standalone-integration-candidate.zip
             dist/acra-standalone-integration-candidate.zip.sha256
+            import-performance.txt
           if-no-files-found: error
 
   windows-first-run:

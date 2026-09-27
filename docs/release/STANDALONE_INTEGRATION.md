@@ -35,3 +35,5 @@ Create a project, then register an authorized HTTP(S) base URL, or enter a hostn
 Authentication values for the controlled loopback LAB validation are entered transiently at execution time and must be scoped to the lab. The application does not persist these values. A registered external host is currently limited to offline import and review; it cannot be actively probed by the standalone executor.
 
 The integration CI repeats the frozen Sprint 13 synthetic holdout and four-framework localhost evaluation against the combined source. Passing those historical tests checks for integration regressions. It does not create a new, independent dataset or establish scanner accuracy against external APIs.
+
+The CI artifact also records elapsed time for offline OpenAPI imports of 100 and 1,000 unique routes and reopening their persisted inventory. These are runner-specific engineering observations, with no network calls and no production latency or throughput promise.
