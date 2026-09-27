@@ -59,3 +59,38 @@ jobs:
           done
           cat /tmp/acra-standalone.log
           exit 1
+
+  windows-first-run:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Build and start from a clean Windows checkout
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $run = Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'run-acra.bat --no-browser --port=8799' -PassThru -RedirectStandardOutput "$env:RUNNER_TEMP\acra-out.log" -RedirectStandardError "$env:RUNNER_TEMP\acra-err.log"
+          try {
+            $ready = $false
+            for ($i = 0; $i -lt 120; $i++) {
+              if ($run.HasExited) { throw "ACRA launcher exited with $($run.ExitCode): $(Get-Content "$env:RUNNER_TEMP\acra-err.log" -Raw)" }
+              try {
+                $health = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/health' -TimeoutSec 2
+                if ($health.burpRequired -eq $false -and $health.coreLinked -eq $true) { $ready = $true; break }
+              } catch { Start-Sleep -Seconds 2 }
+            }
+            if (-not $ready) { throw 'Standalone launcher did not become healthy' }
+            $page = Invoke-WebRequest -Uri 'http://127.0.0.1:8799/' -TimeoutSec 10
+            if ($page.Content -notmatch 'id="target-form"') { throw 'Target onboarding page missing' }
+            $headers = @{ 'X-ACRA-CSRF' = $health.csrfToken }
+            $project = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/projects' -Method Post -Headers $headers -ContentType 'application/x-www-form-urlencoded' -Body @{ name='Clean Windows clone'; description='First run' }
+            $target = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/targets' -Method Post -Headers $headers -ContentType 'application/x-www-form-urlencoded' -Body @{ projectId=$project.id; displayName='Authorized lab'; baseUrl='http://127.0.0.1:8081/api/'; environment='LAB'; authorizationReference='CI-LAB-001'; testingMode='IMPORT_ONLY' }
+            $targets = Invoke-RestMethod -Uri "http://127.0.0.1:8799/api/targets?projectId=$($project.id)"
+            if ($targets.Count -ne 1 -or $targets[0].id -ne $target.id) { throw 'Target not persisted' }
+          } finally {
+            Stop-Process -Id $run.Id -Force -ErrorAction SilentlyContinue
+          }
