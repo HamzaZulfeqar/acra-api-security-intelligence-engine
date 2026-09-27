@@ -94,3 +94,39 @@ jobs:
           } finally {
             Stop-Process -Id $run.Id -Force -ErrorAction SilentlyContinue
           }
+
+  frozen-research-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify frozen synthetic holdout and label isolation
+        run: bash scripts/verify-sprint13-heldout.sh
+      - name: Install frozen framework evaluation dependencies
+        run: python -m pip install --disable-pip-version-check fastapi==0.115.12 uvicorn==0.34.2 Flask==3.1.0
+      - name: Install Express fixture dependencies
+        working-directory: lab/framework-runtime-eval/express
+        run: npm install --no-audit --no-fund
+      - name: Repeat frozen four-framework runtime evaluation
+        run: bash scripts/verify-sprint13-cross-framework-runtime-eval.sh
+      - name: Upload controlled research evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integrated-frozen-research-regression
+          path: |
+            build/s13-heldout/evaluation.json
+            build/s13-xruntime-eval/evaluation.json
+          if-no-files-found: warn
