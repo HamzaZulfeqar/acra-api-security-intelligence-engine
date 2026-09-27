@@ -59,6 +59,15 @@ jobs:
           done
           cat /tmp/acra-standalone.log
           exit 1
+      - name: Package and verify standalone candidate
+        run: bash scripts/build-standalone-integration-bundle.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: acra-standalone-integration-candidate
+          path: |
+            dist/acra-standalone-integration-candidate.zip
+            dist/acra-standalone-integration-candidate.zip.sha256
+          if-no-files-found: error
 
   windows-first-run:
     runs-on: windows-latest

@@ -22,7 +22,9 @@ This branch combines the published `v0.3.0` source with the standalone Sprint 10
 - Visual GUI walkthrough on Windows. CI verifies a clean checkout/launcher, localhost health, target page and persisted registered target.
 - Any extension from guarded loopback LAB execution to authorized non-loopback targets requires a separately reviewed safety and authentication design.
 - Independent unseen API accuracy and timed end-to-end measurements; the 16-case controlled A0–A7 fixture is insufficient.
-- Versioned standalone distribution and release notes; repository administration tracked in issue #6.
+- Public versioned standalone release and release notes; repository administration tracked in issue #6.
+
+The integration workflow creates a candidate ZIP containing the standalone and optional Burp JARs, Windows/Linux launchers, this guide, and a SHA-256 manifest. CI verifies the extracted JAR hashes. This is a review artifact, not a published versioned release.
 
 ## Candidate first run
 
