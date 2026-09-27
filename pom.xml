@@ -12,6 +12,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <modules><module>core</module><module>extension/burp-extension</module></modules>
+  <modules><module>core</module><module>standalone</module><module>extension/burp-extension</module></modules>
   <properties><maven.compiler.release>21</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><montoya.version>2026.7</montoya.version></properties>
 </project>
