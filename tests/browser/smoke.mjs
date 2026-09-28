@@ -25,6 +25,7 @@ try {
   await page.locator('#target-form input[name="authorizationReference"]').fill('CI-APPROVED-LAB');
   await page.locator('#target-form button[type="submit"]').click();
   await page.getByText('Authorized target registered. No scan was started.').waitFor();
+  await page.locator('#target-list').filter({ hasText: '127.0.0.1:8081/api/v1/' }).waitFor();
   assert.match(await page.locator('#target-list').innerText(), /127\.0\.0\.1:8081\/api\/v1\//);
   await page.screenshot({ path: `${output}/target.png`, fullPage: true });
 
