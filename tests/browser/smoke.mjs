@@ -53,6 +53,8 @@ try {
 
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.locator('#health-label').filter({ hasText: 'Local service healthy' }).waitFor();
+  await page.locator('#metric-projects').filter({ hasText: '1' }).waitFor();
+  await page.locator('#metric-targets').filter({ hasText: '1' }).waitFor();
   assert.equal(await page.locator('#metric-projects').innerText(), '1');
   assert.equal(await page.locator('#metric-targets').innerText(), '1');
   console.log('STANDALONE_BROWSER_SMOKE PASS project/target/import/coverage/report/restart');

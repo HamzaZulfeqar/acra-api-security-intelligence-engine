@@ -48,12 +48,12 @@ async function initialize(){
   try{
     const health=await api("/api/health");
     state.csrf=health.csrfToken;
-    document.querySelector("#health-dot").classList.add("up");
-    document.querySelector("#health-label").textContent="Local service healthy";
     const capabilities=await api("/api/capabilities");
     document.querySelector("#metric-methods").textContent=capabilities.httpMethods.length;
     await loadProjects();
     wireEvents();
+    document.querySelector("#health-dot").classList.add("up");
+    document.querySelector("#health-label").textContent="Local service healthy";
   }catch(error){
     document.querySelector("#health-label").textContent="Service unavailable";
     showMessage("#project-form-message",error.message,false);
