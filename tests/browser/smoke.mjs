@@ -55,6 +55,7 @@ try {
   await page.locator('[data-view="reports"]').click();
   await page.locator('#report-form button[type="submit"]').click();
   await page.locator('#report-preview').filter({ hasText: /"projectId"/ }).waitFor();
+  assert.match(await page.locator('#report-preview').innerText(), /\n  "projectId":/);
   assert.match(await page.locator('#report-sha').innerText(), /^[a-f0-9]{64}$/);
   await page.screenshot({ path: `${output}/report.png`, fullPage: true });
 

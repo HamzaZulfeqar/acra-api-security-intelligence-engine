@@ -1409,7 +1409,11 @@ async function generateReport(event){
     const artifact=await api("/api/report?projectId="+encodeURIComponent(state.activeProjectId)
       +"&format="+encodeURIComponent(form.get("format")||"JSON"));
     document.querySelector("#report-sha").textContent=artifact.sha256;
-    document.querySelector("#report-preview").textContent=artifact.content;
+    let preview=artifact.content;
+    if(form.get("format")==="JSON"){
+      try{preview=JSON.stringify(JSON.parse(artifact.content),null,2);}catch(_){/* Show the original artifact. */}
+    }
+    document.querySelector("#report-preview").textContent=preview;
   }catch(error){
     document.querySelector("#report-preview").textContent="Report generation failed: "+error.message;
     document.querySelector("#report-sha").textContent="—";
