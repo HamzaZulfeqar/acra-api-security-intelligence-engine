@@ -59,13 +59,27 @@ try {
   assert.match(await page.locator('#report-sha').innerText(), /^[a-f0-9]{64}$/);
   await page.screenshot({ path: `${output}/report.png`, fullPage: true });
 
+  await page.locator('[data-view="targets"]').click();
+  await page.locator('#target-form input[name="displayName"]').fill('Authorized staging IPv4');
+  await page.locator('#target-form select[name="hostScheme"]').selectOption('http');
+  await page.locator('#target-form input[name="hostInput"]').fill('10.42.0.7:8081');
+  await page.locator('#target-form input[name="hostBasePath"]').fill('/api/v1/');
+  await page.locator('#target-form select[name="environment"]').selectOption('STAGING');
+  await page.locator('#target-form select[name="testingMode"]').selectOption('SAFE_ACTIVE');
+  await page.locator('#target-form input[name="authorizationReference"]').fill('CI-STAGING-SCOPE');
+  await page.locator('#target-form button[type="submit"]').click();
+  await page.locator('#target-list').filter({ hasText: '10.42.0.7:8081/api/v1/' }).waitFor();
+  await page.locator('[data-view="active"]').click();
+  await page.locator('#active-target option').filter({ hasText: 'Authorized staging IPv4' }).waitFor();
+  await page.screenshot({ path: `${output}/external-target.png`, fullPage: true });
+
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.locator('#health-label').filter({ hasText: 'Local service healthy' }).waitFor();
   await page.locator('#metric-projects').filter({ hasText: '1' }).waitFor();
-  await page.locator('#metric-targets').filter({ hasText: '1' }).waitFor();
+  await page.locator('#metric-targets').filter({ hasText: '2' }).waitFor();
   assert.equal(await page.locator('#metric-projects').innerText(), '1');
-  assert.equal(await page.locator('#metric-targets').innerText(), '1');
-  console.log('STANDALONE_BROWSER_SMOKE PASS project/invalid-target-guard/target/import/coverage/report/restart');
+  assert.equal(await page.locator('#metric-targets').innerText(), '2');
+  console.log('STANDALONE_BROWSER_SMOKE PASS project/invalid-target-guard/target/import/coverage/report/external-target/restart');
 } finally {
   await browser.close();
 }

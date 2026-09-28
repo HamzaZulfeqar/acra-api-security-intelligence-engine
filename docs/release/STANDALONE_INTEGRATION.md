@@ -20,7 +20,7 @@ This branch combines the published `v0.3.0` source with the standalone Sprint 10
 ## Acceptance still open
 
 - Human visual/usability walkthrough on Windows. CI now runs headless Chromium from a clean Windows checkout through project creation, invalid-target rejection, target registration, import, coverage, report and reload; screenshots are available as workflow artifacts.
-- Any extension from guarded loopback LAB execution to authorized non-loopback targets requires implementation and review of the proposed controls in `docs/architecture/standalone-external-execution-proposal.md`.
+- A narrow external slice now permits explicitly authorized development/staging IPv4 literal targets in `SAFE_ACTIVE` mode for the existing read-only route-equivalence differential. Independent safety review and full plan/credential design in `docs/architecture/standalone-external-execution-proposal.md` remain open.
 - Independent unseen API accuracy and timed end-to-end measurements; the 16-case controlled A0–A7 fixture is insufficient.
 - Public versioned standalone release; draft release notes are in `docs/release/STANDALONE_RC_NOTES.md`, and repository administration is tracked in issue #6.
 
@@ -32,7 +32,7 @@ With Java 21 and Maven 3.9+ installed, check out this integration branch and run
 
 Create a project, then register an authorized HTTP(S) base URL, or enter a hostname/IP with protocol and optional base path. This step records the assessment boundary and does not make a network request. Import an OpenAPI specification, HAR, or raw HTTP evidence within that target scope. Add the relevant principals, roles, tenants and authorization expectations before reviewing candidates, coverage and reports.
 
-Authentication values for the controlled loopback LAB validation are entered transiently at execution time and must be scoped to the lab. The application does not persist these values. A registered external host is currently limited to offline import and review; it cannot be actively probed by the standalone executor.
+Authentication values are entered transiently at execution time and must belong to approved test identities. The application does not persist these values. External active execution is restricted to explicit development/staging IPv4 targets, read-only methods and the four-request route-equivalence differential; DNS hostnames, production targets and other testing modes remain import/review-only. This CI fixture is not independent real-world accuracy validation.
 
 The integration CI repeats the frozen Sprint 13 synthetic holdout and four-framework localhost evaluation against the combined source. Passing those historical tests checks for integration regressions. It does not create a new, independent dataset or establish scanner accuracy against external APIs.
 

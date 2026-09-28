@@ -1,6 +1,6 @@
 # Proposed external-target execution boundary
 
-**Status:** design for review. No non-loopback active executor is implemented by this document. The current standalone executor remains restricted to controlled loopback LAB targets. Registration of an external HTTP(S) base URL permits offline import and review only.
+**Status:** design for review. A first, narrow implementation supports approved development/staging IPv4 literals for read-only four-request route-equivalence validation. The complete authorization, authentication and hostname design below is not implemented or independently reviewed. Production targets and hostname registrations remain import/review-only.
 
 ## Authorization contract
 
@@ -25,4 +25,4 @@ Keep raw secrets out of serialized evidence. Record the authorization reference,
 3. A clean Windows GUI run against an explicitly authorized test service with independent test identities and expected decisions. Verify redaction, audit trace and stop behavior.
 4. Unseen secure/vulnerable API cases with independent labels and disclosed false positives, false negatives, inconclusive counts and elapsed end-to-end times.
 
-Promotion requires all four gates and a separate reviewed implementation change. Until then the GUI must keep external targets in import/review-only mode.
+Promotion requires all four gates and independent review of the narrow implementation. Until then, this branch remains a draft candidate; unsupported external targets remain import/review-only.

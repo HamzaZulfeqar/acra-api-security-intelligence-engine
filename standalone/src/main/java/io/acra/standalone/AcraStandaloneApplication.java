@@ -28,7 +28,7 @@ public final class AcraStandaloneApplication {
         System.out.println("Workspace: " + store.root());
         System.out.println("Burp required: false");
         System.out.println("Burp bridge: optional loopback-only handoff");
-        System.out.println("Active validation: loopback LAB + CONTROLLED_LAB only");
+        System.out.println("Active validation: controlled LAB or approved development/staging IPv4 SAFE_ACTIVE only");
         System.out.println("Press Ctrl+C to stop.");
 
         Runtime.getRuntime().addShutdownHook(new Thread(server::close, "acra-standalone-shutdown"));

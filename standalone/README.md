@@ -2,7 +2,7 @@
 
 ACRA Sprint 10 provides a standalone localhost product host over the existing ACRA Core.
 
-Burp Suite is **optional**. A fresh clone can run ACRA, create projects, register authorized targets, import API evidence, configure authorization context, review evidence/candidates/coverage/reports, and run the guarded loopback LAB validation path without loading the Burp extension.
+Burp Suite is **optional**. A fresh clone can run ACRA, create projects, register authorized targets, import API evidence, configure authorization context, review evidence/candidates/coverage/reports, and run the guarded read-only validation path without loading the Burp extension.
 
 ## Requirements
 
@@ -154,13 +154,13 @@ Verified:
 The Active Validation workspace is deliberately narrow.
 
 Requirements:
-- target host must be loopback;
-- target environment must be `LAB`;
-- testing mode must be `CONTROLLED_LAB`;
+- target must be loopback `LAB` + `CONTROLLED_LAB`, or an explicitly authorized IPv4 literal in `DEVELOPMENT`/`STAGING` + `SAFE_ACTIVE`;
+- DNS hostnames, production targets, redirects, proxies and unsafe paths are blocked for the external slice;
 - expectation action must be `READ`;
 - expected decision must be explicit ALLOW or DENY;
 - inventory method must be GET, HEAD, or OPTIONS;
-- operator confirmation is required.
+- operator confirmation is required for each four-request differential;
+- authorization values are transient Bearer/Authorization header values; interactive login and cookie-session workflows are not supported in this slice.
 
 Current active mutation:
 - one trailing-slash route-equivalence representation.

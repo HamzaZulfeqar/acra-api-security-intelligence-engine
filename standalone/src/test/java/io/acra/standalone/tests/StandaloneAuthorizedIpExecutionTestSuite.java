@@ -87,11 +87,28 @@ public final class StandaloneAuthorizedIpExecutionTestSuite {
                 throw new AssertionError("kill switch must block");
             } catch (IllegalStateException expected) { }
             if (requests.get() != 4) throw new AssertionError("kill switch dispatched a request");
+            service.resetKillSwitch(true, "continue safety rejection tests");
             if (AuthorizedIpHttpTransport.permittedIpv4("127.0.0.1")
                     || AuthorizedIpHttpTransport.permittedIpv4("169.254.169.254")
                     || AuthorizedIpHttpTransport.permittedIpv4("api.example.test")) {
                 throw new AssertionError("unsafe host admitted");
             }
+            for (String invalidPath : new String[] {
+                    "/api/v1/../admin", "/api/v1/%2e%2e/admin", "//outside.invalid/api/v1/demo"}) {
+                try {
+                    service.executeRouteEquivalence(project.id(), target.id(), expectation.id(),
+                            invalidPath, "Bearer limited-user", "Bearer approved-control", true);
+                    throw new AssertionError("unsafe path admitted: " + invalidPath);
+                } catch (IllegalArgumentException expected) { }
+            }
+            var production = workspace.addTarget(project.id(), "Production", target.baseUri().toString(),
+                    "PRODUCTION", "CI-ROE-001", "SAFE_ACTIVE");
+            try {
+                service.executeRouteEquivalence(project.id(), production.id(), expectation.id(),
+                        "/api/v1/demo", "Bearer limited-user", "Bearer approved-control", true);
+                throw new AssertionError("production target admitted");
+            } catch (IllegalArgumentException expected) { }
+            if (requests.get() != 4) throw new AssertionError("rejected inputs dispatched requests");
             System.out.println("STANDALONE_AUTHORIZED_IP_EXECUTION PASS host=" + address.getHostAddress());
         } finally {
             fixture.stop(0);
