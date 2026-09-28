@@ -1081,6 +1081,7 @@ function wireEvents(){
 
   const dialog=document.querySelector("#project-dialog");
   document.querySelector("#new-project-button").addEventListener("click",function(){dialog.showModal();});
+  document.querySelector("#new-project-button").disabled=false;
   document.querySelector("#close-project-dialog").addEventListener("click",function(){dialog.close();});
   document.querySelector("#cancel-project-dialog").addEventListener("click",function(){dialog.close();});
 
