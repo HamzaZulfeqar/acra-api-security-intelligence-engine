@@ -18,6 +18,13 @@ try {
   await page.locator('#project-form button[type="submit"]').click();
   await page.locator('#targets-view.active').waitFor();
 
+  await page.locator('#target-form input[name="displayName"]').fill('Rejected target');
+  await page.locator('#target-form input[name="hostInput"]').fill('127.0.0.1@outside.invalid');
+  await page.locator('#target-form input[name="authorizationReference"]').fill('CI-APPROVED-LAB');
+  await page.locator('#target-form button[type="submit"]').click();
+  await page.locator('#target-form-message').filter({ hasText: 'Enter a full HTTP(S) base URL' }).waitFor();
+  assert.equal(await page.locator('#target-count').innerText(), '0');
+
   await page.locator('#target-form input[name="displayName"]').fill('Loopback API');
   await page.locator('#target-form select[name="hostScheme"]').selectOption('http');
   await page.locator('#target-form input[name="hostInput"]').fill('127.0.0.1:8081');
@@ -57,7 +64,7 @@ try {
   await page.locator('#metric-targets').filter({ hasText: '1' }).waitFor();
   assert.equal(await page.locator('#metric-projects').innerText(), '1');
   assert.equal(await page.locator('#metric-targets').innerText(), '1');
-  console.log('STANDALONE_BROWSER_SMOKE PASS project/target/import/coverage/report/restart');
+  console.log('STANDALONE_BROWSER_SMOKE PASS project/invalid-target-guard/target/import/coverage/report/restart');
 } finally {
   await browser.close();
 }
