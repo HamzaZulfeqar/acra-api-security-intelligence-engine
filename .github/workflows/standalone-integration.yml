@@ -114,10 +114,11 @@ jobs:
           node-version: '20'
       - name: Install Windows browser smoke dependencies
         shell: pwsh
+        working-directory: tests/browser
         run: |
-          npm install --prefix tests/browser --no-audit --no-fund
+          npm install --no-audit --no-fund
           if ($LASTEXITCODE -ne 0) { throw 'Browser dependencies failed to install' }
-          npm exec --prefix tests/browser -- playwright install chromium
+          npx playwright install chromium
           if ($LASTEXITCODE -ne 0) { throw 'Chromium failed to install' }
       - name: Build and start from a clean Windows checkout
         shell: pwsh
