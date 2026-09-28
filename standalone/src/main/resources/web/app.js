@@ -921,11 +921,20 @@ function renderActive(){
   empty.hidden=executions.length>0;
 }
 
-function isLoopbackControlledTarget(target){
-  if(!target||target.environment!=="LAB"||target.testingMode!=="CONTROLLED_LAB") return false;
+function isExecutableTarget(target){
+  if(!target) return false;
   try{
     const host=new URL(target.baseUrl).hostname.toLowerCase();
-    return host==="localhost"||host==="127.0.0.1"||host==="::1"||host==="[::1]";
+    if(target.environment==="LAB"&&target.testingMode==="CONTROLLED_LAB")
+      return host==="localhost"||host==="127.0.0.1"||host==="::1"||host==="[::1]";
+    if(!["DEVELOPMENT","STAGING"].includes(target.environment)||target.testingMode!=="SAFE_ACTIVE") return false;
+    const parts=host.split(".");
+    if(parts.length!==4||parts.some(function(value){return !/^(0|[1-9][0-9]{0,2})$/.test(value)||Number(value)>255;})) return false;
+    const first=Number(parts[0]),second=Number(parts[1]);
+    return first!==0&&first!==127&&first<224&&first!==169
+      &&!(first===100&&second>=64&&second<=127)
+      &&!(first===192&&second===0)
+      &&!(first===198&&(second===18||second===19));
   }catch(_){
     return false;
   }
@@ -937,7 +946,7 @@ function syncActiveSelectors(){
   if(!targetSelect||!expectationSelect) return;
 
   const previousTarget=targetSelect.value;
-  const targets=state.targets.filter(isLoopbackControlledTarget);
+  const targets=state.targets.filter(isExecutableTarget);
   setOptions("#active-target",targets,function(item){return item.id;},
     function(item){return item.displayName+" — "+item.baseUrl;},false);
   if(targets.some(function(item){return item.id===previousTarget;})) targetSelect.value=previousTarget;

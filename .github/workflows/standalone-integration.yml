@@ -43,6 +43,7 @@ jobs:
             StandaloneFindingReproductionTestSuite StandaloneFindingProductSurfaceTestSuite; do
             java -ea -cp "$cp" "io.acra.standalone.tests.$suite"
           done
+          java -ea -cp "$cp" io.acra.standalone.tests.StandaloneAuthorizedIpExecutionTestSuite
           node --check standalone/src/main/resources/web/app.js
       - name: Observe offline import and inventory performance
         run: |

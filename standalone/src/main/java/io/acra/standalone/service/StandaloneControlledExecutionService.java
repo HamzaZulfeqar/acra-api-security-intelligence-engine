@@ -5,6 +5,7 @@ import io.acra.core.active.analysis.ExpectedDecisionSource;
 import io.acra.core.active.evidence.ExecutionEvidenceStore;
 import io.acra.core.active.evidence.SafetyAuditLog;
 import io.acra.core.active.execution.BackoffPolicy;
+import io.acra.core.active.execution.AuthorizedIpHttpTransport;
 import io.acra.core.active.execution.DelayController;
 import io.acra.core.active.execution.LocalhostHttpTransport;
 import io.acra.core.active.execution.TestExecutor;
@@ -103,7 +104,7 @@ public final class StandaloneControlledExecutionService {
         if (!userConfirmed) throw new IllegalArgumentException("explicit execution confirmation is required");
 
         TargetRecord target = workspace.findTarget(projectId, targetId);
-        requireControlledLoopbackTarget(target);
+        requireExecutableTarget(target);
 
         AuthorizationExpectationRecord expectation = expectation(projectId, expectationId);
         if (!expectation.targetId().equals(targetId)) {
@@ -141,7 +142,9 @@ public final class StandaloneControlledExecutionService {
         Harness harness = harness(projectId.toString(), test.target());
 
         configureGuards(harness, test);
-        ActiveConsent consent = new LocalDevelopmentExecutionPolicy().consentFor(test);
+        ActiveConsent consent = test.target().environment() == ExecutionEnvironment.LAB
+                ? new LocalDevelopmentExecutionPolicy().consentFor(test)
+                : new ActiveConsent(true, true, true, userConfirmed, false);
         if (!consent.activeTestingEnabled() || !consent.targetAuthorized() || !consent.testApproved()) {
             throw new IllegalArgumentException("local development execution policy did not authorize this test");
         }
@@ -235,7 +238,7 @@ public final class StandaloneControlledExecutionService {
                 base.getScheme(),
                 host,
                 port,
-                ExecutionEnvironment.LAB,
+                executionEnvironment(target),
                 true,
                 List.of(allowedPrefix),
                 Set.of(inventory.method()));
@@ -341,7 +344,7 @@ public final class StandaloneControlledExecutionService {
                 80,
                 "explicit standalone controlled route-equivalence validation",
                 ConfigurationSnapshot.of(java.util.Map.of(
-                        "mode", "standalone-controlled-lab",
+                        "mode", "standalone-scoped-read-only",
                         "targetId", target.id().toString(),
                         "expectationId", expectation.id().toString())),
                 List.of(),
@@ -409,7 +412,7 @@ public final class StandaloneControlledExecutionService {
         ScopedRateLimiter rate = new ScopedRateLimiter();
         MutationValidator validator = new MutationValidator(
                 projectId,
-                Set.of(ExecutionEnvironment.LAB),
+                Set.of(target.environment()),
                 killSwitch,
                 budgets,
                 concurrency,
@@ -420,7 +423,8 @@ public final class StandaloneControlledExecutionService {
         TestExecutor executor = new TestExecutor(
                 clock,
                 Duration.ofSeconds(4),
-                new LocalhostHttpTransport(target),
+                target.environment() == ExecutionEnvironment.LAB
+                        ? new LocalhostHttpTransport(target) : new AuthorizedIpHttpTransport(target),
                 noDelay,
                 validator,
                 budgets,
@@ -492,32 +496,46 @@ public final class StandaloneControlledExecutionService {
         };
     }
 
-    private static void requireControlledLoopbackTarget(TargetRecord target) {
+    private static void requireExecutableTarget(TargetRecord target) {
         URI uri = target.baseUri();
         String host = normalizeHost(uri.getHost());
-        if (!"LAB".equals(target.environment())) {
-            throw new IllegalArgumentException("controlled active execution requires LAB environment");
-        }
-        if (!"CONTROLLED_LAB".equals(target.testingMode())) {
-            throw new IllegalArgumentException("controlled active execution requires CONTROLLED_LAB testing mode");
-        }
-        if (!LOOPBACK.contains(host)) {
-            throw new IllegalArgumentException("Phase 7 controlled execution is restricted to loopback targets");
+        boolean local = "LAB".equals(target.environment()) && "CONTROLLED_LAB".equals(target.testingMode())
+                && LOOPBACK.contains(host);
+        boolean external = Set.of("DEVELOPMENT", "STAGING").contains(target.environment())
+                && "SAFE_ACTIVE".equals(target.testingMode())
+                && AuthorizedIpHttpTransport.permittedIpv4(host);
+        if (!local && !external) {
+            throw new IllegalArgumentException("active execution requires controlled loopback LAB or authorized development/staging IPv4 SAFE_ACTIVE target");
         }
         if (!Set.of("http", "https").contains(uri.getScheme().toLowerCase(Locale.ROOT))) {
             throw new IllegalArgumentException("controlled execution requires HTTP(S)");
         }
     }
 
+    private static ExecutionEnvironment executionEnvironment(TargetRecord target) {
+        return switch (target.environment()) {
+            case "LAB" -> ExecutionEnvironment.LAB;
+            case "DEVELOPMENT" -> ExecutionEnvironment.AUTHORIZED_DEV;
+            case "STAGING" -> ExecutionEnvironment.AUTHORIZED_STAGING;
+            default -> throw new IllegalArgumentException("target environment is not executable");
+        };
+    }
+
     private static String validateConcretePath(TargetRecord target, String value) {
         String path = value == null ? "" : value.strip();
-        if (path.isBlank() || !path.startsWith("/") || path.contains("://") || path.indexOf('#') >= 0
+        if (path.isBlank() || !path.startsWith("/") || path.startsWith("//") || path.contains("://") || path.indexOf('#') >= 0
                 || path.indexOf('\\') >= 0 || path.indexOf('\0') >= 0) {
             throw new IllegalArgumentException("concretePath must be a safe origin-form path");
         }
         String lower = path.toLowerCase(Locale.ROOT);
-        if (lower.contains("%2e") || lower.contains("%2f") || lower.contains("%5c")) {
+        if (lower.contains("%2e") || lower.contains("%2f") || lower.contains("%5c")
+                || lower.contains("%3f") || lower.contains("%23") || lower.contains("%40")
+                || lower.contains("%25")) {
             throw new IllegalArgumentException("encoded slash/dot/backslash forms are not accepted in this Phase 7 slice");
+        }
+        String route = path.split("\\?", 2)[0];
+        for (String segment : route.split("/")) {
+            if (segment.equals(".") || segment.equals("..")) throw new IllegalArgumentException("dot segments are not accepted");
         }
         String base = basePath(target.baseUri());
         if (!"/".equals(base) && !boundaryMatch(path, base)) {
@@ -543,7 +561,7 @@ public final class StandaloneControlledExecutionService {
                 null,
                 Instant.now(),
                 "standalone-active-validation",
-                "CONTROLLED_LAB",
+                target.testingMode(),
                 java.util.Map.of());
         return extractor.extract(tx).canonicalPath();
     }

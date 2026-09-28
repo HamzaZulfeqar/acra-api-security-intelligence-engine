@@ -296,7 +296,7 @@
               <span id="active-kill-status" class="status-badge">Kill switch: checking</span>
             </div>
             <form id="active-form">
-              <label>Controlled LAB target
+              <label>Authorized active target
                 <select id="active-target" name="targetId" required></select>
               </label>
               <label>READ authorization expectation
@@ -311,8 +311,8 @@
               <label>Known-ALLOW positive-control authorization value
                 <input id="active-positive-auth" name="positiveControlAuthorizationValue" type="password" required maxlength="4096" autocomplete="off" placeholder="Bearer …">
               </label>
-              <label class="confirmation-row"><input name="confirmed" type="checkbox" value="true" required> I confirm this is an explicitly authorized local LAB target and I want ACRA to send the controlled four-request differential.</label>
-              <p class="form-note">Phase 7 permits loopback targets only, requires LAB + CONTROLLED_LAB, and supports GET/HEAD/OPTIONS READ validation. ACRA generates only a trailing-slash route representation. Both authorization values are transient and are not persisted or returned by the API.</p>
+              <label class="confirmation-row"><input name="confirmed" type="checkbox" value="true" required> I confirm this exact target and path are explicitly authorized, both test identities are approved, and I want ACRA to send the controlled four-request differential.</label>
+              <p class="form-note">Active validation supports controlled loopback LAB targets and explicitly authorized development/staging IPv4 targets in SAFE_ACTIVE mode. Only GET/HEAD/OPTIONS READ expectations and one trailing-slash representation are supported. DNS hostnames, production targets and redirects are blocked. Both authorization values are transient and are not persisted or returned by the API.</p>
               <button class="button" type="submit">Run Controlled Differential</button>
             </form>
             <div id="active-message" class="message" hidden></div>
