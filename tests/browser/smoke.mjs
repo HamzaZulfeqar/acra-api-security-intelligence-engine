@@ -71,6 +71,7 @@ try {
   await page.locator('#target-list').filter({ hasText: '10.42.0.7:8081/api/v1/' }).waitFor();
   await page.locator('[data-view="active"]').click();
   await page.locator('#active-target option').filter({ hasText: 'Authorized staging IPv4' }).waitFor({ state: 'attached' });
+  assert.match(await page.locator('#active-expectation option').innerText(), /Import a read-only endpoint/);
   await page.screenshot({ path: `${output}/external-target.png`, fullPage: true });
 
   await page.reload({ waitUntil: 'domcontentloaded' });

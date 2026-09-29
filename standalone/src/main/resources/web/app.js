@@ -19,7 +19,7 @@ const viewMeta={
   inventory:["API Inventory","Import and normalize OpenAPI, HAR and raw HTTP evidence."],
   context:["Security Context","Define principals, roles, tenants, resources, ownership and expected authorization."],
   authorization:["Authorization","Identity, role, tenant and policy intelligence."],
-  active:["Active Validation","Controlled loopback LAB execution through ACRA Core safety gates."],
+  active:["Active Validation","Scoped read-only validation for controlled LAB and approved development/staging IPv4 targets."],
   "object-access":["Object Access","Object-level authorization reasoning and evidence."],
   "function-access":["Function Access","Function-level authorization reasoning and evidence."],
   "property-access":["Property Access","Property-level READ/UPDATE authorization intelligence."],
@@ -977,6 +977,12 @@ function syncActiveExpectations(){
     function(item){
       return item.principalId+" · "+item.expectedDecision+" · "+item.endpoint;
     },false);
+  if(!rows.length){
+    const hint=document.createElement("option");
+    hint.value="";
+    hint.textContent="Import a read-only endpoint and define its READ expectation";
+    expectationSelect.append(hint);
+  }
   expectationSelect.disabled=rows.length===0;
   syncActivePath();
 }
