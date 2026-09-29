@@ -94,6 +94,7 @@ try {
   ]);
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.locator('#health-label').filter({ hasText: 'Local service healthy' }).waitFor();
+  await page.locator('#project-selector').selectOption({ label: 'Authorized GUI execution' });
   await page.locator('[data-view="active"]').click();
   await page.locator('#active-execution-count').filter({ hasText: '1' }).waitFor();
   assert.doesNotMatch(await page.locator('body').innerText(), /Bearer limited-user|Bearer approved-control/);
