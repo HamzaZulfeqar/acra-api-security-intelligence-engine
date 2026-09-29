@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "acra-standalone-browser-smoke",
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "playwright": "1.55.0"
+  }
+}

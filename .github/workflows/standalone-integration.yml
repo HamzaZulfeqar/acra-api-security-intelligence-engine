@@ -1,0 +1,207 @@
+name: Standalone Integration
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [integrate/standalone-v03]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build the combined reactor
+        run: mvn --batch-mode --no-transfer-progress clean verify
+      - name: Run standalone integration suites
+        run: |
+          set -euo pipefail
+          cp="standalone/target/test-classes:standalone/target/classes:core/target/classes"
+          for suite in \
+            StandaloneFoundationTestSuite StandaloneImportInventoryTestSuite \
+            StandaloneSecurityContextTestSuite StandaloneSecurityContextApiTestSuite \
+            StandaloneCoreProjectionTestSuite StandaloneCoreProjectionApiTestSuite \
+            StandaloneEvidenceDifferentialTestSuite StandaloneEvidenceApiTestSuite \
+            StandaloneReviewReportingTestSuite StandaloneReviewReportingApiTestSuite \
+            StandaloneControlledExecutionTestSuite StandaloneControlledExecutionApiTestSuite \
+            StandaloneFindingLifecycleTestSuite StandaloneFindingLifecycleApiTestSuite \
+            StandaloneFindingReproductionTestSuite StandaloneFindingProductSurfaceTestSuite; do
+            java -ea -cp "$cp" "io.acra.standalone.tests.$suite"
+          done
+          java -ea -cp "$cp" io.acra.standalone.tests.StandaloneAuthorizedIpExecutionTestSuite
+          node --check standalone/src/main/resources/web/app.js
+      - name: Observe offline import and inventory performance
+        run: |
+          java -ea -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneImportPerformanceObservation | tee import-performance.txt
+      - name: Verify packaged application starts on loopback
+        run: |
+          set -euo pipefail
+          java -jar standalone/target/acra-standalone.jar --port=0 --no-browser > /tmp/acra-standalone.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if grep -q 'http://127.0.0.1:' /tmp/acra-standalone.log; then
+              exit 0
+            fi
+            if ! kill -0 "$pid" 2>/dev/null; then
+              cat /tmp/acra-standalone.log
+              exit 1
+            fi
+            sleep 1
+          done
+          cat /tmp/acra-standalone.log
+          exit 1
+      - name: Install browser smoke dependencies
+        run: |
+          npm install --prefix tests/browser --no-audit --no-fund
+          npm exec --prefix tests/browser -- playwright install --with-deps chromium
+      - name: Exercise standalone browser workflow
+        run: |
+          set -euo pipefail
+          workspace="$(mktemp -d)"
+          java -jar standalone/target/acra-standalone.jar --port=8787 --home="$workspace" --no-browser > /tmp/acra-browser.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" "${fixture_pid:-}" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8787/api/health >/dev/null; then break; fi
+            if ! kill -0 "$pid" 2>/dev/null; then cat /tmp/acra-browser.log; exit 1; fi
+            sleep 1
+          done
+          node tests/browser/smoke.mjs
+          export ACRA_FIXTURE_HOST="$(hostname -I | tr ' ' '\n' | awk '$1 !~ /^127\./ && $1 ~ /^[0-9.]+$/ { print; exit }')"
+          test -n "$ACRA_FIXTURE_HOST"
+          export ACRA_FIXTURE_PORT=18081
+          python3 tests/browser/authorized_fixture.py > /tmp/acra-fixture.log 2>&1 &
+          fixture_pid=$!
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent "http://$ACRA_FIXTURE_HOST:$ACRA_FIXTURE_PORT/__fixture_stats" >/dev/null; then break; fi
+            if ! kill -0 "$fixture_pid" 2>/dev/null; then cat /tmp/acra-fixture.log; exit 1; fi
+            sleep 1
+          done
+          ACRA_BROWSER_OUTPUT=build/browser-active node tests/browser/active.mjs
+      - name: Package and verify standalone candidate
+        run: bash scripts/build-standalone-integration-bundle.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: acra-standalone-integration-candidate
+          path: |
+            dist/acra-standalone-integration-candidate.zip
+            dist/acra-standalone-integration-candidate.zip.sha256
+            import-performance.txt
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: acra-standalone-browser-smoke
+          path: |
+            build/browser-smoke/*.png
+            build/browser-active/*.png
+          if-no-files-found: warn
+
+  windows-first-run:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Windows browser smoke dependencies
+        shell: pwsh
+        working-directory: tests/browser
+        run: |
+          npm install --no-audit --no-fund
+          if ($LASTEXITCODE -ne 0) { throw 'Browser dependencies failed to install' }
+          npx playwright install chromium
+          if ($LASTEXITCODE -ne 0) { throw 'Chromium failed to install' }
+      - name: Build and start from a clean Windows checkout
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $run = Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'run-acra.bat --no-browser --port=8799' -PassThru -RedirectStandardOutput "$env:RUNNER_TEMP\acra-out.log" -RedirectStandardError "$env:RUNNER_TEMP\acra-err.log"
+          try {
+            $ready = $false
+            for ($i = 0; $i -lt 120; $i++) {
+              if ($run.HasExited) { throw "ACRA launcher exited with $($run.ExitCode): $(Get-Content "$env:RUNNER_TEMP\acra-err.log" -Raw)" }
+              try {
+                $health = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/health' -TimeoutSec 2
+                if ($health.burpRequired -eq $false -and $health.coreLinked -eq $true) { $ready = $true; break }
+              } catch { Start-Sleep -Seconds 2 }
+            }
+            if (-not $ready) { throw 'Standalone launcher did not become healthy' }
+            $page = Invoke-WebRequest -Uri 'http://127.0.0.1:8799/' -TimeoutSec 10
+            if ($page.Content -notmatch 'id="target-form"') { throw 'Target onboarding page missing' }
+            $env:ACRA_UI_URL = 'http://127.0.0.1:8799/'
+            $env:ACRA_BROWSER_OUTPUT = 'build/browser-smoke-windows'
+            node tests/browser/smoke.mjs
+            if ($LASTEXITCODE -ne 0) { throw 'Windows browser workflow failed' }
+            $headers = @{ 'X-ACRA-CSRF' = $health.csrfToken }
+            $project = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/projects' -Method Post -Headers $headers -ContentType 'application/x-www-form-urlencoded' -Body @{ name='Clean Windows clone'; description='First run' }
+            $target = Invoke-RestMethod -Uri 'http://127.0.0.1:8799/api/targets' -Method Post -Headers $headers -ContentType 'application/x-www-form-urlencoded' -Body @{ projectId=$project.id; displayName='Authorized lab'; baseUrl='http://127.0.0.1:8081/api/'; environment='LAB'; authorizationReference='CI-LAB-001'; testingMode='IMPORT_ONLY' }
+            $targets = Invoke-RestMethod -Uri "http://127.0.0.1:8799/api/targets?projectId=$($project.id)"
+            if ($targets.Count -ne 1 -or $targets[0].id -ne $target.id) { throw 'Target not persisted' }
+          } finally {
+            Stop-Process -Id $run.Id -Force -ErrorAction SilentlyContinue
+          }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: acra-standalone-windows-browser-smoke
+          path: build/browser-smoke-windows/*.png
+          if-no-files-found: warn
+
+  frozen-research-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify frozen synthetic holdout and label isolation
+        run: bash scripts/verify-sprint13-heldout.sh
+      - name: Install frozen framework evaluation dependencies
+        run: python -m pip install --disable-pip-version-check fastapi==0.115.12 uvicorn==0.34.2 Flask==3.1.0
+      - name: Install Express fixture dependencies
+        working-directory: lab/framework-runtime-eval/express
+        run: npm install --no-audit --no-fund
+      - name: Repeat frozen four-framework runtime evaluation
+        run: bash scripts/verify-sprint13-cross-framework-runtime-eval.sh
+      - name: Upload controlled research evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integrated-frozen-research-regression
+          path: |
+            build/s13-heldout/evaluation.json
+            build/s13-xruntime-eval/evaluation.json
+          if-no-files-found: warn

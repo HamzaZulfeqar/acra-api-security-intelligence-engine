@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ACRA — Standalone Security Workbench</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">A</div><div><strong>ACRA</strong><span>Security Workbench</span></div></div>
+      <nav>
+        <button class="nav-item active" data-view="overview">Overview</button>
+        <button class="nav-item" data-view="targets">Targets</button>
+        <button class="nav-item" data-view="inventory">API Inventory</button>
+        <button class="nav-item" data-view="context">Security Context</button>
+        <button class="nav-item" data-view="authorization">Authorization</button>
+        <button class="nav-item" data-view="active">Active Validation</button>
+        <button class="nav-item" data-view="object-access">Object Access</button>
+        <button class="nav-item" data-view="function-access">Function Access</button>
+        <button class="nav-item" data-view="property-access">Property Access</button>
+        <button class="nav-item" data-view="workflow">Workflow</button>
+        <button class="nav-item" data-view="routing">Routing</button>
+        <button class="nav-item" data-view="evidence">Evidence</button>
+        <button class="nav-item" data-view="candidates">Candidates</button>
+        <button class="nav-item" data-view="findings">Reviewed Findings</button>
+        <button class="nav-item" data-view="coverage">Coverage</button>
+        <button class="nav-item" data-view="reports">Reports</button>
+      </nav>
+      <div class="sidebar-footer"><span id="health-dot" class="dot"></span><span id="health-label">Connecting…</span></div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <div><h1 id="view-title">Overview</h1><p id="view-subtitle">Local-first API authorization security analysis.</p></div>
+        <div class="topbar-actions"><select id="project-selector" aria-label="Active project"></select><button id="new-project-button" class="button secondary" disabled>New Project</button></div>
+      </header>
+
+      <section id="overview-view" class="view active">
+        <div class="hero">
+          <div><span class="eyebrow">STANDALONE MODE</span><h2>Analyze authorized API targets without requiring Burp Suite.</h2><p>ACRA Core remains the security intelligence engine. This workbench provides local project, target, evidence and review workflows over localhost.</p></div>
+          <div class="hero-status"><span class="status-badge">127.0.0.1 only</span><span class="status-badge">Burp optional</span><span class="status-badge">Core linked</span></div>
+        </div>
+        <div class="metrics">
+          <article><span>Projects</span><strong id="metric-projects">0</strong></article>
+          <article><span>Targets</span><strong id="metric-targets">0</strong></article>
+          <article><span>Core Methods</span><strong id="metric-methods">—</strong></article>
+          <article><span>Mode</span><strong>Local</strong></article>
+        </div>
+        <div class="grid two">
+          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">QUICK START</span><h3>Assessment workflow</h3></div></div><ol class="steps"><li>Create a local assessment project.</li><li>Add an explicitly authorized HTTP(S) target.</li><li>Import OpenAPI, HAR, or raw HTTP evidence into a canonical API inventory.</li><li>Review ACRA authorization, workflow, routing and property intelligence.</li></ol></article>
+          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">SAFETY BOUNDARY</span><h3>Target onboarding</h3></div></div><p>Adding a target does not scan it. Active interaction remains gated by ACRA scope, authorization, consent, rate, budget and safety controls.</p><button class="button" data-open-targets>Open Targets</button></article>
+        </div>
+      </section>
+
+      <section id="targets-view" class="view">
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">AUTHORIZED SCOPE</span><h3>Add target</h3></div></div>
+            <form id="target-form">
+              <label>Display name<input name="displayName" required maxlength="120" placeholder="Local Demo API"></label>
+              <label>Base URL<input name="baseUrl" maxlength="2048" placeholder="http://127.0.0.1:8081/api/"></label>
+              <p class="form-note">Enter the complete base URL above, or build one from the host fields below.</p>
+              <div class="field-row">
+                <label>Protocol<select name="hostScheme"><option value="https">HTTPS</option><option value="http">HTTP</option></select></label>
+                <label>Host or IP<input name="hostInput" maxlength="253" placeholder="api.example.test or 127.0.0.1:8081"></label>
+              </div>
+              <label>Base path<input name="hostBasePath" maxlength="1024" placeholder="/api/"></label>
+              <div class="field-row">
+                <label>Environment<select name="environment"><option>LAB</option><option>DEVELOPMENT</option><option>STAGING</option><option>PRODUCTION</option></select></label>
+                <label>Testing mode<select name="testingMode"><option>PASSIVE</option><option>IMPORT_ONLY</option><option>SAFE_ACTIVE</option><option>CONTROLLED_LAB</option></select></label>
+              </div>
+              <label>Authorization reference<input name="authorizationReference" required maxlength="240" placeholder="ENG-APPSEC-2026-017"></label>
+              <p class="form-note">Hostnames, IP addresses and optional ports are supported. A MAC address cannot identify an HTTP API. Registration and import do not send requests. Active validation is currently limited to the controlled loopback LAB mode.</p>
+              <button class="button" type="submit">Add Authorized Target</button>
+            </form>
+            <div id="target-form-message" class="message" hidden></div>
+          </article>
+          <article class="panel"><div class="panel-heading"><div><span class="eyebrow">PROJECT SCOPE</span><h3>Registered targets</h3></div><span id="target-count" class="counter">0</span></div><div id="target-list" class="target-list empty-state">Create or select a project to manage targets.</div></article>
+        </div>
+      </section>
+
+      <section id="inventory-view" class="view">
+        <div class="grid two inventory-top">
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">EVIDENCE INGESTION</span><h3>Import API surface</h3></div>
+              <span class="status-badge">No active scan</span>
+            </div>
+            <form id="import-form">
+              <label>Authorized target<select id="import-target" name="targetId" required></select></label>
+              <div class="field-row">
+                <label>Import type
+                  <select name="importType" id="import-type">
+                    <option value="OPENAPI">OpenAPI / Swagger</option>
+                    <option value="HAR">HAR</option>
+                    <option value="RAW_HTTP">Raw HTTP Request</option>
+                  </select>
+                </label>
+                <label>Source reference<input name="sourceReference" maxlength="240" placeholder="openapi.json / capture.har / request.txt"></label>
+              </div>
+              <label>Choose local file<input id="import-file" type="file" accept=".json,.yaml,.yml,.har,.txt,application/json,text/plain"></label>
+              <label>Or paste content<textarea id="import-content" name="content" rows="12" required placeholder="Paste OpenAPI, HAR, or raw HTTP request content here"></textarea></label>
+              <p class="form-note">Imports are offline. ACRA rejects endpoints outside the selected registered target's scheme, host, port, or base path.</p>
+              <button class="button" type="submit">Import & Normalize</button>
+            </form>
+            <div id="import-message" class="message" hidden></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">NORMALIZED SURFACE</span><h3>Inventory summary</h3></div>
+              <span id="inventory-count" class="counter">0</span>
+            </div>
+            <div class="inventory-summary">
+              <article><span>Unique endpoints</span><strong id="inventory-summary-endpoints">0</strong></article>
+              <article><span>Documented</span><strong id="inventory-summary-documented">0</strong></article>
+              <article><span>Observed</span><strong id="inventory-summary-observed">0</strong></article>
+            </div>
+            <div class="boundary">
+              <strong>Canonical correlation</strong>
+              <span>Concrete observed resource paths are normalized through ACRA URI intelligence so traffic such as <code>/users/42</code> can correlate with declared route templates.</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel inventory-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">API INVENTORY</span><h3>Canonical endpoints</h3></div>
+            <input id="inventory-search" class="search-input" placeholder="Filter method, host, route, source or status">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Method</th><th>Canonical route</th><th>Host</th><th>Sources</th><th>Responses</th><th>Observations</th><th>Declared</th></tr></thead>
+              <tbody id="inventory-table-body"></tbody>
+            </table>
+            <div id="inventory-empty" class="empty-state">Import OpenAPI, HAR, or raw HTTP evidence to build the API inventory.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="context-view" class="view">
+        <div class="context-summary">
+          <article><span>Principals</span><strong id="context-principal-count">0</strong></article>
+          <article><span>Roles</span><strong id="context-role-count">0</strong></article>
+          <article><span>Tenants</span><strong id="context-tenant-count">0</strong></article>
+          <article><span>Resources</span><strong id="context-resource-count">0</strong></article>
+          <article><span>Expectations</span><strong id="context-expectation-count">0</strong></article>
+        </div>
+
+        <div class="grid two context-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">IDENTITY</span><h3>Principals</h3></div></div>
+            <form id="principal-form">
+              <div class="field-row">
+                <label>Principal ID<input name="principalId" required maxlength="160" placeholder="user-a"></label>
+                <label>Display name<input name="displayName" maxlength="240" placeholder="User A"></label>
+              </div>
+              <label>Authentication type
+                <select name="authenticationType">
+                  <option>UNKNOWN</option><option>BEARER</option><option>JWT</option><option>SESSION_COOKIE</option>
+                  <option>API_KEY</option><option>BASIC</option><option>OAUTH</option><option>OIDC</option><option>MUTUAL_TLS</option>
+                </select>
+              </label>
+              <button class="button" type="submit">Add Principal</button>
+            </form>
+            <div id="principal-message" class="message" hidden></div>
+            <div id="principal-list" class="mini-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">ACCESS MODEL</span><h3>Roles & Tenants</h3></div></div>
+            <form id="role-form">
+              <div class="field-row">
+                <label>Role ID<input name="roleId" required maxlength="160" placeholder="standard-user"></label>
+                <label>Role name<input name="name" required maxlength="240" placeholder="Standard User"></label>
+              </div>
+              <button class="button secondary" type="submit">Add Role</button>
+            </form>
+            <form id="tenant-form" class="separated-form">
+              <div class="field-row">
+                <label>Tenant ID<input name="tenantId" required maxlength="160" placeholder="tenant-a"></label>
+                <label>Tenant name<input name="name" maxlength="240" placeholder="Tenant A"></label>
+              </div>
+              <button class="button secondary" type="submit">Add Tenant</button>
+            </form>
+            <div id="role-tenant-message" class="message" hidden></div>
+            <div class="mini-columns"><div><h4>Roles</h4><div id="role-list" class="mini-list"></div></div><div><h4>Tenants</h4><div id="tenant-list" class="mini-list"></div></div></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">RESOURCE MODEL</span><h3>Resources & Ownership</h3></div></div>
+            <form id="resource-form">
+              <div class="field-row">
+                <label>Resource ID<input name="resourceId" required maxlength="180" placeholder="user-42"></label>
+                <label>Resource type<input name="resourceType" required maxlength="120" placeholder="user"></label>
+              </div>
+              <div class="field-row">
+                <label>Owner principal<select name="ownerPrincipalId" id="resource-owner"><option value="">Unspecified</option></select></label>
+                <label>Tenant<select name="tenantId" id="resource-tenant"><option value="">Unspecified</option></select></label>
+              </div>
+              <label>Workflow/state<input name="state" maxlength="120" placeholder="ACTIVE"></label>
+              <button class="button" type="submit">Add Resource</button>
+            </form>
+            <div id="resource-message" class="message" hidden></div>
+            <div id="resource-list" class="mini-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">POLICY CONTEXT</span><h3>Expected authorization</h3></div></div>
+            <form id="expectation-form">
+              <label>Target<select name="targetId" id="expectation-target" required></select></label>
+              <label>Endpoint<select name="endpoint" id="expectation-endpoint" required></select></label>
+              <div class="field-row">
+                <label>Action<select name="action"><option>READ</option><option>CREATE</option><option>UPDATE</option><option>DELETE</option><option>EXECUTE</option><option>APPROVE</option><option>SHARE</option><option>EXPORT</option></select></label>
+                <label>Expected decision<select name="expectedDecision"><option>DENY</option><option>ALLOW</option><option>CONDITIONAL</option><option>UNKNOWN</option></select></label>
+              </div>
+              <div class="field-row">
+                <label>Principal<select name="principalId" id="expectation-principal" required></select></label>
+                <label>Role<select name="roleId" id="expectation-role"><option value="">Unspecified</option></select></label>
+              </div>
+              <div class="field-row">
+                <label>Tenant<select name="tenantId" id="expectation-tenant"><option value="">Unspecified</option></select></label>
+                <label>Resource<select name="resourceId" id="expectation-resource"><option value="">Unspecified</option></select></label>
+              </div>
+              <label>Rationale<textarea name="rationale" rows="3" maxlength="1000" placeholder="Why should this context be allowed or denied?"></textarea></label>
+              <button class="button" type="submit">Add Expected Decision</button>
+            </form>
+            <div id="expectation-message" class="message" hidden></div>
+          </article>
+        </div>
+
+        <article class="panel context-matrix-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">CONTEXT MATRIX</span><h3>Expected authorization matrix</h3></div>
+            <input id="context-search" class="search-input" placeholder="Filter endpoint, principal, role, tenant, resource or decision">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Endpoint</th><th>Action</th><th>Principal</th><th>Role</th><th>Tenant</th><th>Resource</th><th>Expected</th><th>Rationale</th></tr></thead>
+              <tbody id="context-table-body"></tbody>
+            </table>
+            <div id="context-empty" class="empty-state">Define principals, resources and expected decisions to build the authorization context matrix.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="authorization-view" class="view">
+        <div class="context-summary">
+          <article><span>Memberships</span><strong id="auth-membership-count">0</strong></article>
+          <article><span>Role assignments</span><strong id="auth-role-assignment-count">0</strong></article>
+          <article><span>Permissions</span><strong id="auth-permission-count">0</strong></article>
+          <article><span>Policy rules</span><strong id="auth-rule-count">0</strong></article>
+          <article><span>Resolved contexts</span><strong id="auth-resolution-count">0</strong></article>
+        </div>
+
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">ACRA CORE S6</span><h3>Authorization policy projection</h3></div><span class="status-badge">Core engine</span></div>
+            <div class="projection-meta"><span>Policy fingerprint</span><code id="auth-policy-fingerprint">—</code></div>
+            <div class="boundary">
+              <strong>Current evidence boundary</strong>
+              <span>Configured policy can resolve ALLOW/DENY now. BOLA/BFLA stay INCONCLUSIVE until an authenticated observation, execution and evidence lineage exists.</span>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">CORE WORKSPACES</span><h3>Analysis readiness</h3></div></div>
+            <div class="readiness-grid">
+              <div><strong>Workflow</strong><span id="workflow-readiness">Projected · awaiting observations</span></div>
+              <div><strong>Routing</strong><span id="routing-readiness">Projected · awaiting observations</span></div>
+              <div><strong>Property</strong><span id="property-readiness">Projected · awaiting observations</span></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel context-matrix-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">EFFECTIVE AUTHORIZATION</span><h3>Core resolution matrix</h3></div>
+            <input id="authorization-search" class="search-input" placeholder="Filter endpoint, principal, decision, state or role">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Endpoint</th><th>Action</th><th>Principal</th><th>Configured</th><th>Resolved</th><th>State</th><th>Effective roles</th><th>BOLA</th><th>BFLA</th><th>Reasons</th></tr></thead>
+              <tbody id="authorization-table-body"></tbody>
+            </table>
+            <div id="authorization-empty" class="empty-state">Define expected authorization in Security Context to project it through ACRA Core.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="active-view" class="view">
+        <div class="grid two active-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">CONTROLLED EXECUTION</span><h3>Route-equivalence validation</h3></div>
+              <span id="active-kill-status" class="status-badge">Kill switch: checking</span>
+            </div>
+            <form id="active-form">
+              <label>Authorized active target
+                <select id="active-target" name="targetId" required></select>
+              </label>
+              <label>READ authorization expectation
+                <select id="active-expectation" name="expectationId" required></select>
+              </label>
+              <label>Concrete request path
+                <input id="active-path" name="concretePath" required maxlength="2048" placeholder="/api/v1/users/42">
+              </label>
+              <label>Tested authorization value
+                <input id="active-tested-auth" name="testedAuthorizationValue" type="password" required maxlength="4096" autocomplete="off" placeholder="Bearer …">
+              </label>
+              <label>Known-ALLOW positive-control authorization value
+                <input id="active-positive-auth" name="positiveControlAuthorizationValue" type="password" required maxlength="4096" autocomplete="off" placeholder="Bearer …">
+              </label>
+              <label class="confirmation-row"><input name="confirmed" type="checkbox" value="true" required> I confirm this exact target and path are explicitly authorized, both test identities are approved, and I want ACRA to send the controlled four-request differential.</label>
+              <p class="form-note">Active validation supports controlled loopback LAB targets and explicitly authorized development/staging IPv4 targets in SAFE_ACTIVE mode. Only GET/HEAD/OPTIONS READ expectations and one trailing-slash representation are supported. DNS hostnames, production targets and redirects are blocked. Both authorization values are transient and are not persisted or returned by the API.</p>
+              <button class="button" type="submit">Run Controlled Differential</button>
+            </form>
+            <div id="active-message" class="message" hidden></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">EMERGENCY CONTROL</span><h3>Kill switch</h3></div></div>
+            <p>Engaging the kill switch blocks controlled active execution before dispatch. Resetting it requires an explicit operator confirmation.</p>
+            <div class="active-control-actions">
+              <button id="active-kill-button" class="button secondary" type="button">Engage Kill Switch</button>
+              <button id="active-reset-button" class="button secondary" type="button">Reset Kill Switch</button>
+            </div>
+            <div class="boundary">
+              <strong>Safety path</strong>
+              <span>Every request still passes ACRA Core environment, consent, equivalence, hard-scope, budget, concurrency, rate-limit and kill-switch controls. This page does not provide an unrestricted HTTP sender.</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel context-matrix-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">EXECUTION HISTORY</span><h3>Controlled validation results</h3></div>
+            <span id="active-execution-count" class="counter">0</span>
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Endpoint</th><th>Baseline path</th><th>Variant</th><th>Expected</th><th>Observed</th><th>Differential</th><th>State</th><th>Core evidence</th><th>Created</th></tr></thead>
+              <tbody id="active-table-body"></tbody>
+            </table>
+            <div id="active-empty" class="empty-state">No controlled active executions have been recorded for this project.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="evidence-view" class="view">
+        <div class="context-summary">
+          <article><span>Artifacts</span><strong id="evidence-artifact-count">0</strong></article>
+          <article><span>HTTP samples</span><strong id="evidence-sample-count">0</strong></article>
+          <article><span>Redacted</span><strong id="evidence-redacted-count">0</strong></article>
+          <article><span>With responses</span><strong id="evidence-response-count">0</strong></article>
+          <article><span>Mode</span><strong>Local</strong></article>
+        </div>
+
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">PROVENANCE ARCHIVE</span><h3>Evidence artifacts</h3></div></div>
+            <div id="evidence-artifact-list" class="mini-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">REDACTED VIEW</span><h3>Evidence preview</h3></div><span class="status-badge">Secrets removed</span></div>
+            <pre id="evidence-preview" class="evidence-preview">Select an evidence artifact to inspect its locally stored redacted representation.</pre>
+          </article>
+        </div>
+
+        <div class="grid two evidence-diff-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">ACRA CORE DIFFERENTIAL</span><h3>HTTP response comparison</h3></div></div>
+            <form id="http-diff-form">
+              <label>Left response sample<select id="http-diff-left" name="leftId" required></select></label>
+              <label>Right response sample<select id="http-diff-right" name="rightId" required></select></label>
+              <label>Comparison mode<select name="mode"><option>NORMALIZED</option><option>STRUCTURAL</option><option>SEMANTIC</option><option>RAW</option></select></label>
+              <button class="button" type="submit">Compare Responses</button>
+            </form>
+            <div id="http-diff-result" class="diff-result">Choose two response samples.</div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">CONTEXT DIFFERENTIAL</span><h3>Authorization comparison</h3></div></div>
+            <form id="auth-diff-form">
+              <label>Left authorization expectation<select id="auth-diff-left" name="leftId" required></select></label>
+              <label>Right authorization expectation<select id="auth-diff-right" name="rightId" required></select></label>
+              <button class="button" type="submit">Compare Contexts</button>
+            </form>
+            <div id="auth-diff-result" class="diff-result">Choose two authorization contexts.</div>
+          </article>
+        </div>
+
+        <article class="panel inventory-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">HTTP EVIDENCE</span><h3>Captured samples</h3></div>
+            <input id="evidence-search" class="search-input" placeholder="Filter method, URL, status, type or source">
+          </div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Method</th><th>Request URL</th><th>Status</th><th>Content type</th><th>Evidence</th><th>Created</th></tr></thead>
+              <tbody id="evidence-sample-table-body"></tbody>
+            </table>
+            <div id="evidence-empty" class="empty-state">Import HAR or raw HTTP material to populate evidence.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="candidates-view" class="view">
+        <article class="panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">REVIEW ONLY</span><h3>Authorization candidates</h3></div>
+            <input id="candidate-search" class="search-input" placeholder="Filter endpoint, principal, state or decision">
+          </div>
+          <div class="boundary"><strong>No automatic confirmation</strong><span>Until authenticated execution provenance exists, Core candidate state remains INCONCLUSIVE. Analyst review state never overrides that Core evidence boundary.</span></div>
+          <div id="candidate-list" class="candidate-list"></div>
+        </article>
+      </section>
+
+      <section id="findings-view" class="view">
+        <div class="context-summary">
+          <article><span>Eligible executions</span><strong id="finding-eligible-count">0</strong></article>
+          <article><span>Needs review</span><strong id="finding-needs-review-count">0</strong></article>
+          <article><span>Validated</span><strong id="finding-validated-count">0</strong></article>
+          <article><span>Confirmed</span><strong id="finding-confirmed-count">0</strong></article>
+          <article><span>Terminal</span><strong id="finding-terminal-count">0</strong></article>
+        </div>
+
+        <div class="grid two finding-intake-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <div><span class="eyebrow">SPRINT 11 INTAKE</span><h3>Evidence-backed executions</h3></div>
+              <span class="status-badge">Human review required</span>
+            </div>
+            <div class="boundary">
+              <strong>Strict admission rule</strong>
+              <span>Only completed controlled executions with expected DENY, observed ALLOW, UNEXPECTED_CHANGE and persisted ACTIVE_EXECUTION evidence can enter the finding lifecycle.</span>
+            </div>
+            <div id="finding-eligible-list" class="candidate-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">LIFECYCLE CONTRACT</span><h3>Review states</h3></div></div>
+            <div class="readiness-grid">
+              <div><strong>NEEDS_REVIEW → VALIDATED</strong><span>Reviewer validates execution lineage, policy context and supporting evidence.</span></div>
+              <div><strong>VALIDATED → CONFIRMED</strong><span>Independent confirmation requires new evidence. Direct candidate-to-confirmed promotion is rejected.</span></div>
+              <div><strong>FALSE_POSITIVE</strong><span>Explicit terminal disposition when reviewed evidence disproves the candidate.</span></div>
+              <div><strong>ACCEPTED_RISK</strong><span>Terminal risk disposition available only after CONFIRMED.</span></div>
+            </div>
+            <div class="boundary">
+              <strong>Independent prioritization</strong>
+              <span>Severity and confidence are preserved independently of lifecycle state. Review actions do not rewrite source evidence or automatically increase severity.</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel finding-review-panel">
+          <div class="panel-heading inventory-heading">
+            <div><span class="eyebrow">REVIEWED FINDINGS</span><h3>Finding lifecycle workspace</h3></div>
+            <input id="finding-search" class="search-input" placeholder="Filter finding, endpoint, principal, state, severity or confidence">
+          </div>
+          <div id="finding-list" class="finding-list"></div>
+          <div id="finding-empty" class="empty-state">No reviewed finding records exist. Run an eligible controlled validation and explicitly open it for review.</div>
+        </article>
+
+        <article class="panel finding-reproduction-panel">
+          <div class="panel-heading">
+            <div><span class="eyebrow">REPRODUCTION & EXPORTS</span><h3>Selected finding artifact</h3></div>
+            <span id="finding-reproduction-status" class="status-badge">Read only</span>
+          </div>
+          <div class="grid two">
+            <div>
+              <div class="projection-meta">
+                <span>Artifact</span><code id="finding-reproduction-name">—</code>
+              </div>
+              <div class="projection-meta">
+                <span>SHA-256 / Draft ID</span><code id="finding-reproduction-digest">—</code>
+              </div>
+              <div class="boundary">
+                <strong>No automatic publication</strong>
+                <span>JSON and SARIF are deterministic reproduction views. Burp Issue Draft is inspection-only here and is never published to Burp automatically.</span>
+              </div>
+            </div>
+            <pre id="finding-reproduction-preview" class="evidence-preview">Choose JSON, SARIF, or Burp Draft from a reviewed finding.</pre>
+          </div>
+        </article>
+      </section>
+
+      <section id="coverage-view" class="view">
+        <div class="context-summary">
+          <article><span>Total</span><strong id="coverage-total">0</strong></article>
+          <article><span>Tested</span><strong id="coverage-tested">0</strong></article>
+          <article><span>Untested</span><strong id="coverage-untested">0</strong></article>
+          <article><span>Partial</span><strong id="coverage-partial">0</strong></article>
+          <article><span>Inconclusive</span><strong id="coverage-inconclusive">0</strong></article>
+        </div>
+        <article class="panel">
+          <div class="panel-heading"><div><span class="eyebrow">ASSESSMENT COVERAGE</span><h3>Endpoint coverage ledger</h3></div></div>
+          <div class="table-wrap">
+            <table class="inventory-table">
+              <thead><tr><th>Method</th><th>Endpoint</th><th>Disposition</th><th>Contexts</th><th>Passive observations</th><th>Reason</th></tr></thead>
+              <tbody id="coverage-table-body"></tbody>
+            </table>
+            <div id="coverage-empty" class="empty-state">No API inventory exists yet.</div>
+          </div>
+        </article>
+      </section>
+
+      <section id="reports-view" class="view">
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">DETERMINISTIC EXPORT</span><h3>Generate report</h3></div></div>
+            <form id="report-form">
+              <label>Format<select name="format"><option>JSON</option><option>MARKDOWN</option></select></label>
+              <button class="button" type="submit">Generate Report</button>
+            </form>
+            <div class="projection-meta report-digest"><span>SHA-256</span><code id="report-sha">—</code></div>
+            <div class="boundary"><strong>Confirmed finding count remains zero</strong><span>Phase 6 reports preserve review-only candidates and explicitly state the active-execution evidence limitation.</span></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><span class="eyebrow">REPORT PREVIEW</span><h3>Current export</h3></div></div>
+            <pre id="report-preview" class="evidence-preview">Generate a JSON or Markdown report.</pre>
+          </article>
+        </div>
+      </section>
+
+      <section id="placeholder-view" class="view">
+        <article class="panel placeholder-panel"><span class="eyebrow">ACRA CORE WORKSPACE</span><h2 id="placeholder-title">Workspace</h2><p id="placeholder-copy">This product area is preserved in the standalone information architecture and will be wired to the existing ACRA Core engine incrementally.</p><div class="boundary"><strong>Current implementation boundary</strong><span>Standalone launcher, local projects and safe target onboarding are active. This screen does not claim analysis functionality that has not yet been wired into the standalone host.</span></div></article>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="project-dialog">
+    <form id="project-form" method="dialog">
+      <div class="dialog-heading"><div><span class="eyebrow">LOCAL PROJECT</span><h3>Create assessment</h3></div><button type="button" id="close-project-dialog" class="icon-button" aria-label="Close">×</button></div>
+      <label>Project name<input name="name" required maxlength="120" placeholder="API Authorization Review"></label>
+      <label>Description<textarea name="description" maxlength="1000" rows="4" placeholder="Authorized assessment scope and purpose"></textarea></label>
+      <div id="project-form-message" class="message" hidden></div>
+      <div class="dialog-actions"><button type="button" id="cancel-project-dialog" class="button secondary">Cancel</button><button type="submit" class="button">Create Project</button></div>
+    </form>
+  </dialog>
+  <script src="/app.js" defer></script>
+</body>
+</html>

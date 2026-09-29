@@ -1,0 +1,63 @@
+name: Sprint 10 Final Closure
+
+on:
+  push:
+    branches:
+      - s10-standalone-workbench
+    paths:
+      - 'core/**'
+      - 'standalone/**'
+      - 'extension/burp-extension/**'
+      - 'packaging/**'
+      - 'scripts/**'
+      - 'lab/**'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'standalone/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - '.github/workflows/sprint10-final.yml'
+      - 'docs/sprints/sprint-10.md'
+      - 'docs/sprints/sprint-10-execution-schedule.md'
+      - 'docs/sprints/ROADMAP.md'
+      - 'PROJECT_STATE.md'
+      - 'run-acra.sh'
+      - 'run-acra.bat'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Normalize executable scripts
+        run: chmod +x ./scripts/*.sh ./packaging/*.sh
+
+      - name: Run Sprint 10 final verification
+        run: bash ./scripts/verify-sprint10-final.sh
+
+      - name: Upload Sprint 10 final closure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-10-final-closure
+          path: |
+            build/s10-final-package/acra-sprint-10-final.zip
+            build/s10-final-package/acra-sprint-10-final.zip.sha256
+            build/s10-final-package/sprint10-package-manifest.txt
+            build/s10-final-package/sprint10-package-verification.json
+            dist/acra-sprint10-bundle.zip
+            dist/acra-sprint10-bundle.zip.sha256
+            dist/acra-sprint10/SHA256SUMS.txt
+            build/s9-foundation/*.log
+            build/s9-foundation/reporting/*
+            build/s9-foundation/performance/*
+          if-no-files-found: warn

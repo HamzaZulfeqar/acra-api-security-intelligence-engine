@@ -1,0 +1,204 @@
+name: Sprint 10 Standalone Workbench
+
+on:
+  push:
+    branches:
+      - s10-standalone-workbench
+    paths:
+      - 'standalone/**'
+      - 'core/**'
+      - 'extension/burp-extension/**'
+      - 'packaging/**'
+      - 'scripts/build-sprint10-distribution.sh'
+      - 'pom.xml'
+      - 'run-acra.sh'
+      - 'run-acra.bat'
+      - '.github/workflows/sprint10-standalone.yml'
+      - 'docs/adr/ADR-0038-standalone-localhost-workbench.md'
+      - 'docs/sprints/sprint-10.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  standalone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build ACRA Core and standalone workbench
+        run: mvn --batch-mode --no-transfer-progress clean package -pl standalone -am
+
+      - name: Build optional Burp adapter with official Montoya dependency
+        run: mvn --batch-mode --no-transfer-progress package -pl extension/burp-extension -am
+
+      - name: Run optional Burp-to-standalone bridge suite
+        run: |
+          java -ea \
+            -cp "extension/burp-extension/target/test-classes:extension/burp-extension/target/classes:core/target/classes" \
+            io.acra.burp.tests.sprint10.Sprint10StandaloneBridgeTestSuite
+
+      - name: Run Sprint 10 import foundation suite
+        run: |
+          java -ea \
+            -cp "core/target/test-classes:core/target/classes" \
+            io.acra.core.tests.sprint10.Sprint10ImportFoundationTestSuite
+
+      - name: Run standalone foundation suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneFoundationTestSuite
+
+      - name: Run standalone import and inventory suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneImportInventoryTestSuite
+
+      - name: Run standalone security context suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneSecurityContextTestSuite
+
+      - name: Run standalone security context API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneSecurityContextApiTestSuite
+
+      - name: Run standalone Core projection suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneCoreProjectionTestSuite
+
+      - name: Run standalone Core projection API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneCoreProjectionApiTestSuite
+
+      - name: Run standalone evidence and differential suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneEvidenceDifferentialTestSuite
+
+      - name: Run standalone evidence API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneEvidenceApiTestSuite
+
+      - name: Run standalone review, coverage and reporting suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneReviewReportingTestSuite
+
+      - name: Run standalone review and reporting API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneReviewReportingApiTestSuite
+
+      - name: Run standalone controlled active execution suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneControlledExecutionTestSuite
+
+      - name: Run standalone controlled active API suite
+        run: |
+          java -ea \
+            -cp "standalone/target/test-classes:standalone/target/classes:core/target/classes" \
+            io.acra.standalone.tests.StandaloneControlledExecutionApiTestSuite
+
+      - name: Validate standalone browser JavaScript
+        run: node --check standalone/src/main/resources/web/app.js
+
+      - name: Verify packaged localhost application
+        run: |
+          HOME_DIR="$RUNNER_TEMP/acra-standalone-home"
+          java -jar standalone/target/acra-standalone.jar \
+            --port=18787 \
+            --home="$HOME_DIR" \
+            --no-browser > "$RUNNER_TEMP/acra-standalone.log" 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl --fail --silent http://127.0.0.1:18787/api/health > "$RUNNER_TEMP/acra-health.json"; then
+              break
+            fi
+            sleep 0.2
+          done
+          grep -q '"status":"UP"' "$RUNNER_TEMP/acra-health.json"
+          grep -q '"burpRequired":false' "$RUNNER_TEMP/acra-health.json"
+          grep -q '"coreLinked":true' "$RUNNER_TEMP/acra-health.json"
+          curl --fail --silent http://127.0.0.1:18787/ | grep -q 'Standalone Security Workbench'
+          kill "$PID"
+          wait "$PID" 2>/dev/null || true
+          trap - EXIT
+
+      - name: Build Sprint 10 distribution bundle
+        run: bash scripts/build-sprint10-distribution.sh
+
+      - name: Verify clean distribution extraction and checksums
+        run: |
+          EXTRACT="$RUNNER_TEMP/acra-s10-dist"
+          rm -rf "$EXTRACT"
+          mkdir -p "$EXTRACT"
+          unzip -q dist/acra-sprint10-bundle.zip -d "$EXTRACT"
+          cd "$EXTRACT/acra-sprint10"
+          sha256sum -c SHA256SUMS.txt
+          test -f acra-standalone.jar
+          test -f acra-burp-extension.jar
+          test -f acra-standalone.sh
+          test -f acra-standalone.bat
+          bash -n acra-standalone.sh
+
+      - name: Verify extracted standalone distribution startup
+        run: |
+          EXTRACT="$RUNNER_TEMP/acra-s10-dist/acra-sprint10"
+          HOME_DIR="$RUNNER_TEMP/acra-s10-dist-home"
+          java -jar "$EXTRACT/acra-standalone.jar" \
+            --port=18789 \
+            --home="$HOME_DIR" \
+            --no-browser > "$RUNNER_TEMP/acra-s10-dist.log" 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in $(seq 1 50); do
+            if curl --fail --silent http://127.0.0.1:18789/api/health > "$RUNNER_TEMP/acra-s10-dist-health.json"; then
+              break
+            fi
+            sleep 0.2
+          done
+          grep -q '"status":"UP"' "$RUNNER_TEMP/acra-s10-dist-health.json"
+          grep -q '"burpRequired":false' "$RUNNER_TEMP/acra-s10-dist-health.json"
+          grep -q 'Management bind: 127.0.0.1' "$RUNNER_TEMP/acra-s10-dist.log"
+          kill "$PID"
+          wait "$PID" 2>/dev/null || true
+          trap - EXIT
+
+      - name: Upload standalone verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-s10-standalone-verification
+          path: |
+            ${{ runner.temp }}/acra-standalone.log
+            ${{ runner.temp }}/acra-health.json
+            ${{ runner.temp }}/acra-s10-dist.log
+            ${{ runner.temp }}/acra-s10-dist-health.json
+            dist/acra-sprint10-bundle.zip
+            dist/acra-sprint10-bundle.zip.sha256
+            dist/acra-sprint10/SHA256SUMS.txt
+          if-no-files-found: warn

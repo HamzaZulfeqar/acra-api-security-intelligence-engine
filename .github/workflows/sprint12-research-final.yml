@@ -1,0 +1,72 @@
+name: Sprint 12 Research Final Closure
+
+on:
+  push:
+    branches:
+      - s12-standalone-a0-a7-research-evaluation
+    paths:
+      - 'core/**'
+      - 'standalone/**'
+      - 'extension/burp-extension/**'
+      - 'tests/**'
+      - 'lab/**'
+      - 'packaging/**'
+      - 'scripts/**'
+      - 'research/**'
+      - 'docs/research/**'
+      - 'docs/sprints/sprint-12.md'
+      - 'docs/sprints/ROADMAP.md'
+      - 'PROJECT_STATE.md'
+      - 'pom.xml'
+      - 'core/pom.xml'
+      - 'standalone/pom.xml'
+      - 'extension/burp-extension/pom.xml'
+      - '.github/workflows/sprint12-research-final.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Normalize executable scripts
+        run: chmod +x ./scripts/*.sh ./scripts/*.py ./packaging/*.sh
+
+      - name: Run Sprint 12 research final verification
+        run: bash ./scripts/verify-sprint12-final.sh
+
+      - name: Upload Sprint 12 final closure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acra-sprint-12-research-final-closure
+          path: |
+            build/s12-final-package/acra-sprint-12-final.zip
+            build/s12-final-package/acra-sprint-12-final.zip.sha256
+            build/s12-final-package/sprint12-package-manifest.txt
+            build/s12-final-package/sprint12-package-verification.json
+            build/s12-research/EXP-A0-A7.json
+            build/s12-research/EXP-A0-A7.json.sha256
+            build/s12-research/EXP-A0-A7.csv
+            build/s12-research/EXP-A0-A7.csv.sha256
+            build/s12-research/EXP-A0-A7-cases.jsonl
+            build/s12-research/EXP-A0-A7-cases.jsonl.sha256
+            build/s11-ground-truth/verification.json
+            dist/acra-sprint12-bundle.zip
+            dist/acra-sprint12-bundle.zip.sha256
+            dist/acra-sprint12/SHA256SUMS.txt
+          if-no-files-found: warn
