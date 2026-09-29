@@ -77,13 +77,24 @@ jobs:
           workspace="$(mktemp -d)"
           java -jar standalone/target/acra-standalone.jar --port=8787 --home="$workspace" --no-browser > /tmp/acra-browser.log 2>&1 &
           pid=$!
-          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          trap 'kill "$pid" "${fixture_pid:-}" 2>/dev/null || true' EXIT
           for attempt in $(seq 1 30); do
             if curl --fail --silent http://127.0.0.1:8787/api/health >/dev/null; then break; fi
             if ! kill -0 "$pid" 2>/dev/null; then cat /tmp/acra-browser.log; exit 1; fi
             sleep 1
           done
           node tests/browser/smoke.mjs
+          export ACRA_FIXTURE_HOST="$(hostname -I | tr ' ' '\n' | awk '$1 !~ /^127\./ && $1 ~ /^[0-9.]+$/ { print; exit }')"
+          test -n "$ACRA_FIXTURE_HOST"
+          export ACRA_FIXTURE_PORT=18081
+          python3 tests/browser/authorized_fixture.py > /tmp/acra-fixture.log 2>&1 &
+          fixture_pid=$!
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent "http://$ACRA_FIXTURE_HOST:$ACRA_FIXTURE_PORT/__fixture_stats" >/dev/null; then break; fi
+            if ! kill -0 "$fixture_pid" 2>/dev/null; then cat /tmp/acra-fixture.log; exit 1; fi
+            sleep 1
+          done
+          ACRA_BROWSER_OUTPUT=build/browser-active node tests/browser/active.mjs
       - name: Package and verify standalone candidate
         run: bash scripts/build-standalone-integration-bundle.sh
       - uses: actions/upload-artifact@v4
@@ -98,7 +109,9 @@ jobs:
         if: always()
         with:
           name: acra-standalone-browser-smoke
-          path: build/browser-smoke/*.png
+          path: |
+            build/browser-smoke/*.png
+            build/browser-active/*.png
           if-no-files-found: warn
 
   windows-first-run:
